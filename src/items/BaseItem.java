@@ -1,14 +1,14 @@
 package items;
 
 /** A simple item with only a name, description, and value. */
-public abstract class BasicItem extends Nameable
+public abstract class BaseItem extends Nameable
 {
     private String description;
     private int    value;
     
-    public BasicItem(String n, int v) {this(n, null, v);}
+    public BaseItem(String n, int v) {this(n, null, v);}
     
-    public BasicItem(String n, String d, int v)
+    public BaseItem(String n, String d, int v)
     {
         super(n);
         description = d;
@@ -22,7 +22,7 @@ public abstract class BasicItem extends Nameable
     public void define()
     {
         System.out.println("  " + getName().toUpperCase() + ":");
-        System.out.println("  Value: " + value + " Credits");
+        System.out.println("  Value: " + value);
         System.out.println("  Description: " + description);
     }
 }

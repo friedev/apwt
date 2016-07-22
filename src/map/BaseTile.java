@@ -1,7 +1,7 @@
 package map;
 
 /** A map tile, represented by a symbol at its core. */
-public class Tile
+public class BaseTile
 {
     public static char EMPTY = '.';
     
@@ -9,9 +9,9 @@ public class Tile
     private Point location;
     private Map   map;
     
-    public Tile(Point l, Map m) {this(EMPTY, l, m);}
+    public BaseTile(Point l, Map m) {this(EMPTY, l, m);}
     
-    public Tile(char s, Point l, Map m)
+    public BaseTile(char s, Point l, Map m)
     {
         symbol   = s;
         location = l;
