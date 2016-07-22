@@ -1,15 +1,13 @@
 package map;
 
-/**
- * 
- */
+/** A two-dimensional array of tiles that can be traversed by entities. */
 public class Map
 {
     /** The default side length of the map in tiles. */
     public static final int SIZE = 11;
     
-    private BaseTile[][] map;
-    private final int  offset;
+    private Tile[][]  map;
+    private final int offset;
     
     /** Generates a map with the default size. */
     public Map() {this(SIZE);}
@@ -20,7 +18,7 @@ public class Map
      */
     public Map(int size)
     {
-        map    = new BaseTile[size][size];
+        map    = new Tile[size][size];
         offset = (int) Math.floor((double) map.length / 2.0);
         initialize();
     }
@@ -71,6 +69,6 @@ public class Map
     {
         for (int y = 0; y < map.length; y++)
             for (int x = 0; x < map[y].length; x++)
-                map[y][x] = new BaseTile(new Point(x - offset, y - offset), this);
+                map[y][x] = new Tile(new Point(x - offset, y - offset), this);
     }
 }

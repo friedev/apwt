@@ -1,17 +1,15 @@
 package items;
 
-/**
- * A container for items up to a certain capacity - note that it is also an item
- * itself.
- */
-public class Container extends Item
+import java.util.List;
+
+/** A container that is simply a collection of items with a capacity. */
+public class Container
 {
     private int capacity;
-    private java.util.List<Item> contents;
+    private List<Item> contents;
     
-    public Container(String n, String d, int va, int vo, int c)
+    public Container(int c)
     {
-        super(n, d, va, vo);
         capacity = c;
         contents = new java.util.ArrayList<>();
     }
@@ -31,6 +29,8 @@ public class Container extends Item
     public String getCapacityAsFraction()
         {return capacity + "/" + getUsedCapacity();}
     
+    public List<Item> toList() {return contents;}
+    
     public boolean addItem(Item item)
     {
         if (item.getVolume() <= getRemainingCapacity())
@@ -45,16 +45,24 @@ public class Container extends Item
     public boolean removeItem(Item item)
         {return contents.remove(item);}
     
-    /** Prints the name, value, description, volume, and capacity of the item. */
-    @Override
-    public void define()
+    public Item findItem(String name)
     {
-        System.out.println("  " + getName().toUpperCase() + ":");
-        System.out.println("  Value: " + getValue());
-        System.out.println("  Volume: " + getVolume());
-        System.out.println("  Capacity: " + getCapacityAsFraction());
-        if (isContained())
-            System.out.println("  Container: " + getContainer());
-        System.out.println("  Description: " + getDescription());
+        for (Item item: contents)
+            if (item.isName(name))
+                return item;
+        
+        return null;
+    }
+    
+    public Item takeItem(String name)
+    {
+        Item item = findItem(name);
+        if (item != null)
+        {
+            contents.remove(item);
+            return item;
+        }
+        
+        return null;
     }
 }
