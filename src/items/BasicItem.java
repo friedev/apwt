@@ -1,7 +1,7 @@
 package items;
 
 /** A simple item with only a name, description, and value. */
-public class BasicItem extends Nameable
+public abstract class BasicItem extends Nameable
 {
     private String description;
     private int    value;

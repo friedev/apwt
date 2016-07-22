@@ -12,7 +12,7 @@ import java.util.Scanner;
  * A class to manage multiple aspects of files, primarily saving and loading,
  * but also other tasks such as finding the jar path.
  */
-public class FileManager
+public abstract class FileManager
 {
     private static String path = findPath();
     

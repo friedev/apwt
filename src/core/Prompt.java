@@ -3,7 +3,7 @@ package core;
 import java.util.Scanner;
 
 /** A prompt that manages input and output. */
-public class Prompt
+public abstract class Prompt
 {
     public static int CANCEL_INT = -999999999;
     
