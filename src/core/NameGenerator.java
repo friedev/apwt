@@ -1,8 +1,5 @@
 package core;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 import java.util.Random;
 
 /**
@@ -11,118 +8,131 @@ import java.util.Random;
  */
 public class NameGenerator
 {
-    private File   prefixFile;
-    private File   suffixFile;
-    private Random random;
+    public static final String PREFIX_FILE  = "prefix.txt";
+    public static final String SUFFIX_FILE  = "suffix.txt";
+    
+    private String[] prefixes;
+    private String[] suffixes;
+    private Random   random;
     
     /**
-     * Invokes the NameGenerator(File, File, Random) constructor with two given
-     * file names and a new random generator
+     * Invokes the NameGenerator(String, String, Random) constructor with the
+     * default file names and a new random generator.
+     */
+    public NameGenerator()
+        {this(PREFIX_FILE, SUFFIX_FILE, new Random());}
+    
+    /**
+     * Invokes the NameGenerator(String, String, Random) constructor with the
+     * default file names and a given seed.
+     * @param seed the seed of the random generator to be used
+     */
+    public NameGenerator(long seed)
+        {this(PREFIX_FILE, SUFFIX_FILE, new Random(seed));}
+    
+    /**
+     * Invokes the NameGenerator(String, String, Random) constructor with the
+     * default file names and a random generator.
+     * @param rand the random generator to use
+     */
+    public NameGenerator(Random rand)
+        {this(PREFIX_FILE, SUFFIX_FILE, rand);}
+    
+    /**
+     * Invokes the NameGenerator(String, String, Random) constructor with two
+     * given file names and a new random generator.
      * @param prefix the name of the prefix file
      * @param suffix the name of the suffix file
-     * @throws FileNotFoundException if files do not exist
-     * @throws NullPointerException if files are null
      */
     public NameGenerator(String prefix, String suffix)
-            throws FileNotFoundException
-    {this(new File(prefix), new File(suffix), new Random());}
+        {this(prefix, suffix, new Random());}
     
     /**
-     * Invokes the NameGenerator(File, File, Random) constructor with two given
-     * file names and a given seed.
+     * Invokes the NameGenerator(String, String, Random) constructor with two
+     * given file names and a given seed.
      * @param prefix the name of the prefix file
      * @param suffix the name of the suffix file
      * @param seed the seed of the random generator to be used
-     * @throws FileNotFoundException if the files do not exist
-     * @throws NullPointerException if files are null
      */
     public NameGenerator(String prefix, String suffix, long seed)
-            throws FileNotFoundException
-    {this(new File(prefix), new File(suffix), new Random(seed));}
+        {this(prefix, suffix, new Random(seed));}
     
     /**
-     * Invokes the NameGenerator(File, File, Random) constructor with two given
-     * file names and a given random generator.
+     * Invokes the NameGenerator(String[], String[], Random) constructor with
+     * two given file names and a random generator.
      * @param prefix the name of the prefix file
      * @param suffix the name of the suffix file
      * @param rand the random generator to use
-     * @throws FileNotFoundException if the files do not exist
-     * @throws NullPointerException if the files are null
      */
     public NameGenerator(String prefix, String suffix, Random rand)
-            throws FileNotFoundException
-    {this(new File(prefix), new File(suffix), rand);}
+    {
+        this(FileManager.toLineArray(prefix), FileManager.toLineArray(suffix),
+                rand);
+    }
     
     /**
-     * Creates a new NameGenerator from a prefix file, a suffix file, and a
-     * random generator.
-     * @param prefix the file to read the prefix from
-     * @param suffix the file to read the suffix from
-     * @param rand
-     * @throws FileNotFoundException if files do not exist
-     * @throws NullPointerException if files are null
+     * Creates a new NameGenerator with two String arrays for the prefixes and
+     * suffixes, and a random generator.
+     * @param prefix the array of prefixes
+     * @param suffix the array of suffixes
+     * @param rand the random generator to use
      */
-    public NameGenerator(File prefix, File suffix, Random rand)
-            throws FileNotFoundException
+    public NameGenerator(String[] prefix, String[] suffix, Random rand)
     {
-        // Throw exceptions if the files are null or do not exist
-        if (prefix == null || suffix == null)
-            throw new NullPointerException();
-        
-        if (!(prefix.exists() && suffix.exists()))
-            throw new FileNotFoundException();
-        
-        prefixFile = prefix;
-        suffixFile = suffix;
-        random     = rand;
+        prefixes = prefix;
+        suffixes = suffix;
+        random   = rand;
     }
     
     /**
      * Generates a random name by combining a prefix and suffix.
-     * @return a name consisting of a line from both the prefix and suffix files
-     * @throws FileNotFoundException thrown by line reader if the file does not
-     * exist
+     * @return a name consisting of an item from both the prefix and suffix
+     * arrays
      */
-    public String generateName() throws FileNotFoundException
-        {return getRandomLine(prefixFile) + getRandomLine(suffixFile);}
-    
-    /**
-     * Returns a random line from the designated file.
-     * @param file the file to return a line from, must exist, be non-null, and
-     * have at least one line in it
-     * @return a random line from the file
-     * @throws FileNotFoundException thrown by reader if the file does not exist
-     * @throws NullPointerException if file is null or has no lines
-     */
-    private String getRandomLine(File file) throws FileNotFoundException
+    public String generateName()
     {
-        if (file == null)
-            throw new NullPointerException();
-        
-        // Count the lines of the file
-        Scanner reader = new Scanner(file);
-        int lineCounter = 0;
-        while (reader.hasNextLine())
-        {
-            reader.nextLine();
-            lineCounter++;
-        }
-        
-        // The file has no lines and thus is empty, so throw an exception
-        if (lineCounter == 0)
-        {
-            reader.close();
-            throw new NullPointerException();
-        }
-        
-        // Reset reader to the first line
-        reader = new Scanner(file);
-        int lineNumber = random.nextInt(lineCounter);
-        for (int i = 0; i < lineNumber; i++)
-            reader.nextLine();
-        
-        String line = reader.nextLine();
-        reader.close();
-        return line;
+        return prefixes[random.nextInt(prefixes.length)] +
+               suffixes[random.nextInt(suffixes.length)];
+//        return getRandomLine(prefixes) + getRandomLine(suffixes);
     }
+    
+//    /**
+//     * Returns a random line from the designated file.
+//     * @param file the file to return a line from, must exist, be non-null, and
+//     * have at least one line in it
+//     * @return a random line from the file
+//     * @throws FileNotFoundException thrown by reader if the file does not exist
+//     * @throws NullPointerException if file is null or has no lines
+//     */
+//    private String getRandomLine(File file) throws FileNotFoundException
+//    {
+//        if (file == null)
+//            throw new NullPointerException();
+//        
+//        // Count the lines of the file
+//        Scanner reader = new Scanner(file);
+//        int lineCounter = 0;
+//        while (reader.hasNextLine())
+//        {
+//            reader.nextLine();
+//            lineCounter++;
+//        }
+//        
+//        // The file has no lines and thus is empty, so throw an exception
+//        if (lineCounter == 0)
+//        {
+//            reader.close();
+//            throw new NullPointerException();
+//        }
+//        
+//        // Reset reader to the first line
+//        reader = new Scanner(file);
+//        int lineNumber = random.nextInt(lineCounter);
+//        for (int i = 0; i < lineNumber; i++)
+//            reader.nextLine();
+//        
+//        String line = reader.nextLine();
+//        reader.close();
+//        return line;
+//    }
 }

@@ -27,7 +27,7 @@ public abstract class FileManager
     public static String findPath()
     {
         String jarPath = Main.class.getProtectionDomain().getCodeSource()
-                                                       .getLocation().getPath();
+                .getLocation().getPath();
         return jarPath.substring(0, jarPath.lastIndexOf("/") + 1);
     }
     
@@ -56,16 +56,12 @@ public abstract class FileManager
         }
         catch (FileNotFoundException fnf)
         {
-            System.out.println("File not found at " + path + target);
-            Prompt.enterTo("close");
-            System.exit(1);
+            Main.quitWithMessage("File not found at " + path + target);
         }
         catch (IOException io)
         {
-            System.out.println("Error encountered while creating or processing "
-                                                               + path + target);
-            Prompt.enterTo("close");
-            System.exit(1);
+            Main.quitWithMessage("Error encountered while creating or "
+                    + "processing " + path + target);
         }
         
         // NOT REACHED
@@ -91,16 +87,12 @@ public abstract class FileManager
         }
         catch (FileNotFoundException fnf)
         {
-            System.out.println("File not found at " + path + target);
-            Prompt.enterTo("close");
-            System.exit(1);
+            Main.quitWithMessage("File not found at " + path + target);
         }
         catch (IOException io)
         {
-            System.out.println("Error encountered while creating " + path
-                                                                      + target);
-            Prompt.enterTo("close");
-            System.exit(1);
+            Main.quitWithMessage("Error encountered while creating " + path
+                    + target);
         }
     }
     
@@ -121,6 +113,31 @@ public abstract class FileManager
         {
             System.out.println("File not found at " + path + target);
         }
+    }
+    
+    /**
+     * Creates an array of Strings, where each item is a line of the file.
+     * @param target the file to create an array from
+     * @return an array of Strings, where each item is a line of the file
+     */
+    public static String[] toLineArray(String target)
+    {
+        try
+        {
+            java.util.ArrayList<String> lineList = new java.util.ArrayList<>();
+            Scanner reader = new Scanner(new File(path + target));
+            while (reader.hasNextLine())
+                lineList.add(reader.nextLine());
+            reader.close();
+            return lineList.toArray(new String[lineList.size()]);
+        }
+        catch (FileNotFoundException fnf)
+        {
+            Main.quitWithMessage("File not found at " + path + target);
+        }
+        
+        // NOT REACHED
+        return null;
     }
     
     /**

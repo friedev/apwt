@@ -26,4 +26,15 @@ public class Main
             return;
         }
     }
+    
+    /**
+     * Quits the game immediately with an error message.
+     * @param message the message to display before closing the game
+     */
+    public static void quitWithMessage(String message)
+    {
+        System.out.println(message);
+        Prompt.enterTo("close");
+        System.exit(1);
+    }
 }
