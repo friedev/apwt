@@ -25,7 +25,7 @@ public class Map
         initialize();
     }
     
-    public BaseTile[][] toArray()      {return map;                         }
+    public BaseTile[][] toArray()  {return map;                         }
     public int      getMinY()      {return -offset;                     }
     public int      getMaxY()      {return (map.length -  1) - offset;  }
     public int      getMinX()      {return -offset;                     }
@@ -54,7 +54,7 @@ public class Map
      */
     public boolean contains(Point p) {return contains(p.x, p.y);}
     
-    /** Prints the sector symbols and a border. */
+    /** Prints the tile symbols and a border. */
     public void print()
     {
         for (int y = 0; y < map.length; y++)
@@ -66,7 +66,7 @@ public class Map
         }
     }
     
-    /** Initializes all the sectors on the map. */
+    /** Initializes all the tiles on the map. */
     private void initialize()
     {
         for (int y = 0; y < map.length; y++)
