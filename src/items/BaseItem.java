@@ -1,5 +1,7 @@
 package items;
 
+import core.Display;
+
 /** A simple item with only a name, description, and value. */
 public abstract class BaseItem extends Nameable
 {
@@ -21,8 +23,8 @@ public abstract class BaseItem extends Nameable
     /** Prints the name, value, and description of the item. */
     public void define()
     {
-        System.out.println("  " + getName().toUpperCase() + ":");
-        System.out.println("  Value: " + value);
-        System.out.println("  Description: " + description);
+        Display.println(getName().toUpperCase() + ":");
+        Display.printListItem("Value", value);
+        Display.printListItem("Description", description);
     }
 }

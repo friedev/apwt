@@ -1,5 +1,7 @@
 package items;
 
+import core.Display;
+
 /** A simple resource that is a BasicItem with an amount field. */
 public class Resource extends BaseItem
 {
@@ -20,9 +22,9 @@ public class Resource extends BaseItem
     @Override
     public void define()
     {
-        System.out.println("  " + getName().toUpperCase() + ":");
-        System.out.println("  Value: " + getValue());
-        System.out.println("  Amount: " + amount);
-        System.out.println("  Description: " + getDescription());
+        Display.println(getName().toUpperCase() + ":");
+        Display.printListItem("Value", getValue());
+        Display.printListItem("Amount", amount);
+        Display.printListItem("Description", getDescription());
     }
 }

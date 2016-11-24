@@ -66,8 +66,8 @@ public class NameGenerator
      */
     public NameGenerator(String prefix, String suffix, Random rand)
     {
-        this(FileManager.toLineArray(prefix), FileManager.toLineArray(suffix),
-                rand);
+        this(FileManager.toLineArray(prefix),
+                FileManager.toLineArray(suffix), rand);
     }
     
     /**
@@ -84,55 +84,23 @@ public class NameGenerator
         random   = rand;
     }
     
+    public String getPrefix()
+        {return prefixes[random.nextInt(prefixes.length)];}
+    
+    public String getSuffix()
+        {return suffixes[random.nextInt(suffixes.length)];}
+    
     /**
      * Generates a random name by combining a prefix and suffix.
      * @return a name consisting of an item from both the prefix and suffix
      * arrays
      */
     public String generateName()
-    {
-        return prefixes[random.nextInt(prefixes.length)] +
-               suffixes[random.nextInt(suffixes.length)];
-//        return getRandomLine(prefixes) + getRandomLine(suffixes);
-    }
+        {return getPrefix() + getSuffix();}
     
-//    /**
-//     * Returns a random line from the designated file.
-//     * @param file the file to return a line from, must exist, be non-null, and
-//     * have at least one line in it
-//     * @return a random line from the file
-//     * @throws FileNotFoundException thrown by reader if the file does not exist
-//     * @throws NullPointerException if file is null or has no lines
-//     */
-//    private String getRandomLine(File file) throws FileNotFoundException
-//    {
-//        if (file == null)
-//            throw new NullPointerException();
-//        
-//        // Count the lines of the file
-//        Scanner reader = new Scanner(file);
-//        int lineCounter = 0;
-//        while (reader.hasNextLine())
-//        {
-//            reader.nextLine();
-//            lineCounter++;
-//        }
-//        
-//        // The file has no lines and thus is empty, so throw an exception
-//        if (lineCounter == 0)
-//        {
-//            reader.close();
-//            throw new NullPointerException();
-//        }
-//        
-//        // Reset reader to the first line
-//        reader = new Scanner(file);
-//        int lineNumber = random.nextInt(lineCounter);
-//        for (int i = 0; i < lineNumber; i++)
-//            reader.nextLine();
-//        
-//        String line = reader.nextLine();
-//        reader.close();
-//        return line;
-//    }
+    public String combineWithPrefix(String suffix)
+        {return getPrefix() + suffix;}
+    
+    public String combineWithSuffix(String prefix)
+        {return prefix + getSuffix();}
 }

@@ -14,10 +14,19 @@ import java.util.Scanner;
  */
 public abstract class FileManager
 {
+    /** The path to the data folder. */
     private static String path = findPath();
     
+    /**
+     * Returns the path to the data folder.
+     * @return the path to the data folder as a String
+     */
     public static String getPath() {return path;}
     
+    /**
+     * Sets the data folder path to the String provided.
+     * @param newPath the String to be set as the new path
+     */
     public void setPath(String newPath) {path = newPath;}
     
     /**
@@ -28,13 +37,17 @@ public abstract class FileManager
     {
         String jarPath = Main.class.getProtectionDomain().getCodeSource()
                 .getLocation().getPath();
-        return jarPath.substring(0, jarPath.lastIndexOf("/") + 1);
+        jarPath = jarPath.substring(0, jarPath.lastIndexOf("/") + 1);
+        
+        // This last step replaces the NetBeans IDE path with a path to a valid
+        // data directory
+        return jarPath.replaceFirst("build/classes", "data");
     }
     
     /**
-     * Creates the player from the save file, if it exists.
+     * Loads a Properties object from a file, if it exists.
      * @param target the name of the file to load from
-     * @return the created Ship to be the player
+     * @return the Properties object loaded from the file
      */
     public static Properties load(String target)
     {
@@ -69,7 +82,7 @@ public abstract class FileManager
     }
     
     /**
-     * Saves the player's ship to the save file.
+     * Saves a Properties object to the specified file.
      * @param properties the list of properties to save
      * @param target the name of the file to save to
      */
@@ -106,12 +119,12 @@ public abstract class FileManager
         {
             Scanner reader = new Scanner(new File(path + target));
             while (reader.hasNextLine())
-                System.out.println(reader.nextLine());
+                Display.println(reader.nextLine());
             reader.close();
         }
         catch (FileNotFoundException fnf)
         {
-            System.out.println("File not found at " + path + target);
+            Display.println("File not found at " + path + target);
         }
     }
     
@@ -157,5 +170,127 @@ public abstract class FileManager
         File file = new File(path + target);
         if (file.exists())
             file.delete();
+    }
+    
+    /**
+     * Returns a random line from the designated file.
+     * @param target the name of the file to return a line from, must exist, be
+     * non-null, and have at least one line in it
+     * @return a random line from the file, null if any of the above conditions
+     * are not met
+     */
+    public static String getRandomLine(String target)
+    {
+        if (target == null)
+            return null;
+        
+        File file = new File(path + target);
+        
+        try
+        {
+            // Count the lines of the file
+            Scanner reader = new Scanner(file);
+            int lineCounter = 0;
+            while (reader.hasNextLine())
+            {
+                reader.nextLine();
+                lineCounter++;
+            }
+
+            // The file has no lines and thus is empty, so return null
+            if (lineCounter == 0)
+            {
+                reader.close();
+                return null;
+            }
+            
+            return getLine(target, Main.random.get().nextInt(lineCounter));
+        }
+        catch (FileNotFoundException fnf)
+        {
+            return null;
+        }
+    }
+    
+    /**
+     * Returns the line at the specified index from the given file.
+     * @param target the name of the file to return a line from, must exist, be
+     * non-null, and have at least one line in it
+     * @param line the index of the line in the file to return (the first line
+     * is 0), must be non-negative
+     * @return the line from the file, null if any of the above conditions are
+     * not met
+     */
+    public static String getLine(String target, int line)
+    {
+        if (target == null)
+            return null;
+        
+        if (line < 0)
+            return null;
+        
+        File file = new File(path + target);
+        
+        try
+        {
+            Scanner reader = new Scanner(file);
+            for (int i = 0; i < line; i++)
+            {
+                if (reader.hasNextLine())
+                {
+                    reader.nextLine();
+                }
+                else
+                {
+                    reader.close();
+                    return null;
+                }    
+            }
+            
+            String lineString = reader.nextLine();
+            reader.close();
+            return lineString;
+        }
+        catch (FileNotFoundException fnf)
+        {
+            return null;
+        }
+    }
+    
+    /**
+     * Writes the specified text to the specified file.
+     * @param target the name of the file to write to, must be non-null
+     * @param text the text to write to the file, must be non-null and have
+     * characters in it
+     */
+    public static void append(String target, String text)
+    {
+        if (target == null || text == null || "".equals(text))
+            return;
+        
+        try
+        {
+            File file = new File(path + target);
+            if (!file.exists())
+                file.createNewFile();
+            
+            String[] lines = toLineArray(target);
+            
+            java.io.PrintWriter writer = new java.io.PrintWriter(file);
+            
+            for (String line: lines)
+                writer.println(line);
+            
+            writer.println(text);
+            writer.close();
+        }
+        catch (FileNotFoundException fnf)
+        {
+            return;
+        }
+        catch (IOException io)
+        {
+            return;
+        }
     }
 }

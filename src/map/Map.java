@@ -1,5 +1,7 @@
 package map;
 
+import core.Display;
+
 /** A two-dimensional array of tiles that can be traversed by entities. */
 public class Map
 {
@@ -58,9 +60,9 @@ public class Map
         for (int y = 0; y < map.length; y++)
         {
             for (int x = 0; x < map[y].length; x++)
-                System.out.print(map[y][x].getSymbol() + " ");
+                Display.print(map[y][x].getSymbol() + " ");
             
-            System.out.println();
+            Display.println();
         }
     }
     
