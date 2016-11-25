@@ -138,8 +138,7 @@ public abstract class Prompt
             {
                 String intString = getInput(indents, prompt);
                 
-                if (Main.CANCEL.equals(intString) ||
-                    Main.CANCEL_KEY.equals(intString))
+                if (Main.isCancel(intString))
                     return null;
                 
                 return Integer.parseInt(intString);
