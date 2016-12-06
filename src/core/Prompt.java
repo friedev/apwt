@@ -66,7 +66,7 @@ public abstract class Prompt
         
         while ("".equals(input) || null == input)
         {
-            Display.println(1, "Please enter something.");
+            Display.println(Main.INDENT_PROMPT, "Please enter something.");
             input = getInput(prompt);
         }
         
@@ -102,7 +102,7 @@ public abstract class Prompt
         
         while ("".equals(input) || null == input)
         {
-            Display.println(1, "Please enter something.");
+            Display.println(Main.INDENT_PROMPT, "Please enter something.");
             input = getRawInput(prompt);
         }
         
@@ -134,20 +134,21 @@ public abstract class Prompt
         do
         {
             // No reassignment is necessary because loop will return
-            try
+            String intString = getInput(indents, prompt);
+
+            if (Main.isCancel(intString))
+                return null;
+            
+            Integer parsedInteger = parseInt(intString);
+            if (parsedInteger == null)
             {
-                String intString = getInput(indents, prompt);
-                
-                if (Main.isCancel(intString))
-                    return null;
-                
-                return Integer.parseInt(intString);
-            }
-            catch (NumberFormatException e)
-            {
-                Display.println(2, "Invalid numerical format. Enter an "
-                        + "integer.");
+                Display.println(Main.INDENT_ERROR,
+                        "Invalid numerical format. Enter an integer.");
                 completed = false;
+            }
+            else
+            {
+                return parsedInteger;
             }
         } while (!completed);
         
@@ -165,6 +166,27 @@ public abstract class Prompt
         {
             return null;
         }
+    }
+    
+    public static int parseInt(String intString, int defaultValue)
+    {
+        Integer parsedInt = parseInt(intString);
+        if (parsedInt == null)
+            return defaultValue;
+        else
+            return parsedInt;
+    }
+    
+    public static int parseInt(String intString, String quitMessage)
+    {
+        Integer parsedInt = parseInt(intString);
+        if (parsedInt == null)
+            Main.quitWithMessage(quitMessage);
+        else
+            return parsedInt;
+        
+        // NOT REACHED
+        return 0;
     }
     
     /**
@@ -193,7 +215,8 @@ public abstract class Prompt
                 case "no": case "n":
                     return false;
                 default:
-                    Display.print(2, "Invalid choice. Enter Y or N.");
+                    Display.println(Main.INDENT_ERROR,
+                            "Invalid choice. Enter Y or N.");
                     break;
             }
         }
@@ -215,9 +238,52 @@ public abstract class Prompt
             case "no": case "n":
                 return false;
             default:
-                Display.println(2, "Invalid choice. Enter Y or N.");
+                Display.println(Main.INDENT_ERROR,
+                        "Invalid choice. Enter Y or N.");
                 return getYNInput(prompt);
         }
+    }
+    
+    /**
+     * Prompts the player for two integers for use as coordinates and returns
+     * the resulting point.
+     * @return a point with an x and y coordinate specified by the player
+     */
+    public static map.Point getPointInput()
+    {
+        Integer x = getIntInput("X Coordinate");
+        if (x == null)
+            return null;
+        
+        Integer y = getIntInput("Y Coordinate");
+        if (y == null)
+            return null;
+        
+        return new map.Point(x, y);
+    }
+    
+    /**
+     * Prints a notification to be displayed after an action, followed by a
+     * continue prompt.
+     * @param message the message to display in the notification
+     */
+    public static void printNotification(String message)
+    {
+        Display.println(Main.INDENT_NOTIFICATION, message);
+        Prompt.enterTo(Main.INDENT_NOTIFICATION, "continue");
+    }
+    
+    /**
+     * Prints a notification to be displayed after an action, followed by a
+     * yes/no query.
+     * @param message the message to display in the notification
+     * @param prompt the prompt to present the player with
+     * @return true if the player answers yes to the prompt
+     */
+    public static boolean printNotificationQuery(String message, String prompt)
+    {
+        Display.println(Main.INDENT_PROMPT, message);
+        return Prompt.getYNInput(Main.INDENT_PROMPT, prompt);
     }
     
     public static String getInitialInput(String prompt, String[] command,
@@ -232,7 +298,7 @@ public abstract class Prompt
     public static Integer getInitialIntInput(String prompt, String[] command,
             int index)
     {
-        if (command != null && command.length > index)
+        if (command != null && command.length > index && command[index] != null)
         {
             Integer initialInt = parseInt(command[index]);
             if (initialInt != null)
@@ -240,5 +306,14 @@ public abstract class Prompt
         }
         
         return getIntInput(1, prompt);
+    }
+    
+    public static boolean getInitialYNInput(String prompt, String[] command,
+            int index)
+    {
+        if (command != null && command.length > index && command[index] != null)
+            return getYNValue(command[index], prompt);
+        
+        return Prompt.getYNInput(prompt);
     }
 }

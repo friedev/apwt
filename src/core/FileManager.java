@@ -41,7 +41,7 @@ public abstract class FileManager
         
         // This last step replaces the NetBeans IDE path with a path to a valid
         // data directory
-        return jarPath.replaceFirst("build/classes", "data");
+        return jarPath.replaceFirst("build/classes", "bundle/data");
     }
     
     /**
