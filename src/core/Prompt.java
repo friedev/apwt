@@ -81,13 +81,16 @@ public abstract class Prompt
     public static String getRawInput() {return in.nextLine();}
     
     /**
-     * Prints a prompt before calling getRawInput();
+     * Prints a prompt before calling getRawInput().
      * @param prompt the prompt to print
      * @return the line of input, unmodified
      */
     public static String getRawInput(String prompt)
+        {return getRawInput(0, prompt);}
+    
+    public static String getRawInput(int indents, String prompt)
     {
-        Display.print(prompt + ": ");
+        Display.print(indents, prompt + ": ");
         return getRawInput();
     }
     

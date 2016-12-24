@@ -57,10 +57,11 @@ public abstract class FileManager
             if (!file.exists())
             {
                 // The act of creating this file may be deprecated in the future
+                createContainingFolders(target);
                 file.createNewFile();
                 return new Properties();
             }
-
+            
             FileInputStream fis = new FileInputStream(file);
             Properties properties = new Properties();
             properties.load(fis);
@@ -90,10 +91,20 @@ public abstract class FileManager
     {
         try
         {
+            if (target == null)
+            {
+                Main.quitWithMessage("No file name was supplied as saving "
+                        + "destination.");
+                return; // Not reached, prevents null pointer warnings
+            }
+            
             File file = new File(path + target);
             if (!file.exists())
+            {
+                createContainingFolders(target);
                 file.createNewFile();
-
+            }
+            
             FileOutputStream fos = new FileOutputStream(file);
             properties.store(fos, "Saved game properties.");
             fos.close();
@@ -272,7 +283,10 @@ public abstract class FileManager
         {
             File file = new File(path + target);
             if (!file.exists())
+            {
+                createContainingFolders(target);
                 file.createNewFile();
+            }
             
             String[] lines = toLineArray(target);
             
@@ -291,6 +305,29 @@ public abstract class FileManager
         catch (IOException io)
         {
             return;
+        }
+    }
+    
+    /**
+     * Creates all folders containing the target file or folder, using
+     * recursion up to the base directory specified by the path field.
+     * @param target the path to the file or folder to create containing folders
+     * for
+     */
+    public static void createContainingFolders(String target)
+    {
+        if (target == null)
+            return;
+        
+        if (target.contains("/"))
+        {
+            String folder = target.substring(0, target.lastIndexOf("/"));
+            createContainingFolders(folder);
+            new File(path + folder).mkdir();
+        }
+        else if (!target.contains("."))
+        {
+            new File(path + target).mkdir();
         }
     }
 }
