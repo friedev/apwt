@@ -1,1 +1,0 @@
-java -jar %USERPROFILE%\Documents\Game\data\Game.jar

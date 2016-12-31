@@ -1,0 +1,1 @@
+java -jar %cd%\data\EverSector.jar
