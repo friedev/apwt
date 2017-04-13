@@ -15,6 +15,8 @@ import java.util.Scanner;
  */
 public abstract class FileManager
 {
+    // PATH
+    
     /** The path to the data folder. */
     private static String path = findPath();
     
@@ -44,6 +46,8 @@ public abstract class FileManager
         // data directory
         return jarPath.replaceFirst("build/classes", "bundle/data");
     }
+    
+    // FILE MANIPULATION
     
     /**
      * Loads a Properties object from a file, if it exists.

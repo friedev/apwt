@@ -8,12 +8,26 @@ import java.util.Random;
  */
 public class NameGenerator
 {
-    public static final String PREFIX_FILE  = "prefix.txt";
-    public static final String SUFFIX_FILE  = "suffix.txt";
+    // CONSTANTS
     
+    /** The default address for the file containing prefixes. */
+    public static final String PREFIX_FILE = "prefix.txt";
+    
+    /** The default address for the file containing suffixes. */
+    public static final String SUFFIX_FILE = "suffix.txt";
+    
+    // FIELDS
+    
+    /** The array of prefixes to choose from. */
     private String[] prefixes;
+    
+    /** The array of suffixes to choose from. */
     private String[] suffixes;
-    private Random   random;
+    
+    /** The random number generator used to select prefixes and suffixes. */
+    private Random random;
+    
+    // CONSTRUCTORS
     
     /**
      * Invokes the NameGenerator(String, String, Random) constructor with the
@@ -84,11 +98,23 @@ public class NameGenerator
         random   = rand;
     }
     
+    // GETTERS
+    
+    /**
+     * Retrieves a random prefix from the prefixes array.
+     * @return a randomly-selected String from the prefixes array
+     */
     public String getPrefix()
         {return prefixes[random.nextInt(prefixes.length)];}
     
+    /**
+     * Retrieves a random suffix from the suffixes array.
+     * @return a randomly-selected String from the suffixes array
+     */
     public String getSuffix()
         {return suffixes[random.nextInt(suffixes.length)];}
+    
+    // GENERATION
     
     /**
      * Generates a random name by combining a prefix and suffix.
@@ -98,9 +124,23 @@ public class NameGenerator
     public String generateName()
         {return getPrefix() + getSuffix();}
     
+    /**
+     * Combines the provided suffix with a random prefix from the prefixes
+     * array.
+     * @param suffix the suffix to combine with a random prefix
+     * @return a single String consisting of a random prefix and the chosen
+     * suffix, concatenated
+     */
     public String combineWithPrefix(String suffix)
         {return getPrefix() + suffix;}
     
+    /**
+     * Combines the provided prefix with a random suffix from the suffixes
+     * array.
+     * @param prefix the prefix to combine with a random suffix
+     * @return a single String consisting of a random suffix and the chosen
+     * prefix, concatented
+     */
     public String combineWithSuffix(String prefix)
         {return prefix + getSuffix();}
 }

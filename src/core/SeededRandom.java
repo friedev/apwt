@@ -5,8 +5,15 @@ import java.util.Random;
 /** A container for a random generator and its seed, used to manage both. */
 public class SeededRandom
 {
+    // FIELDS
+    
+    /** The random number generator. */
     private Random random;
-    private long   seed;
+    
+    /** The stored seed of the random number generator. */
+    private long seed;
+    
+    // CONSTRUCTORS
     
     /**
      * Creates a SeededRandom with a random seed, but saves the seed for further
@@ -29,8 +36,21 @@ public class SeededRandom
         random = new Random(seed);
     }
     
-    public Random get()   {return random;}
-    public long getSeed() {return seed;  }
+    // GETTERS
+    
+    /**
+     * Returns the random number generator.
+     * @return the random number generator
+     */
+    public Random get() {return random;}
+    
+    /**
+     * Returns the seed of the random number generator.
+     * @return the seed of the random number generator
+     */
+    public long getSeed() {return seed;}
+    
+    // SETTERS
     
     /**
      * Sets the seed to a given value and recreates the generator.
@@ -41,6 +61,8 @@ public class SeededRandom
         seed = s;
         random = new Random(seed);
     }
+    
+    // GENERATORS
     
     /**
      * Generates a new random seed by creating a long and assigning it to the

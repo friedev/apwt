@@ -6,6 +6,7 @@ import java.util.Scanner;
 /** A prompt that manages input and output. */
 public abstract class Prompt
 {
+    /** The Scanner used to read input. */
     private static Scanner in = new Scanner(System.in);
     
     /**
@@ -89,6 +90,13 @@ public abstract class Prompt
     public static String getRawInput(String prompt)
         {return getRawInput(0, prompt);}
     
+    /**
+     * Prints the specified number of indents and a prompt before calling
+     * getRawInput().
+     * @param indents the number of indents to print before printing the prompt
+     * @param prompt the prompt to print
+     * @return the line of input, unmodified
+     */
     public static String getRawInput(int indents, String prompt)
     {
         Display.print(indents, prompt + ": ");
@@ -160,6 +168,12 @@ public abstract class Prompt
         return null;
     }
     
+    /**
+     * A modified version of Integer.parseInt() that will return null instead of
+     * throwing a NumberFormatException.
+     * @param intString the String to parse for integers
+     * @return an Integer read from the given String; null if none were found
+     */
     public static Integer parseInt(String intString)
     {
         try
@@ -172,6 +186,14 @@ public abstract class Prompt
         }
     }
     
+    /**
+     * A modified version of Integer.parseInt() that will return the default
+     * value instead of throwing a NumberFormatException.
+     * @param intString the String to parse for integers
+     * @param defaultValue the value to return if the parsing fails
+     * @return an int read from the given String; the defaultValue if none were
+     * found
+     */
     public static int parseInt(String intString, int defaultValue)
     {
         Integer parsedInt = parseInt(intString);
@@ -181,6 +203,15 @@ public abstract class Prompt
             return parsedInt;
     }
     
+    /**
+     * A modified version of Integer.parseInt() that will exit the program
+     * directly with a message instead of throwing a NumberFormatException.
+     * @param intString the String to parse for integers
+     * @param quitMessage the message to print before exiting the program, if
+     * the parsing fails
+     * @return an int read from the given String; will exit the program if none
+     * are found
+     */
     public static int parseInt(String intString, String quitMessage)
     {
         Integer parsedInt = parseInt(intString);
@@ -290,6 +321,15 @@ public abstract class Prompt
         return Prompt.getYNInput(Main.INDENT_PROMPT, prompt);
     }
     
+    /**
+     * Returns the input from the command array if it is valid; otherwise will
+     * prompt the operator for input.
+     * @param prompt the prompt to display if no valid input is found
+     * @param command the array of Strings to get input from
+     * @param index the index in the command array to read input from
+     * @return a String read from the command array, if possible, or new input
+     * from the operator
+     */
     public static String getInitialInput(String prompt, String[] command,
             int index)
     {
@@ -298,7 +338,16 @@ public abstract class Prompt
         
         return getInput(1, prompt);
     }
-        
+    
+    /**
+     * Returns the input from the command array if it is valid; otherwise will
+     * prompt the operator for input.
+     * @param prompt the prompt to display if no valid input is found
+     * @param command the array of Strings to parse input from
+     * @param index the index in the command array to read input from
+     * @return an Integer read from the command array, if possible, or new input
+     * from the operator
+     */
     public static Integer getInitialIntInput(String prompt, String[] command,
             int index)
     {
@@ -312,6 +361,15 @@ public abstract class Prompt
         return getIntInput(1, prompt);
     }
     
+    /**
+     * Returns the input from the command array if it is valid; otherwise will
+     * prompt the operator for input.
+     * @param prompt the prompt to display if no valid input is found
+     * @param command the array of Strings to get input from
+     * @param index the index in the command array to read input from
+     * @return a Y/N value read from the command array, if possible, or new
+     * input from the operator
+     */
     public static boolean getInitialYNInput(String prompt, String[] command,
             int index)
     {

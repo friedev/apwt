@@ -9,14 +9,23 @@ import core.storage.Commands;
  */
 public class Main
 {
-    // TODO add bookmarks
+    // CONSTANTS
     
+    /** The number of spaces used to indent notifications. */
     public static final int INDENT_NOTIFICATION = 2;
-    public static final int INDENT_PROMPT       = 1;
-    public static final int INDENT_ERROR        = 2;
+    
+    /** The number of spaces used to indent prompts. */
+    public static final int INDENT_PROMPT = 1;
+    
+    /** The number of spaces used to indent error messages. */
+    public static final int INDENT_ERROR = 2;
+    
+    // FIELDS
     
     /** The random generator. */
     public static SeededRandom random;
+    
+    // METHODS
     
     /**
      * Initializes the core components and runs the game.
