@@ -1,5 +1,6 @@
 package core;
 
+import core.display.Display;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

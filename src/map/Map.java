@@ -1,6 +1,6 @@
 package map;
 
-import core.Display;
+import core.display.Display;
 
 /** A two-dimensional array of tiles that can be traversed by entities. */
 public class Map

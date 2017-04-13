@@ -1,5 +1,6 @@
 package core;
 
+import core.display.Display;
 import core.storage.Commands;
 
 /**
@@ -25,6 +26,9 @@ public class Main
     {
         random = new SeededRandom();
         
+        Display display = new Display();
+        
+        /*
         // Print a welcome message
         Display.println("Welcome to <game>!");
         Prompt.enterTo("begin");
@@ -35,6 +39,7 @@ public class Main
             // Play the game
             readCommand(Prompt.getInput("Command").split(" "));
         }
+        */
     }
     
     /**

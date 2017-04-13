@@ -1,6 +1,6 @@
 package items;
 
-import core.Display;
+import core.display.Display;
 
 /**
  * A container that also acts as an item - should be used in cases such as

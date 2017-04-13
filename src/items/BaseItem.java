@@ -1,6 +1,6 @@
 package items;
 
-import core.Display;
+import core.display.Display;
 
 /** A simple item with only a name, description, and value. */
 public abstract class BaseItem extends Nameable

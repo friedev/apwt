@@ -1,5 +1,6 @@
 package core;
 
+import core.display.Display;
 import java.util.Scanner;
 
 /** A prompt that manages input and output. */
