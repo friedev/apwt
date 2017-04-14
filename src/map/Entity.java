@@ -1,5 +1,7 @@
 package map;
 
+import core.Point;
+
 /** An entity capable of movement around a map. */
 public class Entity extends items.Nameable
 {

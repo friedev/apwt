@@ -1,31 +1,31 @@
 package core.display.screens;
 
 import java.awt.event.KeyEvent;
-import asciiPanel.AsciiPanel;
+import core.display.Display;
 import core.display.Menu;
 
-public class ExampleScreen implements Screen
+public class ExampleScreen extends Screen
 {
     private int score;
     private Screen subscreen;
     
-    public ExampleScreen()
+    public ExampleScreen(Display d)
     {
-        score = 0;
+        super(d);
+        score     = 0;
         subscreen = null;
     }
     
     @Override
-    public void displayOutput(AsciiPanel terminal)
+    public void displayOutput()
     {
         String[] text = {"Earn points with Enter.",
-            "Press Control+T to toggle the terminal.",
+            "Press Ctrl+T to toggle the terminal.",
             "Press Escape to quit.", "Your Score: " + score};
-        Menu.printCenterBoxed(terminal, text,
-                terminal.getHeightInCharacters() / 2);
+        Menu.printCenterBoxed(display, text, display.getCharHeight() / 2, 2);
         
         if (subscreen != null)
-            subscreen.displayOutput(terminal);
+            subscreen.displayOutput();
     }
 
     @Override
@@ -34,19 +34,30 @@ public class ExampleScreen implements Screen
         switch (key.getKeyCode())
         {
             case KeyEvent.VK_ENTER:
-                score++;
+                if (key.isShiftDown())
+                    score = (int) Math.pow(score, 2);
+                else
+                    score++;
                 break;
             case KeyEvent.VK_ESCAPE:
                 System.exit(0);
             case KeyEvent.VK_T:
                 if (key.isControlDown())
                 {
-                    if (subscreen instanceof TerminalScreen)
+                    if (subscreen instanceof Terminal)
+                    {
                         subscreen = null;
+                    }
                     else
-                        subscreen = new TerminalScreen();
+                    {
+                        subscreen = new Terminal(display, 0,
+                                3 * (display.getCharHeight() / 4),
+                                "Your Input: ", display.getCharWidth(), true,
+                                true);
+                    }
+                    break;
                 }
-                break;
+                // Go to default case if control was not pressed
             default:
                 if (subscreen != null)
                     subscreen.processInput(key);

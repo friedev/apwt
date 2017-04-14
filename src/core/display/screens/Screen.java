@@ -1,10 +1,16 @@
 package core.display.screens;
 
-import java.awt.event.KeyEvent;
-import asciiPanel.AsciiPanel;
+import core.display.Display;
 
-public interface Screen
+public abstract class Screen
 {
-    public void displayOutput(AsciiPanel terminal);    
-    public Screen processInput(KeyEvent key);
+    protected Display display;
+    
+    public Screen(Display d) {display = d;}
+    
+    public Display getDisplay() {return display;}
+    public void setDisplay(Display d) {display = d;}
+    
+    public abstract void displayOutput();    
+    public abstract Screen processInput(java.awt.event.KeyEvent key);
 }

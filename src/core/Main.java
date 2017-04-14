@@ -36,7 +36,7 @@ public class Main
     {
         random = new SeededRandom();
         
-        Display display = new Display();
+        Display display = new Display().init();
         
         /*
         // Print a welcome message

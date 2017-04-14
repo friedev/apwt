@@ -1,5 +1,6 @@
 package map;
 
+import core.Point;
 import items.Container;
 
 /** An expanded entity integrated with the item system. */

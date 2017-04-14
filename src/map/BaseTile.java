@@ -1,5 +1,7 @@
 package map;
 
+import core.Point;
+
 /** A map tile, represented by a symbol at its core. */
 public class BaseTile
 {

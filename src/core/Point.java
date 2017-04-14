@@ -1,13 +1,13 @@
-package map;
+package core;
 
 /** A point on a map, represented with two coordinates: x and y. */
 public class Point
 {
     /** The x coordinate of the point. */
-    int x;
+    public int x;
     
     /** The y coordinate of the point. */
-    int y;
+    public int y;
     
     /** Creates a new point at (0, 0). */
     public Point()
@@ -50,15 +50,6 @@ public class Point
     
     @Override
     public String toString() {return "(" + x + ", " + y + ")";}
-    
-    public int getX() {return x;}
-    public int getY() {return y;}
-    
-    public void setX(int xx) {x = xx;}
-    public void setY(int yy) {y = yy;}
-    
-    public void changeX(int xx) {x += xx;}
-    public void changeY(int yy) {y += yy;}
     
     /**
      * Sets the coordinates to the given ones.

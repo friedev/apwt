@@ -1,5 +1,6 @@
 package map;
 
+import core.Point;
 import core.display.Console;
 
 /** A two-dimensional array of tiles that can be traversed by entities. */

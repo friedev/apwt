@@ -284,7 +284,7 @@ public abstract class Prompt
      * the resulting point.
      * @return a point with an x and y coordinate specified by the player
      */
-    public static map.Point getPointInput()
+    public static core.Point getPointInput()
     {
         Integer x = getIntInput("X Coordinate");
         if (x == null)
@@ -294,7 +294,7 @@ public abstract class Prompt
         if (y == null)
             return null;
         
-        return new map.Point(x, y);
+        return new core.Point(x, y);
     }
     
     /**
