@@ -149,9 +149,30 @@ public class Display extends JFrame implements KeyListener
     public static void write(AsciiPanel panel, char c, Point p)
         {panel.write(c, p.getX(), p.getY());}
     
+    public static boolean contains(AsciiPanel panel, Point p)
+    {
+        return p.getX() >= 0 && p.getX() <= panel.getWidthInCharacters() ||
+               p.getY() >= 0 && p.getY() <= panel.getHeightInCharacters();
+    }
+    
+    public static boolean containsX(AsciiPanel panel, int x)
+        {return x >= 0 && x <= panel.getWidthInCharacters();}
+    
+    public static boolean containsY(AsciiPanel panel, int y)
+        {return y >= 0 && y <= panel.getHeightInCharacters();}
+    
     public void write(String s, Point p)
         {write(terminal, s, p);}
     
     public void write(char c, Point p)
         {write(terminal, c, p);}
+    
+    public boolean contains(Point p)
+        {return contains(terminal, p);}
+    
+    public boolean containsX(int x)
+        {return containsX(terminal, x);}
+    
+    public boolean containsY(int y)
+        {return containsY(terminal, y);}
 }

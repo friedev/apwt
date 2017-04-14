@@ -10,13 +10,13 @@ public abstract class Menu
 {
     public static final int DEFAULT_LINES = 1;
     
-    // TODO add limits so that nothing is drawn outside the panel
-    
     public static boolean draw(AsciiPanel terminal, Point corner1,
             Point corner2, int width)
     {
         if (corner1.equals(corner2) || corner1.getX() == corner2.getX() ||
-                corner1.getY() == corner2.getY())
+                corner1.getY() == corner2.getY() ||
+                !Display.contains(terminal, corner1) ||
+                !Display.contains(terminal, corner2))
             return false;
         
         Point tl, tr, bl, br;
@@ -82,14 +82,21 @@ public abstract class Menu
     public static boolean printBoxed(AsciiPanel terminal, String[] text,
             int topLine, int leftIndent, int width)
     {
+        if (!Display.contains(terminal, new Point(topLine - 1, leftIndent - 1)))
+            return false;
+        
         int maxLength = 0;
+        
+        for (String line: text)
+            if (line.length() > maxLength)
+                maxLength = line.length();
+        
+        if (!Display.contains(terminal, new Point(leftIndent + maxLength,
+                topLine + text.length)))
+            return false;
+        
         for (int i = 0; i < text.length; i++)
-        {
             terminal.write(text[i], leftIndent, topLine + i);
-            
-            if (text[i].length() > maxLength)
-                maxLength = text[i].length();
-        }
         
         return Menu.draw(terminal, new Point(leftIndent - 1, topLine - 1),
                 new Point(leftIndent + maxLength, topLine + text.length), 1);
@@ -102,14 +109,14 @@ public abstract class Menu
     public static boolean printCenterBoxed(AsciiPanel terminal, String[] text,
             int topLine, int width)
     {
+        if (!Display.containsY(terminal, topLine - 1) ||
+                !Display.containsY(terminal, topLine + text.length))
+            return false;
+        
         int maxLength = 0;
-        for (int i = 0; i < text.length; i++)
-        {
-            terminal.writeCenter(text[i], topLine + i);
-            
-            if (text[i].length() > maxLength)
-                maxLength = text[i].length();
-        }
+        for (String line: text)
+            if (line.length() > maxLength)
+                maxLength = line.length();
         
         int center = terminal.getWidthInCharacters() / 2;
         int offsetRight = ((int) maxLength) / 2;
@@ -118,7 +125,17 @@ public abstract class Menu
             offsetLeft = offsetRight + 1;
         else
             offsetLeft = offsetRight;
-        // odd length strings will have even lengths on both sides!
+        
+        // If the terminal width is odd, odd String lengths will have equal
+        // offsets; if the terminal width is even, even String lengths have
+        // equal offsets
+        
+        if (!Display.containsX(terminal, center - offsetLeft - 1) ||
+                !Display.containsX(terminal, center + offsetRight))
+            return false;
+        
+        for (int i = 0; i < text.length; i++)
+            terminal.writeCenter(text[i], topLine + i);
         
         return Menu.draw(terminal, new Point(center - offsetLeft - 1,
                 topLine - 1), new Point(center + offsetRight,
