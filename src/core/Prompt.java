@@ -1,6 +1,6 @@
 package core;
 
-import core.display.Display;
+import core.display.Console;
 import java.util.Scanner;
 
 /** A prompt that manages input and output. */
@@ -25,7 +25,7 @@ public abstract class Prompt
      */
     public static void enterTo(int indents, String prompt)
     {
-        Display.print(indents, "Press enter to " + prompt + ".");
+        Console.print(indents, "Press enter to " + prompt + ".");
         getInput();
     }
     
@@ -52,7 +52,7 @@ public abstract class Prompt
      */
     public static String getInput(int indents, String prompt)
     {
-        Display.print(indents, prompt + ": ");
+        Console.print(indents, prompt + ": ");
         return getInput();
     }
     
@@ -68,7 +68,7 @@ public abstract class Prompt
         
         while ("".equals(input) || null == input)
         {
-            Display.println(Main.INDENT_PROMPT, "Please enter something.");
+            Console.println(Main.INDENT_PROMPT, "Please enter something.");
             input = getInput(prompt);
         }
         
@@ -99,7 +99,7 @@ public abstract class Prompt
      */
     public static String getRawInput(int indents, String prompt)
     {
-        Display.print(indents, prompt + ": ");
+        Console.print(indents, prompt + ": ");
         return getRawInput();
     }
     
@@ -114,7 +114,7 @@ public abstract class Prompt
         
         while ("".equals(input) || null == input)
         {
-            Display.println(Main.INDENT_PROMPT, "Please enter something.");
+            Console.println(Main.INDENT_PROMPT, "Please enter something.");
             input = getRawInput(prompt);
         }
         
@@ -154,7 +154,7 @@ public abstract class Prompt
             Integer parsedInteger = parseInt(intString);
             if (parsedInteger == null)
             {
-                Display.println(Main.INDENT_ERROR,
+                Console.println(Main.INDENT_ERROR,
                         "Invalid numerical format. Enter an integer.");
                 completed = false;
             }
@@ -242,7 +242,7 @@ public abstract class Prompt
     {
         while (true)
         {
-            Display.print(indents, prompt + " (Y/N): ");
+            Console.print(indents, prompt + " (Y/N): ");
             switch (getInput())
             {
                 case "yes": case "y":
@@ -250,7 +250,7 @@ public abstract class Prompt
                 case "no": case "n":
                     return false;
                 default:
-                    Display.println(Main.INDENT_ERROR,
+                    Console.println(Main.INDENT_ERROR,
                             "Invalid choice. Enter Y or N.");
                     break;
             }
@@ -273,7 +273,7 @@ public abstract class Prompt
             case "no": case "n":
                 return false;
             default:
-                Display.println(Main.INDENT_ERROR,
+                Console.println(Main.INDENT_ERROR,
                         "Invalid choice. Enter Y or N.");
                 return getYNInput(prompt);
         }
@@ -304,7 +304,7 @@ public abstract class Prompt
      */
     public static void printNotification(String message)
     {
-        Display.println(Main.INDENT_NOTIFICATION, message);
+        Console.println(Main.INDENT_NOTIFICATION, message);
         Prompt.enterTo(Main.INDENT_NOTIFICATION, "continue");
     }
     
@@ -317,7 +317,7 @@ public abstract class Prompt
      */
     public static boolean printNotificationQuery(String message, String prompt)
     {
-        Display.println(Main.INDENT_PROMPT, message);
+        Console.println(Main.INDENT_PROMPT, message);
         return Prompt.getYNInput(Main.INDENT_PROMPT, prompt);
     }
     

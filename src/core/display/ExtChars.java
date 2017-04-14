@@ -6,48 +6,56 @@ package core.display;
  */
 public abstract class ExtChars
 {
-    public static final char LINE1_VERTICAL   = (char) 179;
-    public static final char LINE1_HORIZONTAL = (char) 196;
-    public static final char LINE1_TL         = (char) 218;
-    public static final char LINE1_TR         = (char) 191;
-    public static final char LINE1_BL         = (char) 192;
-    public static final char LINE1_BR         = (char) 217;
-    public static final char LINE1_SPLIT_U    = (char) 193;
-    public static final char LINE1_SPLIT_D    = (char) 194;
-    public static final char LINE1_SPLIT_L    = (char) 180;
-    public static final char LINE1_SPLIT_R    = (char) 195;
-    public static final char LINE1_SWITCH_U   = (char) 208;
-    public static final char LINE1_SWITCH_D   = (char) 210;
-    public static final char LINE1_SWITCH_L   = (char) 181;
-    public static final char LINE1_SWITCH_R   = (char) 198;
-    public static final char LINE1_CENTER     = (char) 197;
-
-    public static final char LINE2_VERTICAL   = (char) 186;
-    public static final char LINE2_HORIZONTAL = (char) 205;
-    public static final char LINE2_TL         = (char) 201;
-    public static final char LINE2_TR         = (char) 187;
-    public static final char LINE2_BL         = (char) 188;
-    public static final char LINE2_BR         = (char) 200;
-    public static final char LINE2_SPLIT_U    = (char) 202;
-    public static final char LINE2_SPLIT_D    = (char) 203;
-    public static final char LINE2_SPLIT_L    = (char) 185;
-    public static final char LINE2_SPLIT_R    = (char) 204;
-    public static final char LINE2_SWITCH_U   = (char) 207;
-    public static final char LINE2_SWITCH_D   = (char) 209;
-    public static final char LINE2_SWITCH_L   = (char) 182;
-    public static final char LINE2_SWITCH_R   = (char) 199;
-    public static final char LINE2_CENTER     = (char) 206;
-
     public static final char BLOCK         = (char) 219;
     public static final char BLOCK_SHADE_1 = (char) 176;
     public static final char BLOCK_SHADE_2 = (char) 177;
     public static final char BLOCK_SHADE_3 = (char) 178;
 
-    public static final char ARROW_U = (char) 24;
-    public static final char ARROW_D = (char) 25;
-    public static final char ARROW_L = (char) 27;
-    public static final char ARROW_R = (char) 26;
+    public static final char ARROW1_U  = (char) 24;
+    public static final char ARROW1_D  = (char) 25;
+    public static final char ARROW1_L  = (char) 27;
+    public static final char ARROW1_R  = (char) 26;
+    public static final char ARROW1_UD = (char) 18;
+    public static final char ARROW1_LR = (char) 29;
 
-    public static final char DOT    = (char) 7;
-    public static final char CIRCLE = (char) 9;
+    public static final char ARROW2_L = (char) 174;
+    public static final char ARROW2_R = (char) 175;
+
+    public static final char TRIANGLE_U = (char) 30;
+    public static final char TRIANGLE_D = (char) 31;
+    public static final char TRIANGLE_L = (char) 17;
+    public static final char TRIANGLE_R = (char) 16;
+
+    public static final char DOT1      = (char) 7;
+    public static final char DOT2      = (char) 249;
+    public static final char DOT_EMPTY = (char) 248;
+    public static final char DOT_SMALL = (char) 250;
+    public static final char CIRCLE    = (char) 9;
+    public static final char SQUARE    = (char) 254;
+
+    public static final char PI        = (char) 227;
+    public static final char SIGMA     = (char) 228;
+    public static final char PHI_UPPER = (char) 232;
+    public static final char PHI_LOWER = (char) 237;
+    public static final char THETA     = (char) 233;
+    public static final char OMEGA     = (char) 234;
+
+    public static final char PLUS_MINUS   = (char) 241;
+    public static final char SQUARE_ROOT  = (char) 251;
+    public static final char APPROX_EQUAL = (char) 247;
+    public static final char DIVIDE       = (char) 246;
+
+    public static final char HEART   = (char) 3;
+    public static final char DIAMOND = (char) 4;
+    public static final char CLUB    = (char) 5;
+    public static final char SPADE   = (char) 6;
+
+    public static final char BARS     = (char) 240;
+    public static final char HOUSE    = (char) 127;
+    public static final char INFINITY = (char) 236;
+    public static final char AE       = (char) 146;
+    public static final char BUMP     = (char) 239;
+    public static final char FACE     = (char) 1;
+    public static final char STAR     = (char) 15;
+    public static final char SPIRAL   = (char) 21;
 }

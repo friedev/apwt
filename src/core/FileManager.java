@@ -1,6 +1,6 @@
 package core;
 
-import core.display.Display;
+import core.display.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -135,12 +135,12 @@ public abstract class FileManager
         {
             Scanner reader = new Scanner(new File(path + target));
             while (reader.hasNextLine())
-                Display.println(reader.nextLine());
+                Console.println(reader.nextLine());
             reader.close();
         }
         catch (FileNotFoundException fnf)
         {
-            Display.println("File not found at " + path + target);
+            Console.println("File not found at " + path + target);
         }
     }
     

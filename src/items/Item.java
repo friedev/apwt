@@ -1,6 +1,6 @@
 package items;
 
-import core.display.Display;
+import core.display.Console;
 
 /**
  * A more fleshed-out item that takes up space and can be stored in a container.
@@ -27,11 +27,11 @@ public class Item extends BaseItem
     @Override
     public void define()
     {
-        Display.println(getName().toUpperCase() + ":");
-        Display.printListItem("Value", getValue());
-        Display.printListItem("Volume", volume);
+        Console.println(getName().toUpperCase() + ":");
+        Console.printListItem("Value", getValue());
+        Console.printListItem("Volume", volume);
         if (container != null)
-            Display.printListItem("Container", container.toString());
-        Display.printListItem("Description", getDescription());
+            Console.printListItem("Container", container.toString());
+        Console.printListItem("Description", getDescription());
     }
 }

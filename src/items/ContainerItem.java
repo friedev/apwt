@@ -1,6 +1,6 @@
 package items;
 
-import core.display.Display;
+import core.display.Console;
 
 /**
  * A container that also acts as an item - should be used in cases such as
@@ -25,12 +25,12 @@ public class ContainerItem extends Item
     @Override
     public void define()
     {
-        Display.println(getName().toUpperCase() + ":");
-        Display.printListItem("Value", getValue());
-        Display.printListItem("Volume", getVolume());
-        Display.printListItem("Capacity", container.getCapacityAsFraction());
+        Console.println(getName().toUpperCase() + ":");
+        Console.printListItem("Value", getValue());
+        Console.printListItem("Volume", getVolume());
+        Console.printListItem("Capacity", container.getCapacityAsFraction());
         if (isContained())
-            Display.printListItem("Container", getContainer().toString());
-        Display.printListItem("Description", getDescription());
+            Console.printListItem("Container", getContainer().toString());
+        Console.printListItem("Description", getDescription());
     }
 }

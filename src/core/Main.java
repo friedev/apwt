@@ -1,5 +1,6 @@
 package core;
 
+import core.display.Console;
 import core.display.Display;
 import core.storage.Commands;
 
@@ -39,9 +40,9 @@ public class Main
         
         /*
         // Print a welcome message
-        Display.println("Welcome to <game>!");
+        Console.println("Welcome to <game>!");
         Prompt.enterTo("begin");
-        Display.println();
+        Console.println();
         
         while (true)
         {
@@ -75,8 +76,8 @@ public class Main
             case Commands.QUIT:
                 quit();
             default:
-                Display.println(INDENT_ERROR, "Command not found.");
-                Display.println();
+                Console.println(INDENT_ERROR, "Command not found.");
+                Console.println();
                 return false;
         }
     }
@@ -150,12 +151,12 @@ public class Main
     public static boolean help()
     {
         // TODO borrow the spacing format String from EverSector
-        Display.println(1, "action1: does something");
-        Display.println(1, "action2: does something");
-        Display.println(1, "action3: does something");
-        Display.println(1, "cancel: cancel the current action");
-        Display.println(1, "quit: exit the program");
-        Display.println();
+        Console.println(1, "action1: does something");
+        Console.println(1, "action2: does something");
+        Console.println(1, "action3: does something");
+        Console.println(1, "cancel: cancel the current action");
+        Console.println(1, "quit: exit the program");
+        Console.println();
         return true;
     }
     
@@ -171,7 +172,7 @@ public class Main
      */
     public static void quitWithMessage(String message)
     {
-        Display.println(message);
+        Console.println(message);
         Prompt.enterTo("close");
         System.exit(1);
     }

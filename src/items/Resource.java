@@ -1,6 +1,6 @@
 package items;
 
-import core.display.Display;
+import core.display.Console;
 
 /** A simple resource that is a BasicItem with an amount field. */
 public class Resource extends BaseItem
@@ -22,9 +22,9 @@ public class Resource extends BaseItem
     @Override
     public void define()
     {
-        Display.println(getName().toUpperCase() + ":");
-        Display.printListItem("Value", getValue());
-        Display.printListItem("Amount", amount);
-        Display.printListItem("Description", getDescription());
+        Console.println(getName().toUpperCase() + ":");
+        Console.printListItem("Value", getValue());
+        Console.printListItem("Amount", amount);
+        Console.printListItem("Description", getDescription());
     }
 }

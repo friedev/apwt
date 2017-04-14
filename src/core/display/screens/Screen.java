@@ -1,4 +1,4 @@
-package core.display;
+package core.display.screens;
 
 import java.awt.event.KeyEvent;
 import asciiPanel.AsciiPanel;
