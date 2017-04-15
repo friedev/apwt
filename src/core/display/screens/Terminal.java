@@ -1,27 +1,22 @@
 package core.display.screens;
 
 import core.display.Display;
-import core.display.Menu;
 import java.awt.event.KeyEvent;
 
 /**
- * A basic input screen where the operator can type characters and delete them
- * with backspace.
+ * A basic window where the operator can type characters and delete them with
+ * backspace.
  */
-public class Terminal extends Screen
+public class Terminal extends Window
 {
     private StringBuilder input;
-    private int           x;
-    private int           y;
-    private String        prompt;
-    private int           maxInputLength;
-    private boolean       centered;
-    private boolean       bordered;
+    private String prompt;
+    private int maxInputLength;
     
-    public Terminal(Display d, int xx, int yy, String p, int l, boolean c,
-            boolean b)
+    public Terminal(Display d, int xx, int yy, boolean c, boolean b, String p,
+            int l)
     {
-        super(d);
+        super(d, xx, yy, c, b);
         input          = new StringBuilder();
         x              = xx;
         y              = yy;
@@ -35,36 +30,14 @@ public class Terminal extends Screen
         
         if (bordered)
             maxInputLength -= 2;
+        
+        getContents().add(prompt);
     }
     
     // TODO add more intermediate TerminalScreen constructors
     
     public Terminal(Display d, int xx, int yy)
-        {this(d, xx, yy, "", d.getCharWidth(), false, false);}
-    
-    @Override
-    public void displayOutput()
-    {
-        if (input.length() >= maxInputLength)
-            input.delete(maxInputLength, input.length());
-
-        String output = prompt + input.toString();
-        
-        if (bordered)
-        {
-            if (centered)
-                Menu.printCenterBoxed(display, new String[] {output}, y);
-            else
-                Menu.printBoxed(display, new String[] {output}, x, y);
-        }
-        else
-        {
-            if (centered)
-                display.get().writeCenter(output, y);
-            else
-                display.get().write(output, x, y);
-        }
-    }
+        {this(d, xx, yy, false, false, "", d.getCharWidth());}
     
     @Override
     public Screen processInput(KeyEvent key)
@@ -88,6 +61,10 @@ public class Terminal extends Screen
                 break;
         }
         
+        if (input.length() >= maxInputLength)
+            input.delete(maxInputLength, input.length());
+        
+        getContents().set(0, prompt + input.toString());
         return this;
     }
 }

@@ -1,13 +1,14 @@
 package core.display;
 
 import core.display.screens.Screen;
-import core.display.screens.ExampleScreen;
+import core.display.screens.MasterScreen;
 import asciiPanel.AsciiFont;
 import javax.swing.JFrame;
 import asciiPanel.AsciiPanel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import core.Point;
+import core.display.screens.Window;
 
 /** A class used to print output rather than doing so directly. */
 public class Display extends JFrame implements KeyListener
@@ -22,7 +23,7 @@ public class Display extends JFrame implements KeyListener
     /**
      * The height that will be used by default if not supplied in a constructor.
      */
-    public static final int DEFAULT_HEIGHT = 40;
+    public static final int DEFAULT_HEIGHT = 48;
     
     /**
      * The font that will be used by default if not supplied in a constructor.
@@ -43,8 +44,7 @@ public class Display extends JFrame implements KeyListener
     // CONSTRUCTORS
     
     /**
-     * The main Display constructor, accepting a constructed AsciiPanel and
-     * start screen.
+     * The main Display constructor, accepting a constructed AsciiPanel.
      * @param p the panel to be used as the Display's terminal
      */
     public Display(AsciiPanel p)
@@ -76,7 +76,7 @@ public class Display extends JFrame implements KeyListener
     
     public Display init()
     {
-        screen = new ExampleScreen(this);
+        screen = new MasterScreen(this);
         addKeyListener(this);
         repaint();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
