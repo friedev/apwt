@@ -3,14 +3,14 @@ package core.display;
 import core.Point;
 
 /**
- * A menu creator that can create specific menus with different line widths.
+ * A menu creator that can create specific menus with different borders.
  */
 public abstract class Menu
 {
     public static final int DEFAULT_LINES = 1;
     
     public static boolean draw(Display display, Point corner1,
-            Point corner2, int width)
+            Point corner2, Border border)
     {
         if (corner1.equals(corner2) || corner1.x == corner2.x ||
                 corner1.y == corner2.y ||
@@ -54,32 +54,36 @@ public abstract class Menu
             }
         }
         
-        display.write(Line.topLeft(width),     tl);
-        display.write(Line.topRight(width),    tr);
-        display.write(Line.bottomLeft(width),  bl);
-        display.write(Line.bottomRight(width), br);
+        display.write(border.cornerTL, tl);
+        display.write(border.cornerTR, tr);
+        display.write(border.cornerBL, bl);
+        display.write(border.cornerBR, br);
         
         for (int x = tl.x + 1; x < tr.x; x++)
         {
-            display.get().write(Line.horizontal(width), x, tl.y);
-            display.get().write(Line.horizontal(width), x, bl.y);
+            display.get().write(border.edgeT, x, tl.y);
+            display.get().write(border.edgeB, x, bl.y);
         }
         
         for (int y = tl.y + 1; y < bl.y; y++)
         {
-            display.get().write(Line.vertical(width), tl.x, y);
-            display.get().write(Line.vertical(width), tr.x, y);
+            display.get().write(border.edgeL, tl.x, y);
+            display.get().write(border.edgeR, tr.x, y);
         }
         
         return true;
     }
     
     public static boolean draw(Display display, Point corner1,
+            Point corner2, int width)
+        {return draw(display, corner1, corner2, new Border(width));}
+    
+    public static boolean draw(Display display, Point corner1,
             Point corner2)
         {return draw(display, corner1, corner2, DEFAULT_LINES);}
     
     public static boolean printBoxed(Display display, String[] text,
-            int topLine, int leftIndent, int width)
+            int topLine, int leftIndent, Border border)
     {
         if (!display.contains(new Point(topLine - 1, leftIndent - 1)))
             return false;
@@ -98,7 +102,14 @@ public abstract class Menu
         
         return draw(display, new Point(leftIndent - 1, topLine - 1),
                 new Point(leftIndent + maxLength, topLine + text.length),
-                width);
+                border);
+    }
+    
+    public static boolean printBoxed(Display display, String[] text,
+            int topLine, int leftIndent, int width)
+    {
+        return printBoxed(display, text, topLine, leftIndent,
+                new Border(width));
     }
     
     public static boolean printBoxed(Display display, String[] text,
@@ -106,7 +117,7 @@ public abstract class Menu
         {return printBoxed(display, text, topLine, leftIndent, DEFAULT_LINES);}
     
     public static boolean printCenterBoxed(Display display, String[] text,
-            int topLine, int width)
+            int topLine, Border border)
     {
         if (!display.containsY(topLine - 1) ||
                 !display.containsY(topLine + text.length))
@@ -137,8 +148,12 @@ public abstract class Menu
         
         return draw(display, new Point(center - offsetLeft - 1,
                 topLine - 1), new Point(center + offsetRight,
-                        topLine + text.length), width);
+                        topLine + text.length), border);
     }
+    
+    public static boolean printCenterBoxed(Display display, String[] text,
+            int topLine, int width)
+        {return printCenterBoxed(display, text, topLine, new Border(width));}
     
     public static boolean printCenterBoxed(Display display, String[] text,
             int topLine)

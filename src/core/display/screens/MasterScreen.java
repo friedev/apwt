@@ -1,5 +1,7 @@
 package core.display.screens;
 
+import core.display.Border;
+import core.display.Window;
 import java.awt.event.KeyEvent;
 import core.display.Display;
 
@@ -19,7 +21,7 @@ public class MasterScreen extends Screen
         subscreen = null;
         
         output = new Window(display, 0, display.getCharHeight() / 2, true,
-                true);
+                new Border(2));
         output.getContents().addAll(java.util.Arrays.asList(new String[]
            {"Earn points with Enter.", "Press Ctrl+T to toggle the terminal.",
             "Press Escape to quit."}));
@@ -65,8 +67,9 @@ public class MasterScreen extends Screen
                     if (subscreen == null)
                     {
                         subscreen = new Terminal(new Window(display, 0,
-                                3 * (display.getCharHeight() / 4), true, true),
-                                "Your Input: ", display.getCharWidth());
+                                3 * (display.getCharHeight() / 4), true,
+                                new Border(1)), "Your Input: ",
+                                display.getCharWidth());
                     }
                     else
                     {

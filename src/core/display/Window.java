@@ -1,7 +1,5 @@
-package core.display.screens;
+package core.display;
 
-import core.display.Display;
-import core.display.Menu;
 import java.util.List;
 
 /**
@@ -11,30 +9,32 @@ import java.util.List;
 public class Window
 {
     public static final boolean CENTERED = false;
-    public static final boolean BORDERED = true;
     
     protected Display    display;
     private List<String> contents;
     protected int        x;
     protected int        y;
     protected boolean    centered;
-    protected boolean    bordered;
+    protected Border     border;
     
-    public Window(Display d, int xx, int yy, boolean c, boolean b)
+    public Window(Display d, int xx, int yy, boolean c, Border b)
     {
         display  = d;
         x        = xx;
         y        = yy;
         centered = c;
-        bordered = b;
+        border   = b;
         contents = new java.util.ArrayList<>();
     }
     
     public Window(Display d, int xx, int yy, boolean c)
-        {this(d, xx, yy, c, BORDERED);}
+        {this(d, xx, yy, c, new Border(1));}
+    
+    public Window(Display d, int xx, int yy, Border b)
+        {this(d, xx, yy, CENTERED, b);}
     
     public Window(Display d, int xx, int yy)
-        {this(d, xx, yy, CENTERED, BORDERED);}
+        {this(d, xx, yy, CENTERED, new Border(1));}
 
     public void displayOutput()
     {
@@ -43,12 +43,12 @@ public class Window
         
         String[] output = contents.toArray(new String[contents.size()]);
         
-        if (bordered)
+        if (border != null)
         {
             if (centered)
-                Menu.printCenterBoxed(display, output, y);
+                Menu.printCenterBoxed(display, output, y, border);
             else
-                Menu.printBoxed(display, output, x, y);
+                Menu.printBoxed(display, output, x, y, border);
         }
         else
         {
@@ -59,5 +59,11 @@ public class Window
         }
     }
     
-    public List<String> getContents() {return contents;}
+    public List<String> getContents() {return contents;      }
+    public Display      getDisplay()  {return display;       }
+    public int          getX()        {return x;             }
+    public int          getY()        {return y;             }
+    public boolean      isCentered()  {return centered;      }
+    public Border       getBorder()   {return border;        }
+    public boolean      isBordered()  {return border != null;}
 }

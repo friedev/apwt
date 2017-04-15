@@ -8,7 +8,6 @@ import asciiPanel.AsciiPanel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import core.Point;
-import core.display.screens.Window;
 
 /** A class used to print output rather than doing so directly. */
 public class Display extends JFrame implements KeyListener
