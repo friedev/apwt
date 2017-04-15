@@ -30,7 +30,11 @@ public class Terminal extends Screen
         output.getContents().add(prompt);
     }
     
-    // TODO add more intermediate TerminalScreen constructors
+    public Terminal(Window w, int l)
+        {this(w, "", l);}
+    
+    public Terminal(Window w, String p)
+        {this(w, p, w.display.getCharWidth());}
     
     public Terminal(Window w)
         {this(w, "", w.display.getCharWidth());}
