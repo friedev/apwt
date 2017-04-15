@@ -33,9 +33,9 @@ public class Border
     
     public Border(int lineWidth)
     {
-        this(Line.horizontal(lineWidth), Line.horizontal(lineWidth),
-             Line.vertical(lineWidth),   Line.vertical(lineWidth),
-             Line.topLeft(lineWidth),    Line.topRight(lineWidth),
-             Line.bottomLeft(lineWidth), Line.bottomRight(lineWidth));
+        this(LineChars.horizontal(lineWidth), LineChars.horizontal(lineWidth),
+             LineChars.vertical(lineWidth),   LineChars.vertical(lineWidth),
+             LineChars.topLeft(lineWidth),    LineChars.topRight(lineWidth),
+             LineChars.bottomLeft(lineWidth), LineChars.bottomRight(lineWidth));
     }
 }

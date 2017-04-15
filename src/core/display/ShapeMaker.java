@@ -5,7 +5,7 @@ import core.Point;
 /**
  * A menu creator that can create specific menus with different borders.
  */
-public abstract class Menu
+public abstract class ShapeMaker
 {
     public static final int DEFAULT_LINES = 1;
     

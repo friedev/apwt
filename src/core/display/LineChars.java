@@ -4,7 +4,7 @@ package core.display;
  * A collection of methods and constants for easy retrieval of line characters
  * of varying width.
  */
-public abstract class Line
+public abstract class LineChars
 {
     public static final char UNKNOWN = '?';
     

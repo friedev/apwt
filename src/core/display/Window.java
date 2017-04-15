@@ -46,9 +46,9 @@ public class Window
         if (border != null)
         {
             if (centered)
-                Menu.printCenterBoxed(display, output, y, border);
+                ShapeMaker.printCenterBoxed(display, output, y, border);
             else
-                Menu.printBoxed(display, output, x, y, border);
+                ShapeMaker.printBoxed(display, output, x, y, border);
         }
         else
         {
