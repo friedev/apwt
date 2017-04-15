@@ -66,4 +66,7 @@ public class Window
     public boolean      isCentered()  {return centered;      }
     public Border       getBorder()   {return border;        }
     public boolean      isBordered()  {return border != null;}
+    
+    public void setX(int xx) {x = xx;}
+    public void setY(int yy) {y = yy;}
 }

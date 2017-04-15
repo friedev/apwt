@@ -20,7 +20,7 @@ public class MasterScreen extends Screen
         score     = 0;
         subscreen = null;
         
-        output = new Window(display, 0, display.getCharHeight() / 2, true,
+        output = new Window(display, 0, display.getCharHeight() / 4, true,
                 new Border(2));
         output.getContents().addAll(java.util.Arrays.asList(new String[]
            {"Earn points with Enter.", "Press Ctrl+T to toggle the terminal.",
@@ -58,6 +58,18 @@ public class MasterScreen extends Screen
                     output.getContents().set(3, "Your Score: " + score);
                 else
                     output.getContents().add("Your Score: " + score);
+                break;
+            case KeyEvent.VK_UP:
+                output.setY(output.getY() - 1);
+                break;
+            case KeyEvent.VK_DOWN:
+                output.setY(output.getY() + 1);
+                break;
+            case KeyEvent.VK_LEFT:
+                output.setX(output.getX() - 1);
+                break;
+            case KeyEvent.VK_RIGHT:
+                output.setX(output.getX() + 1);
                 break;
             case KeyEvent.VK_ESCAPE:
                 System.exit(0);
