@@ -1,43 +1,43 @@
 package core.display.screens;
 
-import core.display.Display;
 import java.awt.event.KeyEvent;
 
 /**
  * A basic window where the operator can type characters and delete them with
  * backspace.
  */
-public class Terminal extends Window
+public class Terminal extends Screen
 {
     private StringBuilder input;
+    private Window output;
     private String prompt;
-    private int maxInputLength;
+    private int    maxInputLength;
     
-    public Terminal(Display d, int xx, int yy, boolean c, boolean b, String p,
-            int l)
+    public Terminal(Window w, String p, int l)
     {
-        super(d, xx, yy, c, b);
-        input          = new StringBuilder();
-        x              = xx;
-        y              = yy;
-        prompt         = p;
+        super(w.display);
+        input  = new StringBuilder();
+        output = w;
+        prompt = p;
         maxInputLength = l;
-        centered       = c;
-        bordered       = b;
         
         if (prompt != null)
             maxInputLength -= prompt.length();
         
-        if (bordered)
+        if (output.bordered)
             maxInputLength -= 2;
         
-        getContents().add(prompt);
+        output.getContents().add(prompt);
     }
     
     // TODO add more intermediate TerminalScreen constructors
     
-    public Terminal(Display d, int xx, int yy)
-        {this(d, xx, yy, false, false, "", d.getCharWidth());}
+    public Terminal(Window w)
+        {this(w, "", w.display.getCharWidth());}
+    
+    @Override
+    public void displayOutput()
+        {output.displayOutput();}
     
     @Override
     public Screen processInput(KeyEvent key)
@@ -45,7 +45,7 @@ public class Terminal extends Window
         switch (key.getKeyCode())
         {
             case KeyEvent.VK_ESCAPE:
-                System.exit(0);
+                return null;
             case KeyEvent.VK_BACK_SPACE:
                 if (input.length() > 0)
                 {
@@ -55,6 +55,9 @@ public class Terminal extends Window
                         input.deleteCharAt(input.length() - 1);
                 }
                 break;
+            case KeyEvent.VK_T:
+                if (key.isControlDown())
+                    return null;
             default:
                 if (Character.isDefined(key.getKeyChar()))
                     input.append(key.getKeyChar());
@@ -64,7 +67,7 @@ public class Terminal extends Window
         if (input.length() >= maxInputLength)
             input.delete(maxInputLength, input.length());
         
-        getContents().set(0, prompt + input.toString());
+        output.getContents().set(0, prompt + input.toString());
         return this;
     }
 }
