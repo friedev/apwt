@@ -16,16 +16,21 @@ public class Window
     protected int        y;
     protected boolean    centered;
     protected Border     border;
+    protected LineBorder separator;
+    
+    public Window(Display d, int xx, int yy, boolean c, Border b, LineBorder s)
+    {
+        display   = d;
+        x         = xx;
+        y         = yy;
+        centered  = c;
+        border    = b;
+        separator = s;
+        contents  = new java.util.ArrayList<>();
+    }
     
     public Window(Display d, int xx, int yy, boolean c, Border b)
-    {
-        display  = d;
-        x        = xx;
-        y        = yy;
-        centered = c;
-        border   = b;
-        contents = new java.util.ArrayList<>();
-    }
+        {this(d, xx, yy, c, b, null);}
     
     public Window(Display d, int xx, int yy, boolean c)
         {this(d, xx, yy, c, new Border(1));}
@@ -46,9 +51,15 @@ public class Window
         if (border != null)
         {
             if (centered)
-                ShapeMaker.printCenterBoxed(display, output, y, border);
+            {
+                ShapeMaker.printCenterBoxed(display, output, y, border,
+                        separator);
+            }
             else
-                ShapeMaker.printBoxed(display, output, x, y, border);
+            {
+                ShapeMaker.printBoxed(display, output, x, y,
+                        border, separator);
+            }
         }
         else
         {

@@ -22,6 +22,7 @@ public class Border
         edgeB = b;
         edgeL = l;
         edgeR = r;
+        
         cornerTL = tl;
         cornerTR = tr;
         cornerBL = bl;

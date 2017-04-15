@@ -21,7 +21,7 @@ public class MasterScreen extends Screen
         subscreen = null;
         
         output = new Window(display, 0, display.getCharHeight() / 4, true,
-                new Border(2));
+                new Border(2), new core.display.LineBorder(true, 2, 1));
         output.getContents().addAll(java.util.Arrays.asList(new String[]
            {"Earn points with Enter.", "Press Ctrl+T to toggle the terminal.",
             "Press Escape to quit."}));
@@ -54,10 +54,16 @@ public class MasterScreen extends Screen
                 else
                     score++;
                 
+                String scoreString = "Your Score: " + score;
                 if (output.getContents().size() >= 4)
-                    output.getContents().set(3, "Your Score: " + score);
+                {
+                    output.getContents().set(4, scoreString);
+                }
                 else
-                    output.getContents().add("Your Score: " + score);
+                {
+                    output.getContents().add(null);
+                    output.getContents().add(scoreString);
+                }
                 break;
             case KeyEvent.VK_UP:
                 output.setY(output.getY() - 1);

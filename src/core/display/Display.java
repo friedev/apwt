@@ -120,7 +120,7 @@ public class Display extends JFrame implements KeyListener
             return;
         
         for (int line = 0; line < s.length; line++)
-            if (contains(panel, new Point(p.x, p.y + line)))
+            if (s[line] != null && contains(panel, new Point(p.x, p.y + line)))
                 write(panel, s[line], new Point(p.x, p.y + line));
     }
     
@@ -130,7 +130,8 @@ public class Display extends JFrame implements KeyListener
             return;
         
         for (int line = 0; line < s.length; line++)
-            panel.writeCenter(s[line], y + line);
+            if (s[line] != null)
+                panel.writeCenter(s[line], y + line);
     }
     
     public static boolean contains(AsciiPanel panel, Point p)
