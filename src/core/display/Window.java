@@ -1,5 +1,6 @@
 package core.display;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,73 +12,68 @@ public class Window
     public static final boolean CENTERED = false;
     
     protected Display    display;
-    private List<String> contents;
+    private List<ColorSet> contents;
     protected int        x;
     protected int        y;
-    protected boolean    centered;
     protected Border     border;
     protected LineBorder separator;
     
-    public Window(Display d, int xx, int yy, boolean c, Border b, LineBorder s)
+    public Window(Display d, int xx, int yy, Border b, LineBorder s)
     {
         display   = d;
         x         = xx;
         y         = yy;
-        centered  = c;
         border    = b;
         separator = s;
-        contents  = new java.util.ArrayList<>();
+        contents  = new ArrayList<>();
     }
     
-    public Window(Display d, int xx, int yy, boolean c, Border b)
-        {this(d, xx, yy, c, b, null);}
-    
-    public Window(Display d, int xx, int yy, boolean c)
-        {this(d, xx, yy, c, new Border(1));}
-    
     public Window(Display d, int xx, int yy, Border b)
-        {this(d, xx, yy, CENTERED, b);}
+        {this(d, xx, yy, b, null);}
     
     public Window(Display d, int xx, int yy)
-        {this(d, xx, yy, CENTERED, new Border(1));}
+        {this(d, xx, yy, new Border(1));}
 
     public void displayOutput()
     {
         if (contents == null || contents.isEmpty())
             return;
         
-        String[] output = contents.toArray(new String[contents.size()]);
+        ColorSet[] output = contents.toArray(new ColorSet[contents.size()]);
         
         if (border != null)
         {
-            if (centered)
-            {
-                ShapeMaker.printCenterBoxed(display, output, y, border,
-                        separator);
-            }
-            else
-            {
-                ShapeMaker.printBoxed(display, output, x, y,
-                        border, separator);
-            }
+            WindowBuilder.printBoxed(display, output, x, y,
+                    border, separator);
+            core.display.Console.println("Yep this happened.");
         }
         else
         {
-            if (centered)
-                display.writeCenter(output, y);
-            else
-                display.write(output, new core.Point(x, y));
+            display.write(output, new core.Point(x, y));
         }
     }
     
-    public List<String> getContents() {return contents;      }
-    public Display      getDisplay()  {return display;       }
-    public int          getX()        {return x;             }
-    public int          getY()        {return y;             }
-    public boolean      isCentered()  {return centered;      }
-    public Border       getBorder()   {return border;        }
-    public boolean      isBordered()  {return border != null;}
+    public List<ColorSet> getContents() {return contents;}
+    public Display getDisplay()  {return display;        }
+    public int     getX()        {return x;              }
+    public int     getY()        {return y;              }
+    public Border  getBorder()   {return border;         }
+    public boolean isBordered()  {return border != null; }
     
     public void setX(int xx) {x = xx;}
     public void setY(int yy) {y = yy;}
+    
+    public void add(String s)        {contents.add(new ColorSet(s));}
+    public void add(ColorString s)   {contents.add(new ColorSet(s));}
+    public void add(ColorChar[] c)   {contents.add(new ColorSet(c));}
+    public void add(ColorString[] s) {contents.add(ColorSet.toColorSet(s));}
+    public void add(ColorSet s)      {contents.add(s);}
+    
+    public void set(int i, String s)        {contents.set(i, new ColorSet(s));}
+    public void set(int i, ColorString s)   {contents.set(i, new ColorSet(s));}
+    public void set(int i, ColorChar[] c)   {contents.set(i, new ColorSet(c));}
+    public void set(int i, ColorString[] s) {contents.set(i, ColorSet.toColorSet(s));}
+    public void set(int i, ColorSet s)      {contents.set(i, s);}
+    
+    public void addSeparator() {contents.add(null);}
 }

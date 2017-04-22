@@ -3,7 +3,7 @@ package core.display;
 import core.Point;
 
 /** * A tool for creating bordered windows and other shapes. */
-public abstract class ShapeMaker
+public abstract class WindowBuilder
 {
     public static final int DEFAULT_LINES = 1;
     
@@ -122,18 +122,13 @@ public abstract class ShapeMaker
     
     public static boolean drawBorder(Display display, Point corner1,
             Point corner2, int width)
-    {
-        return ShapeMaker.drawBorder(display, corner1, corner2,
-                new Border(width));
-    }
+        {return drawBorder(display, corner1, corner2, new Border(width));}
     
     public static boolean drawBorder(Display display, Point corner1,
             Point corner2)
-    {
-        return ShapeMaker.drawBorder(display, corner1, corner2, DEFAULT_LINES);
-    }
+        {return drawBorder(display, corner1, corner2, DEFAULT_LINES);}
     
-    public static boolean printBoxed(Display display, String[] text,
+    public static boolean printBoxed(Display display, ColorSet[] text,
             int topLine, int leftIndent, Border border, LineBorder separator)
     {
         if (!display.contains(new Point(topLine - 1, leftIndent - 1)))
@@ -141,9 +136,9 @@ public abstract class ShapeMaker
         
         int maxLength = 0;
         
-        for (String line: text)
-            if (line != null && line.length() > maxLength)
-                maxLength = line.length();
+        for (ColorSet line: text)
+            if (line != null && line.getSet().size() > maxLength)
+                maxLength = line.getSet().size();
         
         if (!display.contains(new Point(leftIndent + maxLength,
                 topLine + text.length)))
@@ -151,7 +146,7 @@ public abstract class ShapeMaker
         
         display.write(text, new Point(leftIndent, topLine));
         
-        boolean returnValue = ShapeMaker.drawBorder(display,
+        boolean returnValue = WindowBuilder.drawBorder(display,
                 new Point(leftIndent - 1, topLine - 1),
                 new Point(leftIndent + maxLength, topLine + text.length),
                 border);
@@ -166,9 +161,37 @@ public abstract class ShapeMaker
         return returnValue;
     }
     
+    public static boolean printBoxed(Display display, ColorString[] text,
+            int topLine, int leftIndent, Border border, LineBorder separator)
+    {
+        return printBoxed(display, ColorSet.toColorSetArray(text), topLine,
+                leftIndent, border, separator);
+    }
+    
     public static boolean printBoxed(Display display, String[] text,
+            int topLine, int leftIndent, Border border, LineBorder separator)
+    {
+        return printBoxed(display, ColorSet.toColorSetArray(text), topLine,
+                leftIndent, border, separator);
+    }
+    
+    public static boolean printBoxed(Display display, ColorSet[] text,
             int topLine, int leftIndent, Border border)
         {return printBoxed(display, text, topLine, leftIndent, border, null);}
+    
+    public static boolean printBoxed(Display display, ColorString[] text,
+            int topLine, int leftIndent, Border border)
+    {
+        return printBoxed(display, ColorSet.toColorSetArray(text), topLine,
+                leftIndent, border, null);
+    }
+    
+    public static boolean printBoxed(Display display, String[] text,
+            int topLine, int leftIndent, Border border)
+    {
+        return printBoxed(display, ColorSet.toColorSetArray(text), topLine,
+                leftIndent, border, null);
+    }
     
     public static boolean printBoxed(Display display, String[] text,
             int topLine, int leftIndent, int width)
@@ -181,7 +204,7 @@ public abstract class ShapeMaker
             int topLine, int leftIndent)
         {return printBoxed(display, text, topLine, leftIndent, DEFAULT_LINES);}
     
-    public static boolean printCenterBoxed(Display display, String[] text,
+    public static boolean printCenterBoxed(Display display, ColorString[] text,
             int topLine, Border border, LineBorder separator)
     {
         if (!display.containsY(topLine - 1) ||
@@ -189,9 +212,9 @@ public abstract class ShapeMaker
             return false;
         
         int maxLength = 0;
-        for (String line: text)
-            if (line != null && line.length() > maxLength)
-                maxLength = line.length();
+        for (ColorString line: text)
+            if (line != null && line.string.length() > maxLength)
+                maxLength = line.string.length();
         
         int center = display.getCharWidth() / 2;
         int offsetRight = ((int) maxLength) / 2;
@@ -211,7 +234,7 @@ public abstract class ShapeMaker
         
         display.writeCenter(text, topLine);
         
-        boolean returnValue = ShapeMaker.drawBorder(display,
+        boolean returnValue = WindowBuilder.drawBorder(display,
                 new Point(center - offsetLeft - 1, topLine - 1),
                 new Point(center + offsetRight, topLine + text.length), border);
         
@@ -225,6 +248,17 @@ public abstract class ShapeMaker
         
         return returnValue;
     }
+    
+    public static boolean printCenterBoxed(Display display, String[] text,
+            int topLine, Border border, LineBorder separator)
+    {
+        return printCenterBoxed(display, ColorString.toColorStringArray(text),
+                topLine, border, separator);
+    }
+    
+    public static boolean printCenterBoxed(Display display, ColorString[] text,
+            int topLine, Border border)
+        {return printCenterBoxed(display, text, topLine, border, null);}
     
     public static boolean printCenterBoxed(Display display, String[] text,
             int topLine, Border border)

@@ -1,6 +1,7 @@
 package core.display.screens;
 
-import core.display.Window;
+import core.display.ColorString;
+import core.display.PopupWindow;
 import java.awt.event.KeyEvent;
 
 /**
@@ -10,11 +11,11 @@ import java.awt.event.KeyEvent;
 public class Terminal extends Screen
 {
     private StringBuilder input;
-    private Window output;
-    private String prompt;
-    private int    maxInputLength;
+    private PopupWindow   output;
+    private String        prompt;
+    private int           maxInputLength;
     
-    public Terminal(Window w, String p, int l)
+    public Terminal(PopupWindow w, String p, int l)
     {
         super(w.getDisplay());
         input  = new StringBuilder();
@@ -28,16 +29,16 @@ public class Terminal extends Screen
         if (output.isBordered())
             maxInputLength -= 2;
         
-        output.getContents().add(prompt);
+        output.add(new ColorString(prompt, asciiPanel.AsciiPanel.brightRed));
     }
     
-    public Terminal(Window w, int l)
+    public Terminal(PopupWindow w, int l)
         {this(w, "", l);}
     
-    public Terminal(Window w, String p)
+    public Terminal(PopupWindow w, String p)
         {this(w, p, w.getDisplay().getCharWidth());}
     
-    public Terminal(Window w)
+    public Terminal(PopupWindow w)
         {this(w, "", w.getDisplay().getCharWidth());}
     
     @Override
@@ -72,7 +73,7 @@ public class Terminal extends Screen
         if (input.length() >= maxInputLength)
             input.delete(maxInputLength, input.length());
         
-        output.getContents().set(0, prompt + input.toString());
+        output.set(0, new ColorString(prompt + input.toString(), asciiPanel.AsciiPanel.brightRed));
         return this;
     }
 }

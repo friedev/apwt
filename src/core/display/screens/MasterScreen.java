@@ -1,17 +1,18 @@
 package core.display.screens;
 
 import core.display.Border;
-import core.display.Window;
+import core.display.ColorString;
 import java.awt.event.KeyEvent;
 import core.display.Display;
+import core.display.PopupWindow;
 
 /**
  * 
  */
 public class MasterScreen extends Screen
 {
-    private int    score;
-    private Window output;
+    private int score;
+    private PopupWindow output;
     private Screen subscreen;
     
     public MasterScreen(Display d)
@@ -19,12 +20,12 @@ public class MasterScreen extends Screen
         super(d);
         score     = 0;
         subscreen = null;
-        
-        output = new Window(display, 0, display.getCharHeight() / 4, true,
+        output = new PopupWindow(display, display.getCharHeight() / 4,
                 new Border(2), new core.display.LineBorder(true, 2, 1));
-        output.getContents().addAll(java.util.Arrays.asList(new String[]
-           {"Earn points with Enter.", "Press Ctrl+T to toggle the terminal.",
-            "Press Escape to quit."}));
+        
+        output.add("Earn points with Enter.");
+        output.add("Press Ctrl+T to toggle the terminal.");
+        output.add("Press Escape to quit.");
     }
     
     @Override
@@ -54,15 +55,18 @@ public class MasterScreen extends Screen
                 else
                     score++;
                 
-                String scoreString = "Your Score: " + score;
+                ColorString scoreOutput =
+                        new ColorString("Your Score: " + score,
+                                asciiPanel.AsciiPanel.brightYellow);
+                
                 if (output.getContents().size() >= 4)
                 {
-                    output.getContents().set(4, scoreString);
+                    output.set(4, scoreOutput);
                 }
                 else
                 {
-                    output.getContents().add(null);
-                    output.getContents().add(scoreString);
+                    output.addSeparator();
+                    output.add(scoreOutput);
                 }
                 break;
             case KeyEvent.VK_UP:
@@ -71,12 +75,14 @@ public class MasterScreen extends Screen
             case KeyEvent.VK_DOWN:
                 output.setY(output.getY() + 1);
                 break;
+                /*
             case KeyEvent.VK_LEFT:
                 output.setX(output.getX() - 1);
                 break;
             case KeyEvent.VK_RIGHT:
                 output.setX(output.getX() + 1);
                 break;
+                */
             case KeyEvent.VK_ESCAPE:
                 System.exit(0);
             case KeyEvent.VK_T:
@@ -84,8 +90,8 @@ public class MasterScreen extends Screen
                 {
                     if (subscreen == null)
                     {
-                        subscreen = new Terminal(new Window(display, 0,
-                                3 * (display.getCharHeight() / 4), true,
+                        subscreen = new Terminal(new PopupWindow(display,
+                                3 * (display.getCharHeight() / 4),
                                 new Border(1)), "Your Input: ",
                                 display.getCharWidth());
                     }

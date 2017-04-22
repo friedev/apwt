@@ -129,6 +129,54 @@ public class Display extends JFrame implements KeyListener
                         background);
     }
     
+    public static void write(AsciiPanel panel, String s, ColorSet colors,
+            Point p)
+    {
+        if (colors == null)
+            return;
+        
+        for (int i = 0; i < s.length(); i++)
+        {
+            char cur = s.charAt(i);
+            ColorChar curColors = colors.getColorChar(cur);
+            if (curColors == null)
+            {
+                panel.write(cur, p.x + i, p.y);
+            }
+            else
+            {
+                curColors.syncDefaults(panel);
+                panel.write(cur, p.x + i, p.y, curColors.foreground,
+                        curColors.background);
+            }
+        }
+    }
+    
+    public static void write(AsciiPanel panel, ColorSet s, Point p)
+    {
+        if (s == null || s.getSet() == null || s.getSet().isEmpty())
+            return;
+        
+        java.util.List<ColorChar> chars = s.getSet();
+        
+        for (int i = 0; i < chars.size(); i++)
+        {
+            chars.get(i).syncDefaults(panel);
+            panel.write(chars.get(i).character, p.x + i, p.y,
+                    chars.get(i).foreground, chars.get(i).background);
+        }
+    }
+    
+    public static void write(AsciiPanel panel, ColorSet[] s, Point p)
+    {
+        if (s == null || s.length == 0)
+            return;
+        
+        for (int line = 0; line < s.length; line++)
+            if (s[line] != null && contains(panel, new Point(p.x, p.y + line)))
+                write(panel, s[line], new Point(p.x, p.y + line));
+    }
+    
     public static void writeCenter(AsciiPanel panel, String[] s, int y,
             Color foreground, Color background)
     {
@@ -138,6 +186,22 @@ public class Display extends JFrame implements KeyListener
         for (int line = 0; line < s.length; line++)
             if (s[line] != null)
                 panel.writeCenter(s[line], y + line, foreground, background);
+    }
+    
+    public static void writeCenter(AsciiPanel panel, ColorString[] s, int y)
+    {
+        if (s == null || s.length == 0)
+            return;
+        
+        for (int line = 0; line < s.length; line++)
+        {
+            if (s[line] != null)
+            {
+                s[line].syncDefaults(panel);
+                panel.writeCenter(s[line].string, y + line, s[line].foreground,
+                        s[line].background);
+            }
+        }
     }
     
     public static void write(AsciiPanel panel, String s, Point p,
@@ -200,9 +264,21 @@ public class Display extends JFrame implements KeyListener
     public void write(String[] s, Point p, Color foreground, Color background)
         {write(panel, s, p, foreground, background);}
     
+    public void write(String s, ColorSet colors, Point p)
+        {write(panel, s, colors, p);}
+    
+    public void write(ColorSet s, Point p)
+        {write(panel, s, p);}
+    
+    public void write(ColorSet[] s, Point p)
+        {write(panel, s, p);}
+    
     public void writeCenter(String[] s, int y, Color foreground,
             Color background)
         {writeCenter(panel, s, y, foreground, background);}
+    
+    public void writeCenter(ColorString[] s, int y)
+        {writeCenter(panel, s, y);}
     
     public void write(String s, Point p, Color foreground)
         {write(panel, s, p, foreground);}
