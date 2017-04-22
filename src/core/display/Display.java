@@ -8,6 +8,7 @@ import asciiPanel.AsciiPanel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import core.Point;
+import java.awt.Color;
 
 /** A class used to print output rather than doing so directly. */
 public class Display extends JFrame implements KeyListener
@@ -108,30 +109,77 @@ public class Display extends JFrame implements KeyListener
     
     // GRAPHICAL METHODS
     
-    public static void write(AsciiPanel panel, String s, Point p)
-        {panel.write(s, p.x, p.y);}
+    public static void write(AsciiPanel panel, String s, Point p,
+            Color foreground, Color background)
+        {panel.write(s, p.x, p.y, foreground, background);}
     
-    public static void write(AsciiPanel panel, char c, Point p)
-        {panel.write(c, p.x, p.y);}
+    public static void write(AsciiPanel panel, char c, Point p,
+            Color foreground, Color background)
+        {panel.write(c, p.x, p.y, foreground, background);}
     
-    public static void write(AsciiPanel panel, String[] s, Point p)
+    public static void write(AsciiPanel panel, String[] s, Point p,
+            Color foreground, Color background)
     {
         if (s == null || s.length == 0)
             return;
         
         for (int line = 0; line < s.length; line++)
             if (s[line] != null && contains(panel, new Point(p.x, p.y + line)))
-                write(panel, s[line], new Point(p.x, p.y + line));
+                write(panel, s[line], new Point(p.x, p.y + line), foreground,
+                        background);
     }
     
-    public static void writeCenter(AsciiPanel panel, String[] s, int y)
+    public static void writeCenter(AsciiPanel panel, String[] s, int y,
+            Color foreground, Color background)
     {
         if (s == null || s.length == 0)
             return;
         
         for (int line = 0; line < s.length; line++)
             if (s[line] != null)
-                panel.writeCenter(s[line], y + line);
+                panel.writeCenter(s[line], y + line, foreground, background);
+    }
+    
+    public static void write(AsciiPanel panel, String s, Point p,
+            Color foreground)
+        {write(panel, s, p, foreground, panel.getDefaultBackgroundColor());}
+    
+    public static void write(AsciiPanel panel, char c, Point p,
+            Color foreground)
+        {write(panel, c, p, foreground, panel.getDefaultBackgroundColor());}
+    
+    public static void write(AsciiPanel panel, String[] s, Point p,
+            Color foreground)
+        {write(panel, s, p, foreground, panel.getDefaultBackgroundColor());}
+    
+    public static void writeCenter(AsciiPanel panel, String[] s, int y,
+            Color foreground)
+    {
+        writeCenter(panel, s, y, foreground, panel.getDefaultBackgroundColor());
+    }
+    
+    public static void write(AsciiPanel panel, String s, Point p)
+    {
+        write(panel, s, p, panel.getDefaultForegroundColor(),
+                panel.getDefaultBackgroundColor());
+    }
+    
+    public static void write(AsciiPanel panel, char c, Point p)
+    {
+        write(panel, c, p, panel.getDefaultForegroundColor(),
+                panel.getDefaultBackgroundColor());
+    }
+    
+    public static void write(AsciiPanel panel, String[] s, Point p)
+    {
+        write(panel, s, p, panel.getDefaultForegroundColor(),
+                panel.getDefaultBackgroundColor());
+    }
+    
+    public static void writeCenter(AsciiPanel panel, String[] s, int y)
+    {
+        writeCenter(panel, s, y, panel.getDefaultForegroundColor(),
+                panel.getDefaultBackgroundColor());
     }
     
     public static boolean contains(AsciiPanel panel, Point p)
@@ -144,6 +192,31 @@ public class Display extends JFrame implements KeyListener
         {return y >= 0 && y < panel.getHeightInCharacters();}
     
     public AsciiPanel get() {return panel;}
+    
+    public void write(String s, Point p, Color foreground, Color background)
+        {write(panel, s, p, foreground, background);}
+    
+    public void write(char c, Point p, Color foreground, Color background)
+        {write(panel, c, p, foreground, background);}
+    
+    public void write(String[] s, Point p, Color foreground, Color background)
+        {write(panel, s, p, foreground, background);}
+    
+    public void writeCenter(String[] s, int y, Color foreground,
+            Color background)
+        {writeCenter(panel, s, y, foreground, background);}
+    
+    public void write(String s, Point p, Color foreground)
+        {write(panel, s, p, foreground);}
+    
+    public void write(char c, Point p, Color foreground)
+        {write(panel, c, p, foreground);}
+    
+    public void write(String[] s, Point p, Color foreground)
+        {write(panel, s, p, foreground);}
+    
+    public void writeCenter(String[] s, int y, Color foreground)
+        {writeCenter(panel, s, y, foreground);}
     
     public void write(String s, Point p)
         {write(panel, s, p);}
