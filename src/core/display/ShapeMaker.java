@@ -107,14 +107,14 @@ public abstract class ShapeMaker
         
         for (int x = tl.x + 1; x < tr.x; x++)
         {
-            display.get().write(border.edgeT, x, tl.y);
-            display.get().write(border.edgeB, x, bl.y);
+            display.getPanel().write(border.edgeT, x, tl.y);
+            display.getPanel().write(border.edgeB, x, bl.y);
         }
         
         for (int y = tl.y + 1; y < bl.y; y++)
         {
-            display.get().write(border.edgeL, tl.x, y);
-            display.get().write(border.edgeR, tr.x, y);
+            display.getPanel().write(border.edgeL, tl.x, y);
+            display.getPanel().write(border.edgeR, tr.x, y);
         }
         
         return true;

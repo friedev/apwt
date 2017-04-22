@@ -191,8 +191,6 @@ public class Display extends JFrame implements KeyListener
     public static boolean containsY(AsciiPanel panel, int y)
         {return y >= 0 && y < panel.getHeightInCharacters();}
     
-    public AsciiPanel get() {return panel;}
-    
     public void write(String s, Point p, Color foreground, Color background)
         {write(panel, s, p, foreground, background);}
     
@@ -229,6 +227,8 @@ public class Display extends JFrame implements KeyListener
     
     public void writeCenter(String[] s, int y)
         {writeCenter(panel, s, y);}
+    
+    public AsciiPanel getPanel() {return panel;}
     
     public boolean contains(Point p)
         {return contains(panel, p);}
