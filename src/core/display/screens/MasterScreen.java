@@ -1,19 +1,23 @@
 package core.display.screens;
 
 import core.display.Border;
+import core.display.ColorSet;
 import core.display.ColorString;
 import java.awt.event.KeyEvent;
 import core.display.Display;
+import core.display.LineBorder;
 import core.display.PopupWindow;
+import core.display.Window;
 import java.awt.Color;
+import java.util.ArrayList;
 
 /**
  * 
  */
 public class MasterScreen extends Screen
 {
-    private int score;
-    private PopupWindow output;
+    private int    score;
+    private Window output;
     private Screen subscreen;
     
     public MasterScreen(Display d)
@@ -21,8 +25,8 @@ public class MasterScreen extends Screen
         super(d);
         score     = 0;
         subscreen = null;
-        output = new PopupWindow(display, display.getCharHeight() / 4,
-                new Border(2), new core.display.LineBorder(true, 2, 1));
+        output = new core.display.Window(display, 10, display.getCharHeight() / 4,
+                new Border(2), new ArrayList<>());
         
         output.add("Earn points with Enter.");
         output.add("Press Ctrl+T to toggle the terminal.");
@@ -51,13 +55,22 @@ public class MasterScreen extends Screen
         switch (key.getKeyCode())
         {
             case KeyEvent.VK_ENTER:
-                if (key.isShiftDown())
+                if (key.isShiftDown() && score > 0)
+                {
                     score = (int) Math.pow(score, 2);
+                    output.addSeparator(new LineBorder(true, 2, 1));
+                    output.setSeparator(0, new LineBorder(false, 2, 1, 1));
+                    output.add(new ColorString("The score has been hacked!",
+                            Color.RED));
+                }
                 else
+                {
                     score++;
+                }
                 
-                ColorString scoreOutput =
-                        new ColorString("Your Score: " + score, Color.YELLOW);
+                ColorSet scoreOutput = ColorSet.toColorSet(new ColorString[]
+                    {new ColorString("Your Score: "),
+                    new ColorString(Integer.toString(score), Color.YELLOW)});
                 
                 if (output.getContents().size() >= 4)
                 {
@@ -65,7 +78,7 @@ public class MasterScreen extends Screen
                 }
                 else
                 {
-                    output.addSeparator();
+                    output.addSeparator(new LineBorder(false, 2, 1));
                     output.add(scoreOutput);
                 }
                 break;
@@ -75,14 +88,12 @@ public class MasterScreen extends Screen
             case KeyEvent.VK_DOWN:
                 output.setY(output.getY() + 1);
                 break;
-                /*
             case KeyEvent.VK_LEFT:
                 output.setX(output.getX() - 1);
                 break;
             case KeyEvent.VK_RIGHT:
                 output.setX(output.getX() + 1);
                 break;
-                */
             case KeyEvent.VK_ESCAPE:
                 System.exit(0);
             case KeyEvent.VK_T:

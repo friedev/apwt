@@ -1,6 +1,7 @@
 package core.display;
 
 import core.Point;
+import java.util.ArrayList;
 
 /** * A tool for creating bordered windows and other shapes. */
 public abstract class WindowBuilder
@@ -11,7 +12,9 @@ public abstract class WindowBuilder
             LineBorder border)
     {
         if (end1.equals(end2) || (end1.x != end2.x && end1.y != end2.y) ||
-                !display.contains(end1) || !display.contains(end2))
+                !display.contains(end1) || !display.contains(end2) ||
+                (end1.x == end2.x && border.horizontal) ||
+                (end1.y == end2.y && !border.horizontal))
             return false;
         
         border.syncDefaults(display);
@@ -21,7 +24,7 @@ public abstract class WindowBuilder
         
         int start, end;
         
-        if (end1.x == end2.x)
+        if (!border.horizontal)
         {
             if (end1.y < end2.y)
             {
@@ -143,11 +146,12 @@ public abstract class WindowBuilder
         {return drawBorder(display, corner1, corner2, DEFAULT_LINES);}
     
     public static boolean printBoxed(Display display, ColorSet[] text,
-            int topLine, int leftIndent, Border border, LineBorder separator)
+            int topLine, int leftIndent, Border border, LineBorder[] separators)
     {
         if (!display.contains(new Point(topLine - 1, leftIndent - 1)))
             return false;
         
+        /*
         int maxLength = 0;
         
         for (ColorSet line: text)
@@ -157,36 +161,112 @@ public abstract class WindowBuilder
         if (!display.contains(new Point(leftIndent + maxLength,
                 topLine + text.length)))
             return false;
+        */
         
-        display.write(text, new Point(leftIndent, topLine));
+        int nBlocks = 1;
+        
+        for (ColorSet line: text)
+            if (line == null)
+                nBlocks++;
+        
+        ArrayList<ColorSet>[] blocks = new ArrayList[nBlocks]; 
+        
+        int curBlock = 0;
+        blocks[0] = new ArrayList<>();
+        
+        for (ColorSet line: text)
+        {
+            if (line != null)
+            {
+                blocks[curBlock].add(line);
+            }
+            else
+            {
+                curBlock++;
+                blocks[curBlock] = new ArrayList<>();
+            }
+        }
+        
+        int curLine   = topLine;
+        int curIndent = leftIndent;
+        int overallMaxLength = 0;
+        int curMaxLines  = blocks[0].size();
+        int overallLines = blocks[0].size();
+        Point[] endpoints = new Point[separators.length * 2];
+        
+        for (int block = 0; block < blocks.length; block++)
+        {
+            display.write(blocks[block].toArray(
+                    new ColorSet[blocks[block].size()]),
+                    new Point(curIndent, curLine));
+            
+            int curMaxLength = 0;
+            for (ColorSet line: blocks[block])
+                if (line.getSet().size() > curMaxLength)
+                    curMaxLength = line.getSet().size();
+            
+            curMaxLength += curIndent - leftIndent;
+            
+            if (curMaxLength > overallMaxLength)
+                overallMaxLength = curMaxLength;
+            
+            if (blocks[block].size() > curMaxLines)
+                curMaxLines = blocks[block].size();
+            
+            if (block == blocks.length - 1)
+                break;
+            
+            if (separators[block].horizontal)
+            {
+                curIndent = leftIndent;
+                
+                endpoints[block * 2] = new Point(leftIndent - 1,
+                        curLine + curMaxLines);
+                endpoints[block * 2 + 1] =
+                        new Point(curIndent + overallMaxLength,
+                                curLine + curMaxLines);
+                
+                curLine += curMaxLines + 1;
+                curMaxLines = blocks[block + 1].size();
+                overallLines += blocks[block + 1].size() + 1;
+            }
+            else
+            {
+                curIndent += curMaxLength + 1;
+                
+                endpoints[block * 2] = new Point(curIndent - 1, curLine - 1);
+                endpoints[block * 2 + 1] = new Point(curIndent - 1,
+                        curLine + curMaxLines);
+                
+                // line counts stay the same
+            }
+        }
         
         boolean returnValue = WindowBuilder.drawBorder(display,
                 new Point(leftIndent - 1, topLine - 1),
-                new Point(leftIndent + maxLength, topLine + text.length),
-                border);
+                new Point(leftIndent + overallMaxLength,
+                        topLine + overallLines), border);
         
-        if (separator != null)
-            for (int line = 0; line < text.length; line++)
-                if (text[line] == null)
-                    drawLine(display, new Point(leftIndent - 1, topLine + line),
-                            new Point(leftIndent + maxLength, topLine + line),
-                            separator);
+        // Go backwards so first separators are on top
+        for (int separator = separators.length - 1; separator >= 0; separator--)
+            drawLine(display, endpoints[separator * 2],
+                    endpoints[separator * 2 + 1], separators[separator]);
         
         return returnValue;
     }
     
     public static boolean printBoxed(Display display, ColorString[] text,
-            int topLine, int leftIndent, Border border, LineBorder separator)
+            int topLine, int leftIndent, Border border, LineBorder[] separators)
     {
         return printBoxed(display, ColorSet.toColorSetArray(text), topLine,
-                leftIndent, border, separator);
+                leftIndent, border, separators);
     }
     
     public static boolean printBoxed(Display display, String[] text,
-            int topLine, int leftIndent, Border border, LineBorder separator)
+            int topLine, int leftIndent, Border border, LineBorder[] separators)
     {
         return printBoxed(display, ColorSet.toColorSetArray(text), topLine,
-                leftIndent, border, separator);
+                leftIndent, border, separators);
     }
     
     public static boolean printBoxed(Display display, ColorSet[] text,

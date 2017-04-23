@@ -28,7 +28,7 @@ public class PopupWindow
         {this(d, yy, b, null);}
     
     public PopupWindow(Display d, int yy)
-        {this(d, yy, new Border(1));}
+        {this(d, yy, new Border(1), null);}
 
     public void displayOutput()
     {
