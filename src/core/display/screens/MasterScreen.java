@@ -5,6 +5,7 @@ import core.display.ColorString;
 import java.awt.event.KeyEvent;
 import core.display.Display;
 import core.display.PopupWindow;
+import java.awt.Color;
 
 /**
  * 
@@ -56,8 +57,7 @@ public class MasterScreen extends Screen
                     score++;
                 
                 ColorString scoreOutput =
-                        new ColorString("Your Score: " + score,
-                                asciiPanel.AsciiPanel.brightYellow);
+                        new ColorString("Your Score: " + score, Color.YELLOW);
                 
                 if (output.getContents().size() >= 4)
                 {
@@ -92,8 +92,8 @@ public class MasterScreen extends Screen
                     {
                         subscreen = new Terminal(new PopupWindow(display,
                                 3 * (display.getCharHeight() / 4),
-                                new Border(1)), "Your Input: ",
-                                display.getCharWidth());
+                                new Border(1, Color.RED, Color.BLUE)),
+                                "Your Input: ", display.getCharWidth());
                     }
                     else
                     {

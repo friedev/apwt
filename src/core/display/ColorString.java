@@ -5,17 +5,14 @@ import java.awt.Color;
 /**
  * A container class for a character and its foreground and background colors.
  */
-public class ColorString
+public class ColorString extends ColoredObject
 {
     public String string;
-    public Color  foreground;
-    public Color  background;
     
     public ColorString(String s, Color f, Color b)
     {
-        string     = s;
-        foreground = f;
-        background = b;
+        super(f, b);
+        string = s;
     }
     
     public ColorString(String s, Color f)
@@ -23,15 +20,6 @@ public class ColorString
     
     public ColorString(String s)
         {this(s, null, null);}
-   
-    public void syncDefaults(asciiPanel.AsciiPanel panel)
-    {
-        if (foreground == null)
-            foreground = panel.getDefaultForegroundColor();
-        
-        if (background == null)
-            background = panel.getDefaultBackgroundColor();
-    }
     
     public ColorChar[] toCharArray()
     {

@@ -14,8 +14,10 @@ public abstract class WindowBuilder
                 !display.contains(end1) || !display.contains(end2))
             return false;
         
-        display.write(border.end1, end1);
-        display.write(border.end2, end2);
+        border.syncDefaults(display);
+        
+        display.write(border.end1, end1, border.foreground, border.background);
+        display.write(border.end2, end2, border.foreground, border.background);
         
         int start, end;
         
@@ -33,7 +35,8 @@ public abstract class WindowBuilder
             }
             
             for (int i = start + 1; i < end; i++)
-                display.write(border.line, new Point(end1.x, i));
+                display.write(border.line, new Point(end1.x, i),
+                        border.foreground, border.background);
         }
         else
         {
@@ -49,7 +52,8 @@ public abstract class WindowBuilder
             }
             
             for (int i = start + 1; i < end; i++)
-                display.write(border.line, new Point(i, end1.y));
+                display.write(border.line, new Point(i, end1.y),
+                        border.foreground, border.background);
         }
         
         return true;
@@ -100,21 +104,31 @@ public abstract class WindowBuilder
             }
         }
         
-        display.write(border.cornerTL, tl);
-        display.write(border.cornerTR, tr);
-        display.write(border.cornerBL, bl);
-        display.write(border.cornerBR, br);
+        border.syncDefaults(display);
+        
+        display.write(border.cornerTL, tl,
+                border.foreground, border.background);
+        display.write(border.cornerTR, tr,
+                border.foreground, border.background);
+        display.write(border.cornerBL, bl,
+                border.foreground, border.background);
+        display.write(border.cornerBR, br,
+                border.foreground, border.background);
         
         for (int x = tl.x + 1; x < tr.x; x++)
         {
-            display.getPanel().write(border.edgeT, x, tl.y);
-            display.getPanel().write(border.edgeB, x, bl.y);
+            display.getPanel().write(border.edgeT, x, tl.y,
+                    border.foreground, border.background);
+            display.getPanel().write(border.edgeB, x, bl.y,
+                    border.foreground, border.background);
         }
         
         for (int y = tl.y + 1; y < bl.y; y++)
         {
-            display.getPanel().write(border.edgeL, tl.x, y);
-            display.getPanel().write(border.edgeR, tr.x, y);
+            display.getPanel().write(border.edgeL, tl.x, y,
+                    border.foreground, border.background);
+            display.getPanel().write(border.edgeR, tr.x, y,
+                    border.foreground, border.background);
         }
         
         return true;

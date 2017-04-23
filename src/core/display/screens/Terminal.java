@@ -29,7 +29,7 @@ public class Terminal extends Screen
         if (output.isBordered())
             maxInputLength -= 2;
         
-        output.add(new ColorString(prompt, asciiPanel.AsciiPanel.brightRed));
+        output.add(new ColorString(prompt));
     }
     
     public Terminal(PopupWindow w, int l)
@@ -73,7 +73,7 @@ public class Terminal extends Screen
         if (input.length() >= maxInputLength)
             input.delete(maxInputLength, input.length());
         
-        output.set(0, new ColorString(prompt + input.toString(), asciiPanel.AsciiPanel.brightRed));
+        output.set(0, new ColorString(prompt + input.toString()));
         return this;
     }
 }
