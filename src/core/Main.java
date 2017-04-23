@@ -1,6 +1,5 @@
 package core;
 
-import core.display.Console;
 import core.display.Display;
 import core.storage.Commands;
 

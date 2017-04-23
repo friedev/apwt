@@ -1,6 +1,6 @@
 package items;
 
-import core.display.Console;
+import core.Console;
 
 /** A simple resource that is a BasicItem with an amount field. */
 public class Resource extends BaseItem

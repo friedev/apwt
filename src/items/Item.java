@@ -1,6 +1,6 @@
 package items;
 
-import core.display.Console;
+import core.Console;
 
 /**
  * A more fleshed-out item that takes up space and can be stored in a container.

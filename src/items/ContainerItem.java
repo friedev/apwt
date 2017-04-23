@@ -1,6 +1,6 @@
 package items;
 
-import core.display.Console;
+import core.Console;
 
 /**
  * A container that also acts as an item - should be used in cases such as

@@ -1,4 +1,4 @@
-package core.display;
+package core;
 
 /**
  * 
