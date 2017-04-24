@@ -1,7 +1,7 @@
 package core;
 
 /**
- * 
+ * A set of many static methods used to format and print output to the console.
  */
 public class Console
 {

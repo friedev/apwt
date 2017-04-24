@@ -5,25 +5,66 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * A system that uses ColorChars to map characters to foreground and background
- * colors.
+ * A List of ColorChars that can be used as a multicolored String or even as a
+ * mapping system.
  */
 public class ColorSet
 {
+    /** The List of specific ColorChars in the ColorSet. */
     private List<ColorChar> set;
     
+    /**
+     * Creates a ColorSet from an existing List of ColorChars.
+     * @param s the List of ColorChars that will be used in the ColorSet
+     */
     public ColorSet(List<ColorChar> s)
         {set = s;}
     
+    /**
+     * Creates a ColorSet from an array of ColorChars, converting it into a
+     * List.
+     * @param c the array of ColorChars that will be converted in the List used
+     * by the ColorSet
+     */
     public ColorSet(ColorChar[] c)
         {this(new ArrayList<>(java.util.Arrays.asList(c)));}
     
-    public ColorSet(ColorString s) {this(s.toCharArray());   }
-    public ColorSet(String s)      {this(new ColorString(s));}
-    public ColorSet()              {this(new ArrayList<>()); }
+    /**
+     * Creates a ColorSet from a single ColorString, consisting of multiple
+     * characters with the same color.
+     * @param s the ColorString that will be converted into the List used by the
+     * ColorSet
+     */
+    public ColorSet(ColorString s)
+        {this(s.toCharArray());}
     
-    public List getSet() {return set;}
+    /**
+     * Creates a ColorSet from a String, consisting of multiple characters
+     * without a specified color.
+     * @param s the String that will be converted into the List used by the
+     * ColorSet
+     */
+    public ColorSet(String s)
+        {this(new ColorString(s));}
     
+    /** Creates a ColorSet with an empty ArrayList. */
+    public ColorSet()
+        {this(new ArrayList<>());}
+    
+    /**
+     * Returns the List of ColorChars used by the ColorSet.
+     * @return the ColorSet's List of ColorChars
+     */
+    public List getSet()
+        {return set;}
+    
+    /**
+     * Returns the first ColorChar found in the ColorSet with a character that
+     * matches the one provided.
+     * @param character the character to look for in the ColorSet's ColorChars
+     * @return the first ColorChar found in the ColorSet with a character that
+     * matches the one provided, null if none are found
+     */
     public ColorChar getColorChar(char character)
     {
         for (ColorChar cc: set)
@@ -33,10 +74,20 @@ public class ColorSet
         return null;
     }
     
+    /**
+     * Returns the ColorSet's List as an array of ColorChars.
+     * @return the ColorSet's List as an array of ColorChars
+     */
     public ColorChar[] toCharArray()
         {return set.toArray(new ColorChar[set.size()]);}
     
-    
+    /**
+     * Converts the array of Strings provided into a single ColorSet without
+     * specified colors.
+     * @param s the array of Strings to convert into a ColorSet
+     * @return a ColorSet consisting of ColorChars with the characters of the
+     * String
+     */
     public static ColorSet toColorSet(String[] s)
     {
         ArrayList<ColorChar> chars = new ArrayList<>();
@@ -47,6 +98,13 @@ public class ColorSet
         return new ColorSet(chars.toArray(new ColorChar[chars.size()]));
     }
     
+    /**
+     * Converts the array of ColorStrings provided into a single ColorSet with
+     * the colors of each ColorString.
+     * @param s the array of ColorStrings to convert into a ColorSet
+     * @return a ColorSet consisting of ColorChars with the characters of the
+     * ColorStrings and the color of the ColorString from which they originated
+     */
     public static ColorSet toColorSet(ColorString[] s)
     {
         ArrayList<ColorChar> chars = new ArrayList<>();
@@ -56,6 +114,13 @@ public class ColorSet
         return new ColorSet(chars.toArray(new ColorChar[chars.size()]));
     }
     
+    /**
+     * Converts the array of Strings provided into an array of ColorSets, one
+     * for each String.
+     * @param s the array of Strings to convert into an array of ColorSets
+     * @return an array of ColorSets, one for each String, with the characters
+     * of the Strings and no specified colors
+     */
     public static ColorSet[] toColorSetArray(String[] s)
     {
         ColorSet[] lines = new ColorSet[s.length];
@@ -66,6 +131,14 @@ public class ColorSet
         return lines;
     }
     
+    /**
+     * Converts the array of ColorStrings provided into an array of ColorSets,
+     * one for each ColorString.
+     * @param s the array of ColorStrings to convert into an array of ColorSets
+     * @return an array of ColorSets, one for each ColorString, with the
+     * characters of the ColorStrings and the colors of the ColorStrings from
+     * which they originated
+     */
     public static ColorSet[] toColorSetArray(ColorString[] s)
     {
         ColorSet[] lines = new ColorSet[s.length];

@@ -5,21 +5,28 @@ import core.display.ColorSet;
 import core.display.ColorString;
 import java.awt.event.KeyEvent;
 import core.display.Display;
-import core.display.LineBorder;
+import core.display.Line;
 import core.display.PopupWindow;
 import core.display.Window;
 import java.awt.Color;
 import java.util.ArrayList;
 
-/**
- * 
- */
+/** A sample Screen used as the main screen of an application. */
 public class MasterScreen extends Screen
 {
-    private int    score;
+    /** A sample gameplay mechanic. */
+    private int score;
+    /** The Window through which output is displayed. */
     private Window output;
+    /**
+     * A Screen that will be processed and displayed in front of this Screen.
+     */
     private Screen subscreen;
     
+    /**
+     * Creates a MasterScreen on the provided Display.
+     * @param d the Display on which the MasterScreen will be shown
+     */
     public MasterScreen(Display d)
     {
         super(d);
@@ -58,8 +65,8 @@ public class MasterScreen extends Screen
                 if (key.isShiftDown() && score > 0)
                 {
                     score = (int) Math.pow(score, 2);
-                    output.addSeparator(new LineBorder(true, 2, 1));
-                    output.setSeparator(0, new LineBorder(false, 2, 1, 1));
+                    output.addSeparator(new Line(true, 2, 1));
+                    output.setSeparator(0, new Line(false, 2, 1, 1));
                     output.add(new ColorString("The score has been hacked!",
                             Color.RED));
                 }
@@ -78,7 +85,7 @@ public class MasterScreen extends Screen
                 }
                 else
                 {
-                    output.addSeparator(new LineBorder(false, 2, 1));
+                    output.addSeparator(new Line(false, 2, 1));
                     output.add(scoreOutput);
                 }
                 break;

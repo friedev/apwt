@@ -3,13 +3,25 @@ package core.display;
 import core.Point;
 import java.util.ArrayList;
 
-/** * A tool for creating bordered windows and other shapes. */
+/** A tool for creating bordered windows and other shapes. */
 public abstract class WindowBuilder
 {
+    /** The default line width of Borders and Lines. */
     public static final int DEFAULT_LINES = 1;
     
+    /**
+     * Draws a Line between two endpoints to the provided Display.
+     * @param display the Display to draw the line on
+     * @param end1 the first endpoint; must be a different point than the second
+     * endpoint, have one axis value in common, and be on the display
+     * @param end2 the second endpoint; must be a different point than the first
+     * endpoint, have one axis value in common, and be on the display
+     * @param border the characters of the Line; if horizontal, points must
+     * share y values, and the opposite is true with x values
+     * @return true if the Line was successfully drawn
+     */
     public static boolean drawLine(Display display, Point end1, Point end2,
-            LineBorder border)
+            Line border)
     {
         if (end1.equals(end2) || (end1.x != end2.x && end1.y != end2.y) ||
                 !display.contains(end1) || !display.contains(end2) ||
@@ -62,6 +74,16 @@ public abstract class WindowBuilder
         return true;
     }
     
+    /**
+     * Draws a Border between two specified corners to the provided Display.
+     * @param display the Display to draw the Border on
+     * @param corner1 the first corner; must be a different point than the
+     * second corner, share no axis values, and be on the display
+     * @param corner2 the second corner; must be a different point than the
+     * first corner, share no axis values, and be on the display
+     * @param border the characters of the Border
+     * @return true if the Border was successfully drawn
+     */
     public static boolean drawBorder(Display display, Point corner1,
             Point corner2, Border border)
     {
@@ -137,31 +159,52 @@ public abstract class WindowBuilder
         return true;
     }
     
+    /**
+     * Draws a Border of the specified width between two specified corners to
+     * the provided Display.
+     * @param display the Display to draw the Border on
+     * @param corner1 the first corner; must be a different point than the
+     * second corner, share no axis values, and be on the display
+     * @param corner2 the second corner; must be a different point than the
+     * first corner, share no axis values, and be on the display
+     * @param width the width of the Border to draw; must be 1 or 2
+     * @return true if the Border was successfully drawn
+     */
     public static boolean drawBorder(Display display, Point corner1,
             Point corner2, int width)
         {return drawBorder(display, corner1, corner2, new Border(width));}
     
+    /**
+     * Draws a Border of the default width between two specified corners to the
+     * provided Display.
+     * @param display the Display to draw the Border on
+     * @param corner1 the first corner; must be a different point than the
+     * second corner, share no axis values, and be on the display
+     * @param corner2 the second corner; must be a different point than the
+     * first corner, share no axis values, and be on the display
+     * @return true if the Border was successfully drawn
+     */
     public static boolean drawBorder(Display display, Point corner1,
             Point corner2)
         {return drawBorder(display, corner1, corner2, DEFAULT_LINES);}
     
+    /**
+     * Prints the provided text surrounded by the provided Border to the
+     * provided display.
+     * @param display the Display to draw on
+     * @param text the lines of text, as ColorSets, to print
+     * @param topLine the line on which the first ColorSet will be written
+     * @param leftIndent the number of characters from the left the text will be
+     * printed
+     * @param border the Border with which to surround the text
+     * @param separators the Lines with which to separate text
+     * @return true if the operation was successful
+     */
     public static boolean printBoxed(Display display, ColorSet[] text,
-            int topLine, int leftIndent, Border border, LineBorder[] separators)
+            int topLine, int leftIndent, Border border, Line[] separators)
     {
         if (!display.contains(new Point(topLine - 1, leftIndent - 1)))
             return false;
-        
-        /*
-        int maxLength = 0;
-        
-        for (ColorSet line: text)
-            if (line != null && line.getSet().size() > maxLength)
-                maxLength = line.getSet().size();
-        
-        if (!display.contains(new Point(leftIndent + maxLength,
-                topLine + text.length)))
-            return false;
-        */
         
         int nBlocks = 1;
         
@@ -247,6 +290,11 @@ public abstract class WindowBuilder
                 new Point(leftIndent + overallMaxLength,
                         topLine + overallLines), border);
         
+        // TODO print horizontal separators before vertical ones
+        // Horizontal separators only need to overwrite the border, but vertical
+        // ones need to overwrite both the border and horizontal separators
+        // Direction (forward/backward) through the list does not matter
+        
         // Go backwards so first separators are on top
         for (int separator = separators.length - 1; separator >= 0; separator--)
             drawLine(display, endpoints[separator * 2],
@@ -255,24 +303,70 @@ public abstract class WindowBuilder
         return returnValue;
     }
     
+    /**
+     * Prints the provided text surrounded by the provided Border to the
+     * provided display.
+     * @param display the Display to draw on
+     * @param text the lines of text, as ColorStrings, to print
+     * @param topLine the line on which the first ColorString will be written
+     * @param leftIndent the number of characters from the left the text will be
+     * printed
+     * @param border the Border with which to surround the text
+     * @param separators the Lines with which to separate text
+     * @return true if the operation was successful
+     */
     public static boolean printBoxed(Display display, ColorString[] text,
-            int topLine, int leftIndent, Border border, LineBorder[] separators)
+            int topLine, int leftIndent, Border border, Line[] separators)
     {
         return printBoxed(display, ColorSet.toColorSetArray(text), topLine,
                 leftIndent, border, separators);
     }
     
+    /**
+     * Prints the provided text surrounded by the provided Border to the
+     * provided display.
+     * @param display the Display to draw on
+     * @param text the lines of text, as Strings, to print
+     * @param topLine the line on which the first String will be written
+     * @param leftIndent the number of characters from the left the text will be
+     * printed
+     * @param border the Border with which to surround the text
+     * @param separators the Lines with which to separate text
+     * @return true if the operation was successful
+     */
     public static boolean printBoxed(Display display, String[] text,
-            int topLine, int leftIndent, Border border, LineBorder[] separators)
+            int topLine, int leftIndent, Border border, Line[] separators)
     {
         return printBoxed(display, ColorSet.toColorSetArray(text), topLine,
                 leftIndent, border, separators);
     }
     
+    /**
+     * Prints the provided text surrounded by the provided Border to the
+     * provided display; no separators will be used.
+     * @param display the Display to draw on
+     * @param text the lines of text, as ColorSets, to print
+     * @param topLine the line on which the first ColorSet will be written
+     * @param leftIndent the number of characters from the left the text will be
+     * printed
+     * @param border the Border with which to surround the text
+     * @return true if the operation was successful
+     */
     public static boolean printBoxed(Display display, ColorSet[] text,
             int topLine, int leftIndent, Border border)
         {return printBoxed(display, text, topLine, leftIndent, border, null);}
     
+    /**
+     * Prints the provided text surrounded by the provided Border to the
+     * provided display; no separators will be used.
+     * @param display the Display to draw on
+     * @param text the lines of text, as ColorStrings, to print
+     * @param topLine the line on which the first ColorString will be written
+     * @param leftIndent the number of characters from the left the text will be
+     * printed
+     * @param border the Border with which to surround the text
+     * @return true if the operation was successful
+     */
     public static boolean printBoxed(Display display, ColorString[] text,
             int topLine, int leftIndent, Border border)
     {
@@ -280,6 +374,17 @@ public abstract class WindowBuilder
                 leftIndent, border, null);
     }
     
+    /**
+     * Prints the provided text surrounded by the provided Border to the
+     * provided display; no separators will be used.
+     * @param display the Display to draw on
+     * @param text the lines of text, as Strings, to print
+     * @param topLine the line on which the first String will be written
+     * @param leftIndent the number of characters from the left the text will be
+     * printed
+     * @param border the Border with which to surround the text
+     * @return true if the operation was successful
+     */
     public static boolean printBoxed(Display display, String[] text,
             int topLine, int leftIndent, Border border)
     {
@@ -287,6 +392,17 @@ public abstract class WindowBuilder
                 leftIndent, border, null);
     }
     
+    /**
+     * Prints the provided text surrounded by a Border of the provided width to
+     * the provided display; no separators will be used.
+     * @param display the Display to draw on
+     * @param text the lines of text, as Strings, to print
+     * @param topLine the line on which the first String will be written
+     * @param leftIndent the number of characters from the left the text will be
+     * printed
+     * @param width the width of the Border with which to surround the text
+     * @return true if the operation was successful
+     */
     public static boolean printBoxed(Display display, String[] text,
             int topLine, int leftIndent, int width)
     {
@@ -294,12 +410,32 @@ public abstract class WindowBuilder
                 new Border(width));
     }
     
+    /**
+     * Prints the provided text surrounded by the default Border to the
+     * provided display; no separators will be used.
+     * @param display the Display to draw on
+     * @param text the lines of text, as Strings, to print
+     * @param topLine the line on which the first String will be written
+     * @param leftIndent the number of characters from the left the text will be
+     * printed
+     * @return true if the operation was successful
+     */
     public static boolean printBoxed(Display display, String[] text,
             int topLine, int leftIndent)
         {return printBoxed(display, text, topLine, leftIndent, DEFAULT_LINES);}
     
+    /**
+     * Prints the provided text surrounded by the provided Border to the center
+     * of the provided display.
+     * @param display the Display to draw on
+     * @param text the lines of text, as ColorStrings, to print
+     * @param topLine the line on which the first ColorString will be written
+     * @param border the Border with which to surround the text
+     * @param separator the Line to use for all horizontal separations
+     * @return true if the operation was successful
+     */
     public static boolean printCenterBoxed(Display display, ColorString[] text,
-            int topLine, Border border, LineBorder separator)
+            int topLine, Border border, Line separator)
     {
         if (!display.containsY(topLine - 1) ||
                 !display.containsY(topLine + text.length))
@@ -343,25 +479,70 @@ public abstract class WindowBuilder
         return returnValue;
     }
     
+    /**
+     * Prints the provided text surrounded by the provided Border to the center
+     * of the provided display.
+     * @param display the Display to draw on
+     * @param text the lines of text, as Strings, to print
+     * @param topLine the line on which the first String will be written
+     * @param border the Border with which to surround the text
+     * @param separator the Line to use for all horizontal separations
+     * @return true if the operation was successful
+     */
     public static boolean printCenterBoxed(Display display, String[] text,
-            int topLine, Border border, LineBorder separator)
+            int topLine, Border border, Line separator)
     {
         return printCenterBoxed(display, ColorString.toColorStringArray(text),
                 topLine, border, separator);
     }
     
+    /**
+     * Prints the provided text surrounded by the provided Border to the center
+     * of the provided display; no separators will be used.
+     * @param display the Display to draw on
+     * @param text the lines of text, as ColorStrings, to print
+     * @param topLine the line on which the first ColorString will be written
+     * @param border the Border with which to surround the text
+     * @return true if the operation was successful
+     */
     public static boolean printCenterBoxed(Display display, ColorString[] text,
             int topLine, Border border)
         {return printCenterBoxed(display, text, topLine, border, null);}
     
+    /**
+     * Prints the provided text surrounded by the provided Border to the center
+     * of the provided display; no separators will be used.
+     * @param display the Display to draw on
+     * @param text the lines of text, as Strings, to print
+     * @param topLine the line on which the first String will be written
+     * @param border the Border with which to surround the text
+     * @return true if the operation was successful
+     */
     public static boolean printCenterBoxed(Display display, String[] text,
             int topLine, Border border)
         {return printCenterBoxed(display, text, topLine, border, null);}
     
+    /**
+     * Prints the provided text surrounded by a Border of the provided width to
+     * the center of the provided display; no separators will be used.
+     * @param display the Display to draw on
+     * @param text the lines of text, as Strings, to print
+     * @param topLine the line on which the first String will be written
+     * @param width the width of the Border with which to surround the text
+     * @return true if the operation was successful
+     */
     public static boolean printCenterBoxed(Display display, String[] text,
             int topLine, int width)
         {return printCenterBoxed(display, text, topLine, new Border(width));}
     
+    /**
+     * Prints the provided text surrounded by the provided Border to the center
+     * of the provided display; no separators will be used.
+     * @param display the Display to draw on
+     * @param text the lines of text, as Strings, to print
+     * @param topLine the line on which the first String will be written
+     * @return true if the operation was successful
+     */
     public static boolean printCenterBoxed(Display display, String[] text,
             int topLine)
         {return printCenterBoxed(display, text, topLine, DEFAULT_LINES);}
