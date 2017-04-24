@@ -290,15 +290,15 @@ public abstract class WindowBuilder
                 new Point(leftIndent + overallMaxLength,
                         topLine + overallLines), border);
         
-        // TODO print horizontal separators before vertical ones
-        // Horizontal separators only need to overwrite the border, but vertical
-        // ones need to overwrite both the border and horizontal separators
-        // Direction (forward/backward) through the list does not matter
+        for (int separator = 0; separator < separators.length; separator++)
+            if (separators[separator].horizontal)
+                drawLine(display, endpoints[separator * 2],
+                        endpoints[separator * 2 + 1], separators[separator]);
         
-        // Go backwards so first separators are on top
-        for (int separator = separators.length - 1; separator >= 0; separator--)
-            drawLine(display, endpoints[separator * 2],
-                    endpoints[separator * 2 + 1], separators[separator]);
+        for (int separator = 0; separator < separators.length; separator++)
+            if (!separators[separator].horizontal)
+                drawLine(display, endpoints[separator * 2],
+                        endpoints[separator * 2 + 1], separators[separator]);
         
         return returnValue;
     }
