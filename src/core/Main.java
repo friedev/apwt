@@ -34,8 +34,15 @@ public class Main
     public static void main(String[] args)
     {
         random = new SeededRandom();
-        
         Display display = new Display().init();
+        
+        /*
+        // Name Generator Demo
+        NameGenerator generator = new NameGenerator(new String[]{"names/syl1.txt",
+                "names/syl2.txt", "names/syl3.txt"});
+        for (int i = 0; i < 10; i++)
+            Console.println(generator.generateRandomLengthName(2));
+        */
         
         /*
         // Print a welcome message
