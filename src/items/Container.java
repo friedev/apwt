@@ -8,13 +8,14 @@ public class Container
     private int capacity;
     private List<Item> contents;
     
-    public Container(int c)
+    public Container(int capacity)
     {
-        capacity = c;
+        this.capacity = capacity;
         contents = new java.util.ArrayList<>();
     }
     
-    public int getCapacity() {return capacity;}
+    public int getCapacity()
+        {return capacity;}
     
     public int getUsedCapacity()
     {
@@ -24,7 +25,8 @@ public class Container
         return usedCapacity;
     }
     
-    public int getRemainingCapacity() {return capacity - getUsedCapacity();}
+    public int getRemainingCapacity()
+        {return capacity - getUsedCapacity();}
     
     public String getCapacityAsFraction()
         {return capacity + "/" + getUsedCapacity();}

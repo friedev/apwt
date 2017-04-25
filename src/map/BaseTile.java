@@ -21,7 +21,7 @@ public class BaseTile
     }
     
     @Override
-    public String toString() {return "" + symbol;}
+    public String toString() {return Character.toString(symbol);}
     
     public char  getSymbol()   {return symbol;  }
     public Point getLocation() {return location;}

@@ -6,14 +6,8 @@ import core.Console;
 /** A two-dimensional array of tiles that can be traversed by entities. */
 public class Map
 {
-    /** The default side length of the map in tiles. */
-    public static final int SIZE = 11;
-    
     private Tile[][]  map;
     private final int offset;
-    
-    /** Generates a map with the default size. */
-    public Map() {this(SIZE);}
     
     /**
      * Generates a map of a specified size.
@@ -23,17 +17,24 @@ public class Map
     {
         map    = new Tile[size][size];
         offset = (int) Math.floor((double) map.length / 2.0);
-        initialize();
+        
+        // Initialize all Tiles on the map
+        for (int y = 0; y < map.length; y++)
+            for (int x = 0; x < map[y].length; x++)
+                map[y][x] = new Tile(new Point(x - offset, y - offset), this);
     }
     
-    public BaseTile[][] toArray()  {return map;                         }
-    public int      getMinY()      {return -offset;                     }
-    public int      getMaxY()      {return (map.length -  1) - offset;  }
-    public int      getMinX()      {return -offset;                     }
-    public int      getMaxX()      {return (map[0].length - 1) - offset;}
+    public BaseTile[][] toArray() {return map;                         }
+    public int          getMinY() {return -offset;                     }
+    public int          getMaxY() {return (map.length -  1) - offset;  }
+    public int          getMinX() {return -offset;                     }
+    public int          getMaxX() {return (map[0].length - 1) - offset;}
     
-    public BaseTile tileAt(int x, int y) {return map[y + offset][x + offset];}
-    public BaseTile tileAt(Point p)      {return tileAt(p.x, p.y);}
+    public BaseTile tileAt(int x, int y)
+        {return map[y + offset][x + offset];}
+    
+    public BaseTile tileAt(Point p)
+        {return tileAt(p.x, p.y);}
     
     /**
      * Returns true if the specified coordinates are on the map.
@@ -53,7 +54,8 @@ public class Map
      * @param p the point to use coordinates from
      * @return true if the point is on the map
      */
-    public boolean contains(Point p) {return contains(p.x, p.y);}
+    public boolean contains(Point p)
+        {return contains(p.x, p.y);}
     
     /** Prints the tile symbols and a border. */
     public void print()
@@ -65,13 +67,5 @@ public class Map
             
             Console.println();
         }
-    }
-    
-    /** Initializes all the tiles on the map. */
-    private void initialize()
-    {
-        for (int y = 0; y < map.length; y++)
-            for (int x = 0; x < map[y].length; x++)
-                map[y][x] = new Tile(new Point(x - offset, y - offset), this);
     }
 }

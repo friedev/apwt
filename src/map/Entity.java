@@ -8,8 +8,6 @@ public class Entity extends items.Nameable
     private Map   map;
     private Point location;
     
-    public Entity(String n, Map m) {this(n, m, new Point());}
-    
     public Entity(String n, Map m, Point l)
     {
         super(n);
@@ -17,8 +15,14 @@ public class Entity extends items.Nameable
         location = l;
     }
     
-    public Map   getMap()      {return map;     }
-    public Point getLocation() {return location;}
+    public Entity(String n, Map m)
+        {this(n, m, new Point());}
+    
+    public Map getMap()
+        {return map;}
+    
+    public Point getLocation()
+        {return location;}
     
     public void moveTo(Point destination)
     {
