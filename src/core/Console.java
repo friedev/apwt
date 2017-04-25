@@ -148,8 +148,6 @@ public class Console
             println();
     }
     
-    // TODO create a version of printSpacingBetween that returns a String
-    
     /**
      * Prints the two provided Strings with at most the provided number of space
      * characters between them.

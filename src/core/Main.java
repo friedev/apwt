@@ -156,7 +156,6 @@ public class Main
      */
     public static boolean help()
     {
-        // TODO borrow the spacing format String from EverSector
         Console.println(1, "action1: does something");
         Console.println(1, "action2: does something");
         Console.println(1, "action3: does something");

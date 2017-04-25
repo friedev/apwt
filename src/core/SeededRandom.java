@@ -98,8 +98,6 @@ public class SeededRandom
      */
     public Object select(Object[] choices, double[] probabilities)
     {
-        // TODO upgrade select to be able to use sums of any amount
-        
         if (choices == null || choices.length == 0)
             return null;
         
@@ -130,8 +128,6 @@ public class SeededRandom
      */
     public Object[] select(Object[] choices, double[] probabilities, int amount)
     {
-        // TODO test multi-select
-        
         if (choices == null || choices.length == 0 || amount < choices.length)
             return null;
         
