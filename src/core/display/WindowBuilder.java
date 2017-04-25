@@ -203,7 +203,8 @@ public abstract class WindowBuilder
     public static boolean printBoxed(Display display, ColorSet[] text,
             int topLine, int leftIndent, Border border, Line[] separators)
     {
-        if (!display.contains(new Point(topLine - 1, leftIndent - 1)))
+        if (!display.contains(new Point(topLine - 1, leftIndent - 1)) ||
+                text == null || text.length == 0)
             return false;
         
         int nBlocks = 1;
@@ -235,7 +236,9 @@ public abstract class WindowBuilder
         int overallMaxLength = 0;
         int curMaxLines  = blocks[0].size();
         int overallLines = blocks[0].size();
-        Point[] endpoints = new Point[separators.length * 2];
+        Point[] endpoints = null; // Suppresses undefined warning
+        if (separators != null)
+            endpoints = new Point[separators.length * 2];
         
         for (int block = 0; block < blocks.length; block++)
         {
@@ -259,46 +262,79 @@ public abstract class WindowBuilder
             if (block == blocks.length - 1)
                 break;
             
-            if (separators[block].horizontal)
+            if (separators != null && separators.length - 1 >= block &&
+                    separators[block] != null)
+            {
+                if (separators[block].horizontal)
+                {
+                    curIndent = leftIndent;
+
+                    endpoints[block * 2] = new Point(leftIndent - 1,
+                            curLine + curMaxLines);
+                    endpoints[block * 2 + 1] =
+                            new Point(curIndent + overallMaxLength,
+                                    curLine + curMaxLines);
+
+                    curLine += curMaxLines + 1;
+                    curMaxLines = blocks[block + 1].size();
+                    overallLines += blocks[block + 1].size() + 1;
+                }
+                else
+                {
+                    curIndent += curMaxLength + 1;
+
+                    endpoints[block * 2] = new Point(curIndent - 1, curLine - 1);
+                    endpoints[block * 2 + 1] = new Point(curIndent - 1,
+                            curLine + curMaxLines);
+
+                    // line counts stay the same
+                }
+            }
+            else
             {
                 curIndent = leftIndent;
-                
-                endpoints[block * 2] = new Point(leftIndent - 1,
-                        curLine + curMaxLines);
-                endpoints[block * 2 + 1] =
-                        new Point(curIndent + overallMaxLength,
-                                curLine + curMaxLines);
-                
                 curLine += curMaxLines + 1;
                 curMaxLines = blocks[block + 1].size();
                 overallLines += blocks[block + 1].size() + 1;
             }
-            else
-            {
-                curIndent += curMaxLength + 1;
-                
-                endpoints[block * 2] = new Point(curIndent - 1, curLine - 1);
-                endpoints[block * 2 + 1] = new Point(curIndent - 1,
-                        curLine + curMaxLines);
-                
-                // line counts stay the same
-            }
         }
         
-        boolean returnValue = WindowBuilder.drawBorder(display,
-                new Point(leftIndent - 1, topLine - 1),
-                new Point(leftIndent + overallMaxLength,
-                        topLine + overallLines), border);
+        boolean returnValue = true;
         
-        for (int separator = 0; separator < separators.length; separator++)
-            if (separators[separator].horizontal)
-                drawLine(display, endpoints[separator * 2],
-                        endpoints[separator * 2 + 1], separators[separator]);
+        if (border != null)
+        {
+            returnValue = returnValue && WindowBuilder.drawBorder(display,
+                    new Point(leftIndent - 1, topLine - 1),
+                    new Point(leftIndent + overallMaxLength,
+                            topLine + overallLines), border);
+        }
         
-        for (int separator = 0; separator < separators.length; separator++)
-            if (!separators[separator].horizontal)
-                drawLine(display, endpoints[separator * 2],
+        if (separators != null && separators.length > 0)
+        {
+            for (int separator = 0; separator < separators.length; separator++)
+            {
+                if (separators.length - 1 >= separator &&
+                        separators[separator] != null &&
+                        separators[separator].horizontal)
+                {
+                    returnValue = returnValue &&
+                        drawLine(display, endpoints[separator * 2],
                         endpoints[separator * 2 + 1], separators[separator]);
+                }
+            }
+            
+            for (int separator = 0; separator < separators.length; separator++)
+            {
+                if (separators.length - 1 >= separator &&
+                        separators[separator] != null &&
+                        !separators[separator].horizontal)
+                {
+                    returnValue = returnValue &&
+                        drawLine(display, endpoints[separator * 2],
+                        endpoints[separator * 2 + 1], separators[separator]);
+                }
+            }
+        }
         
         return returnValue;
     }
