@@ -9,9 +9,16 @@ public class Point
     /** The y coordinate of the point. */
     public int y;
     
-    /** Creates a new point at (0, 0). */
-    public Point()
-        {this(0, 0);}
+    /**
+     * Creates a point with the given x and y coordinates.
+     * @param x the x coordinate of the point
+     * @param y the y coordinate of the point
+     */
+    public Point(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
     
     /**
      * Copying constructor that creates a point at the same coordinates as
@@ -22,16 +29,9 @@ public class Point
     public Point(Point p)
         {this(p.x, p.y);}
     
-    /**
-     * Creates a point with the given x and y coordinates.
-     * @param xx the x coordinate of the point
-     * @param yy the y coordinate of the point
-     */
-    public Point(int xx, int yy)
-    {
-        x = xx;
-        y = yy;
-    }
+    /** Creates a new point at (0, 0). */
+    public Point()
+        {this(0, 0);}
     
     /**
      * Creates a point from an ordered pair in String form.

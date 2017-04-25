@@ -16,17 +16,6 @@ public class SeededRandom
     // CONSTRUCTORS
     
     /**
-     * Creates a SeededRandom with a random seed, but saves the seed for further
-     * use.
-     */
-    public SeededRandom()
-    {
-        random = new Random();
-        seed   = random.nextLong();
-        random = new Random(seed);
-    }
-    
-    /**
      * Creates a SeededRandom with the given seed.
      * @param s the seed to use in the random generator
      */
@@ -35,6 +24,13 @@ public class SeededRandom
         seed   = s;
         random = new Random(seed);
     }
+    
+    /**
+     * Creates a SeededRandom with a random seed, but saves the seed for further
+     * use.
+     */
+    public SeededRandom()
+        {this(new Random().nextLong());}
     
     // GETTERS
     

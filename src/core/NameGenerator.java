@@ -19,21 +19,33 @@ public class NameGenerator
     // CONSTRUCTORS
     
     /**
-     * Creates a NameGenerator with the given file names and a new random
+     * Creates a NameGenerator with the given syllable sets and the given random
      * generator.
-     * @param files the paths of the files to load
+     * @param syllables the syllables to choose from
+     * @param random the random generator to use
      */
-    public NameGenerator(String[] files)
-        {this(files, new Random());}
+    public NameGenerator(String[][] syllables, Random random)
+    {
+        this.syllables = syllables;
+        this.random = random;
+    }
     
     /**
-     * Creates a NameGenerator with the given file names and a new random
+     * Creates a NameGenerator with the given syllable sets and a new random
      * generator with the given seed.
-     * @param files the paths of the files to load
-     * @param seed the seed of the random generator to be used
+     * @param syllables the syllables to choose from
+     * @param seed the seed of the random generator to use
      */
-    public NameGenerator(String[] files, long seed)
-        {this(files, new Random(seed));}
+    public NameGenerator(String[][] syllables, long seed)
+        {this(syllables, new Random(seed));}
+    
+    /**
+     * Creates a NameGenerator with the given syllable sets and a new random
+     * generator.
+     * @param syllables the syllables to choose from
+     */
+    public NameGenerator(String[][] syllables)
+        {this(syllables, new Random());}
     
     /**
      * Creates a NameGenerator with the given file names and the given random
@@ -50,33 +62,21 @@ public class NameGenerator
     }
     
     /**
-     * Creates a NameGenerator with the given syllable sets and a new random
-     * generator.
-     * @param syllables the syllables to choose from
-     */
-    public NameGenerator(String[][] syllables)
-        {this(syllables, new Random());}
-    
-    /**
-     * Creates a NameGenerator with the given syllable sets and a new random
+     * Creates a NameGenerator with the given file names and a new random
      * generator with the given seed.
-     * @param syllables the syllables to choose from
-     * @param seed the seed of the random generator to use
+     * @param files the paths of the files to load
+     * @param seed the seed of the random generator to be used
      */
-    public NameGenerator(String[][] syllables, long seed)
-        {this(syllables, new Random(seed));}
+    public NameGenerator(String[] files, long seed)
+        {this(files, new Random(seed));}
     
     /**
-     * Creates a NameGenerator with the given syllable sets and the given random
+     * Creates a NameGenerator with the given file names and a new random
      * generator.
-     * @param syllables the syllables to choose from
-     * @param random the random generator to use
+     * @param files the paths of the files to load
      */
-    public NameGenerator(String[][] syllables, Random random)
-    {
-        this.syllables = syllables;
-        this.random = random;
-    }
+    public NameGenerator(String[] files)
+        {this(files, new Random());}
     
     // GENERATION
     
