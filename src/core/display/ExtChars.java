@@ -26,12 +26,12 @@ public abstract class ExtChars
     public static final char TRIANGLE_L = (char) 17;
     public static final char TRIANGLE_R = (char) 16;
 
-    public static final char DOT1      = (char) 7;
-    public static final char DOT2      = (char) 249;
+    public static final char DOT       = (char) 249;
     public static final char DOT_EMPTY = (char) 248;
     public static final char DOT_SMALL = (char) 250;
     public static final char CIRCLE    = (char) 9;
     public static final char SQUARE    = (char) 254;
+    public static final char OVAL      = (char) 7;
 
     public static final char PI        = (char) 227;
     public static final char SIGMA     = (char) 228;

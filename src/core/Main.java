@@ -2,6 +2,7 @@ package core;
 
 import core.display.Display;
 import core.storage.Commands;
+import map.TileType;
 
 /**
  * A sample main class that contains the basic components of the library to get

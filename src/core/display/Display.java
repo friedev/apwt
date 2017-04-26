@@ -142,6 +142,16 @@ public class Display extends JFrame implements KeyListener
         {panel.write(c, p.x, p.y, foreground, background);}
     
     /**
+     * Writes a ColorChar to the provided AsciiPanel.
+     * @param panel the panel on which to write the ColorChar
+     * @param cc the ColorChar to write
+     * @param p  the point, in characters, at which the ColorChar will be
+     * written
+     */
+    public static void write(AsciiPanel panel, ColorChar cc, Point p)
+        {panel.write(cc.character, p.x, p.y, cc.foreground, cc.background);}
+    
+    /**
      * Writes an array of Strings to the provided AsciiPanel, with each String
      * on the line below the previous.
      * @param panel the panel on which to write the Strings
@@ -437,6 +447,15 @@ public class Display extends JFrame implements KeyListener
      */
     public void write(char c, Point p, Color foreground, Color background)
         {write(panel, c, p, foreground, background);}
+    
+    /**
+     * Writes a ColorChar to this Display's AsciiPanel.
+     * @param cc the ColorChar to write
+     * @param p  the point, in characters, at which the ColorChar will be
+     * written
+     */
+    public void write(ColorChar cc, Point p)
+        {write(panel, cc, p);}
     
     /**
      * Writes an array of Strings to this Display's AsciiPanel, with each String

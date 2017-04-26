@@ -2,11 +2,12 @@ package map;
 
 import core.Point;
 import core.Console;
+import core.Main;
 
 /** A two-dimensional array of tiles that can be traversed by entities. */
 public class Map
 {
-    private Tile[][]  map;
+    private Tile[][] map;
     private final int offset;
     
     /**
@@ -21,19 +22,30 @@ public class Map
         // Initialize all Tiles on the map
         for (int y = 0; y < map.length; y++)
             for (int x = 0; x < map[y].length; x++)
-                map[y][x] = new Tile(new Point(x - offset, y - offset), this);
+                map[y][x] = new Tile(TileType.FLOOR);
     }
     
-    public BaseTile[][] toArray() {return map;                         }
-    public int          getMinY() {return -offset;                     }
-    public int          getMaxY() {return (map.length -  1) - offset;  }
-    public int          getMinX() {return -offset;                     }
-    public int          getMaxX() {return (map[0].length - 1) - offset;}
+    public Map(TileType[][] tiles)
+    {
+        map = new Tile[tiles.length][tiles[0].length];
+        offset = (int) Math.floor((double) map.length / 2.0);
+        
+        // Initialize all tiles
+        for (int y = 0; y < map.length; y++)
+            for (int x = 0; x < map[y].length; x++)
+                map[y][x] = new Tile(tiles[y][x]);
+    }
     
-    public BaseTile tileAt(int x, int y)
+    public Tile[][] toArray() {return map;                         }
+    public int      getMinY() {return -offset;                     }
+    public int      getMaxY() {return (map.length -  1) - offset;  }
+    public int      getMinX() {return -offset;                     }
+    public int      getMaxX() {return (map[0].length - 1) - offset;}
+    
+    public Tile tileAt(int x, int y)
         {return map[y + offset][x + offset];}
     
-    public BaseTile tileAt(Point p)
+    public Tile tileAt(Point p)
         {return tileAt(p.x, p.y);}
     
     /**
@@ -63,9 +75,67 @@ public class Map
         for (int y = 0; y < map.length; y++)
         {
             for (int x = 0; x < map[y].length; x++)
-                Console.print(map[y][x].getSymbol() + " ");
+                Console.print(map[y][x] + " ");
             
             Console.println();
         }
+    }
+    
+    public void display(core.display.Display display, Point start)
+    {
+        for (int y = 0; y < map.length; y++)
+            for (int x = 0; x < map[y].length; x++)
+                display.write(map[y][x].getType().getGlyph(),
+                        new Point(start.x + x, start.y + y));
+    }
+    
+    private static TileType[][] smoothCaves(TileType[][] tiles, TileType floor,
+            TileType wall)
+    {
+        int size = tiles.length;
+        TileType[][] smoothedTiles = new TileType[size][size];
+        
+        for (int x = 0; x < size; x++)
+        {
+            for (int y = 0; y < size; y++)
+            {
+                int floors = 0;
+                int walls = 0;
+
+                for (int ox = -1; ox < 2; ox++)
+                {
+                    for (int oy = -1; oy < 2; oy++)
+                    {
+                        if (x + ox < 0 || x + ox >= size ||
+                                y + oy < 0 || y + oy >= size)
+                            continue;
+
+                        if (tiles[x + ox][y + oy] == floor)
+                            floors++;
+                        else
+                            walls++;
+                    }
+                }
+                
+                smoothedTiles[x][y] = floors >= walls ? floor : wall;
+            }
+        }
+        
+        return smoothedTiles;
+    }
+    
+    public static Map generateCave(int size, int smoothing, TileType floor,
+            TileType wall)
+    {
+        TileType[][] tiles = new TileType[size][size];
+        
+        for (int x = 0; x < size; x++)
+            for (int y = 0; y < size; y++)
+                tiles[x][y] = Main.random.get().nextBoolean() ? floor : wall;
+        
+        for (int i = 0; i < smoothing; i++)
+            tiles = smoothCaves(tiles, floor, wall);
+        
+        return new Map(tiles);
     }
 }

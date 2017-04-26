@@ -1,24 +1,28 @@
 package map;
 
-import core.Point;
 import items.Container;
 
 /** An upgraded tile integrated with the item system. */
-public class Tile extends BaseTile
+public class Tile
 {
     public static final int MAX_VOLUME = 100;
     
-    private Container items;
+    private TileType type;
+    private Container floorItems;
     
-    public Tile(char s, Point l, Map m)
+    public Tile(TileType t)
     {
-        super(s, l, m);
-        items = new Container(MAX_VOLUME);
+        type = t;
+        floorItems = new Container(MAX_VOLUME);
     }
     
-    public Tile(Point l, Map m)
-        {this(EMPTY, l, m);}
+    @Override
+    public String toString()
+        {return Character.toString(type.getGlyph().character);}
+    
+    public TileType getType()
+        {return type;}
     
     public Container getItems()
-        {return items;}
+        {return floorItems;}
 }

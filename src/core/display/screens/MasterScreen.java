@@ -30,13 +30,14 @@ public class MasterScreen extends Screen
     public MasterScreen(Display d)
     {
         super(d);
-        score     = 0;
+        score = 0;
         subscreen = null;
         output = new core.display.Window(display, 10, display.getCharHeight() / 4,
                 new Border(2), new ArrayList<>());
         
         output.add("Earn points with Enter.");
         output.add("Press Ctrl+T to toggle the terminal.");
+        output.add("Press Ctrl+M to toggle the map.");
         output.add("Press Escape to quit.");
     }
     
@@ -79,9 +80,9 @@ public class MasterScreen extends Screen
                     {new ColorString("Your Score: "),
                     new ColorString(Integer.toString(score), Color.YELLOW)});
                 
-                if (output.getContents().size() >= 4)
+                if (output.getContents().size() >= 5)
                 {
-                    output.set(4, scoreOutput);
+                    output.set(5, scoreOutput);
                 }
                 else
                 {
@@ -106,18 +107,17 @@ public class MasterScreen extends Screen
             case KeyEvent.VK_T:
                 if (key.isControlDown())
                 {
-                    if (subscreen == null)
-                    {
-                        subscreen = new Terminal(new PopupWindow(display,
-                                3 * (display.getCharHeight() / 4),
-                                new Border(1, Color.RED, Color.BLUE)),
-                                "Your Input: ", display.getCharWidth());
-                    }
-                    else
-                    {
-                        subscreen = null;
-                    }
-                    
+                    subscreen = new Terminal(new PopupWindow(display,
+                            3 * (display.getCharHeight() / 4),
+                            new Border(1, Color.RED, Color.BLUE)),
+                            "Your Input: ", display.getCharWidth());
+                    break;
+                }
+                // Skip case if control was not pressed
+            case KeyEvent.VK_M:
+                if (key.isControlDown())
+                {
+                    subscreen = new MapScreen(display);
                     break;
                 }
                 // Skip case if control was not pressed
