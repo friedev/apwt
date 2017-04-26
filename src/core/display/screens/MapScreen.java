@@ -11,9 +11,11 @@ import map.TileType;
 public class MapScreen extends Screen
 {
     public static final int SMOOTHNESS = 8;
+    public static final double VARIATION_EXPONENT = 2.5;
     
-    private boolean showSmoothness;
+    private boolean showUI;
     private int smoothness;
+    private double variationExponent;
     private Map map;
     private int[][] heightmap;
 
@@ -21,7 +23,8 @@ public class MapScreen extends Screen
     {
         super(display);
         smoothness = SMOOTHNESS;
-        showSmoothness = false;
+        variationExponent = VARIATION_EXPONENT;
+        showUI = false;
         updateMap(false);
     }
     
@@ -31,7 +34,7 @@ public class MapScreen extends Screen
         if (heightmap == null)
         {
             map.display(display, new core.Point(0, 0));
-            if (showSmoothness)
+            if (showUI)
             {
                 display.write("Smoothness: " + smoothness,
                         new core.Point(0, 0));
@@ -45,6 +48,12 @@ public class MapScreen extends Screen
                             core.display.ExtChars.BLOCK,
                             new java.awt.Color(heightmap[y][x], heightmap[y][x],
                                     heightmap[y][x])), new core.Point(y, x));
+            
+            if (showUI)
+            {
+                display.write("Variation Exponent: " + variationExponent,
+                        new core.Point(0, 0));
+            }
         }
     }
 
@@ -54,21 +63,27 @@ public class MapScreen extends Screen
         switch (key.getKeyCode())
         {
             case KeyEvent.VK_UP:
-                smoothness++;
-                updateMap(false);
+                if (heightmap == null)
+                    smoothness++;
+                else
+                    variationExponent += 0.1;
+                updateMap();
                 break;
             case KeyEvent.VK_DOWN:
-                smoothness = Math.max(smoothness - 1, 0);
-                updateMap(false);
+                if (heightmap == null)
+                    Math.max(smoothness - 1, 0);
+                else
+                    variationExponent -= 0.1;
+                updateMap();
                 break;
             case KeyEvent.VK_S:
-                showSmoothness = !showSmoothness;
+                showUI = !showUI;
                 break;
             case KeyEvent.VK_H:
                 updateMap(heightmap == null);
                 break;
             case KeyEvent.VK_ENTER:
-                updateMap(heightmap != null);
+                updateMap();
                 break;
             case KeyEvent.VK_ESCAPE:
                 return null;
@@ -81,7 +96,8 @@ public class MapScreen extends Screen
     {
         if (height)
         {
-            heightmap = Map.generateHeightmap(48, 128, 2.5);
+            heightmap = Map.generateHeightmap(Math.min(display.getCharHeight(),
+                    display.getCharWidth()), 128, variationExponent);
             map = null;
         }
         else
@@ -92,4 +108,7 @@ public class MapScreen extends Screen
             heightmap = null;
         }
     }
+    
+    private void updateMap()
+        {updateMap(heightmap != null);}
 }
