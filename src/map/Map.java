@@ -201,27 +201,29 @@ public class Map
         int c3 = heightmap[x2][y2];
         int c4 = heightmap[x1][y2];
 
+        java.util.Random r = Main.random.get();
+        
         // If not already defined, work out the midpoints of the corners of
         // the rectangle by means of an average plus a random number
         if (heightmap[midx][y1] == 0)
            heightmap[midx][y1] = Math.max(0,
-                   ((c1 + c2 + Main.random.get().nextInt(dist) - hdist) / 2));
+                   ((c1 + c2 + r.nextInt(dist) - hdist) / 2));
         
         if (heightmap[midx][y2] == 0)
            heightmap[midx][y2] = Math.max(0,
-                   ((c4 + c3 + Main.random.get().nextInt(dist) - hdist) / 2));
+                   ((c4 + c3 + r.nextInt(dist) - hdist) / 2));
         
         if (heightmap[x1][midy] == 0)
            heightmap[x1][midy] = Math.max(0,
-                   ((c1 + c4 + Main.random.get().nextInt(dist) - hdist) / 2));
+                   ((c1 + c4 + r.nextInt(dist) - hdist) / 2));
         
         if (heightmap[x2][midy] == 0)
            heightmap[x2][midy] = Math.max(0,
-                   ((c2 + c3 + Main.random.get().nextInt(dist) - hdist) / 2));
+                   ((c2 + c3 + r.nextInt(dist) - hdist) / 2));
 
         // Work out the middle point
-        heightmap[midx][midy] = Math.max(0, ((c1 + c2 + c3 + c4 +
-                Main.random.get().nextInt(dist) - hdist) / 4));
+        heightmap[midx][midy] = Math.max(0,
+                ((c1 + c2 + c3 + c4 + r.nextInt(dist) - hdist) / 4));
 
         // Now divide this rectangle into 4, and call again for each smaller
         // rectangle
