@@ -89,6 +89,21 @@ public class Map
                         new Point(start.x + x, start.y + y));
     }
     
+    public static Map generateCave(int size, int smoothing, TileType floor,
+            TileType wall)
+    {
+        TileType[][] tiles = new TileType[size][size];
+        
+        for (int x = 0; x < size; x++)
+            for (int y = 0; y < size; y++)
+                tiles[x][y] = Main.random.get().nextBoolean() ? floor : wall;
+        
+        for (int i = 0; i < smoothing; i++)
+            tiles = smoothCaves(tiles, floor, wall);
+        
+        return new Map(tiles);
+    }
+    
     private static TileType[][] smoothCaves(TileType[][] tiles, TileType floor,
             TileType wall)
     {
@@ -123,19 +138,97 @@ public class Map
         
         return smoothedTiles;
     }
-    
-    public static Map generateCave(int size, int smoothing, TileType floor,
-            TileType wall)
+
+    public static int[][] generateHeightmap(int size, int range,
+            double variationExponent)
     {
-        TileType[][] tiles = new TileType[size][size];
+        int[][] heightmap = new int[size][size];
         
-        for (int x = 0; x < size; x++)
-            for (int y = 0; y < size; y++)
-                tiles[x][y] = Main.random.get().nextBoolean() ? floor : wall;
+        // Fill the array with 0s
+        for (int y = 0; y < size; y++)
+            for (int x = 0; x < size; x++)
+                heightmap[x][y] = 0;
         
-        for (int i = 0; i < smoothing; i++)
-            tiles = smoothCaves(tiles, floor, wall);
+        // Setup points in the 4 corners of the map
+        heightmap[0       ][0       ] = Main.random.get().nextInt(range);
+        heightmap[size - 1][0       ] = Main.random.get().nextInt(range);
+        heightmap[size - 1][size - 1] = Main.random.get().nextInt(range);
+        heightmap[0       ][size - 1] = Main.random.get().nextInt(range);
         
-        return new Map(tiles);
+        // Do the midpoint
+        heightmap = midpoint(heightmap, 0, 0, size - 1, size - 1);
+        
+        double maxHeight = 0;
+        
+        for (int y = 0; y < heightmap.length; y++)
+        {
+            for (int x = 0; x < heightmap[y].length; x++)
+            {
+                double height = Math.pow(heightmap[y][x], variationExponent);
+                if (height > maxHeight)
+                    maxHeight = height;
+            }
+        }
+
+        for (int y = 0; y < heightmap.length; y++)
+            for (int x = 0; x < heightmap[y].length; x++)
+                heightmap[y][x] = (int) (Math.pow(heightmap[y][x],
+                        variationExponent) / maxHeight * ((double) range));
+        
+        return heightmap;
+    }
+
+    private static int[][] midpoint(int[][] heightmap, int x1, int y1, int x2,
+            int y2)
+    {
+        // If this is pointing at just one tile, exit because it doesn't need
+        // doing
+        if (x2 - x1 < 2 && y2 - y1 <2)
+            return heightmap;
+        
+        // Find distance between points and use when generating a random number
+        int dist = (x2 - x1 + y2 - y1);
+        int hdist = dist / 2;
+        
+        // Find midpoint
+        int midx = (x1 + x2) / 2;
+        int midy = (y1 + y2) / 2;
+        
+        // Get pixel colors of corners
+        int c1 = heightmap[x1][y1];
+        int c2 = heightmap[x2][y1];
+        int c3 = heightmap[x2][y2];
+        int c4 = heightmap[x1][y2];
+
+        // If not already defined, work out the midpoints of the corners of
+        // the rectangle by means of an average plus a random number
+        if (heightmap[midx][y1] == 0)
+           heightmap[midx][y1] = Math.max(0,
+                   ((c1 + c2 + Main.random.get().nextInt(dist) - hdist) / 2));
+        
+        if (heightmap[midx][y2] == 0)
+           heightmap[midx][y2] = Math.max(0,
+                   ((c4 + c3 + Main.random.get().nextInt(dist) - hdist) / 2));
+        
+        if (heightmap[x1][midy] == 0)
+           heightmap[x1][midy] = Math.max(0,
+                   ((c1 + c4 + Main.random.get().nextInt(dist) - hdist) / 2));
+        
+        if (heightmap[x2][midy] == 0)
+           heightmap[x2][midy] = Math.max(0,
+                   ((c2 + c3 + Main.random.get().nextInt(dist) - hdist) / 2));
+
+        // Work out the middle point
+        heightmap[midx][midy] = Math.max(0, ((c1 + c2 + c3 + c4 +
+                Main.random.get().nextInt(dist) - hdist) / 4));
+
+        // Now divide this rectangle into 4, and call again for each smaller
+        // rectangle
+        heightmap = midpoint(heightmap, x1, y1, midx, midy);
+        heightmap = midpoint(heightmap, midx, y1, x2, midy);
+        heightmap = midpoint(heightmap, x1, midy, midx, y2);
+        heightmap = midpoint(heightmap, midx, midy, x2, y2);
+
+        return heightmap;
     }
 }
