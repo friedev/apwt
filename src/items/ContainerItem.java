@@ -1,9 +1,9 @@
 package items;
 
-import core.Console;
+import java.util.List;
 
 /**
- * A container that also acts as an item - should be used in cases such as
+ * A item that also acts as a container - should be used in cases such as
  * inventories.
  */
 public class ContainerItem extends Item
@@ -21,16 +21,11 @@ public class ContainerItem extends Item
     
     public Container container() {return container;}
     
-    /** Prints the name, value, description, volume, and capacity of the item. */
     @Override
-    public void define()
+    protected List<String> defineAsList()
     {
-        Console.println(getName().toUpperCase() + ":");
-        Console.printListItem("Value", getValue());
-        Console.printListItem("Volume", getVolume());
-        Console.printListItem("Capacity", container.getCapacityAsFraction());
-        if (isContained())
-            Console.printListItem("Container", getContainer().toString());
-        Console.printListItem("Description", getDescription());
+        List<String> definition = super.defineAsList();
+        definition.add(" -Capacity: " + container.getCapacityAsFraction());
+        return definition;
     }
 }

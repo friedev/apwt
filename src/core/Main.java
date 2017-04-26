@@ -37,6 +37,13 @@ public class Main
         Display display = new Display().init();
         
         /*
+        // Item Definition Demo
+        for (String line: new items.ContainerItem("The Container",
+                "The one container to rule them all.", 10000, 25, 100).define())
+            Console.println(line);
+        */
+        
+        /*
         // Name Generator Demo
         NameGenerator generator = new NameGenerator(new String[]{"names/syl1.txt",
                 "names/syl2.txt", "names/syl3.txt"});

@@ -1,6 +1,7 @@
 package items;
 
-import core.Console;
+import java.util.ArrayList;
+import java.util.List;
 
 /** A simple item with only a name, description, and value. */
 public abstract class BaseItem extends Nameable
@@ -20,11 +21,22 @@ public abstract class BaseItem extends Nameable
     public String getDescription() {return description;}
     public int    getValue()       {return value;}
     
-    /** Prints the name, value, and description of the item. */
-    public void define()
+    protected List<String> defineAsList()
     {
-        Console.println(getName().toUpperCase() + ":");
-        Console.printListItem("Value", value);
-        Console.printListItem("Description", description);
+        ArrayList<String> definition = new ArrayList<>();
+        definition.add(getName() + ":");
+        definition.add(description);
+        definition.add(" -Value: " + value);
+        return definition;
+    }
+    
+    /**
+     * Returns a String[] with lines listing the object's characteristics.
+     * @return a String[] with lines listing the object's characteristics
+     */
+    public String[] define()
+    {
+        List<String> definition = defineAsList();
+        return definition.toArray(new String[definition.size()]);
     }
 }

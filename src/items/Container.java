@@ -29,7 +29,7 @@ public class Container
         {return capacity - getUsedCapacity();}
     
     public String getCapacityAsFraction()
-        {return capacity + "/" + getUsedCapacity();}
+        {return getUsedCapacity() + "/" + capacity;}
     
     public List<Item> toList() {return contents;}
     

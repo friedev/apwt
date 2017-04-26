@@ -1,6 +1,6 @@
 package items;
 
-import core.Console;
+import java.util.List;
 
 /**
  * A more fleshed-out item that takes up space and can be stored in a container.
@@ -21,17 +21,13 @@ public class Item extends BaseItem
     public Container getContainer() {return container;        }
     public boolean   isContained()  {return container != null;}
     
-    /**
-     * Prints the name, value, description, volume, and container of the item.
-     */
     @Override
-    public void define()
+    protected List<String> defineAsList()
     {
-        Console.println(getName().toUpperCase() + ":");
-        Console.printListItem("Value", getValue());
-        Console.printListItem("Volume", volume);
+        List<String> definition = super.defineAsList();
+        definition.add(" -Volume: " + volume);
         if (container != null)
-            Console.printListItem("Container", container.toString());
-        Console.printListItem("Description", getDescription());
+            definition.add(" -Container: " + container);
+        return definition;
     }
 }
