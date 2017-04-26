@@ -150,10 +150,11 @@ public class Map
                 heightmap[x][y] = 0;
         
         // Setup points in the 4 corners of the map
-        heightmap[0       ][0       ] = Main.random.get().nextInt(range);
-        heightmap[size - 1][0       ] = Main.random.get().nextInt(range);
-        heightmap[size - 1][size - 1] = Main.random.get().nextInt(range);
-        heightmap[0       ][size - 1] = Main.random.get().nextInt(range);
+        Point[] corners = new Point[] {new Point(0, 0), new Point (0, size - 1),
+                new Point(size - 1, 0), new Point(size - 1, size - 1)};
+        
+        for (Point corner: corners)
+            heightmap[corner.y][corner.x] = Main.random.get().nextInt(range);
         
         // Do the midpoint
         heightmap = midpoint(heightmap, 0, 0, size - 1, size - 1);
