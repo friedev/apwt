@@ -148,4 +148,20 @@ public class ColorSet
         
         return lines;
     }
+    
+    /**
+     * Converts the 2D array of ColorChars provided into an array of ColorSets,
+     * with each ColorChar[] as a single ColorSet.
+     * @param a the array of ColorChars to convert into an array of ColorSets
+     * @return an array of ColorSets, one for each ColorChar
+     */
+    public static ColorSet[] toColorSetArray(ColorChar[][] a)
+    {
+        ColorSet[] lines = new ColorSet[a.length];
+        
+        for (int line = 0; line < a.length; line++)
+            lines[line] = new ColorSet(a[line]);
+        
+        return lines;
+    }
 }

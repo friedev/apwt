@@ -7,7 +7,7 @@ import java.util.List;
 
 public enum TileType
 {
-    FLOOR(new ColorChar(ExtChars.DOT, AsciiPanel.white), "A dirt and rock cave floor."),
+    FLOOR(new ColorChar(ExtChars.DOT, AsciiPanel.white), "A dirt and rock cave floor.", new TileProperty[]{TileProperty.OPEN, TileProperty.TRANSPARENT}),
     WALL(new ColorChar(ExtChars.BLOCK, AsciiPanel.brightBlack), "A dirt and rock cave wall."),
     BOUNDS(new ColorChar('x', AsciiPanel.brightBlack), "Beyond the edge of the world."),
     STAIRS_DOWN(new ColorChar('>', AsciiPanel.brightWhite), "A stone staircase that goes down."),
