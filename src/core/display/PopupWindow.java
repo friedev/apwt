@@ -21,7 +21,7 @@ public class PopupWindow extends Window<ColorString>
     public PopupWindow(Display display, int y, Border border, Line separator)
     {
         super(display, border);
-        this.y         = y;
+        this.y = y;
         this.separator = separator;
     }
     

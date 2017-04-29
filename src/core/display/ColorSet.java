@@ -8,7 +8,7 @@ import java.util.List;
  * A List of ColorChars that can be used as a multicolored String or even as a
  * mapping system.
  */
-public class ColorSet
+public class ColorSet implements CharSequence
 {
     /** The List of specific ColorChars in the ColorSet. */
     private List<ColorChar> set;
@@ -80,6 +80,21 @@ public class ColorSet
      */
     public ColorChar[] toCharArray()
         {return set.toArray(new ColorChar[set.size()]);}
+    
+    @Override
+    public int length()
+        {return set.size();}
+
+    @Override
+    public char charAt(int index)
+        {return set.get(index).character;}
+
+    @Override
+    public CharSequence subSequence(int start, int end)
+    {
+        return new ColorSet(set.subList(start, end).toArray(
+                new ColorChar[end - start + 1]));
+    }
     
     /**
      * Converts the array of Strings provided into a single ColorSet without

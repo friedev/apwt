@@ -7,7 +7,7 @@ import java.util.List;
  * Any window used to display a list of contents should extend this class.
  * @param <Content> the type of content the Window will display
  */
-public abstract class Window<Content>
+public abstract class Window<Content extends CharSequence>
 {
     /** The Display on which to print the window. */
     protected Display display;
@@ -24,7 +24,7 @@ public abstract class Window<Content>
     public Window(Display display, Border border)
     {
         this.display = display;
-        this.border  = border;
+        this.border = border;
         this.contents = new ArrayList<>();
     }
     

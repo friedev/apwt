@@ -5,7 +5,7 @@ import java.awt.Color;
 /**
  * A container class for a character and its foreground and background colors.
  */
-public class ColorString extends ColoredObject
+public class ColorString extends ColoredObject implements CharSequence
 {
     /** The ColorString's actual String. */
     public String string;
@@ -70,4 +70,16 @@ public class ColorString extends ColoredObject
         
         return cs;
     }
+
+    @Override
+    public int length()
+        {return string.length();}
+
+    @Override
+    public char charAt(int index)
+        {return string.charAt(index);}
+
+    @Override
+    public CharSequence subSequence(int start, int end)
+        {return string.subSequence(start, end);}
 }
