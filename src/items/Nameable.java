@@ -6,12 +6,12 @@ public class Nameable
     private String name;
     private String nickname;
     
-    public Nameable(String n) {this(n, null);}
+    public Nameable(String name) {this(name, null);}
     
-    public Nameable(String n, String nn)
+    public Nameable(String name, String nickname)
     {
-        name = n;
-        nickname = nn;
+        this.name = name;
+        this.nickname = nickname;
     }
     
     @Override

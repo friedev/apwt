@@ -7,16 +7,18 @@ public class Resource extends BaseItem
 {
     int amount;
     
-    public Resource(String n, String d, int v) {this(n, d, v, 0);}
+    public Resource(String name, String description, int value)
+        {this(name, description, value, 0);}
     
-    public Resource(String n, String d, int v, int a)
+    public Resource(String name, String description, int value, int amount)
     {
-        super(n, d, v);
-        amount = a;
+        super(name, description, value);
+        this.amount = amount;
     }
     
     @Override
-    public String toString() {return getName() + " (" + amount + ")";}
+    public String toString()
+        {return getName() + " (" + amount + ")";}
     
     @Override
     protected List<String> defineAsList()

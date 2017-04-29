@@ -10,10 +10,10 @@ public class Item extends BaseItem
     private int volume;
     private Container container;
     
-    public Item(String n, String d, int va, int vo)
+    public Item(String name, String description, int value, int volume)
     {
-        super(n, d, va);
-        volume = vo;
+        super(name, description, value);
+        this.volume = volume;
         container = null;
     }
     

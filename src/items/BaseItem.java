@@ -9,13 +9,13 @@ public abstract class BaseItem extends Nameable
     private String description;
     private int    value;
     
-    public BaseItem(String n, int v) {this(n, null, v);}
+    public BaseItem(String name, int value) {this(name, null, value);}
     
-    public BaseItem(String n, String d, int v)
+    public BaseItem(String name, String description, int value)
     {
-        super(n);
-        description = d;
-        value = v;
+        super(name);
+        this.description = description;
+        this.value = value;
     }
     
     public String getDescription() {return description;}

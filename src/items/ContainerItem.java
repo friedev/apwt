@@ -10,13 +10,15 @@ public class ContainerItem extends Item
 {
     private Container container;
     
-    public ContainerItem(String n, String d, int va, int vo, int c)
-        {this(n, d, va, vo, new Container(c));}
+    public ContainerItem(String name, String description, int value, int volume,
+            int capacity)
+        {this(name, description, value, volume, new Container(capacity));}
     
-    public ContainerItem(String n, String d, int va, int vo, Container c)
+    public ContainerItem(String name, String description, int value, int volume,
+            Container container)
     {
-        super(n, d, va, vo);
-        container = c;
+        super(name, description, value, volume);
+        this.container = container;
     }
     
     public Container container() {return container;}
