@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 import core.display.Display;
 import core.display.Line;
 import core.display.PopupWindow;
-import core.display.Window;
+import core.display.AlignedWindow;
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class MasterScreen extends Screen
     /** A sample gameplay mechanic. */
     private int score;
     /** The Window through which output is displayed. */
-    private Window output;
+    private AlignedWindow output;
     /**
      * A Screen that will be processed and displayed in front of this Screen.
      */
@@ -32,7 +32,7 @@ public class MasterScreen extends Screen
         super(d);
         score = 0;
         subscreen = null;
-        output = new core.display.Window(display, 10, display.getCharHeight() / 4,
+        output = new core.display.AlignedWindow(display, 10, display.getCharHeight() / 4,
                 new Border(2), new ArrayList<>());
         
         output.add("Earn points with Enter.");
@@ -45,7 +45,7 @@ public class MasterScreen extends Screen
     public void displayOutput()
     {
         if (output != null)
-            output.displayOutput();
+            output.display();
         
         if (subscreen != null)
             subscreen.displayOutput();

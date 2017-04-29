@@ -72,7 +72,7 @@ public class Terminal extends Screen
     
     @Override
     public void displayOutput()
-        {output.displayOutput();}
+        {output.display();}
     
     @Override
     public Screen processInput(KeyEvent key)
