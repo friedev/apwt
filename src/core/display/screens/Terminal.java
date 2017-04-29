@@ -1,23 +1,25 @@
 package core.display.screens;
 
-import core.display.ColorString;
 import core.display.Window;
 import java.awt.event.KeyEvent;
 
 /**
  * A basic window where the operator can type characters and delete them with
  * backspace.
+ * @param <Output> the type of Window used by the Terminal
+ * @param <Content> the type of content displayed by the Terminal's Window
  */
-public class Terminal extends Screen
+public abstract class Terminal<Output extends Window,
+        Content extends CharSequence> extends Screen
 {
     /** The StringBuilder where all keypresses are added. */
-    private StringBuilder input;
+    protected StringBuilder input;
     /** The Window through which all output is displayed. */
-    private Window output;
+    protected Output output;
     /** The String printed before the entered input is shown to the user. */
-    private String prompt;
+    protected Content prompt;
     /** The input length at which the Terminal will not accept any new input. */
-    private int maxInputLength;
+    protected int maxInputLength;
     
     /**
      * Creates a Terminal with the given Window, prompt, and maximum length.
@@ -26,10 +28,10 @@ public class Terminal extends Screen
      * @param length the Terminal's maximum length, counting Window borders and
      * the prompt
      */
-    public Terminal(Window output, String prompt, int length)
+    public Terminal(Output output, Content prompt, int length)
     {
         super(output.getDisplay());
-        input  = new StringBuilder();
+        input = new StringBuilder();
         this.output = output;
         this.prompt = prompt;
         maxInputLength = length;
@@ -39,40 +41,13 @@ public class Terminal extends Screen
         
         if (output.isBordered())
             maxInputLength -= 2;
-        
-        output.add(prompt);
     }
     
     /**
-     * Creates a Terminal with the given Window and maximum length, but no
-     * prompt.
-     * @param output the Terminal's output window
-     * @param length the Terminal's maximum length, counting Window borders
+     * Adds the typed key to the input field.
+     * @param key the KeyEvent to process
+     * @return the new Screen to display
      */
-    public Terminal(Window output, int length)
-        {this(output, "", length);}
-    
-    /**
-     * Creates a Terminal with the given Window and prompt, using the width of
-     * the Display as the maximum length.
-     * @param output the Terminal's output window
-     * @param prompt the Terminal's prompt
-     */
-    public Terminal(Window output, String prompt)
-        {this(output, prompt, output.getDisplay().getCharWidth());}
-    
-    /**
-     * Creates a Terminal with no prompt and the width of the Display as the
-     * maximum length.
-     * @param window the Terminal's output window
-     */
-    public Terminal(Window window)
-        {this(window, "", window.getDisplay().getCharWidth());}
-    
-    @Override
-    public void displayOutput()
-        {output.display();}
-    
     @Override
     public Screen processInput(KeyEvent key)
     {
@@ -89,9 +64,6 @@ public class Terminal extends Screen
                         input.deleteCharAt(input.length() - 1);
                 }
                 break;
-            case KeyEvent.VK_T:
-                if (key.isControlDown())
-                    return null;
             default:
                 if (Character.isDefined(key.getKeyChar()))
                     input.append(key.getKeyChar());
@@ -101,7 +73,6 @@ public class Terminal extends Screen
         if (input.length() >= maxInputLength)
             input.delete(maxInputLength, input.length());
         
-        output.set(0, new ColorString(prompt + input.toString()));
         return this;
     }
     

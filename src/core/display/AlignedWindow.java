@@ -63,8 +63,15 @@ public class AlignedWindow extends Window<ColorSet>
         
         if (border != null)
         {
-            WindowBuilder.printBoxed(display, output, y, x, border,
-                    separators.toArray(new Line[separators.size()]));
+            if (hasSeparators())
+            {
+                WindowBuilder.printBoxed(display, output, y, x, border,
+                        separators.toArray(new Line[separators.size()]));
+            }
+            else
+            {
+                WindowBuilder.printBoxed(display, output, y, x, border);
+            }
         }
         else
         {

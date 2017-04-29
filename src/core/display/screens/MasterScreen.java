@@ -32,8 +32,8 @@ public class MasterScreen extends Screen
         super(d);
         score = 0;
         subscreen = null;
-        output = new core.display.AlignedWindow(display, 10, display.getCharHeight() / 4,
-                new Border(2), new ArrayList<>());
+        output = new core.display.AlignedWindow(display, 10,
+                display.getCharHeight() / 4, new Border(2), new ArrayList<>());
         
         output.add("Earn points with Enter.");
         output.add("Press Ctrl+T to toggle the terminal.");
@@ -107,10 +107,10 @@ public class MasterScreen extends Screen
             case KeyEvent.VK_T:
                 if (key.isControlDown())
                 {
-                    subscreen = new Terminal(new PopupWindow(display,
-                            3 * (display.getCharHeight() / 4),
-                            new Border(1, Color.RED, Color.BLUE)),
-                            "Your Input: ", display.getCharWidth());
+                    subscreen = new AlignedTerminal(new AlignedWindow(display,
+                            10, 3 * (display.getCharHeight() / 4),
+                            new Border(1)), new ColorSet("Your Input: "),
+                            display.getCharWidth(), Color.YELLOW);
                     break;
                 }
                 // Skip case if control was not pressed

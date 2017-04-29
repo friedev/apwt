@@ -58,6 +58,18 @@ public class ColorSet implements CharSequence
     public List getSet()
         {return set;}
     
+    public ColorSet add(char c)
+        {set.add(new ColorChar(c)); return this;}
+    
+    public ColorSet add(String s)
+        {return add(new ColorSet(s));}
+    
+    public ColorSet add(ColorString s)
+        {return add(new ColorSet(s));}
+    
+    public ColorSet add(ColorSet s)
+        {set.addAll(Arrays.asList(s.toCharArray())); return this;}
+    
     /**
      * Returns the first ColorChar found in the ColorSet with a character that
      * matches the one provided.
