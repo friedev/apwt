@@ -1,7 +1,7 @@
 package core.display.screens;
 
 import core.display.ColorString;
-import core.display.PopupWindow;
+import core.display.Window;
 import java.awt.event.KeyEvent;
 
 /**
@@ -12,28 +12,27 @@ public class Terminal extends Screen
 {
     /** The StringBuilder where all keypresses are added. */
     private StringBuilder input;
-    /** The PopupWindow through which all output is displayed. */
-    private PopupWindow output;
+    /** The Window through which all output is displayed. */
+    private Window output;
     /** The String printed before the entered input is shown to the user. */
     private String prompt;
     /** The input length at which the Terminal will not accept any new input. */
     private int maxInputLength;
     
     /**
-     * Creates a Terminal with the given PopupWindow, prompt, and maximum
-     * length.
-     * @param w the Terminal's output PopupWindow
-     * @param p the Terminal's prompt
-     * @param l the Terminal's maximum length, counting Window borders and the
-     * prompt
+     * Creates a Terminal with the given Window, prompt, and maximum length.
+     * @param output the Terminal's output window
+     * @param prompt the Terminal's prompt
+     * @param length the Terminal's maximum length, counting Window borders and
+     * the prompt
      */
-    public Terminal(PopupWindow w, String p, int l)
+    public Terminal(Window output, String prompt, int length)
     {
-        super(w.getDisplay());
+        super(output.getDisplay());
         input  = new StringBuilder();
-        output = w;
-        prompt = p;
-        maxInputLength = l;
+        this.output = output;
+        this.prompt = prompt;
+        maxInputLength = length;
         
         if (prompt != null)
             maxInputLength -= prompt.length();
@@ -41,34 +40,34 @@ public class Terminal extends Screen
         if (output.isBordered())
             maxInputLength -= 2;
         
-        output.add(new ColorString(prompt));
+        output.add(prompt);
     }
     
     /**
-     * Creates a Terminal with the given PopupWindow and maximum length, but no
+     * Creates a Terminal with the given Window and maximum length, but no
      * prompt.
-     * @param w the Terminal's output PopupWindow
-     * @param l the Terminal's maximum length, counting Window borders
+     * @param output the Terminal's output window
+     * @param length the Terminal's maximum length, counting Window borders
      */
-    public Terminal(PopupWindow w, int l)
-        {this(w, "", l);}
+    public Terminal(Window output, int length)
+        {this(output, "", length);}
     
     /**
-     * Creates a Terminal with the given PopupWindow and prompt, using the width
-     * of the Display as the maximum length.
-     * @param w the Terminal's output PopupWindow
-     * @param p the Terminal's prompt
+     * Creates a Terminal with the given Window and prompt, using the width of
+     * the Display as the maximum length.
+     * @param output the Terminal's output window
+     * @param prompt the Terminal's prompt
      */
-    public Terminal(PopupWindow w, String p)
-        {this(w, p, w.getDisplay().getCharWidth());}
+    public Terminal(Window output, String prompt)
+        {this(output, prompt, output.getDisplay().getCharWidth());}
     
     /**
      * Creates a Terminal with no prompt and the width of the Display as the
      * maximum length.
-     * @param w the Terminal's output PopupWindow
+     * @param window the Terminal's output window
      */
-    public Terminal(PopupWindow w)
-        {this(w, "", w.getDisplay().getCharWidth());}
+    public Terminal(Window window)
+        {this(window, "", window.getDisplay().getCharWidth());}
     
     @Override
     public void displayOutput()
@@ -105,4 +104,7 @@ public class Terminal extends Screen
         output.set(0, new ColorString(prompt + input.toString()));
         return this;
     }
+    
+    public Window getWindow()
+        {return output;}
 }
