@@ -3,41 +3,52 @@ package map;
 import core.display.ColorChar;
 import core.display.ExtChars;
 import asciiPanel.AsciiPanel;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum TileType
 {
-    FLOOR(new ColorChar(ExtChars.DOT, AsciiPanel.white), "A dirt and rock cave floor.", new TileProperty[]{TileProperty.OPEN, TileProperty.TRANSPARENT}),
-    WALL(new ColorChar(ExtChars.BLOCK, AsciiPanel.brightBlack), "A dirt and rock cave wall."),
-    BOUNDS(new ColorChar('x', AsciiPanel.brightBlack), "Beyond the edge of the world."),
-    STAIRS_DOWN(new ColorChar('>', AsciiPanel.brightWhite), "A stone staircase that goes down."),
-    STAIRS_UP(new ColorChar('<', AsciiPanel.brightWhite), "A stone staircase that goes up."),
-    UNKNOWN(new ColorChar(' ', AsciiPanel.white), "(unknown)");
-
+    FLOOR(new ColorChar(ExtChars.DOT, AsciiPanel.white),
+            new TileProperty[]{TileProperty.OPEN, TileProperty.TRANSPARENT}),
+    WALL(new ColorChar(ExtChars.BLOCK, AsciiPanel.brightBlack), -1),
+    BOUNDS(new ColorChar('x', AsciiPanel.brightBlack), -1),
+    STAIRS_DOWN(new ColorChar('>', AsciiPanel.brightWhite)),
+    STAIRS_UP(new ColorChar('<', AsciiPanel.brightWhite)),
+    UNKNOWN(new ColorChar(' ', AsciiPanel.white));
+    
     private ColorChar glyph;
-    private String description;
+    private int moveCost;
     private List<TileProperty> properties;
 
-    TileType(ColorChar glyph, String description, List<TileProperty>
-            properties)
+    TileType(ColorChar glyph, int moveCost, List<TileProperty> properties)
     {
         this.glyph = glyph;
-        this.description = description;
+        this.moveCost = moveCost;
         this.properties = properties;
     }
     
-    TileType(ColorChar glyph, String description, TileProperty[] properties)
-        {this(glyph, description, java.util.Arrays.asList(properties));}
+    TileType(ColorChar glyph, int moveCost, TileProperty[] properties)
+        {this(glyph, moveCost, Arrays.asList(properties));}
 
-    TileType(ColorChar glyph, String description)
-        {this(glyph, description, new java.util.ArrayList<>());}
+    TileType(ColorChar glyph, int moveCost)
+        {this(glyph, moveCost, new ArrayList<>());}
+    
+    TileType(ColorChar glyph, List<TileProperty> properties)
+        {this(glyph, Map.TILE_COST, properties);}
+    
+    TileType(ColorChar glyph, TileProperty[] properties)
+        {this(glyph, Map.TILE_COST, properties);}
+
+    TileType(ColorChar glyph)
+        {this(glyph, Map.TILE_COST);}
 
     public ColorChar getGlyph()
         {return glyph;}
-
-    public String describe()
-        {return description;}
-
+    
+    public int getMoveCost()
+        {return moveCost;}
+    
     public List<TileProperty> getProperties()
         {return properties;}
     

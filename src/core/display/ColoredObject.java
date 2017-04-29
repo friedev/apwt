@@ -35,6 +35,18 @@ public abstract class ColoredObject
     public ColoredObject()
         {this(null, null);}
     
+    public void setForeground(Color color)
+        {foreground = color;}
+    
+    public void setBackground(Color color)
+        {background = color;}
+    
+    public void setColors(Color foreground, Color background)
+    {
+        this.foreground = foreground;
+        this.background = background;
+    }
+    
     /**
      * Sets any unspecified (null) colors of the ColoredObject to the default
      * colors of the provided AsciiPanel.

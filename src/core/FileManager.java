@@ -219,7 +219,7 @@ public abstract class FileManager
                 return null;
             }
             
-            return getLine(target, Main.random.get().nextInt(lineCounter));
+            return getLine(target, Main.rng.nextInt(lineCounter));
         }
         catch (FileNotFoundException fnf)
         {

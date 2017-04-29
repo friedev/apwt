@@ -1,7 +1,7 @@
 package core.display;
 
-import core.Point;
 import java.util.ArrayList;
+import squidpony.squidmath.Coord;
 
 /** A tool for creating bordered windows and other shapes. */
 public abstract class WindowBuilder
@@ -20,7 +20,7 @@ public abstract class WindowBuilder
      * share y values, and the opposite is true with x values
      * @return true if the Line was successfully drawn
      */
-    public static boolean drawLine(Display display, Point end1, Point end2,
+    public static boolean drawLine(Display display, Coord end1, Coord end2,
             Line border)
     {
         if (end1.equals(end2) || (end1.x != end2.x && end1.y != end2.y) ||
@@ -50,7 +50,7 @@ public abstract class WindowBuilder
             }
             
             for (int i = start + 1; i < end; i++)
-                display.write(border.line, new Point(end1.x, i),
+                display.write(border.line, Coord.get(end1.x, i),
                         border.foreground, border.background);
         }
         else
@@ -67,7 +67,7 @@ public abstract class WindowBuilder
             }
             
             for (int i = start + 1; i < end; i++)
-                display.write(border.line, new Point(i, end1.y),
+                display.write(border.line, Coord.get(i, end1.y),
                         border.foreground, border.background);
         }
         
@@ -84,8 +84,8 @@ public abstract class WindowBuilder
      * @param border the characters of the Border
      * @return true if the Border was successfully drawn
      */
-    public static boolean drawBorder(Display display, Point corner1,
-            Point corner2, Border border)
+    public static boolean drawBorder(Display display, Coord corner1,
+            Coord corner2, Border border)
     {
         if (corner1.equals(corner2) || corner1.x == corner2.x ||
                 corner1.y == corner2.y ||
@@ -93,38 +93,38 @@ public abstract class WindowBuilder
                 !display.contains(corner2))
             return false;
         
-        Point tl, tr, bl, br;
+        Coord tl, tr, bl, br;
         if (corner1.y < corner2.y) // corner1 is above corner2
         {
             if (corner1.x < corner2.x) // corner1 is left of corner2
             {
                 tl = corner1;
-                tr = new Point(corner2.x, corner1.y);
-                bl = new Point(corner1.x, corner2.y);
+                tr = Coord.get(corner2.x, corner1.y);
+                bl = Coord.get(corner1.x, corner2.y);
                 br = corner2;
             }
             else // corner1 is right of corner2
             {
-                tl = new Point(corner2.x, corner1.y);
+                tl = Coord.get(corner2.x, corner1.y);
                 tr = corner1;
                 bl = corner2;
-                br = new Point(corner1.x, corner2.y);
+                br = Coord.get(corner1.x, corner2.y);
             }
         }
         else // corner1 is below corner2
         {
             if (corner1.x < corner2.x) // corner1 is left of corner2
             {
-                tl = new Point(corner1.x, corner2.y);
+                tl = Coord.get(corner1.x, corner2.y);
                 tr = corner2;
                 bl = corner1;
-                br = new Point(corner2.x, corner1.y);
+                br = Coord.get(corner2.x, corner1.y);
             }
             else // corner1 is right of corner2
             {
                 tl = corner2;
-                tr = new Point(corner1.x, corner2.y);
-                bl = new Point(corner2.x, corner1.y);
+                tr = Coord.get(corner1.x, corner2.y);
+                bl = Coord.get(corner2.x, corner1.y);
                 br = corner1;
             }
         }
@@ -170,8 +170,8 @@ public abstract class WindowBuilder
      * @param width the width of the Border to draw; must be 1 or 2
      * @return true if the Border was successfully drawn
      */
-    public static boolean drawBorder(Display display, Point corner1,
-            Point corner2, int width)
+    public static boolean drawBorder(Display display, Coord corner1,
+            Coord corner2, int width)
         {return drawBorder(display, corner1, corner2, new Border(width));}
     
     /**
@@ -184,8 +184,8 @@ public abstract class WindowBuilder
      * first corner, share no axis values, and be on the display
      * @return true if the Border was successfully drawn
      */
-    public static boolean drawBorder(Display display, Point corner1,
-            Point corner2)
+    public static boolean drawBorder(Display display, Coord corner1,
+            Coord corner2)
         {return drawBorder(display, corner1, corner2, DEFAULT_LINES);}
     
     /**
@@ -203,7 +203,7 @@ public abstract class WindowBuilder
     public static boolean printBoxed(Display display, ColorSet[] text,
             int topLine, int leftIndent, Border border, Line[] separators)
     {
-        if (!display.contains(new Point(topLine - 1, leftIndent - 1)) ||
+        if (!display.contains(Coord.get(topLine - 1, leftIndent - 1)) ||
                 text == null || text.length == 0)
             return false;
         
@@ -236,15 +236,15 @@ public abstract class WindowBuilder
         int overallMaxLength = 0;
         int curMaxLines  = blocks[0].size();
         int overallLines = blocks[0].size();
-        Point[] endpoints = null; // Suppresses undefined warning
+        Coord[] endpoints = null; // Suppresses undefined warning
         if (separators != null)
-            endpoints = new Point[separators.length * 2];
+            endpoints = new Coord[separators.length * 2];
         
         for (int block = 0; block < blocks.length; block++)
         {
             display.write(blocks[block].toArray(
                     new ColorSet[blocks[block].size()]),
-                    new Point(curIndent, curLine));
+                    Coord.get(curIndent, curLine));
             
             int curMaxLength = 0;
             for (ColorSet line: blocks[block])
@@ -269,10 +269,10 @@ public abstract class WindowBuilder
                 {
                     curIndent = leftIndent;
 
-                    endpoints[block * 2] = new Point(leftIndent - 1,
+                    endpoints[block * 2] = Coord.get(leftIndent - 1,
                             curLine + curMaxLines);
                     endpoints[block * 2 + 1] =
-                            new Point(curIndent + overallMaxLength,
+                            Coord.get(curIndent + overallMaxLength,
                                     curLine + curMaxLines);
 
                     curLine += curMaxLines + 1;
@@ -283,8 +283,8 @@ public abstract class WindowBuilder
                 {
                     curIndent += curMaxLength + 1;
 
-                    endpoints[block * 2] = new Point(curIndent - 1, curLine - 1);
-                    endpoints[block * 2 + 1] = new Point(curIndent - 1,
+                    endpoints[block * 2] = Coord.get(curIndent - 1, curLine - 1);
+                    endpoints[block * 2 + 1] = Coord.get(curIndent - 1,
                             curLine + curMaxLines);
 
                     // line counts stay the same
@@ -304,8 +304,8 @@ public abstract class WindowBuilder
         if (border != null)
         {
             returnValue = returnValue && WindowBuilder.drawBorder(display,
-                    new Point(leftIndent - 1, topLine - 1),
-                    new Point(leftIndent + overallMaxLength,
+                    Coord.get(leftIndent - 1, topLine - 1),
+                    Coord.get(leftIndent + overallMaxLength,
                             topLine + overallLines), border);
         }
         
@@ -501,15 +501,15 @@ public abstract class WindowBuilder
         display.writeCenter(text, topLine);
         
         boolean returnValue = WindowBuilder.drawBorder(display,
-                new Point(center - offsetLeft - 1, topLine - 1),
-                new Point(center + offsetRight, topLine + text.length), border);
+                Coord.get(center - offsetLeft - 1, topLine - 1),
+                Coord.get(center + offsetRight, topLine + text.length), border);
         
         if (separator != null)
             for (int line = 0; line < text.length; line++)
                 if (text[line] == null)
                     drawLine(display,
-                            new Point(center - offsetLeft - 1, topLine + line),
-                            new Point(center + offsetRight, topLine + line),
+                            Coord.get(center - offsetLeft - 1, topLine + line),
+                            Coord.get(center + offsetRight, topLine + line),
                             separator);
         
         return returnValue;

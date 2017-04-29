@@ -1,6 +1,7 @@
 package core;
 
 import java.util.Scanner;
+import squidpony.squidmath.Coord;
 
 /** A prompt that manages input and output. */
 public abstract class Prompt
@@ -283,7 +284,7 @@ public abstract class Prompt
      * the resulting point.
      * @return a point with an x and y coordinate specified by the player
      */
-    public static core.Point getPointInput()
+    public static Coord getPointInput()
     {
         Integer x = getIntInput("X Coordinate");
         if (x == null)
@@ -293,7 +294,7 @@ public abstract class Prompt
         if (y == null)
             return null;
         
-        return new core.Point(x, y);
+        return Coord.get(x, y);
     }
     
     /**

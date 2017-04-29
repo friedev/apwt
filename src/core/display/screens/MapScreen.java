@@ -1,16 +1,16 @@
 package core.display.screens;
 
-import core.Point;
 import core.display.ColorChar;
 import core.display.ColorSet;
 import core.display.Display;
-import core.display.ExtChars;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import map.Entity;
 import map.Map;
 import map.TileProperty;
 import map.TileType;
+import squidpony.squidgrid.Direction;
+import squidpony.squidmath.Coord;
 
 /**
  * 
@@ -39,6 +39,38 @@ public class MapScreen extends Screen
     @Override
     public void displayOutput()
     {
+        char[][] testMap = new squidpony.squidgrid.mapping.SpillWorldMap(48, 48, "Earth").generate(3);
+        ColorChar[][] glyphMap = new ColorChar[testMap.length][testMap[0].length];
+        for (int y = 0; y < testMap.length; y++)
+        {
+            for (int x = 0; x < testMap[y].length; x++)
+            {
+                glyphMap[y][x] = new ColorChar(testMap[y][x]);
+                /*
+                switch (testMap[y][x])
+                {
+                    case '~':
+                        glyphMap[y][x].setColors(AsciiPanel.brightBlue, AsciiPanel.blue);
+                        break;
+                    case '%':
+                        glyphMap[y][x].setColors(AsciiPanel.green, AsciiPanel.green);
+                        break;
+                    case 'A':
+                        glyphMap[y][x].setColors(AsciiPanel.brightRed, AsciiPanel.green);
+                        break;
+                    case 'B':
+                        glyphMap[y][x].setColors(AsciiPanel.brightYellow, AsciiPanel.green);
+                        break;
+                    case 'C':
+                        glyphMap[y][x].setColors(AsciiPanel.brightGreen, AsciiPanel.green);
+                        break;
+                }
+                */
+            }
+        }
+        display.write(ColorSet.toColorSetArray(glyphMap), Coord.get(0, 0));
+        
+        /*
         if (heightmap == null)
         {
             display.write(ColorSet.toColorSetArray(map.toGlyphs(
@@ -61,6 +93,7 @@ public class MapScreen extends Screen
                         new Point(0, 0));
             }
         }
+        */
     }
 
     @Override
@@ -79,7 +112,7 @@ public class MapScreen extends Screen
                     break;
                 }
             case KeyEvent.VK_K: case KeyEvent.VK_W: case KeyEvent.VK_NUMPAD8:
-                player.moveNorth();
+                player.changeLocation(Direction.UP);
                 break;
             case KeyEvent.VK_DOWN:
                 if (key.isControlDown())
@@ -92,27 +125,27 @@ public class MapScreen extends Screen
                     break;
                 }
             case KeyEvent.VK_J: case KeyEvent.VK_S: case KeyEvent.VK_NUMPAD2:
-                player.moveSouth();
+                player.changeLocation(Direction.DOWN);
                 break;
             case KeyEvent.VK_LEFT: case KeyEvent.VK_H: case KeyEvent.VK_A: 
             case KeyEvent.VK_NUMPAD4:
-                player.moveWest();
+                player.changeLocation(Direction.LEFT);
                 break;
             case KeyEvent.VK_RIGHT: case KeyEvent.VK_L: case KeyEvent.VK_D:
             case KeyEvent.VK_NUMPAD6:
-                player.moveEast();
+                player.changeLocation(Direction.RIGHT);
                 break;
             case KeyEvent.VK_Y: case KeyEvent.VK_NUMPAD7:
-                player.moveNorthwest();
+                player.changeLocation(Direction.UP_LEFT);
                 break;
             case KeyEvent.VK_U: case KeyEvent.VK_NUMPAD9:
-                player.moveNortheast();
+                player.changeLocation(Direction.UP_RIGHT);
                 break;
             case KeyEvent.VK_B: case KeyEvent.VK_NUMPAD1:
-                player.moveSouthwest();
+                player.changeLocation(Direction.DOWN_LEFT);
                 break;
             case KeyEvent.VK_N: case KeyEvent.VK_NUMPAD3:
-                player.moveSoutheast();
+                player.changeLocation(Direction.DOWN_RIGHT);
                 break;
             case KeyEvent.VK_X:
                 showUI = !showUI;

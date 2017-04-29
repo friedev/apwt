@@ -2,6 +2,7 @@ package core.display;
 
 import java.util.ArrayList;
 import java.util.List;
+import squidpony.squidmath.Coord;
 
 /**
  * A class used to display text at a certain location, optionally with a border
@@ -74,7 +75,7 @@ public class Window
         }
         else
         {
-            display.write(output, new core.Point(x, y));
+            display.write(output, Coord.get(x, y));
         }
     }
     

@@ -1,18 +1,26 @@
 package map;
 
-import core.Point;
 import core.Console;
 import core.Main;
 import core.display.ColorChar;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import squidpony.squidmath.AStarSearch;
+import squidpony.squidmath.Coord;
 
 /** A two-dimensional array of tiles that can be traversed by entities. */
 public class Map
 {
+    /** The default number of moves that tiles cost to move to. */
+    public static final int TILE_COST = 100;
+    
+    /** The default number of moves that entities gain each turn. */
+    public static final int ENTITY_SPEED = 10;
+    
     private Tile[][] tiles;
     private final int offset;
     private List<Entity> entities;
+    private AStarSearch search;
     
     /**
      * Generates a map of a specified size.
@@ -22,7 +30,8 @@ public class Map
     {
         tiles = new Tile[size][size];
         offset = (int) Math.floor((double) tiles.length / 2.0);
-        entities = new ArrayList<>();
+        entities = new LinkedList<>();
+        search = new AStarSearch(toCosts(), AStarSearch.SearchType.DIJKSTRA);
         
         // Initialize all Tiles on the map
         for (int y = 0; y < tiles.length; y++)
@@ -34,7 +43,8 @@ public class Map
     {
         this.tiles = new Tile[tiles.length][tiles[0].length];
         offset = (int) Math.floor((double) this.tiles.length / 2.0);
-        entities = new ArrayList<>();
+        entities = new LinkedList<>();
+        search = new AStarSearch(toCosts(), AStarSearch.SearchType.DIJKSTRA);
         
         // Initialize all Tiles on the map
         for (int y = 0; y < this.tiles.length; y++)
@@ -42,26 +52,41 @@ public class Map
                 this.tiles[y][x] = new Tile(tiles[y][x]);
     }
     
-    public Tile[][] toArray() {return tiles;                         }
-    public int      getMinY() {return -offset;                       }
-    public int      getMaxY() {return (tiles.length -  1) - offset;  }
-    public int      getMinX() {return -offset;                       }
-    public int      getMaxX() {return (tiles[0].length - 1) - offset;}
+    public Tile[][] toArray()
+        {return tiles;}
     
-    public int getXSize() {return tiles[0].length;}
-    public int getYSize() {return tiles.length;}
+    public int getMinY()
+        {return -offset;}
+    
+    public int getMaxY()
+        {return (tiles.length -  1) - offset;}
+    
+    public int getMinX()
+        {return -offset;}
+    
+    public int getMaxX()
+        {return (tiles[0].length - 1) - offset;}
+    
+    public int getXSize()
+        {return tiles[0].length;}
+    
+    public int getYSize()
+        {return tiles.length;}
     
     public Tile tileAt(int x, int y)
         {return tiles[-y + offset][x + offset];}
     
-    public Tile tileAt(Point p)
-        {return tileAt(p.x, p.y);}
+    public Tile tileAt(Coord c)
+        {return tileAt(c.x, c.y);}
     
-    public Point convertToIndex(Point coordinates)
-        {return new Point(coordinates.x + offset, -coordinates.y + offset);}
+    public AStarSearch search()
+        {return search;}
     
-    public Point convertToCoordinates(Point index)
-        {return new Point(index.x - offset, -(index.y - offset));}
+    public Coord coordToIndex(Coord coordinates)
+        {return Coord.get(coordinates.x + offset, -coordinates.y + offset);}
+    
+    public Coord indexToCoord(Coord index)
+        {return Coord.get(index.x - offset, -(index.y - offset));}
     
     /**
      * Returns true if the specified coordinates are on the map.
@@ -78,11 +103,11 @@ public class Map
     /**
      * Performs the same function as contains(int, int), except that it uses a
      * predefined point's coordinates.
-     * @param p the point to use coordinates from
+     * @param c the coordinates
      * @return true if the point is on the map
      */
-    public boolean contains(Point p)
-        {return contains(p.x, p.y);}
+    public boolean contains(Coord c)
+        {return contains(c.x, c.y);}
     
     public void addEntity(Entity e)
     {
@@ -92,6 +117,13 @@ public class Map
     
     public void removeEntity(Entity e)
         {entities.remove(e);}
+    
+    public void update()
+    {
+        for (Entity entity: entities)
+            entity.update();
+    }
+        
     
     /** Prints the tile symbols and a border. */
     public void print()
@@ -105,7 +137,7 @@ public class Map
         }
     }
     
-    public ColorChar[][] toGlyphs(Point start, Point end)
+    public ColorChar[][] toGlyphs(Coord start, Coord end)
     {
         if (start.x > end.x || start.y > end.y)
             return null;
@@ -120,7 +152,7 @@ public class Map
         
         for (Entity entity: entities)
         {
-            Point index = convertToIndex(entity.getLocation());
+            Coord index = coordToIndex(entity.getLocation());
             if (index.x >= start.x && index.x < end.x &&
                     index.y >= start.y && index.y < end.y)
                 glyphs[index.y - start.y][index.x - start.x] = entity.getGlyph();
@@ -129,10 +161,10 @@ public class Map
         return glyphs;
     }
     
-    public ColorChar[][] toGlyphs(Point center, int displayWidth,
+    public ColorChar[][] toGlyphs(Coord center, int displayWidth,
             int displayHeight)
     {
-        Point centerIndex = convertToIndex(center);
+        Coord centerIndex = coordToIndex(center);
         
         int startX = Math.max(0, Math.min(centerIndex.x - displayWidth / 2,
                 getXSize() - displayWidth));
@@ -141,10 +173,10 @@ public class Map
         int endX = Math.min(getXSize(), startX + displayWidth);
         int endY = Math.min(getYSize(), startY + displayHeight);
 
-        return toGlyphs(new Point(startX, startY), new Point(endX, endY));
+        return toGlyphs(Coord.get(startX, startY), Coord.get(endX, endY));
     }
     
-    public ColorChar[][] toGlyphs(Point center, core.display.Display display)
+    public ColorChar[][] toGlyphs(Coord center, core.display.Display display)
     {
         return toGlyphs(center, display.getCharWidth(),
                 display.getCharHeight());
@@ -152,17 +184,26 @@ public class Map
     
     public ColorChar[][] toGlyphs()
     {
-        return toGlyphs(new Point(0, 0),
-                new Point(tiles.length - 1, tiles[0].length - 1));
+        return toGlyphs(Coord.get(0, 0),
+                Coord.get(tiles.length - 1, tiles[0].length - 1));
     }
     
-    public Point findTileWithProperty(TileProperty property)
+    public double[][] toCosts()
+    {
+        double[][] costMap = new double[tiles.length][tiles[0].length];
+        for (int y = 0; y < tiles.length; y++)
+            for (int x = 0; x < tiles[y].length; x++)
+                costMap[y][x] = (double) tiles[y][x].getType().getMoveCost();
+        return costMap;
+    }
+    
+    public Coord findTileWithProperty(TileProperty property)
     {
         for (int tries = 0; tries < 50; tries++)
         {
-            Point testPoint = convertToCoordinates(new Point(
-                    Main.random.get().nextInt(getXSize()),
-                    Main.random.get().nextInt(getYSize())));
+            Coord testPoint = indexToCoord(Coord.get(
+                    Main.rng.nextInt(getXSize()),
+                    Main.rng.nextInt(getYSize())));
             
             if (tileAt(testPoint).getType().getProperties().contains(property))
                 return testPoint;
@@ -178,7 +219,7 @@ public class Map
         
         for (int x = 0; x < size; x++)
             for (int y = 0; y < size; y++)
-                tiles[x][y] = Main.random.get().nextBoolean() ? floor : wall;
+                tiles[x][y] = Main.rng.nextBoolean() ? floor : wall;
         
         for (int i = 0; i < smoothing; i++)
             tiles = smoothCaves(tiles, floor, wall);
@@ -232,11 +273,11 @@ public class Map
                 heightmap[x][y] = 0;
         
         // Setup points in the 4 corners of the map
-        Point[] corners = new Point[] {new Point(0, 0), new Point (0, size - 1),
-                new Point(size - 1, 0), new Point(size - 1, size - 1)};
+        Coord[] corners = new Coord[] {Coord.get(0, 0), Coord.get (0, size - 1),
+                Coord.get(size - 1, 0), Coord.get(size - 1, size - 1)};
         
-        for (Point corner: corners)
-            heightmap[corner.y][corner.x] = Main.random.get().nextInt(range);
+        for (Coord corner: corners)
+            heightmap[corner.y][corner.x] = Main.rng.nextInt(range);
         
         // Do the midpoint
         heightmap = midpoint(heightmap, 0, 0, size - 1, size - 1);
@@ -282,30 +323,28 @@ public class Map
         int c2 = heightmap[x2][y1];
         int c3 = heightmap[x2][y2];
         int c4 = heightmap[x1][y2];
-
-        java.util.Random r = Main.random.get();
         
         // If not already defined, work out the midpoints of the corners of
         // the rectangle by means of an average plus a random number
         if (heightmap[midx][y1] == 0)
            heightmap[midx][y1] = Math.max(0,
-                   ((c1 + c2 + r.nextInt(dist) - hdist) / 2));
+                   ((c1 + c2 + Main.rng.nextInt(dist) - hdist) / 2));
         
         if (heightmap[midx][y2] == 0)
            heightmap[midx][y2] = Math.max(0,
-                   ((c4 + c3 + r.nextInt(dist) - hdist) / 2));
+                   ((c4 + c3 + Main.rng.nextInt(dist) - hdist) / 2));
         
         if (heightmap[x1][midy] == 0)
            heightmap[x1][midy] = Math.max(0,
-                   ((c1 + c4 + r.nextInt(dist) - hdist) / 2));
+                   ((c1 + c4 + Main.rng.nextInt(dist) - hdist) / 2));
         
         if (heightmap[x2][midy] == 0)
            heightmap[x2][midy] = Math.max(0,
-                   ((c2 + c3 + r.nextInt(dist) - hdist) / 2));
+                   ((c2 + c3 + Main.rng.nextInt(dist) - hdist) / 2));
 
         // Work out the middle point
         heightmap[midx][midy] = Math.max(0,
-                ((c1 + c2 + c3 + c4 + r.nextInt(dist) - hdist) / 4));
+                ((c1 + c2 + c3 + c4 + Main.rng.nextInt(dist) - hdist) / 4));
 
         // Now divide this rectangle into 4, and call again for each smaller
         // rectangle

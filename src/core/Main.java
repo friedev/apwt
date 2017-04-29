@@ -2,6 +2,7 @@ package core;
 
 import core.display.Display;
 import core.storage.Commands;
+import squidpony.squidmath.RNG;
 
 /**
  * A sample main class that contains the basic components of the library to get
@@ -23,7 +24,7 @@ public class Main
     // FIELDS
     
     /** The random generator. */
-    public static SeededRandom random;
+    public static RNG rng;
     
     // METHODS
     
@@ -33,14 +34,23 @@ public class Main
      */
     public static void main(String[] args)
     {
-        random = new SeededRandom();
-        Display display = new Display().init();
+        rng = new RNG();
+        new Display().init();
         
         /*
         // Item Definition Demo
         for (String line: new items.ContainerItem("The Container",
                 "The one container to rule them all.", 10000, 25, 100).define())
             Console.println(line);
+        */
+        
+        /*
+        // WeightedLetterNamegen Test - needs more samples!
+        WeightedLetterNamegen generator = new WeightedLetterNamegen(
+                new String[]{"Boldorf", "Dalian", "Renovhir", "Islix",
+                    "Galandor", "Keltzquin", "Mogrithe"});
+        for (int i = 0; i < 50; i++)
+            Console.println(generator.generate()[0]);
         */
         
         /*
