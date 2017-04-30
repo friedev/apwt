@@ -1,11 +1,21 @@
 package corelib;
 
+import corelib.storage.Commands;
 import java.util.Scanner;
 import squidpony.squidmath.Coord;
 
 /** A prompt that manages input and output. */
 public abstract class Prompt
 {
+    /** The number of spaces used to indent notifications. */
+    public static final int INDENT_NOTIFICATION = 2;
+    
+    /** The number of spaces used to indent prompts. */
+    public static final int INDENT_PROMPT = 1;
+    
+    /** The number of spaces used to indent error messages. */
+    public static final int INDENT_ERROR = 2;
+    
     /** The Scanner used to read input. */
     private static Scanner in = new Scanner(System.in);
     
@@ -68,7 +78,7 @@ public abstract class Prompt
         
         while ("".equals(input) || null == input)
         {
-            Console.println(Main.INDENT_PROMPT, "Please enter something.");
+            Console.println(INDENT_PROMPT, "Please enter something.");
             input = getInput(prompt);
         }
         
@@ -114,7 +124,7 @@ public abstract class Prompt
         
         while ("".equals(input) || null == input)
         {
-            Console.println(Main.INDENT_PROMPT, "Please enter something.");
+            Console.println(INDENT_PROMPT, "Please enter something.");
             input = getRawInput(prompt);
         }
         
@@ -148,13 +158,13 @@ public abstract class Prompt
             // No reassignment is necessary because loop will return
             String intString = getInput(indents, prompt);
 
-            if (Main.isCancel(intString))
+            if (Commands.isCancel(intString))
                 return null;
             
             Integer parsedInteger = parseInt(intString);
             if (parsedInteger == null)
             {
-                Console.println(Main.INDENT_ERROR,
+                Console.println(INDENT_ERROR,
                         "Invalid numerical format. Enter an integer.");
                 completed = false;
             }
@@ -216,7 +226,7 @@ public abstract class Prompt
     {
         Integer parsedInt = parseInt(intString);
         if (parsedInt == null)
-            Main.quitWithMessage(quitMessage);
+            Console.quitWithMessage(quitMessage);
         else
             return parsedInt;
         
@@ -250,7 +260,7 @@ public abstract class Prompt
                 case "no": case "n":
                     return false;
                 default:
-                    Console.println(Main.INDENT_ERROR,
+                    Console.println(INDENT_ERROR,
                             "Invalid choice. Enter Y or N.");
                     break;
             }
@@ -273,7 +283,7 @@ public abstract class Prompt
             case "no": case "n":
                 return false;
             default:
-                Console.println(Main.INDENT_ERROR,
+                Console.println(INDENT_ERROR,
                         "Invalid choice. Enter Y or N.");
                 return getYNInput(prompt);
         }
@@ -304,8 +314,8 @@ public abstract class Prompt
      */
     public static void printNotification(String message)
     {
-        Console.println(Main.INDENT_NOTIFICATION, message);
-        Prompt.enterTo(Main.INDENT_NOTIFICATION, "continue");
+        Console.println(INDENT_NOTIFICATION, message);
+        Prompt.enterTo(INDENT_NOTIFICATION, "continue");
     }
     
     /**
@@ -317,8 +327,8 @@ public abstract class Prompt
      */
     public static boolean printNotificationQuery(String message, String prompt)
     {
-        Console.println(Main.INDENT_PROMPT, message);
-        return Prompt.getYNInput(Main.INDENT_PROMPT, prompt);
+        Console.println(INDENT_PROMPT, message);
+        return Prompt.getYNInput(INDENT_PROMPT, prompt);
     }
     
     /**

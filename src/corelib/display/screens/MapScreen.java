@@ -10,7 +10,9 @@ import corelib.map.Map;
 import corelib.map.TileProperty;
 import corelib.map.TileType;
 import squidpony.squidgrid.Direction;
+import squidpony.squidgrid.mapping.HeightMapFactory;
 import squidpony.squidmath.Coord;
+import squidpony.squidmath.RNG;
 
 /**
  * 
@@ -25,7 +27,7 @@ public class MapScreen extends Screen
     private double variationExponent;
     private Map map;
     private Entity player;
-    private int[][] heightmap;
+    private double[][] heightmap;
 
     public MapScreen(Display display)
     {
@@ -69,6 +71,8 @@ public class MapScreen extends Screen
             }
         }
         display.write(ColorSet.toColorSetArray(glyphMap), Coord.get(0, 0));
+        
+        
         
         /*
         if (heightmap == null)
@@ -167,14 +171,13 @@ public class MapScreen extends Screen
     {
         if (height)
         {
-            heightmap = Map.generateHeightmap(Math.min(display.getCharHeight(),
-                    display.getCharWidth()), 128, variationExponent);
+            heightmap = HeightMapFactory.heightMap(48, 48, 0);
             map = null;
         }
         else
         {
             map = Map.generateCave(301, smoothness, TileType.FLOOR,
-                    TileType.WALL);
+                    TileType.WALL, new RNG());
             player = new Entity("Player", map,
                     map.findTileWithProperty(TileProperty.OPEN),
                     new ColorChar('@', Color.white));

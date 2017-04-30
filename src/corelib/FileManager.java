@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.Scanner;
+import squidpony.squidmath.RNG;
 
 /**
  * A class to manage multiple aspects of files, primarily saving and loading,
@@ -37,7 +38,7 @@ public abstract class FileManager
      */
     public static String findPath()
     {
-        String jarPath = Main.class.getProtectionDomain().getCodeSource()
+        String jarPath = FileManager.class.getProtectionDomain().getCodeSource()
                 .getLocation().getPath();
         jarPath = jarPath.substring(0, jarPath.lastIndexOf("/") + 1);
         
@@ -74,11 +75,11 @@ public abstract class FileManager
         }
         catch (FileNotFoundException fnf)
         {
-            Main.quitWithMessage("File not found at " + path + target);
+            Console.quitWithMessage("File not found at " + path + target);
         }
         catch (IOException io)
         {
-            Main.quitWithMessage("Error encountered while creating or "
+            Console.quitWithMessage("Error encountered while creating or "
                     + "processing " + path + target);
         }
         
@@ -97,7 +98,7 @@ public abstract class FileManager
         {
             if (target == null)
             {
-                Main.quitWithMessage("No file name was supplied as saving "
+                Console.quitWithMessage("No file name was supplied as saving "
                         + "destination.");
                 return; // Not reached, prevents null pointer warnings
             }
@@ -115,11 +116,11 @@ public abstract class FileManager
         }
         catch (FileNotFoundException fnf)
         {
-            Main.quitWithMessage("File not found at " + path + target);
+            Console.quitWithMessage("File not found at " + path + target);
         }
         catch (IOException io)
         {
-            Main.quitWithMessage("Error encountered while creating " + path
+            Console.quitWithMessage("Error encountered while creating " + path
                     + target);
         }
     }
@@ -161,7 +162,7 @@ public abstract class FileManager
         }
         catch (FileNotFoundException fnf)
         {
-            Main.quitWithMessage("File not found at " + path + target);
+            Console.quitWithMessage("File not found at " + path + target);
         }
         
         // NOT REACHED
@@ -191,10 +192,11 @@ public abstract class FileManager
      * Returns a random line from the designated file.
      * @param target the name of the file to return a line from, must exist, be
      * non-null, and have at least one line in it
+     * @param rng the random number generator with which to select a line
      * @return a random line from the file, null if any of the above conditions
      * are not met
      */
-    public static String getRandomLine(String target)
+    public static String getRandomLine(String target, RNG rng)
     {
         if (target == null)
             return null;
@@ -219,7 +221,7 @@ public abstract class FileManager
                 return null;
             }
             
-            return getLine(target, Main.rng.nextInt(lineCounter));
+            return getLine(target, rng.nextInt(lineCounter));
         }
         catch (FileNotFoundException fnf)
         {
