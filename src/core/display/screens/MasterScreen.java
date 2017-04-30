@@ -6,7 +6,6 @@ import core.display.ColorString;
 import java.awt.event.KeyEvent;
 import core.display.Display;
 import core.display.Line;
-import core.display.PopupWindow;
 import core.display.AlignedWindow;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -16,8 +15,10 @@ public class MasterScreen extends Screen
 {
     /** A sample gameplay mechanic. */
     private int score;
+    
     /** The Window through which output is displayed. */
     private AlignedWindow output;
+    
     /**
      * A Screen that will be processed and displayed in front of this Screen.
      */
