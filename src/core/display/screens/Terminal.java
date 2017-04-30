@@ -53,7 +53,12 @@ public abstract class Terminal<Output extends Window,
     {
         switch (key.getKeyCode())
         {
+            // Both escape (cancel) and enter (confirm) will return null to
+            // close the terminal, but escape will clear the input. This can
+            // be detected externally and reacted to appropriately.
             case KeyEvent.VK_ESCAPE:
+                input = null;
+            case KeyEvent.VK_ENTER:
                 return null;
             case KeyEvent.VK_BACK_SPACE:
                 if (input.length() > 0)
