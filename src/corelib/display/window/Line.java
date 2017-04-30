@@ -67,18 +67,18 @@ public class Line extends ColoredObject
     /**
      * Creates a Line connecting two side lines of the provided widths, along
      * with specified colors.
-     * @param h true if the connection is horizontal
+     * @param horizontal true if the connection is horizontal
      * @param side1Width the width of the first side line
      * @param side2Width the width of the second side line
      * @param lineWidth the width of the line
-     * @param f the color of the characters
-     * @param b the color of the background
+     * @param foreground the color of the characters
+     * @param background the color of the background
      */
-    public Line(boolean h, int side1Width, int side2Width, int lineWidth,
-            Color f, Color b)
+    public Line(boolean horizontal, int side1Width, int side2Width, int lineWidth,
+            Color foreground, Color background)
     {
-        super(f, b);
-        horizontal = h;
+        super(foreground, background);
+        this.horizontal = horizontal;
         
         if (horizontal)
         {
@@ -97,117 +97,127 @@ public class Line extends ColoredObject
     /**
      * Creates a Line connecting two side lines of the provided widths, along
      * with a specified foreground color.
-     * @param h true if the connection is horizontal
+     * @param horizontal true if the connection is horizontal
      * @param side1Width the width of the first side line
      * @param side2Width the width of the second side line
      * @param lineWidth the width of the line
-     * @param f the color of the characters
+     * @param foreground the color of the characters
      */
-    public Line(boolean h, int side1Width, int side2Width, int lineWidth,
-            Color f)
-        {this(h, side1Width, side2Width, lineWidth, f, null);}
+    public Line(boolean horizontal, int side1Width, int side2Width,
+            int lineWidth, Color foreground)
+        {this(horizontal, side1Width, side2Width, lineWidth, foreground, null);}
     
     /**
      * Creates a Line connecting two side lines of the provided widths, but no
      * specified colors
-     * @param h true if the connection is horizontal
+     * @param horizontal true if the connection is horizontal
      * @param side1Width the width of the first side line
      * @param side2Width the width of the second side line
      * @param lineWidth the width of the line
      */
-    public Line(boolean h, int side1Width, int side2Width, int lineWidth)
-        {this(h, side1Width, side2Width, lineWidth, null, null);}
+    public Line(boolean horizontal, int side1Width, int side2Width,
+            int lineWidth)
+        {this(horizontal, side1Width, side2Width, lineWidth, null, null);}
     
     /**
      * Creates a Line connecting two side lines of the same provided width,
      * along with specified colors.
-     * @param h true if the connection is horizontal
+     * @param horizontal true if the connection is horizontal
      * @param sideWidth the width of both side lines
      * @param lineWidth the width of the line
-     * @param f the color of the characters
-     * @param b the color of the background
+     * @param foreground the color of the characters
+     * @param background the color of the background
      */
-    public Line(boolean h, int sideWidth, int lineWidth, Color f, Color b)
-        {this(h, sideWidth, sideWidth, lineWidth, f, b);}
+    public Line(boolean horizontal, int sideWidth, int lineWidth,
+            Color foreground, Color background)
+    {
+        this(horizontal, sideWidth, sideWidth, lineWidth, foreground,
+                background);
+    }
     
     /**
      * Creates a Line connecting two side lines of the same provided width,
      * along with a specified foreground color.
-     * @param h true if the connection is horizontal
+     * @param horizontal true if the connection is horizontal
      * @param sideWidth the width of both side lines
      * @param lineWidth the width of the line
-     * @param f the color of the characters
+     * @param foreground the color of the characters
      */
-    public Line(boolean h, int sideWidth, int lineWidth, Color f)
-        {this(h, sideWidth, sideWidth, lineWidth, f, null);}
+    public Line(boolean horizontal, int sideWidth, int lineWidth,
+            Color foreground)
+        {this(horizontal, sideWidth, sideWidth, lineWidth, foreground, null);}
     
     /**
      * Creates a Line connecting two side lines of the same provided width, but
      * no specified colors.
-     * @param h true if the connection is horizontal
+     * @param horizontal true if the connection is horizontal
      * @param sideWidth the width of both side lines
      * @param lineWidth the width of the line
      */
-    public Line(boolean h, int sideWidth, int lineWidth)
-        {this(h, sideWidth, sideWidth, lineWidth, null, null);}
+    public Line(boolean horizontal, int sideWidth, int lineWidth)
+        {this(horizontal, sideWidth, sideWidth, lineWidth, null, null);}
     
     /**
      * Creates a Line with the provided width and specified colors; endpoints
      * will use the same characters as the line itself.
-     * @param h true if the line is horizontal
+     * @param horizontal true if the line is horizontal
      * @param lineWidth the width of the line
-     * @param f the color of the characters
-     * @param b the color of the background
+     * @param foreground the color of the characters
+     * @param background the color of the background
      */
-    public Line(boolean h, int lineWidth, Color f, Color b)
-        {this(h, LineChars.getLine(h, lineWidth), f, b);}
+    public Line(boolean horizontal, int lineWidth, Color foreground,
+            Color background)
+    {
+        this(horizontal, LineChars.getLine(horizontal, lineWidth), foreground,
+                background);
+    }
     
     /**
      * Creates a Line with the provided width and a specified foreground color;
      * endpoints will use the same characters as the line itself.
-     * @param h true if the line is horizontal
+     * @param horizontal true if the line is horizontal
      * @param lineWidth the width of the line
-     * @param f the color of the characters
+     * @param foreground the color of the characters
      */
-    public Line(boolean h, int lineWidth, Color f)
-        {this(h, lineWidth, f, null);}
+    public Line(boolean horizontal, int lineWidth, Color foreground)
+        {this(horizontal, lineWidth, foreground, null);}
     
     /**
      * Creates a Line with the provided width and no specified colors; endpoints
      * will use the same characters as the line itself.
-     * @param h true if the line is horizontal
+     * @param horizontal true if the line is horizontal
      * @param lineWidth the width of the line
      */
-    public Line(boolean h, int lineWidth)
-        {this(h, lineWidth, null, null);}
+    public Line(boolean horizontal, int lineWidth)
+        {this(horizontal, lineWidth, null, null);}
     
     /**
      * Creates a Line with one character used for the line and both endpoints,
      * along with specified colors.
-     * @param h true if the line is meant to be displayed horizontally
+     * @param horizontal true if the line is meant to be displayed horizontally
      * @param c the character to use for the line and both endpoints
-     * @param f the color of the characters
-     * @param b the color of the background
+     * @param foreground the color of the characters
+     * @param background the color of the background
      */
-    public Line(boolean h, char c, Color f, Color b)
-        {this(c, c, c, h, f, b);}
+    public Line(boolean horizontal, char c, Color foreground, Color background)
+        {this(c, c, c, horizontal, foreground, background);}
     
     /**
      * Creates a Line with one character used for the line and both endpoints,
      * along with a specified foreground color.
-     * @param h true if the line is meant to be displayed horizontally
+     * @param horizontal true if the line is meant to be displayed horizontally
      * @param c the character to use for the line and both endpoints
-     * @param f the color of the characters
+     * @param foreground the color of the characters
      */
-    public Line(boolean h, char c, Color f)
-        {this(c, c, c, h, f, null);}
+    public Line(boolean horizontal, char c, Color foreground)
+        {this(c, c, c, horizontal, foreground, null);}
     
     /**
      * Creates a Line with one character used for the line and both endpoints,
      * but no specified colors.
-     * @param h true if the line is meant to be displayed horizontally
+     * @param horizontal true if the line is meant to be displayed horizontally
      * @param c the character to use for the line and both endpoints
      */
-    public Line(boolean h, char c)
-        {this(c, c, c, h, null, null);}
+    public Line(boolean horizontal, char c)
+        {this(c, c, c, horizontal, null, null);}
 }

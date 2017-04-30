@@ -207,10 +207,7 @@ public abstract class Prompt
     public static int parseInt(String intString, int defaultValue)
     {
         Integer parsedInt = parseInt(intString);
-        if (parsedInt == null)
-            return defaultValue;
-        else
-            return parsedInt;
+        return parsedInt == null ? defaultValue : parsedInt;
     }
     
     /**
@@ -227,11 +224,8 @@ public abstract class Prompt
         Integer parsedInt = parseInt(intString);
         if (parsedInt == null)
             Console.quitWithMessage(quitMessage);
-        else
-            return parsedInt;
         
-        // NOT REACHED
-        return 0;
+        return parsedInt;
     }
     
     /**
@@ -343,10 +337,8 @@ public abstract class Prompt
     public static String getInitialInput(String prompt, String[] command,
             int index)
     {
-        if (command != null && command.length > index && command[index] != null)
-            return command[index];
-        
-        return getInput(1, prompt);
+        return command != null && command.length > index &&
+                command[index] != null ? command[index] : getInput(1, prompt);
     }
     
     /**
@@ -383,9 +375,8 @@ public abstract class Prompt
     public static boolean getInitialYNInput(String prompt, String[] command,
             int index)
     {
-        if (command != null && command.length > index && command[index] != null)
-            return getYNValue(command[index], prompt);
-        
-        return Prompt.getYNInput(prompt);
+        return command != null && command.length > index &&
+                command[index] != null ?
+                getYNValue(command[index], prompt) : Prompt.getYNInput(prompt);
     }
 }

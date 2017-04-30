@@ -87,11 +87,9 @@ public class NameGenerator
      */
     public String getSyllable(int place)
     {
-        if (place < 0 || place >= syllables.length ||
-                syllables == null || syllables[place] == null)
-            return null;
-        
-        return syllables[place][rng.nextInt(syllables[place].length)];
+        return place < 0 || place >= syllables.length || syllables == null
+                || syllables[place] == null ?
+                null : syllables[place][rng.nextInt(syllables[place].length)];
     }
     
     /**

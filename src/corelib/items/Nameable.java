@@ -17,10 +17,8 @@ public class Nameable
     @Override
     public String toString()
     {
-        if (nickname != null && !"".equals(nickname))
-            return name + " \"" + nickname + "\"";
-        
-        return name;
+        return nickname != null && !"".equals(nickname) ?
+            name + " \"" + nickname + "\"" : name;
     }
     
     public String getName()          {return name;              }
@@ -65,11 +63,9 @@ public class Nameable
     {
         char firstLetter = name.charAt(0);
         
-        if (firstLetter == 'A' || firstLetter == 'E' || firstLetter == 'I' ||
-                                  firstLetter == 'O' || firstLetter == 'U')
-            return "an " + name.toLowerCase();
-        
-        return "a " + name.toLowerCase();
+        return firstLetter == 'A' || firstLetter == 'E' || firstLetter == 'I' ||
+                                  firstLetter == 'O' || firstLetter == 'U' ?
+            "an " + name.toLowerCase() : "a " + name.toLowerCase();
     }
     
     /**
@@ -82,11 +78,9 @@ public class Nameable
     {
         char firstLetter = name.charAt(0);
         
-        if (firstLetter == 'A' || firstLetter == 'E' || firstLetter == 'I' ||
-                                  firstLetter == 'O' || firstLetter == 'U')
-            return "An " + name.toLowerCase();
-        
-        return "A " + name.toLowerCase();
+        return firstLetter == 'A' || firstLetter == 'E' || firstLetter == 'I' ||
+                                  firstLetter == 'O' || firstLetter == 'U' ?
+            "An " + name.toLowerCase() : "A " + name.toLowerCase();
     }
     
     /**
@@ -94,7 +88,8 @@ public class Nameable
      * or 'an' will be attached to the front.
      * @return the full name of the item as described above
      */
-    public String getFullName() {return getFullName(name);}
+    public String getFullName()
+     {return getFullName(name);}
     
     /**
      * Performs the same function as the normal full name method, except the 'a'
