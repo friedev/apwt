@@ -1,7 +1,7 @@
 package corelib.display.screens;
 
 import corelib.display.glyphs.ColorString;
-import corelib.display.window.PopupWindow;
+import corelib.display.windows.PopupWindow;
 
 /** A Terminal displayed as a PopupWindow. */
 public class PopupTerminal extends Terminal<PopupWindow, ColorString>

@@ -1,7 +1,7 @@
 package corelib.display.screens;
 
 import corelib.display.glyphs.ColorSet;
-import corelib.display.window.AlignedWindow;
+import corelib.display.windows.AlignedWindow;
 import corelib.display.glyphs.ColorString;
 import java.awt.Color;
 

@@ -1,4 +1,4 @@
-package corelib.display.window;
+package corelib.display.windows;
 
 import corelib.display.Display;
 import java.util.ArrayList;

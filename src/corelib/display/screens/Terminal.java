@@ -1,6 +1,6 @@
 package corelib.display.screens;
 
-import corelib.display.window.Window;
+import corelib.display.windows.Window;
 import java.awt.event.KeyEvent;
 
 /**
