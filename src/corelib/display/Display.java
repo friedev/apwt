@@ -4,7 +4,6 @@ import corelib.display.glyphs.ColorSet;
 import corelib.display.glyphs.ColorChar;
 import corelib.display.glyphs.ColorString;
 import corelib.display.screens.Screen;
-import corelib.display.screens.MasterScreen;
 import asciiPanel.AsciiFont;
 import javax.swing.JFrame;
 import asciiPanel.AsciiPanel;
@@ -83,11 +82,12 @@ public class Display extends JFrame implements KeyListener
     /**
      * Initializes the screen and keylistener, as well as setting up default
      * settings outside of a constructor.
+     * @param startScreen the initial screen to display
      * @return the initialized display, this
      */
-    public Display init()
+    public Display init(Screen startScreen)
     {
-        screen = new MasterScreen(this);
+        screen = startScreen;
         addKeyListener(this);
         repaint();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
