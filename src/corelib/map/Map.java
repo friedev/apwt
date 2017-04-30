@@ -34,13 +34,14 @@ public class Map
         tiles = new Tile[size][size];
         offset = (int) Math.floor((double) tiles.length / 2.0);
         entities = new LinkedList<>();
-        search = new AStarSearch(toCosts(), AStarSearch.SearchType.DIJKSTRA);
         this.rng = rng;
         
         // Initialize all Tiles on the map
         for (int y = 0; y < tiles.length; y++)
             for (int x = 0; x < tiles[y].length; x++)
                 tiles[y][x] = new Tile(TileType.FLOOR);
+        
+        search = new AStarSearch(toCosts(), AStarSearch.SearchType.DIJKSTRA);
     }
     
     public Map(TileType[][] tiles, RNG rng)
@@ -48,13 +49,14 @@ public class Map
         this.tiles = new Tile[tiles.length][tiles[0].length];
         offset = (int) Math.floor((double) this.tiles.length / 2.0);
         entities = new LinkedList<>();
-        search = new AStarSearch(toCosts(), AStarSearch.SearchType.DIJKSTRA);
         this.rng = rng;
         
         // Initialize all Tiles on the map
         for (int y = 0; y < this.tiles.length; y++)
             for (int x = 0; x < this.tiles[y].length; x++)
                 this.tiles[y][x] = new Tile(tiles[y][x]);
+        
+        search = new AStarSearch(toCosts(), AStarSearch.SearchType.DIJKSTRA);
     }
     
     public Map(int size)
