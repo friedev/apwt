@@ -1,6 +1,5 @@
 package corelib;
 
-import corelib.storage.Commands;
 import java.util.Scanner;
 import squidpony.squidmath.Coord;
 
@@ -157,8 +156,9 @@ public abstract class Prompt
         {
             // No reassignment is necessary because loop will return
             String intString = getInput(indents, prompt);
-
-            if (Commands.isCancel(intString))
+            
+            // Make "cancel" a constant or request it as a parameter if possible
+            if ("cancel".equals(intString))
                 return null;
             
             Integer parsedInteger = parseInt(intString);
