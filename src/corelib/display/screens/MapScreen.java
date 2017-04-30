@@ -1,8 +1,10 @@
 package corelib.display.screens;
 
+import asciiPanel.AsciiPanel;
 import corelib.display.glyphs.ColorChar;
 import corelib.display.glyphs.ColorSet;
 import corelib.display.Display;
+import corelib.display.ExtChars;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import corelib.map.Entity;
@@ -48,31 +50,37 @@ public class MapScreen extends Screen
             for (int x = 0; x < testMap[y].length; x++)
             {
                 glyphMap[y][x] = new ColorChar(testMap[y][x]);
-                /*
+                
                 switch (testMap[y][x])
                 {
                     case '~':
-                        glyphMap[y][x].setColors(AsciiPanel.brightBlue, AsciiPanel.blue);
+                        glyphMap[y][x].setColors(AsciiPanel.brightBlue,
+                                AsciiPanel.blue);
+                        glyphMap[y][x].character = ExtChars.APPROX_EQUAL;
                         break;
                     case '%':
-                        glyphMap[y][x].setColors(AsciiPanel.green, AsciiPanel.green);
+                        glyphMap[y][x].setColors(AsciiPanel.green,
+                                AsciiPanel.green);
                         break;
                     case 'A':
-                        glyphMap[y][x].setColors(AsciiPanel.brightRed, AsciiPanel.green);
+                        glyphMap[y][x].setColors(AsciiPanel.brightRed,
+                                AsciiPanel.green);
+                        glyphMap[y][x].character = ExtChars.SQUARE;
                         break;
                     case 'B':
-                        glyphMap[y][x].setColors(AsciiPanel.brightYellow, AsciiPanel.green);
+                        glyphMap[y][x].setColors(AsciiPanel.brightYellow,
+                                AsciiPanel.green);
+                        glyphMap[y][x].character = ExtChars.SQUARE;
                         break;
                     case 'C':
-                        glyphMap[y][x].setColors(AsciiPanel.brightGreen, AsciiPanel.green);
+                        glyphMap[y][x].setColors(AsciiPanel.brightGreen,
+                                AsciiPanel.green);
+                        glyphMap[y][x].character = ExtChars.SQUARE;
                         break;
                 }
-                */
             }
         }
         display.write(ColorSet.toColorSetArray(glyphMap), Coord.get(0, 0));
-        
-        
         
         /*
         if (heightmap == null)
