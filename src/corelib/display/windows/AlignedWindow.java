@@ -56,7 +56,6 @@ public class AlignedWindow extends Window<ColorSet>
     public AlignedWindow(Display display, int x, int y)
         {this(display, x, y, new Border(1), null);}
 
-    /** Prints the Window to its Display using WindowBuilder. */
     @Override
     public void display()
     {
@@ -109,7 +108,7 @@ public class AlignedWindow extends Window<ColorSet>
      * @return true if the Window's List of separators is not null
      */
     public boolean hasSeparators()
-        {return separators != null;}
+        {return separators != null && !separators.isEmpty();}
     
     /**
      * Sets the Window's x coordinate to the specified value.
@@ -139,7 +138,7 @@ public class AlignedWindow extends Window<ColorSet>
     /**
      * Converts the provided String into a ColorSet and adds it to the Window's
      * contents.
-     * content content the String to add
+     * @param content content the String to add
      */
     public void add(String content)
         {contents.add(new ColorSet(content));}

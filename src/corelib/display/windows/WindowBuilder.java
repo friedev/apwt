@@ -206,7 +206,7 @@ public abstract class WindowBuilder
     public static boolean printBoxed(Display display, ColorSet[] text,
             int topLine, int leftIndent, Border border, Line[] separators)
     {
-        if (!display.contains(Coord.get(topLine - 1, leftIndent - 1)) ||
+        if (!display.contains(Coord.get(leftIndent - 1, topLine - 1)) ||
                 text == null || text.length == 0)
             return false;
         
@@ -234,12 +234,13 @@ public abstract class WindowBuilder
             }
         }
         
-        int curLine   = topLine;
-        int curIndent = leftIndent;
+        int curLine          = topLine;
+        int curIndent        = leftIndent;
         int overallMaxLength = 0;
-        int curMaxLines  = blocks[0].size();
-        int overallLines = blocks[0].size();
-        Coord[] endpoints = null; // Suppresses undefined warning
+        int curMaxLines      = blocks[0].size();
+        int overallLines     = blocks[0].size();
+        Coord[] endpoints    = null; // Suppresses undefined warning
+        
         if (separators != null)
             endpoints = new Coord[separators.length * 2];
         

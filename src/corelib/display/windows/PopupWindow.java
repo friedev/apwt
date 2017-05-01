@@ -45,7 +45,6 @@ public class PopupWindow extends Window<ColorString>
     public PopupWindow(Display display, int y)
         {this(display, y, new Border(1), null);}
 
-    /** Prints the PopupWindow to its Display using WindowBuilder. */
     @Override
     public void display()
     {
