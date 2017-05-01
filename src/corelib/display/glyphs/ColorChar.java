@@ -37,4 +37,23 @@ public class ColorChar extends ColoredObject
      */
     public ColorChar(char c)
         {this(c, null, null);}
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o == null || !(o instanceof ColorChar))
+            return false;
+        
+        ColorChar other = (ColorChar) o;
+        return character == other.character && foreground == other.foreground &&
+                background == other.background;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 31 * hash + this.character;
+        return hash;
+    }
 }

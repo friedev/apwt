@@ -10,7 +10,7 @@ public class Being extends Entity
     // Replace with a BodyPart[] eventually
     private Container[] inventories;
     
-    public Being(String name, Map map, Coord location, ColorChar glyph,
+    public Being(String name, TileMap map, Coord location, ColorChar glyph,
             Container[] inventories)
     {
         super(name, map, location, glyph);
