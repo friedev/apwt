@@ -3,6 +3,9 @@ package corelib.display.windows;
 import corelib.display.glyphs.ColorSet;
 import corelib.display.glyphs.ColorString;
 import corelib.display.Display;
+import corelib.display.ExtChars;
+import corelib.display.glyphs.ColorChar;
+import java.awt.Color;
 import java.util.ArrayList;
 import squidpony.squidmath.Coord;
 
@@ -78,17 +81,20 @@ public abstract class WindowBuilder
     }
     
     /**
-     * Draws a Border between two specified corners to the provided Display.
+     * Draws a Border between two specified corners to the provided Display,
+     * filled with the provided fill color.
      * @param display the Display to draw the Border on
      * @param corner1 the first corner; must be a different point than the
      * second corner, share no axis values, and be on the display
      * @param corner2 the second corner; must be a different point than the
      * first corner, share no axis values, and be on the display
      * @param border the characters of the Border
+     * @param fill the Color to fill the center of the Border with; if null, no
+     * fill will be performed
      * @return true if the Border was successfully drawn
      */
     public static boolean drawBorder(Display display, Coord corner1,
-            Coord corner2, Border border)
+            Coord corner2, Border border, Color fill)
     {
         if (corner1.equals(corner2) || corner1.x == corner2.x ||
                 corner1.y == corner2.y ||
@@ -159,6 +165,14 @@ public abstract class WindowBuilder
                     border.foreground, border.background);
         }
         
+        if (fill == null)
+            return true;
+        
+        for (int y = tl.y + 1; y < bl.y; y++)
+            for (int x = tl.x + 1; x < tr.x; x++)
+                display.write(new ColorChar(ExtChars.BLOCK, fill),
+                        Coord.get(x, y));
+        
         return true;
     }
     
@@ -171,15 +185,50 @@ public abstract class WindowBuilder
      * @param corner2 the second corner; must be a different point than the
      * first corner, share no axis values, and be on the display
      * @param width the width of the Border to draw; must be 1 or 2
+     * @param fill the Color to fill the center of the Border with; if null, no
+     * fill will be performed
+     * @return true if the Border was successfully drawn
+     */
+    public static boolean drawBorder(Display display, Coord corner1,
+            Coord corner2, int width, Color fill)
+        {return drawBorder(display, corner1, corner2, new Border(width), fill);}
+    
+    /**
+     * Draws a Border between two specified corners to the provided Display,
+     * filled with the background color of the provided Border.
+     * @param display the Display to draw the Border on
+     * @param corner1 the first corner; must be a different point than the
+     * second corner, share no axis values, and be on the display
+     * @param corner2 the second corner; must be a different point than the
+     * first corner, share no axis values, and be on the display
+     * @param border the characters of the Border
+     * @return true if the Border was successfully drawn
+     */
+    public static boolean drawBorder(Display display, Coord corner1,
+            Coord corner2, Border border)
+    {
+        border.syncDefaults(display);
+        return drawBorder(display, corner1, corner2, border, border.background);
+    }
+    
+    /**
+     * Draws a Border of the specified width between two specified corners to
+     * the provided Display. No fill will be performed.
+     * @param display the Display to draw the Border on
+     * @param corner1 the first corner; must be a different point than the
+     * second corner, share no axis values, and be on the display
+     * @param corner2 the second corner; must be a different point than the
+     * first corner, share no axis values, and be on the display
+     * @param width the width of the Border to draw; must be 1 or 2
      * @return true if the Border was successfully drawn
      */
     public static boolean drawBorder(Display display, Coord corner1,
             Coord corner2, int width)
-        {return drawBorder(display, corner1, corner2, new Border(width));}
+        {return drawBorder(display, corner1, corner2, width, null);}
     
     /**
      * Draws a Border of the default width between two specified corners to the
-     * provided Display.
+     * provided Display. No fill will be performed.
      * @param display the Display to draw the Border on
      * @param corner1 the first corner; must be a different point than the
      * second corner, share no axis values, and be on the display
@@ -239,6 +288,7 @@ public abstract class WindowBuilder
         int overallMaxLength = 0;
         int curMaxLines      = blocks[0].size();
         int overallLines     = blocks[0].size();
+        Coord[] textPoints   = new Coord[nBlocks];
         Coord[] endpoints    = null; // Suppresses undefined warning
         
         if (separators != null)
@@ -246,9 +296,7 @@ public abstract class WindowBuilder
         
         for (int block = 0; block < blocks.length; block++)
         {
-            display.write(blocks[block].toArray(
-                    new ColorSet[blocks[block].size()]),
-                    Coord.get(curIndent, curLine));
+            textPoints[block] = Coord.get(curIndent, curLine);
             
             int curMaxLength = 0;
             for (ColorSet line: blocks[block])
@@ -339,6 +387,10 @@ public abstract class WindowBuilder
                 }
             }
         }
+        
+        for (int block = 0; block < nBlocks; block++)
+            display.write(blocks[block].toArray(
+                    new ColorSet[blocks[block].size()]), textPoints[block]);
         
         return returnValue;
     }
