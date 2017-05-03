@@ -1,24 +1,22 @@
 package corelib.map;
 
 import corelib.display.glyphs.ColorChar;
-import corelib.items.Nameable;
 import java.util.Queue;
 import squidpony.squidgrid.Direction;
 import squidpony.squidmath.Coord;
 
 /** An entity capable of movement around a map. */
-public class Entity extends Nameable
+public class Entity
 {
-    private TileMap map;
-    private Coord location;
-    private ColorChar glyph;
+    protected TileMap map;
+    protected Coord location;
+    protected ColorChar glyph;
     private double speed;
     private double actions;
     
-    public Entity(String name, TileMap map, Coord location, ColorChar glyph,
+    public Entity(TileMap map, Coord location, ColorChar glyph,
             double moveSpeed)
     {
-        super(name);
         this.map = map;
         this.location = location;
         this.glyph = glyph;
@@ -26,17 +24,17 @@ public class Entity extends Nameable
         actions = 0;
     }
     
-    public Entity(String name, TileMap map, ColorChar glyph, double moveSpeed)
+    public Entity(TileMap map, ColorChar glyph, double moveSpeed)
     {
-        this(name, map, Coord.get(map.getXSize() / 2, map.getYSize() / 2),
+        this(map, Coord.get(map.getXSize() / 2, map.getYSize() / 2),
                 glyph, moveSpeed);
     }
     
-    public Entity(String name, TileMap map, Coord location, ColorChar glyph)
-        {this(name, map, location, glyph, TileMap.ENTITY_SPEED);}
+    public Entity(TileMap map, Coord location, ColorChar glyph)
+        {this(map, location, glyph, TileMap.ENTITY_SPEED);}
     
-    public Entity(String name, TileMap map, ColorChar glyph)
-        {this(name, map, glyph, TileMap.ENTITY_SPEED);}
+    public Entity(TileMap map, ColorChar glyph)
+        {this(map, glyph, TileMap.ENTITY_SPEED);}
     
     public TileMap getMap()
         {return map;}
@@ -49,6 +47,12 @@ public class Entity extends Nameable
     
     public double getMoveSpeed()
         {return speed;}
+    
+    public void addToMap()
+        {map.addEntity(this);}
+    
+    public void removeFromMap()
+        {map.removeEntity(this);}
     
     public boolean setLocation(Coord destination)
     {

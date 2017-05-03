@@ -13,10 +13,10 @@ public abstract class Screen
     
     /**
      * Creates a new Screen on the provided Display.
-     * @param d the Display on which the Screen will be shown
+     * @param display the Display on which the Screen will be shown
      */
-    public Screen(Display d)
-        {display = d;}
+    public Screen(Display display)
+        {this.display = display;}
     
     /**
      * Returns the Display used by the Screen.

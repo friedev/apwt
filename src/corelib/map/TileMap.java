@@ -3,6 +3,7 @@ package corelib.map;
 import corelib.Console;
 import corelib.display.Display;
 import corelib.display.glyphs.ColorChar;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -19,10 +20,10 @@ import squidpony.squidmath.RNG;
 public class TileMap<TileProperty> implements Iterable<Tile>
 {
     /** The default number of moves that tiles cost to move to. */
-    public static final int TILE_COST = 100;
+    public static final int TILE_COST = 1;
     
     /** The default number of moves that entities gain each turn. */
-    public static final int ENTITY_SPEED = 10;
+    public static final int ENTITY_SPEED = 1;
     
     public static final int MAX_TRIES = 50;
     
@@ -116,6 +117,9 @@ public class TileMap<TileProperty> implements Iterable<Tile>
     public void removeEntity(Entity e)
         {entities.remove(e);}
     
+    public boolean hasEntity(Entity e)
+        {return entities.contains(e);}
+    
     public void update()
     {
         for (Entity entity: entities)
@@ -155,8 +159,13 @@ public class TileMap<TileProperty> implements Iterable<Tile>
             if (location.x >= start.x && location.x < end.x &&
                     location.y >= start.y && location.y < end.y)
             {
+                Color background = entity.glyph.background == null ?
+                        tileAt(location).glyph.background :
+                        entity.glyph.background;
+                
                 glyphs[location.y - start.y][location.x - start.x] =
-                        entity.getGlyph();
+                        new ColorChar(entity.glyph.character,
+                        entity.glyph.foreground, background);
             }
         }
         

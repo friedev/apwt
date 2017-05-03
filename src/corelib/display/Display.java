@@ -10,6 +10,7 @@ import asciiPanel.AsciiPanel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.Color;
+import squidpony.squidgrid.Direction;
 import squidpony.squidmath.Coord;
 
 /**
@@ -117,6 +118,35 @@ public class Display extends JFrame implements KeyListener
 
     @Override
     public void keyTyped(KeyEvent e) {}
+    
+    public static Direction keyToDirection(KeyEvent key)
+    {
+        switch (key.getKeyCode())
+        {
+            case KeyEvent.VK_UP: case KeyEvent.VK_K: case KeyEvent.VK_W:
+            case KeyEvent.VK_NUMPAD8:
+                return Direction.UP;
+            case KeyEvent.VK_DOWN: case KeyEvent.VK_J: case KeyEvent.VK_S:
+            case KeyEvent.VK_NUMPAD2:
+                return Direction.DOWN;
+            case KeyEvent.VK_LEFT: case KeyEvent.VK_H: case KeyEvent.VK_A: 
+            case KeyEvent.VK_NUMPAD4:
+                return Direction.LEFT;
+            case KeyEvent.VK_RIGHT: case KeyEvent.VK_L: case KeyEvent.VK_D:
+            case KeyEvent.VK_NUMPAD6:
+                return Direction.RIGHT;
+            case KeyEvent.VK_Y: case KeyEvent.VK_NUMPAD7:
+                return Direction.UP_LEFT;
+            case KeyEvent.VK_U: case KeyEvent.VK_NUMPAD9:
+                return Direction.UP_RIGHT;
+            case KeyEvent.VK_B: case KeyEvent.VK_NUMPAD1:
+                return Direction.DOWN_LEFT;
+            case KeyEvent.VK_N: case KeyEvent.VK_NUMPAD3:
+                return Direction.DOWN_RIGHT;
+        }
+        
+        return null;
+    }
     
     // STATIC GRAPHICAL METHODS
     
