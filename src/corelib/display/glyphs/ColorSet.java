@@ -1,5 +1,6 @@
 package corelib.display.glyphs;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +20,9 @@ public class ColorSet implements CharSequence
      */
     public ColorSet(List<ColorChar> s)
         {set = s;}
+    
+    public ColorSet(ColorSet copying)
+        {this(copying.set);}
     
     /**
      * Creates a ColorSet from an array of ColorChars, converting it into a
@@ -69,6 +73,31 @@ public class ColorSet implements CharSequence
     
     public ColorSet add(ColorSet s)
         {set.addAll(Arrays.asList(s.toCharArray())); return this;}
+    
+    public ColorSet setForeground(Color foreground)
+    {
+        for (int i = 0; i < set.size(); i++)
+        {
+            ColorChar newChar = new ColorChar(set.get(i));
+            newChar.setForeground(foreground);
+            set.set(i, newChar);
+        }
+        return this;
+    }
+    
+    public ColorSet setBackground(Color background)
+    {
+        for (int i = 0; i < set.size(); i++)
+        {
+            ColorChar newChar = new ColorChar(set.get(i));
+            newChar.setBackground(background);
+            set.set(i, newChar);
+        }
+        return this;
+    }
+    
+    public ColorSet setColors(Color foreground, Color background)
+        {return setForeground(foreground).setBackground(background);}
     
     /**
      * Returns the first ColorChar found in the ColorSet with a character that

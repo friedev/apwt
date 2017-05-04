@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
  * @param <Content> the type of content displayed by the Terminal's Window
  */
 public abstract class Terminal<Output extends Window,
-        Content extends CharSequence> extends Screen
+        Content extends CharSequence> extends ConfirmationScreen
 {
     /** The StringBuilder where all keypresses are added. */
     protected StringBuilder input;
@@ -53,13 +53,6 @@ public abstract class Terminal<Output extends Window,
     {
         switch (key.getKeyCode())
         {
-            // Both escape (cancel) and enter (confirm) will return null to
-            // close the terminal, but escape will clear the input. This can
-            // be detected externally and reacted to appropriately.
-            case KeyEvent.VK_ESCAPE:
-                input = null;
-            case KeyEvent.VK_ENTER:
-                return null;
             case KeyEvent.VK_BACK_SPACE:
                 if (input.length() > 0)
                 {
@@ -78,9 +71,20 @@ public abstract class Terminal<Output extends Window,
         if (input.length() >= maxInputLength)
             input.delete(maxInputLength, input.length());
         
-        return this;
+        return checkConfirmation(key);
     }
     
     public Window getWindow()
         {return output;}
+    
+    @Override
+    public Screen onConfirm()
+        {return null;}
+    
+    @Override
+    public Screen onCancel()
+    {
+        input = null;
+        return null;
+    }
 }

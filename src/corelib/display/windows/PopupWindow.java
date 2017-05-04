@@ -2,6 +2,8 @@ package corelib.display.windows;
 
 import corelib.display.glyphs.ColorString;
 import corelib.display.Display;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A centered Window meant for temporary use as a popup. AsciiPanel cannot
@@ -15,35 +17,64 @@ public class PopupWindow extends Window<ColorString>
     private Line separator;
     
     /**
-     * Creates a PopupWindow with all fields defined.
-     * @param display the PopupWindow's Display
-     * @param y the PopupWindow's y coordinate
-     * @param border the PopupWindow's Border
-     * @param separator the PopupWindow's Separators
+     * Creates a Window with all fields defined.
+     * @param display the Window's Display
+     * @param contents the Window's contents
+     * @param y the Window's y coordinate
+     * @param border the Window's Border
+     * @param separator the Window's separator
      */
-    public PopupWindow(Display display, int y, Border border, Line separator)
+    public PopupWindow(Display display, List<ColorString> contents, int y,
+            Border border, Line separator)
     {
-        super(display, border);
+        super(display, border, contents);
         this.y = y;
         this.separator = separator;
     }
     
-    /**
-     * Creates a PopupWindow with no separator.
-     * @param display the PopupWindow's Display
-     * @param y the PopupWindow's y coordinate
-     * @param border the PopupWindow's Border
-     */
-    public PopupWindow(Display display, int y, Border border)
-        {this(display, y, border, null);}
+    public PopupWindow(PopupWindow copying)
+    {
+        this(copying.display, copying.contents, copying.y, copying.border,
+                copying.separator);
+    }
     
     /**
-     * Creates a borderless PopupWindow with no separator.
-     * @param display the PopupWindow's Display
-     * @param y the PopupWindow's y coordinate
+     * Creates a Window with all fields defined.
+     * @param display the Window's Display
+     * @param y the Window's y coordinate
+     * @param border the Window's Border
+     * @param separator the Window's separator
+     */
+    public PopupWindow(Display display, int y, Border border, Line separator)
+        {this(display, new ArrayList<>(), y, border, separator);}
+    
+    /**
+     * Creates a Window with no separator.
+     * @param display the Window's Display
+     * @param contents the Window's contents
+     * @param y the Window's y coordinate
+     * @param border the Window's Border
+     */
+    public PopupWindow(Display display, List<ColorString> contents, int y,
+            Border border)
+        {this(display, contents, y, border, null);}
+    
+    /**
+     * Creates a Window with no separator.
+     * @param display the Window's Display
+     * @param y the Window's y coordinate
+     * @param border the Window's Border
+     */
+    public PopupWindow(Display display, int y, Border border)
+        {this(display, new ArrayList<>(), y, border);}
+    
+    /**
+     * Creates a Window with a default border and no separator.
+     * @param display the Window's Display
+     * @param y the Window's y coordinate
      */
     public PopupWindow(Display display, int y)
-        {this(display, y, new Border(1), null);}
+        {this(display, y, new Border(1));}
 
     @Override
     public void display()

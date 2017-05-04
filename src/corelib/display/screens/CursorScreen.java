@@ -9,7 +9,7 @@ import squidpony.squidmath.Coord;
 /**
  * 
  */
-public class CursorScreen extends Screen
+public class CursorScreen extends ConfirmationScreen
 {
     private Cursor cursor;
     
@@ -37,26 +37,20 @@ public class CursorScreen extends Screen
             return this;
         }
         
-        switch (key.getKeyCode())
-        {
-            case KeyEvent.VK_ENTER:
-                return onConfirm();
-            case KeyEvent.VK_ESCAPE:
-                return onCancel();
-        }
-        
-        return this;
+        return checkConfirmation(key);
     }
     
     public Cursor getCursor()
         {return cursor;}
     
+    @Override
     public Screen onConfirm()
     {
         cursor.removeFromMap();
         return null;
     }
     
+    @Override
     public Screen onCancel()
     {
         cursor.removeFromMap();

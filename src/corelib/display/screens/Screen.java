@@ -29,7 +29,8 @@ public abstract class Screen
      * Sets the Display to the given Display.
      * @param d the new Display for the Screen to use
      */
-    public void setDisplay(Display d) {display = d;}
+    public void setDisplay(Display d)
+        {display = d;}
     
     /** Displays the Screen's output to its Display. */
     public abstract void displayOutput();   

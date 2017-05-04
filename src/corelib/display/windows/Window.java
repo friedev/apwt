@@ -12,22 +12,26 @@ public abstract class Window<Content extends CharSequence>
 {
     /** The Display on which to print the window. */
     protected Display display;
-    /** The contents of the Window, with each ColorSet as a different line. */
-    protected List<Content> contents;
     /** The Border surrounding the Window; not displayed if null. */
     protected Border border;
+    /** The contents of the Window, with each Content as a different line. */
+    protected List<Content> contents;
     
     /**
      * Creates a Window with all fields defined.
      * @param display the Window's Display
      * @param border the Window's Border
+     * @param contents the Window's initial contents
      */
-    public Window(Display display, Border border)
+    public Window(Display display, Border border, List<Content> contents)
     {
         this.display = display;
         this.border = border;
-        this.contents = new ArrayList<>();
+        this.contents = contents;
     }
+    
+    public Window(Display display, Border border)
+        {this(display, border, new ArrayList<>());}
     
     /** Prints the Window to its Display using WindowBuilder. */
     public abstract void display();

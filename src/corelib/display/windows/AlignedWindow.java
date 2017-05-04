@@ -4,6 +4,7 @@ import corelib.display.glyphs.ColorChar;
 import corelib.display.glyphs.ColorSet;
 import corelib.display.glyphs.ColorString;
 import corelib.display.Display;
+import java.util.ArrayList;
 import java.util.List;
 import squidpony.squidmath.Coord;
 
@@ -23,19 +24,60 @@ public class AlignedWindow extends Window<ColorSet>
     /**
      * Creates a Window with all fields defined.
      * @param display the Window's Display
+     * @param contents the Window's contents
      * @param x the Window's x coordinate
      * @param y the Window's y coordinate
      * @param border the Window's Border
-     * @param separators the Window's Separators
+     * @param separators the Window's separators
      */
-    public AlignedWindow(Display display, int x, int y, Border border,
-            List<Line> separators)
+    public AlignedWindow(Display display, List<ColorSet> contents, int x, int y,
+            Border border, List<Line> separators)
     {
-        super(display, border);
+        super(display, border, contents);
         this.x          = x;
         this.y          = y;
         this.separators = separators;
     }
+    
+    public AlignedWindow(AlignedWindow copying)
+    {
+        this(copying.display, copying.contents, copying.x, copying.y,
+                copying.border, copying.separators);
+    }
+    
+    /**
+     * Creates a Window with all fields defined.
+     * @param display the Window's Display
+     * @param x the Window's x coordinate
+     * @param y the Window's y coordinate
+     * @param border the Window's Border
+     * @param separators the Window's separators
+     */
+    public AlignedWindow(Display display, int x, int y, Border border,
+            List<Line> separators)
+        {this(display, new ArrayList<>(), x, y, border, separators);}
+    
+    /**
+     * Creates a Window with no separators.
+     * @param display the Window's Display
+     * @param contents the Window's contents
+     * @param x the Window's x coordinate
+     * @param y the Window's y coordinate
+     * @param border the Window's Border
+     */
+    public AlignedWindow(Display display, List<ColorSet> contents, int x, int y,
+            Border border)
+        {this(display, contents, x, y, border, null);}
+    
+    /**
+     * Creates a Window with a default bordeer and no separators.
+     * @param display the Window's Display
+     * @param contents the Window's contents
+     * @param x the Window's x coordinate
+     * @param y the Window's y coordinate
+     */
+    public AlignedWindow(Display display, List<ColorSet> contents, int x, int y)
+        {this(display, contents, x, y, new Border(1));}
     
     /**
      * Creates a Window with no separators.
@@ -48,13 +90,13 @@ public class AlignedWindow extends Window<ColorSet>
         {this(display, x, y, border, null);}
     
     /**
-     * Creates a borderless Window with no separators.
+     * Creates a Window with a default border and no separators.
      * @param display the Window's Display
      * @param x the Window's x coordinate
      * @param y the Window's y coordinate
      */
     public AlignedWindow(Display display, int x, int y)
-        {this(display, x, y, new Border(1), null);}
+        {this(display, x, y, new Border(1));}
 
     @Override
     public void display()

@@ -22,6 +22,9 @@ public class ColorChar extends ColoredObject
         character  = c;
     }
     
+    public ColorChar(ColorChar copying)
+        {this(copying.character, copying.foreground, copying.background);}
+    
     /**
      * Creates a ColorChar from a character and a foreground color, but no
      * specified background color.

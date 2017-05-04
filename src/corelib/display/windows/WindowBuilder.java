@@ -554,8 +554,6 @@ public abstract class WindowBuilder
                 !display.containsX(center + offsetRight))
             return false;
         
-        display.writeCenter(text, topLine);
-        
         boolean returnValue = WindowBuilder.drawBorder(display,
                 Coord.get(center - offsetLeft - 1, topLine - 1),
                 Coord.get(center + offsetRight, topLine + text.length), border);
@@ -567,6 +565,8 @@ public abstract class WindowBuilder
                             Coord.get(center - offsetLeft - 1, topLine + line),
                             Coord.get(center + offsetRight, topLine + line),
                             separator);
+        
+        display.writeCenter(text, topLine);
         
         return returnValue;
     }

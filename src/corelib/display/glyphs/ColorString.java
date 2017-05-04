@@ -22,6 +22,9 @@ public class ColorString extends ColoredObject implements CharSequence
         string = s;
     }
     
+    public ColorString(ColorString copying)
+        {this(copying.string, copying.foreground, copying.background);}
+    
     /**
      * Creates a ColorString from a String and a foreground color, but no
      * specified background color.
