@@ -8,13 +8,6 @@ import squidpony.squidmath.Coord;
  */
 public class Cursor extends Entity
 {
-    public Cursor(TileMap map, Coord location, ColorChar glyph,
-            double moveSpeed)
-        {super(map, location, glyph, moveSpeed);}
-    
-    public Cursor(TileMap map, ColorChar glyph, double moveSpeed)
-        {super(map, glyph, moveSpeed);}
-    
     public Cursor(TileMap map, Coord location, ColorChar glyph)
         {super(map, location, glyph);}
     
