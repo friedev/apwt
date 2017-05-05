@@ -48,8 +48,10 @@ public abstract class WindowBuilder
         
         border.syncDefaults(display);
         
-        display.write(border.end1, end1, border.foreground, border.background);
-        display.write(border.end2, end2, border.foreground, border.background);
+        display.write(end1, new ColorChar(border.end1,
+                border.foreground, border.background));
+        display.write(end2, new ColorChar(border.end2,
+                border.foreground, border.background));
         
         int start, end;
         
@@ -67,8 +69,8 @@ public abstract class WindowBuilder
             }
             
             for (int i = start + 1; i < end; i++)
-                display.write(border.line, Coord.get(end1.x, i),
-                        border.foreground, border.background);
+                display.write(Coord.get(end1.x, i), new ColorChar(border.line,
+                        border.foreground, border.background));
         }
         else
         {
@@ -84,8 +86,8 @@ public abstract class WindowBuilder
             }
             
             for (int i = start + 1; i < end; i++)
-                display.write(border.line, Coord.get(i, end1.y),
-                        border.foreground, border.background);
+                display.write(Coord.get(i, end1.y), new ColorChar(border.line,
+                        border.foreground, border.background));
         }
         
         return true;
@@ -153,14 +155,14 @@ public abstract class WindowBuilder
         
         border.syncDefaults(display);
         
-        display.write(border.cornerTL, tl,
-                border.foreground, border.background);
-        display.write(border.cornerTR, tr,
-                border.foreground, border.background);
-        display.write(border.cornerBL, bl,
-                border.foreground, border.background);
-        display.write(border.cornerBR, br,
-                border.foreground, border.background);
+        display.write(tl, new ColorChar(border.cornerTL,
+                border.foreground, border.background));
+        display.write(tr, new ColorChar(border.cornerTR,
+                border.foreground, border.background));
+        display.write(bl, new ColorChar(border.cornerBL,
+                border.foreground, border.background));
+        display.write(br, new ColorChar(border.cornerBR,
+                border.foreground, border.background));
         
         for (int x = tl.x + 1; x < tr.x; x++)
         {
@@ -183,8 +185,8 @@ public abstract class WindowBuilder
         
         for (int y = tl.y + 1; y < bl.y; y++)
             for (int x = tl.x + 1; x < tr.x; x++)
-                display.write(new ColorChar(ExtChars.BLOCK, fill),
-                        Coord.get(x, y));
+                display.write(Coord.get(x, y),
+                        new ColorChar(ExtChars.BLOCK, fill));
         
         return true;
     }
@@ -421,8 +423,8 @@ public abstract class WindowBuilder
         }
         
         for (int block = 0; block < nBlocks; block++)
-            display.write(blocks[block].toArray(
-                    new ColorSet[blocks[block].size()]), textPoints[block]);
+            display.write(textPoints[block], blocks[block].toArray(
+                    new ColorSet[blocks[block].size()]));
         
         return returnValue;
     }
@@ -598,7 +600,7 @@ public abstract class WindowBuilder
                             Coord.get(center + offsetRight, topLine + line),
                             separator);
         
-        display.writeCenter(text, topLine);
+        display.writeCenter(topLine, text);
         
         return returnValue;
     }

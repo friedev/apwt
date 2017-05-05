@@ -144,7 +144,7 @@ public class ColorSet implements CharSequence
      * @return a ColorSet consisting of ColorChars with the characters of the
      * String
      */
-    public static ColorSet toColorSet(String[] s)
+    public static ColorSet toColorSet(String... s)
     {
         ArrayList<ColorChar> chars = new ArrayList<>();
         for (String ss: s)
@@ -161,7 +161,7 @@ public class ColorSet implements CharSequence
      * @return a ColorSet consisting of ColorChars with the characters of the
      * ColorStrings and the color of the ColorString from which they originated
      */
-    public static ColorSet toColorSet(ColorString[] s)
+    public static ColorSet toColorSet(ColorString... s)
     {
         ArrayList<ColorChar> chars = new ArrayList<>();
         for (ColorString cs: s)
@@ -177,7 +177,7 @@ public class ColorSet implements CharSequence
      * @return an array of ColorSets, one for each String, with the characters
      * of the Strings and no specified colors
      */
-    public static ColorSet[] toColorSetArray(String[] s)
+    public static ColorSet[] toColorSetArray(String... s)
     {
         ColorSet[] lines = new ColorSet[s.length];
         
@@ -195,7 +195,7 @@ public class ColorSet implements CharSequence
      * characters of the ColorStrings and the colors of the ColorStrings from
      * which they originated
      */
-    public static ColorSet[] toColorSetArray(ColorString[] s)
+    public static ColorSet[] toColorSetArray(ColorString... s)
     {
         ColorSet[] lines = new ColorSet[s.length];
         
@@ -211,7 +211,7 @@ public class ColorSet implements CharSequence
      * @param a the array of ColorChars to convert into an array of ColorSets
      * @return an array of ColorSets, one for each ColorChar
      */
-    public static ColorSet[] toColorSetArray(ColorChar[][] a)
+    public static ColorSet[] toColorSetArray(ColorChar[]... a)
     {
         ColorSet[] lines = new ColorSet[a.length];
         

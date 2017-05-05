@@ -94,7 +94,7 @@ public class PopupWindow extends Window<ColorString>
             }
             else
             {
-                display.writeCenter(output, y);
+                display.writeCenter(y, output);
             }
         }
         catch (IllegalArgumentException | IndexOutOfBoundsException e)

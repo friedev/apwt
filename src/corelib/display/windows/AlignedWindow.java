@@ -122,7 +122,7 @@ public class AlignedWindow extends Window<ColorSet>
             }
             else
             {
-                display.write(output, Coord.get(x, y));
+                display.write(Coord.get(x, y), output);
             }
         }
         catch (IllegalArgumentException | IndexOutOfBoundsException e)
@@ -190,32 +190,32 @@ public class AlignedWindow extends Window<ColorSet>
      * contents.
      * @param content content the String to add
      */
-    public void add(String content)
-        {contents.add(new ColorSet(content));}
+    public AlignedWindow add(String content)
+        {contents.add(new ColorSet(content)); return this;}
     
     /**
      * Converts the provided ColorString into a ColorSet and adds it to the
      * Window's contents.
      * @param content the ColorString to add
      */
-    public void add(ColorString content)
-        {contents.add(new ColorSet(content));}
+    public AlignedWindow add(ColorString content)
+        {contents.add(new ColorSet(content)); return this;}
     
     /**
      * Converts the provided array of ColorChars into a ColorSet and adds it to
      * the Window's contents.
      * @param content the array of ColorChars to add
      */
-    public void add(ColorChar[] content)
-        {contents.add(new ColorSet(content));}
+    public AlignedWindow add(ColorChar[] content)
+        {contents.add(new ColorSet(content)); return this;}
     
     /**
      * Converts the provided array of ColorStrings into a ColorSet and adds it
      * to the Window's contents.
      * @param content the array of ColorStrings to add
      */
-    public void add(ColorString[] content)
-        {contents.add(ColorSet.toColorSet(content));}
+    public AlignedWindow add(ColorString[] content)
+        {contents.add(ColorSet.toColorSet(content)); return this;}
     
     /**
      * Sets the line of the Window's contents at the index to the provided

@@ -151,30 +151,26 @@ public class Display extends JFrame implements KeyListener
     // STATIC GRAPHICAL METHODS
     
     /**
-     * Writes a String to the provided AsciiPanel.
+     * Writes a String to the provided AsciiPanel, using the default foreground
+     * and background colors.
      * @param panel the panel on which to write the String
      * @param s the String to write
      * @param point the point, in characters, at which the String will be
      * written
-     * @param foreground the color of the String
-     * @param background the color of the background
      */
-    public static void write(AsciiPanel panel, String s, Coord point,
-            Color foreground, Color background)
-        {panel.write(s, point.x, point.y, foreground, background);}
+    public static void write(AsciiPanel panel, Coord point, String s)
+        {panel.write(s, point.x, point.y);}
     
     /**
-     * Writes a character to the provided AsciiPanel.
+     * Writes a character to the provided AsciiPanel, using the default
+     * foreground and background colors.
      * @param panel the panel on which to write the character
      * @param c the char to write
      * @param point the point, in characters, at which the character will be
      * written
-     * @param foreground the color of the character
-     * @param background the color of the background
      */
-    public static void write(AsciiPanel panel, char c, Coord point,
-            Color foreground, Color background)
-        {panel.write(c, point.x, point.y, foreground, background);}
+    public static void write(AsciiPanel panel, Coord point, char c)
+        {panel.write(c, point.x, point.y);}
     
     /**
      * Writes a ColorChar to the provided AsciiPanel.
@@ -183,7 +179,7 @@ public class Display extends JFrame implements KeyListener
      * @param point  the point, in characters, at which the ColorChar will be
      * written
      */
-    public static void write(AsciiPanel panel, ColorChar cc, Coord point)
+    public static void write(AsciiPanel panel, Coord point, ColorChar cc)
     {
         panel.write(cc.character, point.x, point.y, cc.foreground,
                 cc.background);
@@ -196,11 +192,8 @@ public class Display extends JFrame implements KeyListener
      * @param s the Strings to write
      * @param point the point, in characters, at which the first String will be
      * written
-     * @param foreground the color of the Strings
-     * @param background the color of the background
      */
-    public static void write(AsciiPanel panel, String[] s, Coord point,
-            Color foreground, Color background)
+    public static void write(AsciiPanel panel, Coord point, String... s)
     {
         if (s == null || s.length == 0)
             return;
@@ -208,8 +201,7 @@ public class Display extends JFrame implements KeyListener
         for (int line = 0; line < s.length; line++)
             if (s[line] != null && contains(panel,
                     Coord.get(point.x, point.y + line)))
-                write(panel, s[line], Coord.get(point.x, point.y + line),
-                        foreground, background);
+                write(panel, Coord.get(point.x, point.y + line), s[line]);
     }
     
     /**
@@ -223,8 +215,8 @@ public class Display extends JFrame implements KeyListener
      * used on all matching characters of the String printed; if a character is
      * not found in the ColorSet, default colors will be used instead
      */
-    public static void write(AsciiPanel panel, String s, ColorSet colors,
-            Coord point)
+    public static void write(AsciiPanel panel, Coord point, ColorSet colors,
+            String s)
     {
         if (colors == null)
             return;
@@ -253,7 +245,7 @@ public class Display extends JFrame implements KeyListener
      * @param point the point, in characters, at which the ColorSet will be
      * written
      */
-    public static void write(AsciiPanel panel, ColorSet s, Coord point)
+    public static void write(AsciiPanel panel, Coord point, ColorSet s)
     {
         if (s == null || s.getSet() == null || s.getSet().isEmpty())
             return;
@@ -276,7 +268,7 @@ public class Display extends JFrame implements KeyListener
      * @param point the point, in characters, at which the first ColorSet will
      * be written
      */
-    public static void write(AsciiPanel panel, ColorSet[] s, Coord point)
+    public static void write(AsciiPanel panel, Coord point,  ColorSet... s)
     {
         if (s == null || s.length == 0)
             return;
@@ -284,7 +276,7 @@ public class Display extends JFrame implements KeyListener
         for (int line = 0; line < s.length; line++)
             if (s[line] != null && contains(panel,
                     Coord.get(point.x, point.y + line)))
-                write(panel, s[line], Coord.get(point.x, point.y + line));
+                write(panel, Coord.get(point.x, point.y + line), s[line]);
     }
     
     /**
@@ -292,18 +284,15 @@ public class Display extends JFrame implements KeyListener
      * @param panel the panel on which to write the Strings
      * @param s the Strings to write
      * @param y the line on which the first String will be written
-     * @param foreground the color of the Strings
-     * @param background the color of the background
      */
-    public static void writeCenter(AsciiPanel panel, String[] s, int y,
-            Color foreground, Color background)
+    public static void writeCenter(AsciiPanel panel, int y, String... s)
     {
         if (s == null || s.length == 0)
             return;
         
         for (int line = 0; line < s.length; line++)
             if (s[line] != null)
-                panel.writeCenter(s[line], y + line, foreground, background);
+                panel.writeCenter(s[line], y + line);
     }
     
     /**
@@ -312,7 +301,7 @@ public class Display extends JFrame implements KeyListener
      * @param s the ColorStrings to write
      * @param y the line on which the first ColorString will be written
      */
-    public static void writeCenter(AsciiPanel panel, ColorString[] s, int y)
+    public static void writeCenter(AsciiPanel panel, int y, ColorString... s)
     {
         if (s == null || s.length == 0)
             return;
@@ -326,113 +315,6 @@ public class Display extends JFrame implements KeyListener
                         s[line].background);
             }
         }
-    }
-    
-    /**
-     * Writes a String to the provided AsciiPanel, using the default background
-     * color.
-     * @param panel the panel on which to write the String
-     * @param s the String to write
-     * @param point the point, in characters, at which the String will be written
-     * @param foreground the color of the character
-     */
-    public static void write(AsciiPanel panel, String s, Coord point,
-            Color foreground)
-        {write(panel, s, point, foreground, panel.getDefaultBackgroundColor());}
-    
-    /**
-     * Writes a character to the provided AsciiPanel, using the default
-     * background color.
-     * @param panel the panel on which to write the character
-     * @param c the char to write
-     * @param point the point, in characters, at which the character will be
-     * written
-     * @param foreground the color of the character
-     */
-    public static void write(AsciiPanel panel, char c, Coord point,
-            Color foreground)
-        {write(panel, c, point, foreground, panel.getDefaultBackgroundColor());}
-    
-    /**
-     * Writes an array of Strings to the provided AsciiPanel, with each String
-     * on the line below the previous and using the default background color.
-     * @param panel the panel on which to write the Strings
-     * @param s the Strings to write
-     * @param point the point, in characters, at which the first String will be
-     * written
-     * @param foreground the color of the Strings
-     */
-    public static void write(AsciiPanel panel, String[] s, Coord point,
-            Color foreground)
-        {write(panel, s, point, foreground, panel.getDefaultBackgroundColor());}
-    
-    /**
-     * Writes an array of Strings to the center of the provided AsciiPanel,
-     * using the default background color.
-     * @param panel the panel on which to write the Strings
-     * @param s the Strings to write
-     * @param y the line on which the first String will be written
-     * @param foreground the color of the Strings
-     */
-    public static void writeCenter(AsciiPanel panel, String[] s, int y,
-            Color foreground)
-    {
-        writeCenter(panel, s, y, foreground, panel.getDefaultBackgroundColor());
-    }
-    
-    /**
-     * Writes a String to the provided AsciiPanel, using the default foreground
-     * and background colors.
-     * @param panel the panel on which to write the String
-     * @param s the String to write
-     * @param point the point, in characters, at which the String will be
-     * written
-     */
-    public static void write(AsciiPanel panel, String s, Coord point)
-    {
-        write(panel, s, point, panel.getDefaultForegroundColor(),
-                panel.getDefaultBackgroundColor());
-    }
-    
-    /**
-     * Writes a character to the provided AsciiPanel, using the default
-     * foreground and background colors.
-     * @param panel the panel on which to write the character
-     * @param c the char to write
-     * @param point the point, in characters, at which the character will be
-     * written
-     */
-    public static void write(AsciiPanel panel, char c, Coord point)
-    {
-        write(panel, c, point, panel.getDefaultForegroundColor(),
-                panel.getDefaultBackgroundColor());
-    }
-    
-    /**
-     * Writes an array of Strings to the provided AsciiPanel, with each String
-     * on the line below the previous and using the default foreground and
-     * background colors.
-     * @param panel the panel on which to write the Strings
-     * @param s the Strings to write
-     * @param point the point, in characters, at which the String
-     */
-    public static void write(AsciiPanel panel, String[] s, Coord point)
-    {
-        write(panel, s, point, panel.getDefaultForegroundColor(),
-                panel.getDefaultBackgroundColor());
-    }
-    
-    /**
-     * Writes an array of Strings to the center of the provided AsciiPanel,
-     * using the default foreground and background colors.
-     * @param panel the panel on which to write the Strings
-     * @param s the Strings to write
-     * @param y the line on which the first String will be written
-     */
-    public static void writeCenter(AsciiPanel panel, String[] s, int y)
-    {
-        writeCenter(panel, s, y, panel.getDefaultForegroundColor(),
-                panel.getDefaultBackgroundColor());
     }
     
     /**
@@ -474,26 +356,24 @@ public class Display extends JFrame implements KeyListener
         {return panel;}
     
     /**
-     * Writes a String to this Display's AsciiPanel.
+     * Writes a String to this Display's AsciiPanel, using the default
+     * foreground and background colors.
      * @param s the String to write
      * @param point the point, in characters, at which the String will be
      * written
-     * @param foreground the color of the String
-     * @param background the color of the background
      */
-    public void write(String s, Coord point, Color foreground, Color background)
-        {write(panel, s, point, foreground, background);}
+    public void write(Coord point, String s)
+        {write(panel, point, s);}
     
     /**
-     * Writes a character to this Display's AsciiPanel.
+     * Writes a character to this Display's AsciiPanel, using the default
+     * foreground and background colors.
      * @param c the char to write
      * @param point the point, in characters, at which the character will be
      * written
-     * @param foreground the color of the character
-     * @param background the color of the background
      */
-    public void write(char c, Coord point, Color foreground, Color background)
-        {write(panel, c, point, foreground, background);}
+    public void write(Coord point, char c)
+        {write(panel, point, c);}
     
     /**
      * Writes a ColorChar to this Display's AsciiPanel.
@@ -501,8 +381,8 @@ public class Display extends JFrame implements KeyListener
      * @param point  the point, in characters, at which the ColorChar will be
      * written
      */
-    public void write(ColorChar cc, Coord point)
-        {write(panel, cc, point);}
+    public void write(Coord point, ColorChar cc)
+        {write(panel, point, cc);}
     
     /**
      * Writes an array of Strings to this Display's AsciiPanel, with each String
@@ -510,12 +390,9 @@ public class Display extends JFrame implements KeyListener
      * @param s the Strings to write
      * @param point the point, in characters, at which the first String will be
      * written
-     * @param foreground the color of the Strings
-     * @param background the color of the background
      */
-    public void write(String[] s, Coord point, Color foreground,
-            Color background)
-        {write(panel, s, point, foreground, background);}
+    public void write(Coord point, String... s)
+        {write(panel, point, s);}
     
     /**
      * Writes a String to this Display's AsciiPanel, using the colors defined in
@@ -527,8 +404,8 @@ public class Display extends JFrame implements KeyListener
      * used on all matching characters of the String printed; if a character is
      * not found in the ColorSet, default colors will be used instead
      */
-    public void write(String s, ColorSet colors, Coord point)
-        {write(panel, s, colors, point);}
+    public void write(Coord point, ColorSet colors, String s)
+        {write(panel, point, colors, s);}
     
     /**
      * Writes the ColorChars of a ColorSet to this Display's AsciiPanel.
@@ -536,8 +413,8 @@ public class Display extends JFrame implements KeyListener
      * @param point the point, in characters, at which the ColorSet will be
      * written
      */
-    public void write(ColorSet s, Coord point)
-        {write(panel, s, point);}
+    public void write(Coord point, ColorSet s)
+        {write(panel, point, s);}
     
     /**
      * Writes an array of ColorSets to this Display's AsciiPanel, with each
@@ -546,110 +423,24 @@ public class Display extends JFrame implements KeyListener
      * @param point the point, in characters, at which the first ColorSet will
      * be written
      */
-    public void write(ColorSet[] s, Coord point)
-        {write(panel, s, point);}
+    public void write(Coord point, ColorSet... s)
+        {write(panel, point, s);}
     
     /**
      * Writes an array of Strings to the center of this Display's AsciiPanel.
      * @param s the Strings to write
      * @param y the line on which the first String will be written
-     * @param foreground the color of the Strings
-     * @param background the color of the background
      */
-    public void writeCenter(String[] s, int y, Color foreground,
-            Color background)
-        {writeCenter(panel, s, y, foreground, background);}
+    public void writeCenter(int y, String... s)
+        {writeCenter(panel, y, s);}
     
     /**
      * Writes an array of ColorStrings to this Display's AsciiPanel.
      * @param s the ColorStrings to write
      * @param y the line on which the first ColorString will be written
      */
-    public void writeCenter(ColorString[] s, int y)
-        {writeCenter(panel, s, y);}
-    
-    /**
-     * Writes a String to this Display's AsciiPanel, using the default
-     * background color.
-     * @param s the String to write
-     * @param point the point, in characters, at which the String will be
-     * written
-     * @param foreground the color of the character
-     */
-    public void write(String s, Coord point, Color foreground)
-        {write(panel, s, point, foreground);}
-    
-    /**
-     * Writes a character to this Display's AsciiPanel, using the default
-     * background color.
-     * @param c the char to write
-     * @param point the point, in characters, at which the character will be
-     * written
-     * @param foreground the color of the character
-     */
-    public void write(char c, Coord point, Color foreground)
-        {write(panel, c, point, foreground);}
-    
-    /**
-     * Writes an array of Strings to this Display's AsciiPanel, with each String
-     * on the line below the previous and using the default background color.
-     * @param s the Strings to write
-     * @param point the point, in characters, at which the first String will be
-     * written
-     * @param foreground the color of the Strings
-     */
-    public void write(String[] s, Coord point, Color foreground)
-        {write(panel, s, point, foreground);}
-    
-    /**
-     * Writes an array of Strings to the center of this Display's AsciiPanel,
-     * using the default background color.
-     * @param s the Strings to write
-     * @param y the line on which the first String will be written
-     * @param foreground the color of the Strings
-     */
-    public void writeCenter(String[] s, int y, Color foreground)
-        {writeCenter(panel, s, y, foreground);}
-    
-    /**
-     * Writes a String to this Display's AsciiPanel, using the default
-     * foreground and background colors.
-     * @param s the String to write
-     * @param point the point, in characters, at which the String will be
-     * written
-     */
-    public void write(String s, Coord point)
-        {write(panel, s, point);}
-    
-    /**
-     * Writes a character to this Display's AsciiPanel, using the default
-     * foreground and background colors.
-     * @param c the char to write
-     * @param point the point, in characters, at which the character will be
-     * written
-     */
-    public void write(char c, Coord point)
-        {write(panel, c, point);}
-    
-    /**
-     * Writes an array of Strings to this Display's AsciiPanel, with each String
-     * on the line below the previous and using the default foreground and
-     * background colors.
-     * @param s the Strings to write
-     * @param point the point, in characters, at which the first String will be
-     * written
-     */
-    public void write(String[] s, Coord point)
-        {write(panel, s, point);}
-    
-    /**
-     * Writes an array of Strings to the center of the provided AsciiPanel,
-     * using the default foreground and background colors.
-     * @param s the Strings to write
-     * @param y the line on which the first String will be written
-     */
-    public void writeCenter(String[] s, int y)
-        {writeCenter(panel, s, y);}
+    public void writeCenter(int y, ColorString... s)
+        {writeCenter(panel, y, s);}
     
     /**
      * Returns true if this Display's AsciiPanel contains the given Coord.
