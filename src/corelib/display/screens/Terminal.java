@@ -77,9 +77,20 @@ public abstract class Terminal<Output extends Window,
     public Window getWindow()
         {return output;}
     
+    public String getInput()
+    {
+        if (input == null)
+            return null;
+        
+        return input.toString();
+    }
+    
     @Override
     public Screen onConfirm()
-        {return null;}
+    {
+        input.deleteCharAt(input.length() - 1);
+        return null;
+    }
     
     @Override
     public Screen onCancel()
