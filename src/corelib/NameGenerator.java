@@ -1,5 +1,6 @@
 package corelib;
 
+import java.io.FileNotFoundException;
 import squidpony.squidmath.RNG;
 
 /**
@@ -52,8 +53,9 @@ public class NameGenerator
      * generator.
      * @param files the paths of the files to load
      * @param rng the random generator to use
+     * @throws java.io.FileNotFoundException
      */
-    public NameGenerator(String[] files, RNG rng)
+    public NameGenerator(String[] files, RNG rng) throws FileNotFoundException
     {
         syllables = new String[files.length][];
         for (int syllable = 0; syllable < files.length; syllable++)
@@ -66,16 +68,18 @@ public class NameGenerator
      * generator with the given seed.
      * @param files the paths of the files to load
      * @param seed the seed of the random generator to be used
+     * @throws java.io.FileNotFoundException
      */
-    public NameGenerator(String[] files, long seed)
+    public NameGenerator(String[] files, long seed) throws FileNotFoundException
         {this(files, new RNG(seed));}
     
     /**
      * Creates a NameGenerator with the given file names and a new random
      * generator.
      * @param files the paths of the files to load
+     * @throws java.io.FileNotFoundException
      */
-    public NameGenerator(String[] files)
+    public NameGenerator(String[] files) throws FileNotFoundException
         {this(files, new RNG());}
     
     // GENERATION
@@ -100,7 +104,8 @@ public class NameGenerator
     public String generateName(int length)
     {
         if (length <= 0 || length > syllables.length)
-            return null;
+            throw new IndexOutOfBoundsException("Length must be between 0 and "
+                    + syllables.length);
         
         StringBuilder name = new StringBuilder();
         for (int place = 0; place < length; place++)

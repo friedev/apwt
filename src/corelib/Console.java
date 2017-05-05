@@ -159,15 +159,4 @@ public abstract class Console
      */
     public static void printSpacingBetween(int spacing, String s1, String s2)
         {System.out.printf("%-" + spacing + "s %s", s1, s2);}
-    
-    /**
-     * Quits the game immediately with an error message.
-     * @param message the message to display before closing the game
-     */
-    public static void quitWithMessage(String message)
-    {
-        Console.println(message);
-        Prompt.enterTo("close");
-        System.exit(1);
-    }
 }

@@ -53,76 +53,44 @@ public abstract class FileManager
      * Loads a Properties object from a file, if it exists.
      * @param target the name of the file to load from
      * @return the Properties object loaded from the file
+     * @throws java.io.FileNotFoundException
+     * @throws java.io.IOException
      */
-    public static Properties load(String target)
+    public static Properties load(String target) throws FileNotFoundException,
+            IOException
     {
-        try
-        {
-            File file = new File(path + target);
-            if (!file.exists())
-            {
-                // The act of creating this file may be deprecated in the future
-                createContainingFolders(target);
-                file.createNewFile();
-                return new Properties();
-            }
-            
-            FileInputStream fis = new FileInputStream(file);
-            Properties properties = new Properties();
-            properties.load(fis);
-            fis.close();
-            return properties;
-        }
-        catch (FileNotFoundException fnf)
-        {
-            Console.quitWithMessage("File not found at " + path + target);
-        }
-        catch (IOException io)
-        {
-            Console.quitWithMessage("Error encountered while creating or "
-                    + "processing " + path + target);
-        }
-        
-        // NOT REACHED
-        return null;
+        FileInputStream reader =
+                new FileInputStream(new File(path + target));
+        Properties properties = new Properties();
+        properties.load(reader);
+        reader.close();
+        return properties;
     }
     
     /**
      * Saves a Properties object to the specified file.
      * @param properties the list of properties to save
      * @param target the name of the file to save to
+     * @throws java.io.FileNotFoundException
+     * @throws java.io.IOException
      */
     public static void save(Properties properties, String target)
+            throws FileNotFoundException, IOException
     {
-        try
+        if (target == null)
+            throw new NullPointerException("File saving destination may "
+                    + "not be null");
+
+        File file = new File(path + target);
+        if (!file.exists())
         {
-            if (target == null)
-            {
-                Console.quitWithMessage("No file name was supplied as saving "
-                        + "destination.");
-                return; // Not reached, prevents null pointer warnings
-            }
-            
-            File file = new File(path + target);
-            if (!file.exists())
-            {
-                createContainingFolders(target);
-                file.createNewFile();
-            }
-            
-            FileOutputStream fos = new FileOutputStream(file);
-            properties.store(fos, "Saved game properties.");
-            fos.close();
+            createContainingFolders(target);
+            file.createNewFile();
         }
-        catch (FileNotFoundException fnf)
-        {
-            Console.quitWithMessage("File not found at " + path + target);
-        }
-        catch (IOException io)
-        {
-            Console.quitWithMessage("Error encountered while creating " + path
-                    + target);
-        }
+
+        FileOutputStream writer = new FileOutputStream(file);
+        properties.store(writer, "Saved game properties.");
+        writer.close();
     }
     
     /**
@@ -148,25 +116,17 @@ public abstract class FileManager
      * Creates an array of Strings, where each item is a line of the file.
      * @param target the file to create an array from
      * @return an array of Strings, where each item is a line of the file
+     * @throws java.io.FileNotFoundException
      */
     public static String[] toLineArray(String target)
+            throws FileNotFoundException
     {
-        try
-        {
-            java.util.ArrayList<String> lineList = new java.util.ArrayList<>();
-            Scanner reader = new Scanner(new File(path + target));
-            while (reader.hasNextLine())
-                lineList.add(reader.nextLine());
-            reader.close();
-            return lineList.toArray(new String[lineList.size()]);
-        }
-        catch (FileNotFoundException fnf)
-        {
-            Console.quitWithMessage("File not found at " + path + target);
-        }
-        
-        // NOT REACHED
-        return null;
+        java.util.ArrayList<String> lineList = new java.util.ArrayList<>();
+        Scanner reader = new Scanner(new File(path + target));
+        while (reader.hasNextLine())
+            lineList.add(reader.nextLine());
+        reader.close();
+        return lineList.toArray(new String[lineList.size()]);
     }
     
     /**
@@ -195,38 +155,33 @@ public abstract class FileManager
      * @param rng the random number generator with which to select a line
      * @return a random line from the file, null if any of the above conditions
      * are not met
+     * @throws java.io.FileNotFoundException
      */
     public static String getRandomLine(String target, RNG rng)
+            throws FileNotFoundException
     {
         if (target == null)
-            return null;
+            throw new NullPointerException("Target file path may not be null");
         
         File file = new File(path + target);
         
-        try
+        // Count the lines of the file
+        Scanner reader = new Scanner(file);
+        int lineCounter = 0;
+        while (reader.hasNextLine())
         {
-            // Count the lines of the file
-            Scanner reader = new Scanner(file);
-            int lineCounter = 0;
-            while (reader.hasNextLine())
-            {
-                reader.nextLine();
-                lineCounter++;
-            }
-
-            // The file has no lines and thus is empty, so return null
-            if (lineCounter == 0)
-            {
-                reader.close();
-                return null;
-            }
-            
-            return getLine(target, rng.nextInt(lineCounter));
+            reader.nextLine();
+            lineCounter++;
         }
-        catch (FileNotFoundException fnf)
+
+        // The file has no lines and thus is empty, so return null
+        if (lineCounter == 0)
         {
+            reader.close();
             return null;
         }
+
+        return getLine(target, rng.nextInt(lineCounter));
     }
     
     /**
@@ -237,41 +192,36 @@ public abstract class FileManager
      * is 0), must be non-negative
      * @return the line from the file, null if any of the above conditions are
      * not met
+     * @throws java.io.FileNotFoundException
      */
     public static String getLine(String target, int line)
+            throws FileNotFoundException
     {
         if (target == null)
-            return null;
+            throw new NullPointerException("Target file path may not be null");
         
         if (line < 0)
-            return null;
+            throw new IndexOutOfBoundsException("Line number must be >= 0");
         
         File file = new File(path + target);
         
-        try
+        Scanner reader = new Scanner(file);
+        for (int i = 0; i < line; i++)
         {
-            Scanner reader = new Scanner(file);
-            for (int i = 0; i < line; i++)
+            if (reader.hasNextLine())
             {
-                if (reader.hasNextLine())
-                {
-                    reader.nextLine();
-                }
-                else
-                {
-                    reader.close();
-                    return null;
-                }    
+                reader.nextLine();
             }
-            
-            String lineString = reader.nextLine();
-            reader.close();
-            return lineString;
+            else
+            {
+                reader.close();
+                return null;
+            }    
         }
-        catch (FileNotFoundException fnf)
-        {
-            return null;
-        }
+
+        String lineString = reader.nextLine();
+        reader.close();
+        return lineString;
     }
     
     /**
@@ -279,39 +229,33 @@ public abstract class FileManager
      * @param target the name of the file to write to, must be non-null
      * @param text the text to write to the file, must be non-null and have
      * characters in it
+     * @throws java.io.FileNotFoundException
+     * @throws java.io.IOException
      */
-    public static void append(String target, String text)
+    public static void append(String target, String text) throws FileNotFoundException, IOException
     {
-        if (target == null || text == null || "".equals(text))
+        if (target == null)
+            throw new NullPointerException("Target file path may not be null");
+        
+        if (text == null || "".equals(text))
             return;
         
-        try
+        File file = new File(path + target);
+        if (!file.exists())
         {
-            File file = new File(path + target);
-            if (!file.exists())
-            {
-                createContainingFolders(target);
-                file.createNewFile();
-            }
-            
-            String[] lines = toLineArray(target);
-            
-            java.io.PrintWriter writer = new java.io.PrintWriter(file);
-            
-            for (String line: lines)
-                writer.println(line);
-            
-            writer.println(text);
-            writer.close();
+            createContainingFolders(target);
+            file.createNewFile();
         }
-        catch (FileNotFoundException fnf)
-        {
-            return;
-        }
-        catch (IOException io)
-        {
-            return;
-        }
+
+        String[] lines = toLineArray(target);
+
+        java.io.PrintWriter writer = new java.io.PrintWriter(file);
+
+        for (String line: lines)
+            writer.println(line);
+
+        writer.println(text);
+        writer.close();
     }
     
     /**
@@ -323,7 +267,7 @@ public abstract class FileManager
     public static void createContainingFolders(String target)
     {
         if (target == null)
-            return;
+            throw new NullPointerException("Target file path may not be null");
         
         if (target.contains("/"))
         {

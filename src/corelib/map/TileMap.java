@@ -142,7 +142,12 @@ public class TileMap<TileProperty> implements Iterable<Tile>
     public ColorChar[][] toGlyphs(Coord start, Coord end)
     {
         if (start.x > end.x || start.y > end.y)
-            return null;
+            throw new IllegalArgumentException(
+                    "Start coordinates must be <= end coordinates");
+        
+        if (!contains(start) || !contains(end))
+            throw new IndexOutOfBoundsException("Start and end coordinates "
+                    + "must be contained on the map");
         
         ColorChar[][] glyphs =
                 new ColorChar[end.y - start.y][end.x - start.x];

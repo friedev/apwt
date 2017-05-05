@@ -29,11 +29,22 @@ public abstract class WindowBuilder
     public static boolean drawLine(Display display, Coord end1, Coord end2,
             Line border)
     {
-        if (end1.equals(end2) || (end1.x != end2.x && end1.y != end2.y) ||
-                !display.contains(end1) || !display.contains(end2) ||
-                (end1.x == end2.x && border.horizontal) ||
+        if (end1.equals(end2))
+            throw new IllegalArgumentException("Both endpoints may not be the "
+                    + "same point");
+        
+        if (end1.x != end2.x && end1.y != end2.y)
+            throw new IllegalArgumentException("Both endpoints must share an "
+                    + "axis value");
+        
+        if (!display.contains(end1) || !display.contains(end2))
+            throw new IndexOutOfBoundsException("The display must contain both "
+                    + "endpoints");
+        
+        if ((end1.x == end2.x && border.horizontal) ||
                 (end1.y == end2.y && !border.horizontal))
-            return false;
+            throw new IllegalArgumentException("Endpoint dimension does not "
+                    + "match line horizontal/vertical field");
         
         border.syncDefaults(display);
         
@@ -96,11 +107,13 @@ public abstract class WindowBuilder
     public static boolean drawBorder(Display display, Coord corner1,
             Coord corner2, Border border, Color fill)
     {
-        if (corner1.equals(corner2) || corner1.x == corner2.x ||
-                corner1.y == corner2.y ||
-                !display.contains(corner1) ||
-                !display.contains(corner2))
-            return false;
+        if (corner1.x == corner2.x || corner1.y == corner2.y)
+            throw new IllegalArgumentException("Corners must have different "
+                    + "axis values");
+        
+        if (!display.contains(corner1) || !display.contains(corner2))
+            throw new IllegalArgumentException("The display must contain both "
+                    + "corners");
         
         Coord tl, tr, bl, br;
         if (corner1.y < corner2.y) // corner1 is above corner2
@@ -308,8 +321,28 @@ public abstract class WindowBuilder
             if (curMaxLength > overallMaxLength)
                 overallMaxLength = curMaxLength;
             
+            blockCheck:
             if (blocks[block].size() > curMaxLines)
+            {
+                overallLines -= curMaxLines;
                 curMaxLines = blocks[block].size();
+                overallLines += curMaxLines;
+                
+                if (separators == null)
+                    break blockCheck;
+                
+                int checkingBlock = block - 1;
+                while (separators.length - 1 >= checkingBlock &&
+                        checkingBlock >= 0 &&
+                        separators[checkingBlock] != null &&
+                        !separators[checkingBlock].horizontal)
+                {
+                    endpoints[checkingBlock * 2 + 1] = Coord.get(
+                            endpoints[checkingBlock * 2 + 1].x,
+                            curLine + curMaxLines);
+                    checkingBlock--;
+                }
+            }
             
             if (block == blocks.length - 1)
                 break;
@@ -335,11 +368,10 @@ public abstract class WindowBuilder
                 {
                     curIndent += curMaxLength + 1;
 
-                    endpoints[block * 2] = Coord.get(curIndent - 1, curLine - 1);
+                    endpoints[block * 2] = Coord.get(curIndent - 1,
+                            curLine - 1);
                     endpoints[block * 2 + 1] = Coord.get(curIndent - 1,
                             curLine + curMaxLines);
-
-                    // line counts stay the same
                 }
             }
             else

@@ -85,14 +85,22 @@ public class PopupWindow extends Window<ColorString>
         ColorString[] output =
                 contents.toArray(new ColorString[contents.size()]);
         
-        if (border != null)
+        try
         {
-            WindowBuilder.printCenterBoxed(display, output, y, border,
-                        separator);
+            if (border != null)
+            {
+                WindowBuilder.printCenterBoxed(display, output, y, border,
+                            separator);
+            }
+            else
+            {
+                display.writeCenter(output, y);
+            }
         }
-        else
+        catch (IllegalArgumentException | IndexOutOfBoundsException e)
         {
-            display.writeCenter(output, y);
+            // Do not print the Window if exceptions are encountered
+            return;
         }
     }
     
@@ -140,4 +148,7 @@ public class PopupWindow extends Window<ColorString>
      */
     public void set(int index, String content)
         {contents.set(index, new ColorString(content));}
+    
+    public void insert(int index, String content)
+        {contents.add(index, new ColorString(content));}
 }

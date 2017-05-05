@@ -106,21 +106,29 @@ public class AlignedWindow extends Window<ColorSet>
         
         ColorSet[] output = contents.toArray(new ColorSet[contents.size()]);
         
-        if (border != null)
+        try
         {
-            if (hasSeparators())
+            if (border != null)
             {
-                WindowBuilder.printBoxed(display, output, y, x, border,
-                        separators.toArray(new Line[separators.size()]));
+                if (hasSeparators())
+                {
+                    WindowBuilder.printBoxed(display, output, y, x, border,
+                            separators.toArray(new Line[separators.size()]));
+                }
+                else
+                {
+                    WindowBuilder.printBoxed(display, output, y, x, border);
+                }
             }
             else
             {
-                WindowBuilder.printBoxed(display, output, y, x, border);
+                display.write(output, Coord.get(x, y));
             }
         }
-        else
+        catch (IllegalArgumentException | IndexOutOfBoundsException e)
         {
-            display.write(output, Coord.get(x, y));
+            // Do not print the Window if exceptions are encountered
+            return;
         }
     }
     
@@ -245,6 +253,18 @@ public class AlignedWindow extends Window<ColorSet>
     public void set(int index, ColorString[] content)
         {contents.set(index, ColorSet.toColorSet(content));}
     
+    public void insert(int index, String content)
+        {insert(index, new ColorSet(content));}
+    
+    public void insert(int index, ColorString content)
+        {insert(index, new ColorSet(content));}
+    
+    public void insert(int index, ColorChar[] content)
+        {insert(index, new ColorSet(content));}
+    
+    public void insert(int index, ColorSet content)
+        {contents.add(index, content);}
+    
     /**
      * Adds a separator associated with the provided Line.
      * @param separator the Line to add as a separator
@@ -263,7 +283,8 @@ public class AlignedWindow extends Window<ColorSet>
     public void setSeparator(int index, Line separator)
     {
         if (index >= separators.size() || index < 0)
-            return;
+            throw new IndexOutOfBoundsException("Index must be between 0 and "
+                    + separators.size());
         
         separators.set(index, separator);
     }

@@ -211,24 +211,6 @@ public abstract class Prompt
     }
     
     /**
-     * A modified version of Integer.parseInt() that will exit the program
-     * directly with a message instead of throwing a NumberFormatException.
-     * @param intString the String to parse for integers
-     * @param quitMessage the message to print before exiting the program, if
-     * the parsing fails
-     * @return an int read from the given String; will exit the program if none
-     * are found
-     */
-    public static int parseInt(String intString, String quitMessage)
-    {
-        Integer parsedInt = parseInt(intString);
-        if (parsedInt == null)
-            Console.quitWithMessage(quitMessage);
-        
-        return parsedInt;
-    }
-    
-    /**
      * Prompts for yes/no input until gathered.
      * @param prompt the prompt to print for the Y/N input
      * @return true if y/yes is entered, false if n/no is entered
