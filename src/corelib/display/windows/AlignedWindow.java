@@ -41,8 +41,8 @@ public class AlignedWindow extends Window<ColorSet>
     
     public AlignedWindow(AlignedWindow copying)
     {
-        this(copying.display, copying.contents, copying.x, copying.y,
-                copying.border, copying.separators);
+        this(copying.getDisplay(), copying.getContents(), copying.x, copying.y,
+                copying.getBorder(), copying.separators);
     }
     
     /**
@@ -70,7 +70,7 @@ public class AlignedWindow extends Window<ColorSet>
         {this(display, contents, x, y, border, null);}
     
     /**
-     * Creates a Window with a default bordeer and no separators.
+     * Creates a Window with a default border and no separators.
      * @param display the Window's Display
      * @param contents the Window's contents
      * @param x the Window's x coordinate
@@ -101,28 +101,31 @@ public class AlignedWindow extends Window<ColorSet>
     @Override
     public void display()
     {
-        if (contents == null || contents.isEmpty())
+        if (getContents() == null || getContents().isEmpty())
             return;
         
-        ColorSet[] output = contents.toArray(new ColorSet[contents.size()]);
+        ColorSet[] output = getContents().toArray(
+                new ColorSet[getContents().size()]);
         
         try
         {
-            if (border != null)
+            if (isBordered())
             {
                 if (hasSeparators())
                 {
-                    WindowBuilder.printBoxed(display, output, y, x, border,
+                    WindowBuilder.printBoxed(getDisplay(), output, y, x,
+                            getBorder(),
                             separators.toArray(new Line[separators.size()]));
                 }
                 else
                 {
-                    WindowBuilder.printBoxed(display, output, y, x, border);
+                    WindowBuilder.printBoxed(getDisplay(), output, y, x,
+                            getBorder());
                 }
             }
             else
             {
-                display.write(Coord.get(x, y), output);
+                getDisplay().write(Coord.get(x, y), output);
             }
         }
         catch (IllegalArgumentException | IndexOutOfBoundsException e)
@@ -191,7 +194,7 @@ public class AlignedWindow extends Window<ColorSet>
      * @param content content the String to add
      */
     public AlignedWindow add(String content)
-        {contents.add(new ColorSet(content)); return this;}
+        {getContents().add(new ColorSet(content)); return this;}
     
     /**
      * Converts the provided ColorString into a ColorSet and adds it to the
@@ -199,7 +202,7 @@ public class AlignedWindow extends Window<ColorSet>
      * @param content the ColorString to add
      */
     public AlignedWindow add(ColorString content)
-        {contents.add(new ColorSet(content)); return this;}
+        {getContents().add(new ColorSet(content)); return this;}
     
     /**
      * Converts the provided array of ColorChars into a ColorSet and adds it to
@@ -207,7 +210,7 @@ public class AlignedWindow extends Window<ColorSet>
      * @param content the array of ColorChars to add
      */
     public AlignedWindow add(ColorChar[] content)
-        {contents.add(new ColorSet(content)); return this;}
+        {getContents().add(new ColorSet(content)); return this;}
     
     /**
      * Converts the provided array of ColorStrings into a ColorSet and adds it
@@ -215,7 +218,7 @@ public class AlignedWindow extends Window<ColorSet>
      * @param content the array of ColorStrings to add
      */
     public AlignedWindow add(ColorString[] content)
-        {contents.add(ColorSet.toColorSet(content)); return this;}
+        {getContents().add(ColorSet.toColorSet(content)); return this;}
     
     /**
      * Sets the line of the Window's contents at the index to the provided
@@ -224,7 +227,7 @@ public class AlignedWindow extends Window<ColorSet>
      * @param content the String that will be set at the line
      */
     public void set(int index, String content)
-        {contents.set(index, new ColorSet(content));}
+        {getContents().set(index, new ColorSet(content));}
     
     /**
      * Sets the line of the Window's contents at the index to the provided
@@ -233,7 +236,7 @@ public class AlignedWindow extends Window<ColorSet>
      * @param content the ColorString that will be set at the line
      */
     public void set(int index, ColorString content)
-        {contents.set(index, new ColorSet(content));}
+        {getContents().set(index, new ColorSet(content));}
     
     /**
      * Sets the line of the Window's contents at the index to the provided array
@@ -242,7 +245,7 @@ public class AlignedWindow extends Window<ColorSet>
      * @param content the array of ColorChars that will be set at the line
      */
     public void set(int index, ColorChar[] content)
-        {contents.set(index, new ColorSet(content));}
+        {getContents().set(index, new ColorSet(content));}
     
     /**
      * Sets the line of the Window's contents at the index to the provided array
@@ -251,7 +254,7 @@ public class AlignedWindow extends Window<ColorSet>
      * @param content the array of ColorStrings that will be set at the line
      */
     public void set(int index, ColorString[] content)
-        {contents.set(index, ColorSet.toColorSet(content));}
+        {getContents().set(index, ColorSet.toColorSet(content));}
     
     public void insert(int index, String content)
         {insert(index, new ColorSet(content));}
@@ -263,7 +266,7 @@ public class AlignedWindow extends Window<ColorSet>
         {insert(index, new ColorSet(content));}
     
     public void insert(int index, ColorSet content)
-        {contents.add(index, content);}
+        {getContents().add(index, content);}
     
     /**
      * Adds a separator associated with the provided Line.
@@ -271,7 +274,7 @@ public class AlignedWindow extends Window<ColorSet>
      */
     public void addSeparator(Line separator)
     {
-        contents.add(null);
+        getContents().add(null);
         separators.add(separator);
     }
     

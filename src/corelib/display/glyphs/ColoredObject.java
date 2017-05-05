@@ -10,9 +10,9 @@ import java.awt.Color;
 public abstract class ColoredObject
 {
     /** The color of the foreground. */
-    public Color foreground;
+    private Color foreground;
     /** The color of the background. */
-    public Color background;
+    private Color background;
     
     /**
      * Creates a ColoredObject with a foreground and background color.
@@ -35,6 +35,12 @@ public abstract class ColoredObject
     /** Creates a ColoredObject with no specified colors. */
     public ColoredObject()
         {this(null, null);}
+    
+    public Color getForeground()
+        {return foreground;}
+    
+    public Color getBackground()
+        {return background;}
     
     public void setForeground(Color color)
         {foreground = color;}

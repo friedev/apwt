@@ -11,11 +11,11 @@ import java.util.List;
 public abstract class Window<Content extends CharSequence>
 {
     /** The Display on which to print the window. */
-    protected Display display;
+    private Display display;
     /** The Border surrounding the Window; not displayed if null. */
-    protected Border border;
+    private Border border;
     /** The contents of the Window, with each Content as a different line. */
-    protected List<Content> contents;
+    private List<Content> contents;
     
     /**
      * Creates a Window with all fields defined.
@@ -63,6 +63,9 @@ public abstract class Window<Content extends CharSequence>
      */
     public boolean isBordered()
         {return border != null;}
+    
+    public void resetContents()
+        {contents = new ArrayList<>();}
     
     /**
      * Adds the provided content to the Window's contents.

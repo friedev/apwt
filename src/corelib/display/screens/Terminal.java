@@ -13,13 +13,13 @@ public abstract class Terminal<Output extends Window,
         Content extends CharSequence> extends ConfirmationScreen
 {
     /** The StringBuilder where all keypresses are added. */
-    protected StringBuilder input;
+    private StringBuilder input;
     /** The Window through which all output is displayed. */
-    protected Output output;
+    private Output output;
     /** The String printed before the entered input is shown to the user. */
-    protected Content prompt;
+    private Content prompt;
     /** The input length at which the Terminal will not accept any new input. */
-    protected int maxInputLength;
+    private int maxInputLength;
     
     /**
      * Creates a Terminal with the given Window, prompt, and maximum length.
@@ -76,6 +76,9 @@ public abstract class Terminal<Output extends Window,
     
     public Window getWindow()
         {return output;}
+    
+    public Content getPrompt()
+        {return prompt;}
     
     public String getInput()
     {

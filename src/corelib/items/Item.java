@@ -22,7 +22,7 @@ public class Item extends BaseItem
     public boolean   isContained()  {return container != null;}
     
     @Override
-    protected List<String> defineAsList()
+    public List<String> defineAsList()
     {
         List<String> definition = super.defineAsList();
         definition.add(" -Volume: " + volume);

@@ -21,7 +21,7 @@ public class Resource extends BaseItem
         {return getName() + " (" + amount + ")";}
     
     @Override
-    protected List<String> defineAsList()
+    public List<String> defineAsList()
     {
         List<String> definition = super.defineAsList();
         definition.add(" -Amount: " + amount);

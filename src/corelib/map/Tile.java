@@ -12,9 +12,9 @@ import java.util.Objects;
  */
 public class Tile<Property>
 {
-    protected ColorChar glyph;
-    protected double moveCost;
-    protected List<Property> properties;
+    private ColorChar glyph;
+    private double moveCost;
+    private List<Property> properties;
     
     public Tile(ColorChar glyph, double moveCost, List<Property> properties)
     {

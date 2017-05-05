@@ -151,8 +151,8 @@ public class Display extends JFrame implements KeyListener
     // STATIC GRAPHICAL METHODS
     
     /**
-     * Writes a String to the provided AsciiPanel, using the default foreground
-     * and background colors.
+     * Writes a String to the provided AsciiPanel, using the default getForeground()
+     * and getBackground() colors.
      * @param panel the panel on which to write the String
      * @param s the String to write
      * @param point the point, in characters, at which the String will be
@@ -163,7 +163,7 @@ public class Display extends JFrame implements KeyListener
     
     /**
      * Writes a character to the provided AsciiPanel, using the default
-     * foreground and background colors.
+     * getForeground() and getBackground() colors.
      * @param panel the panel on which to write the character
      * @param c the char to write
      * @param point the point, in characters, at which the character will be
@@ -181,8 +181,8 @@ public class Display extends JFrame implements KeyListener
      */
     public static void write(AsciiPanel panel, Coord point, ColorChar cc)
     {
-        panel.write(cc.character, point.x, point.y, cc.foreground,
-                cc.background);
+        panel.write(cc.getChar(), point.x, point.y, cc.getForeground(),
+                cc.getBackground());
     }
     
     /**
@@ -232,8 +232,8 @@ public class Display extends JFrame implements KeyListener
             else
             {
                 curColors.syncDefaults(panel);
-                panel.write(cur, point.x + i, point.y, curColors.foreground,
-                        curColors.background);
+                panel.write(cur, point.x + i, point.y, curColors.getForeground(),
+                        curColors.getBackground());
             }
         }
     }
@@ -255,8 +255,8 @@ public class Display extends JFrame implements KeyListener
         for (int i = 0; i < chars.size(); i++)
         {
             chars.get(i).syncDefaults(panel);
-            panel.write(chars.get(i).character, point.x + i, point.y,
-                    chars.get(i).foreground, chars.get(i).background);
+            panel.write(chars.get(i).getChar(), point.x + i, point.y,
+                    chars.get(i).getForeground(), chars.get(i).getBackground());
         }
     }
     
@@ -311,8 +311,8 @@ public class Display extends JFrame implements KeyListener
             if (s[line] != null)
             {
                 s[line].syncDefaults(panel);
-                panel.writeCenter(s[line].string, y + line, s[line].foreground,
-                        s[line].background);
+                panel.writeCenter(s[line].getString(), y + line,
+                        s[line].getForeground(), s[line].getBackground());
             }
         }
     }
@@ -357,7 +357,7 @@ public class Display extends JFrame implements KeyListener
     
     /**
      * Writes a String to this Display's AsciiPanel, using the default
-     * foreground and background colors.
+     * getForeground() and getBackground() colors.
      * @param s the String to write
      * @param point the point, in characters, at which the String will be
      * written
@@ -367,7 +367,7 @@ public class Display extends JFrame implements KeyListener
     
     /**
      * Writes a character to this Display's AsciiPanel, using the default
-     * foreground and background colors.
+     * getForeground() and getBackground() colors.
      * @param c the char to write
      * @param point the point, in characters, at which the character will be
      * written

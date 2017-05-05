@@ -2,7 +2,6 @@ package corelib.display.windows;
 
 import corelib.display.glyphs.ColorString;
 import java.awt.Color;
-import java.util.ArrayList;
 
 /**
  * 
@@ -20,12 +19,12 @@ public class PopupMenu extends ColoredMenu<ColorString, PopupWindow>
     public PopupWindow getOutput()
     {
         PopupWindow copy = new PopupWindow((PopupWindow) getWindow());
-        copy.contents = new ArrayList<>();
-        for (ColorString content: getWindow().contents)
+        copy.resetContents();
+        for (ColorString content: getWindow().getContents())
             copy.add(new ColorString(content));
         
-        copy.contents.get(getSelectionIndex())
-                .setColors(selectionForeground, selectionBackground);
+        copy.getContents().get(getSelectionIndex())
+                .setColors(getForeground(), getBackground());
         return copy;
     }
 }

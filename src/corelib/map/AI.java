@@ -5,7 +5,7 @@ package corelib.map;
  */
 public abstract class AI
 {
-    protected Being host;
+    private Being host;
     
     public AI(Being host)
     {
@@ -14,4 +14,10 @@ public abstract class AI
     }
     
     public abstract boolean update();
+    
+    public Being getHost()
+        {return host;}
+    
+    public void setHost(Being host)
+        {this.host = host;}
 }

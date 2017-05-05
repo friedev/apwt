@@ -21,7 +21,7 @@ public abstract class BaseItem extends Nameable
     public String getDescription() {return description;}
     public int    getValue()       {return value;}
     
-    protected List<String> defineAsList()
+    public List<String> defineAsList()
     {
         ArrayList<String> definition = new ArrayList<>();
         definition.add(getName() + ":");

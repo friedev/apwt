@@ -67,9 +67,10 @@ public class PopupTerminal extends Terminal<PopupWindow, ColorString>
     @Override
     public void displayOutput()
     {
-        output.set(output.getContents().size() - 1,
-                new ColorString(prompt + input.toString(), prompt.foreground,
-                prompt.background));
-        output.display();
+        getWindow().set(getWindow().getContents().size() - 1,
+                new ColorString(getPrompt() + getInput(),
+                        getPrompt().getForeground(),
+                        getPrompt().getBackground()));
+        getWindow().display();
     }
 }

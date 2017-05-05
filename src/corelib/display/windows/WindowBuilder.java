@@ -49,9 +49,9 @@ public abstract class WindowBuilder
         border.syncDefaults(display);
         
         display.write(end1, new ColorChar(border.end1,
-                border.foreground, border.background));
+                border.getForeground(), border.getBackground()));
         display.write(end2, new ColorChar(border.end2,
-                border.foreground, border.background));
+                border.getForeground(), border.getBackground()));
         
         int start, end;
         
@@ -70,7 +70,7 @@ public abstract class WindowBuilder
             
             for (int i = start + 1; i < end; i++)
                 display.write(Coord.get(end1.x, i), new ColorChar(border.line,
-                        border.foreground, border.background));
+                        border.getForeground(), border.getBackground()));
         }
         else
         {
@@ -87,7 +87,7 @@ public abstract class WindowBuilder
             
             for (int i = start + 1; i < end; i++)
                 display.write(Coord.get(i, end1.y), new ColorChar(border.line,
-                        border.foreground, border.background));
+                        border.getForeground(), border.getBackground()));
         }
         
         return true;
@@ -156,28 +156,28 @@ public abstract class WindowBuilder
         border.syncDefaults(display);
         
         display.write(tl, new ColorChar(border.cornerTL,
-                border.foreground, border.background));
+                border.getForeground(), border.getBackground()));
         display.write(tr, new ColorChar(border.cornerTR,
-                border.foreground, border.background));
+                border.getForeground(), border.getBackground()));
         display.write(bl, new ColorChar(border.cornerBL,
-                border.foreground, border.background));
+                border.getForeground(), border.getBackground()));
         display.write(br, new ColorChar(border.cornerBR,
-                border.foreground, border.background));
+                border.getForeground(), border.getBackground()));
         
         for (int x = tl.x + 1; x < tr.x; x++)
         {
             display.getPanel().write(border.edgeT, x, tl.y,
-                    border.foreground, border.background);
+                    border.getForeground(), border.getBackground());
             display.getPanel().write(border.edgeB, x, bl.y,
-                    border.foreground, border.background);
+                    border.getForeground(), border.getBackground());
         }
         
         for (int y = tl.y + 1; y < bl.y; y++)
         {
             display.getPanel().write(border.edgeL, tl.x, y,
-                    border.foreground, border.background);
+                    border.getForeground(), border.getBackground());
             display.getPanel().write(border.edgeR, tr.x, y,
-                    border.foreground, border.background);
+                    border.getForeground(), border.getBackground());
         }
         
         if (fill == null)
@@ -210,7 +210,7 @@ public abstract class WindowBuilder
     
     /**
      * Draws a Border between two specified corners to the provided Display,
-     * filled with the background color of the provided Border.
+     * filled with the getBackground() color of the provided Border.
      * @param display the Display to draw the Border on
      * @param corner1 the first corner; must be a different point than the
      * second corner, share no axis values, and be on the display
@@ -223,7 +223,7 @@ public abstract class WindowBuilder
             Coord corner2, Border border)
     {
         border.syncDefaults(display);
-        return drawBorder(display, corner1, corner2, border, border.background);
+        return drawBorder(display, corner1, corner2, border, border.getBackground());
     }
     
     /**

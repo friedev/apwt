@@ -7,9 +7,9 @@ import squidpony.squidmath.Coord;
 /** An entity capable of movement around a map. */
 public class Entity
 {
-    protected TileMap map;
-    protected Coord location;
-    protected ColorChar glyph;
+    private TileMap map;
+    private Coord location;
+    private ColorChar glyph;
     
     public Entity(TileMap map, Coord location, ColorChar glyph)
     {
@@ -41,7 +41,7 @@ public class Entity
     
     public boolean setLocation(Coord destination)
     {
-        if (map.isOpen(destination))
+        if (map.contains(destination))
         {
             location = destination;
             return true;
@@ -50,14 +50,20 @@ public class Entity
         return false;
     }
     
-    public boolean setLocation(int x, int y)
-        {return setLocation(Coord.get(x, y));}
-    
-    public boolean changeLocation(int x, int y)
-        {return setLocation(location.x + x, location.y + y);}
+    public boolean changeLocation(Coord change)
+        {return setLocation(location.add(change));}
     
     public boolean changeLocation(Direction direction)
-        {return changeLocation(direction.deltaX, direction.deltaY);}
+        {return changeLocation(Coord.get(direction.deltaX, direction.deltaY));}
+    
+    public boolean moveTo(Coord destination)
+        {return map.isOpen(destination) ? setLocation(destination) : false;}
+    
+    public boolean moveBy(Coord change)
+        {return moveTo(location.add(change));}
+    
+    public boolean move(Direction direction)
+        {return moveBy(Coord.get(direction.deltaX, direction.deltaY));}
     
     // Returns true if the entity moved
     public boolean update()

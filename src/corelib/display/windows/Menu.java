@@ -18,7 +18,7 @@ public abstract class Menu<Content extends CharSequence,
     public Menu(WindowType window, int initialSelection)
     {
         this.window = window;
-        selection = Math.max(0, Math.min(window.contents.size() - 1,
+        selection = Math.max(0, Math.min(window.getContents().size() - 1,
                 initialSelection));
     }
     
@@ -34,7 +34,7 @@ public abstract class Menu<Content extends CharSequence,
         {return selection;}
     
     private boolean contentsContains(int index)
-        {return index < window.contents.size() && index >= 0;}
+        {return index < window.getContents().size() && index >= 0;}
     
     public boolean setSelectionIndex(int index)
     {
@@ -48,7 +48,7 @@ public abstract class Menu<Content extends CharSequence,
     }
     
     public Content getSelection()
-        {return window.contents.get(selection);}
+        {return window.getContents().get(selection);}
     
     private int bypassSeparators(int change)
     {
@@ -57,7 +57,7 @@ public abstract class Menu<Content extends CharSequence,
         
         int nextSelection = selection;
         while (contentsContains(nextSelection + change) &&
-                getWindow().contents.get(nextSelection + change) == null)
+                getWindow().getContents().get(nextSelection + change) == null)
             nextSelection++;
         return nextSelection + change;
     }
@@ -68,7 +68,7 @@ public abstract class Menu<Content extends CharSequence,
             return false;
         
         int nextSelection = bypassSeparators(change);
-        int fallback = change > 0 ? 0 : getWindow().contents.size() - 1;
+        int fallback = change > 0 ? 0 : getWindow().getContents().size() - 1;
         return contentsContains(nextSelection) ?
                 setSelectionIndex(nextSelection) : setSelectionIndex(fallback);
     }

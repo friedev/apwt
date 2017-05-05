@@ -34,8 +34,8 @@ public class PopupWindow extends Window<ColorString>
     
     public PopupWindow(PopupWindow copying)
     {
-        this(copying.display, copying.contents, copying.y, copying.border,
-                copying.separator);
+        this(copying.getDisplay(), copying.getContents(), copying.y,
+                copying.getBorder(), copying.separator);
     }
     
     /**
@@ -79,22 +79,22 @@ public class PopupWindow extends Window<ColorString>
     @Override
     public void display()
     {
-        if (contents == null || contents.isEmpty())
+        if (getContents() == null || getContents().isEmpty())
             return;
         
         ColorString[] output =
-                contents.toArray(new ColorString[contents.size()]);
+                getContents().toArray(new ColorString[getContents().size()]);
         
         try
         {
-            if (border != null)
+            if (isBordered())
             {
-                WindowBuilder.printCenterBoxed(display, output, y, border,
-                            separator);
+                WindowBuilder.printCenterBoxed(getDisplay(), output, y,
+                        getBorder(), separator);
             }
             else
             {
-                display.writeCenter(y, output);
+                getDisplay().writeCenter(y, output);
             }
         }
         catch (IllegalArgumentException | IndexOutOfBoundsException e)
@@ -138,7 +138,7 @@ public class PopupWindow extends Window<ColorString>
      * @param content the String to add
      */
     public void add(String content)
-        {contents.add(new ColorString(content));}
+        {getContents().add(new ColorString(content));}
     
     /**
      * Sets the line of the PopupWindow's contents at i to the provided String,
@@ -147,8 +147,8 @@ public class PopupWindow extends Window<ColorString>
      * @param content the String that will be set at the line
      */
     public void set(int index, String content)
-        {contents.set(index, new ColorString(content));}
+        {getContents().set(index, new ColorString(content));}
     
     public void insert(int index, String content)
-        {contents.add(index, new ColorString(content));}
+        {getContents().add(index, new ColorString(content));}
 }

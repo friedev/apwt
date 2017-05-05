@@ -1,7 +1,7 @@
 package corelib.display.screens;
 
 import corelib.display.Display;
-import corelib.map.Cursor;
+import corelib.map.Entity;
 import java.awt.event.KeyEvent;
 import squidpony.squidgrid.Direction;
 import squidpony.squidmath.Coord;
@@ -11,16 +11,16 @@ import squidpony.squidmath.Coord;
  */
 public class CursorScreen extends ConfirmationScreen
 {
-    private Cursor cursor;
+    private Entity cursor;
     
-    public CursorScreen(Display display, Cursor cursor, Coord offset)
+    public CursorScreen(Display display, Entity cursor, Coord offset)
     {
         super(display);
         this.cursor = cursor;
         cursor.addToMap();
     }
     
-    public CursorScreen(Display display, Cursor cursor)
+    public CursorScreen(Display display, Entity cursor)
         {this(display, cursor, Coord.get(0, 0));}
 
     @Override
@@ -40,7 +40,7 @@ public class CursorScreen extends ConfirmationScreen
         return checkConfirmation(key);
     }
     
-    public Cursor getCursor()
+    public Entity getCursor()
         {return cursor;}
     
     @Override

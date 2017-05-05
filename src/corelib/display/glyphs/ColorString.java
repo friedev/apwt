@@ -1,9 +1,10 @@
 package corelib.display.glyphs;
 
 import java.awt.Color;
+import java.util.Objects;
 
 /**
- * A container class for a character and its foreground and background colors.
+ * A container class for a String and its foreground and background colors.
  */
 public class ColorString extends ColoredObject implements CharSequence
 {
@@ -23,7 +24,9 @@ public class ColorString extends ColoredObject implements CharSequence
     }
     
     public ColorString(ColorString copying)
-        {this(copying.string, copying.foreground, copying.background);}
+    {
+        this(copying.string, copying.getForeground(), copying.getBackground());
+    }
     
     /**
      * Creates a ColorString from a String and a foreground color, but no
@@ -41,6 +44,12 @@ public class ColorString extends ColoredObject implements CharSequence
     public ColorString(String s)
         {this(s, null, null);}
     
+    public String getString()
+        {return string;}
+    
+    public void setString(String string)
+        {this.string = string;} 
+    
     /**
      * Converts the ColorString into an array of ColorChars, each with the
      * colors of the ColorString.
@@ -52,7 +61,8 @@ public class ColorString extends ColoredObject implements CharSequence
         ColorChar[] array = new ColorChar[string.length()];
         
         for (int i = 0; i < string.length(); i++)
-            array[i] = new ColorChar(string.charAt(i), foreground, background);
+            array[i] = new ColorChar(string.charAt(i), getForeground(),
+                    getBackground());
         
         return array;
     }
@@ -74,6 +84,35 @@ public class ColorString extends ColoredObject implements CharSequence
         return cs;
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o == null || !(o instanceof ColorString))
+            return false;
+        
+        ColorString cast = (ColorString) o;
+        if (string == null && cast.string != null)
+            return false;
+        
+        if (getForeground() == null && cast.getForeground() != null)
+            return false;
+        
+        if (getBackground() == null && cast.getBackground() != null)
+            return false;
+        
+        return string.equals(cast.string) &&
+               getForeground().equals(cast.getForeground()) &&
+               getBackground().equals(cast.getBackground());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(this.string);
+        return hash;
+    }
+    
     @Override
     public int length()
         {return string.length();}

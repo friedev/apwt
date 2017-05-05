@@ -99,9 +99,9 @@ public class AlignedTerminal extends Terminal<AlignedWindow, ColorSet>
     @Override
     public void displayOutput()
     {
-        output.set(output.getContents().size() - 1,
-                new ColorSet().add(prompt).add(new ColorString(input.toString(),
+        getWindow().set(getWindow().getContents().size() - 1,
+                new ColorSet().add(getPrompt()).add(new ColorString(getInput(),
                         inputForeground, inputBackground)));
-        output.display();
+        getWindow().display();
     }
 }

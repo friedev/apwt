@@ -9,7 +9,7 @@ import corelib.display.Display;
 public abstract class Screen
 {
     /** The Display through which output is shown. */
-    protected Display display;
+    private Display display;
     
     /**
      * Creates a new Screen on the provided Display.

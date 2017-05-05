@@ -24,7 +24,7 @@ public class ContainerItem extends Item
     public Container container() {return container;}
     
     @Override
-    protected List<String> defineAsList()
+    public List<String> defineAsList()
     {
         List<String> definition = super.defineAsList();
         definition.add(" -Capacity: " + container.getCapacityAsFraction());

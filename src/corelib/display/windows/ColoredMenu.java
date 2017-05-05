@@ -10,8 +10,8 @@ import java.awt.Color;
 public abstract class ColoredMenu<Content extends CharSequence,
         WindowType extends Window<Content>> extends Menu<Content, WindowType>
 {
-    protected Color selectionForeground;
-    protected Color selectionBackground;
+    private Color selectionForeground;
+    private Color selectionBackground;
     
     public ColoredMenu(WindowType window, int initialSelection,
             Color foreground, Color background)
@@ -23,4 +23,10 @@ public abstract class ColoredMenu<Content extends CharSequence,
     
     public ColoredMenu(WindowType window, Color foreground, Color background)
         {this(window, 0, foreground, background);}
+    
+    public Color getForeground()
+        {return selectionForeground;}
+    
+    public Color getBackground()
+        {return selectionBackground;}
 }

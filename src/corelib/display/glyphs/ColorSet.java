@@ -109,7 +109,7 @@ public class ColorSet implements CharSequence
     public ColorChar getColorChar(char character)
     {
         for (ColorChar cc: set)
-            if (cc.character == character)
+            if (cc.getChar() == character)
                 return cc;
         
         return null;
@@ -128,7 +128,7 @@ public class ColorSet implements CharSequence
 
     @Override
     public char charAt(int index)
-        {return set.get(index).character;}
+        {return set.get(index).getChar();}
 
     @Override
     public CharSequence subSequence(int start, int end)

@@ -27,10 +27,10 @@ public class TileMap<TileProperty> implements Iterable<Tile>
     
     public static final int MAX_TRIES = 50;
     
-    protected Tile<TileProperty>[][] tiles;
-    protected List<Entity> entities;
-    protected AStarSearch search;
-    protected RNG rng;
+    private Tile<TileProperty>[][] tiles;
+    private List<Entity> entities;
+    private AStarSearch search;
+    private RNG rng;
     
     /**
      * Generates a map of a specified size.
@@ -164,13 +164,13 @@ public class TileMap<TileProperty> implements Iterable<Tile>
             if (location.x >= start.x && location.x < end.x &&
                     location.y >= start.y && location.y < end.y)
             {
-                Color background = entity.glyph.background == null ?
-                        tileAt(location).glyph.background :
-                        entity.glyph.background;
+                Color background = entity.getGlyph().getBackground() == null ?
+                        tileAt(location).getGlyph().getBackground() :
+                        entity.getGlyph().getBackground();
                 
                 glyphs[location.y - start.y][location.x - start.x] =
-                        new ColorChar(entity.glyph.character,
-                        entity.glyph.foreground, background);
+                        new ColorChar(entity.getGlyph().getChar(),
+                        entity.getGlyph().getForeground(), background);
             }
         }
         

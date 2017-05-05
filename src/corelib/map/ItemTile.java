@@ -12,9 +12,9 @@ public class ItemTile<Property> extends Tile<Property>
     
     private Container floorItems;
     
-    public ItemTile(Tile t)
+    public ItemTile(Tile tile)
     {
-        super(t.glyph, t.moveCost, t.properties);
+        super(tile.getGlyph(), tile.getCost(), tile.getProperties());
         floorItems = new Container(MAX_VOLUME);
     }
     
