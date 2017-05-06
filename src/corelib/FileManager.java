@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.Scanner;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import squidpony.squidmath.RNG;
 
 /**
@@ -24,13 +26,25 @@ public abstract class FileManager
      * Returns the path to the data folder.
      * @return the path to the data folder as a String
      */
-    public static String getPath() {return path;}
+    public static String getPath()
+        {return path;}
     
     /**
      * Sets the data folder path to the String provided.
      * @param newPath the String to be set as the new path
      */
-    public void setPath(String newPath) {path = newPath;}
+    public void setPath(String newPath)
+        {path = newPath;}
+    
+    public static void movePathUp()
+    {
+        // Must be done as two statements since both modify and refer to path
+        path = path.substring(0, path.length() - 2);
+        path = path.substring(0, path.lastIndexOf("/") + 1);
+    }
+    
+    public static void addFolderToPath(String folder)
+        {path += folder;}
     
     /**
      * Finds the path to the jar and its directory, returning the latter.
@@ -280,4 +294,18 @@ public abstract class FileManager
             new File(path + target).mkdir();
         }
     }
+    
+    public static void loopAudio(String soundFile, int times) throws Exception
+    {
+        Clip clip = AudioSystem.getClip();
+        clip.open(AudioSystem.getAudioInputStream(
+                new File(FileManager.getPath() + soundFile)));
+        clip.loop(times);
+    }
+    
+    public static void loopAudio(String soundFile) throws Exception
+        {loopAudio(soundFile, Clip.LOOP_CONTINUOUSLY);}
+    
+    public static void playAudio(String soundFile) throws Exception
+        {loopAudio(soundFile, 0);}
 }
