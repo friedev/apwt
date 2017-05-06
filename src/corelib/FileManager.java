@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Scanner;
 import javax.sound.sampled.AudioSystem;
@@ -68,6 +70,48 @@ public abstract class FileManager
     }
     
     // FILE MANIPULATION
+    
+    /**
+     * Returns true if the specified file name exists.
+     * @param target the name of the file to check existence of
+     * @return true if the file with the given name exists
+     */
+    public static boolean checkExistence(String target)
+        {return new File(path + target).exists();}
+    
+    /**
+     * Deletes a specified file if it exists.
+     * @param target the name of the file to delete
+     */
+    public static void delete(String target)
+    {
+        File file = new File(path + target);
+        if (file.exists())
+            file.delete();
+    }
+    
+    /**
+     * Creates all folders containing the target file or folder, using
+     * recursion up to the base directory specified by the path field.
+     * @param target the path to the file or folder to create containing folders
+     * for
+     */
+    public static void createContainingFolders(String target)
+    {
+        if (target == null)
+            throw new NullPointerException("Target file path may not be null");
+        
+        if (target.contains("/"))
+        {
+            String folder = target.substring(0, target.lastIndexOf("/"));
+            createContainingFolders(folder);
+            new File(path + folder).mkdir();
+        }
+        else if (!target.contains("."))
+        {
+            new File(path + target).mkdir();
+        }
+    }
     
     /**
      * Loads a Properties object from a file, if it exists.
@@ -142,90 +186,12 @@ public abstract class FileManager
     public static String[] toLineArray(String target)
             throws FileNotFoundException
     {
-        java.util.ArrayList<String> lineList = new java.util.ArrayList<>();
+        ArrayList<String> lineList = new ArrayList<>();
         Scanner reader = new Scanner(new File(path + target));
         while (reader.hasNextLine())
             lineList.add(reader.nextLine());
         reader.close();
         return lineList.toArray(new String[lineList.size()]);
-    }
-    
-    /**
-     * Returns true if the specified file name exists.
-     * @param target the name of the file to check existence of
-     * @return true if the file with the given name exists
-     */
-    public static boolean checkExistence(String target)
-        {return new File(path + target).exists();}
-    
-    /**
-     * Deletes a specified file if it exists.
-     * @param target the name of the file to delete
-     */
-    public static void delete(String target)
-    {
-        File file = new File(path + target);
-        if (file.exists())
-            file.delete();
-    }
-    
-    /**
-     * Creates all folders containing the target file or folder, using
-     * recursion up to the base directory specified by the path field.
-     * @param target the path to the file or folder to create containing folders
-     * for
-     */
-    public static void createContainingFolders(String target)
-    {
-        if (target == null)
-            throw new NullPointerException("Target file path may not be null");
-        
-        if (target.contains("/"))
-        {
-            String folder = target.substring(0, target.lastIndexOf("/"));
-            createContainingFolders(folder);
-            new File(path + folder).mkdir();
-        }
-        else if (!target.contains("."))
-        {
-            new File(path + target).mkdir();
-        }
-    }
-    
-    /**
-     * Returns a random line from the designated file.
-     * @param target the name of the file to return a line from, must exist, be
-     * non-null, and have at least one line in it
-     * @param rng the random number generator with which to select a line
-     * @return a random line from the file, null if any of the above conditions
-     * are not met
-     * @throws java.io.FileNotFoundException if the file is not found
-     */
-    public static String getRandomLine(String target, RNG rng)
-            throws FileNotFoundException
-    {
-        if (target == null)
-            throw new NullPointerException("Target file path may not be null");
-        
-        File file = new File(path + target);
-        
-        // Count the lines of the file
-        Scanner reader = new Scanner(file);
-        int lineCounter = 0;
-        while (reader.hasNextLine())
-        {
-            reader.nextLine();
-            lineCounter++;
-        }
-
-        // The file has no lines and thus is empty, so return null
-        if (lineCounter == 0)
-        {
-            reader.close();
-            return null;
-        }
-
-        return getLine(target, rng.nextInt(lineCounter));
     }
     
     /**
@@ -269,6 +235,42 @@ public abstract class FileManager
     }
     
     /**
+     * Returns a random line from the designated file.
+     * @param target the name of the file to return a line from, must exist, be
+     * non-null, and have at least one line in it
+     * @param rng the random number generator with which to select a line
+     * @return a random line from the file, null if any of the above conditions
+     * are not met
+     * @throws java.io.FileNotFoundException if the file is not found
+     */
+    public static String getRandomLine(String target, RNG rng)
+            throws FileNotFoundException
+    {
+        if (target == null)
+            throw new NullPointerException("Target file path may not be null");
+        
+        File file = new File(path + target);
+        
+        // Count the lines of the file
+        Scanner reader = new Scanner(file);
+        int lineCounter = 0;
+        while (reader.hasNextLine())
+        {
+            reader.nextLine();
+            lineCounter++;
+        }
+
+        // The file has no lines and thus is empty, so return null
+        if (lineCounter == 0)
+        {
+            reader.close();
+            return null;
+        }
+
+        return getLine(target, rng.nextInt(lineCounter));
+    }
+    
+    /**
      * Writes the specified text to the specified file.
      * @param target the name of the file to write to, must be non-null
      * @param text the text to write to the file, must be non-null and have
@@ -294,7 +296,7 @@ public abstract class FileManager
 
         String[] lines = toLineArray(target);
 
-        java.io.PrintWriter writer = new java.io.PrintWriter(file);
+        PrintWriter writer = new PrintWriter(file);
 
         for (String line: lines)
             writer.println(line);
