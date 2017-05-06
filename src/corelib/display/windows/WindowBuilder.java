@@ -283,9 +283,13 @@ public abstract class WindowBuilder
     public static boolean printBoxed(Display display, ColorSet[] text,
             int topLine, int leftIndent, Border border, Line[] separators)
     {
-        if (!display.contains(Coord.get(leftIndent - 1, topLine - 1)) ||
-                text == null || text.length == 0)
-            return false;
+        if (!display.contains(Coord.get(leftIndent - 1, topLine - 1)))
+            throw new IndexOutOfBoundsException("Top left coordinates must be "
+                    + ">= 1; were " + leftIndent + " and " + topLine);
+        
+        if (text == null || text.length == 0)
+            throw new IllegalArgumentException(
+                    "At least 1 line of text must be provided");
         
         int nBlocks = 1;
         
@@ -586,9 +590,15 @@ public abstract class WindowBuilder
     public static boolean printCenterBoxed(Display display, ColorString[] text,
             int topLine, Border border, Line separator)
     {
+        if (text == null || text.length == 0)
+            throw new IllegalArgumentException(
+                    "At least 1 line of text must be provided");
+        
         if (!display.containsY(topLine - 1) ||
                 !display.containsY(topLine + text.length))
-            return false;
+            throw new IndexOutOfBoundsException("Top line value must be "
+                    + "between 1 and " + (display.getCharHeight() - 1)
+                            + "; was " + topLine);
         
         int maxLength = 0;
         for (ColorString line: text)
