@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 import javax.sound.sampled.AudioSystem;
@@ -193,6 +194,48 @@ public abstract class FileManager
         reader.close();
         return lineList.toArray(new String[lineList.size()]);
     }
+    
+    /**
+     * Writes the given lines of text to the given file; will overwrite existing
+     * lines or create the file if necessary.
+     * @param target the file to write to, must be non-null
+     * @param lines the lines to write
+     * @throws IOException if there is an error creating the file
+     */
+    public static void writeToFile(String target, String... lines)
+            throws IOException
+    {
+        if (target == null)
+            throw new NullPointerException("Target file path may not be null");
+        
+        if (lines == null || lines.length == 0)
+            return;
+        
+        File file = new File(path + target);
+        if (!file.exists())
+        {
+            createContainingFolders(target);
+            file.createNewFile();
+        }
+
+        PrintWriter writer = new PrintWriter(file);
+
+        for (String line: lines)
+            writer.println(line);
+        
+        writer.close();
+    }
+    
+    /**
+     * Writes the given List of text lines to the given file; will overwrite
+     * existing lines or create the file if necessary.
+     * @param target the file to write to, must be non-null
+     * @param lines the lines to write
+     * @throws IOException if there is an error creating the file
+     */
+    public static void writeToFile(String target, List<String> lines)
+            throws IOException
+        {writeToFile(target, lines.toArray(new String[lines.size()]));}
     
     /**
      * Returns the line at the specified index from the given file.
