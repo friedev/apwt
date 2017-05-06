@@ -298,8 +298,7 @@ public abstract class FileManager
     public static void loopAudio(String soundFile, int times) throws Exception
     {
         Clip clip = AudioSystem.getClip();
-        clip.open(AudioSystem.getAudioInputStream(
-                new File(FileManager.getPath() + soundFile)));
+        clip.open(AudioSystem.getAudioInputStream(new File(path + soundFile)));
         clip.loop(times);
     }
     
