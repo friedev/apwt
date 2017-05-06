@@ -4,24 +4,31 @@ import corelib.display.Display;
 import corelib.map.Entity;
 import java.awt.event.KeyEvent;
 import squidpony.squidgrid.Direction;
-import squidpony.squidmath.Coord;
 
 /**
- * 
+ * A {@link Screen} that controls an {@link corelib.map.Entity} acting as a
+ * cursor. This can be used to select tiles on a
+ * {@link corelib.map.TileMap map}.
  */
 public class CursorScreen extends ConfirmationScreen
 {
+    /** The {@link corelib.map.Entity} acting as a cursor. */
     private Entity cursor;
     
-    public CursorScreen(Display display, Entity cursor, Coord offset)
+    /**
+     * Creates a new {@link CursorScreen} on the given
+     * {@link corelib.display.Display}, with the given
+     * {@link corelib.map.Entity} as a cursor.
+     * @param display the {@link corelib.display.Display} on which the
+     * {@link Screen} will be shown
+     * @param cursor the {@link corelib.map.Entity} to use as a cursor
+     */
+    public CursorScreen(Display display, Entity cursor)
     {
         super(display);
         this.cursor = cursor;
         cursor.addToMap();
     }
-    
-    public CursorScreen(Display display, Entity cursor)
-        {this(display, cursor, Coord.get(0, 0));}
 
     @Override
     public void displayOutput()
@@ -40,6 +47,10 @@ public class CursorScreen extends ConfirmationScreen
         return checkConfirmation(key);
     }
     
+    /**
+     * Returns the {@link CursorScreen Screen's} {@link #cursor cursor}.
+     * @return the {@link CursorScreen Screen's} {@link #cursor cursor}
+     */
     public Entity getCursor()
         {return cursor;}
     

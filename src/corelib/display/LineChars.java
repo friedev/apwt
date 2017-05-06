@@ -9,67 +9,37 @@ public abstract class LineChars
     /** The character returned when invalid values are specified. */
     public static final char UNKNOWN = '?';
     
-    /** One horizontal line. */
-    public static final char LINE1_HORIZONTAL = (char) 196;
-    /** One vertical line. */
-    public static final char LINE1_VERTICAL = (char) 179;
-    /** A line at the top left corner of a rectangle. */
-    public static final char LINE1_TL = (char) 218;
-    /** A line at the top right corner of a rectangle. */
-    public static final char LINE1_TR = (char) 191;
-    /** A line at the bottom left corner of a rectangle. */
-    public static final char LINE1_BL = (char) 192;
-    /** A line at the bottom right corner of a rectangle. */
-    public static final char LINE1_BR = (char) 217;
-    /** A horizontal line with a perpendicular line extending upwards. */
-    public static final char LINE1_SPLIT_U = (char) 193;
-    /** A horizontal line with a perpendicular line extending downwards. */
-    public static final char LINE1_SPLIT_D = (char) 194;
-    /** A horizontal line with a perpendicular line extending to the left. */
-    public static final char LINE1_SPLIT_L = (char) 180;
-    /** A horizontal line with a perpendicular line extending to the right. */
-    public static final char LINE1_SPLIT_R = (char) 195;
-    /** A horizontal line with two parallel lines extending upwards. */
-    public static final char LINE1_SWITCH_U = (char) 208;
-    /** A horizontal line with two parallel lines extending downwards. */
-    public static final char LINE1_SWITCH_D = (char) 210;
-    /** A horizontal line with two parallel lines extending to the left. */
-    public static final char LINE1_SWITCH_L = (char) 181;
-    /** A horizontal line with two parallel lines extending to the right. */
-    public static final char LINE1_SWITCH_R = (char) 198;
-    /** A perpendicular intersection of two lines. */
-    public static final char LINE1_CENTER = (char) 197;
+    /**─*/ public static final char LINE1_HORIZONTAL = (char) 196;
+    /**│*/ public static final char LINE1_VERTICAL   = (char) 179;
+    /**┌*/ public static final char LINE1_TL         = (char) 218;
+    /**┐*/ public static final char LINE1_TR         = (char) 191;
+    /**└*/ public static final char LINE1_BL         = (char) 192;
+    /**┌*/ public static final char LINE1_BR         = (char) 217;
+    /**┴*/ public static final char LINE1_SPLIT_U    = (char) 193;
+    /**┬*/ public static final char LINE1_SPLIT_D    = (char) 194;
+    /**┤*/ public static final char LINE1_SPLIT_L    = (char) 180;
+    /**├*/ public static final char LINE1_SPLIT_R    = (char) 195;
+    /**╨*/ public static final char LINE1_SWITCH_U   = (char) 208;
+    /**╥*/ public static final char LINE1_SWITCH_D   = (char) 210;
+    /**╡*/ public static final char LINE1_SWITCH_L   = (char) 181;
+    /**╞*/ public static final char LINE1_SWITCH_R   = (char) 198;
+    /**┼*/ public static final char LINE1_CENTER     = (char) 197;
 
-    /** Two parallel, horizontal lines. */
-    public static final char LINE2_HORIZONTAL = (char) 205;
-    /** Two parallel, vertical lines. */
-    public static final char LINE2_VERTICAL = (char) 186;
-    /** Two lines at the top left corner of a rectangle. */
-    public static final char LINE2_TL = (char) 201;
-    /** Two lines at the top right corner of a rectangle. */
-    public static final char LINE2_TR = (char) 187;
-    /** Two lines at the bottom left corner of a rectangle. */
-    public static final char LINE2_BL = (char) 200;
-    /** Two lines at the bottom right corner of a rectangle. */
-    public static final char LINE2_BR = (char) 188;
-    /** Two parallel, horizontal lines with two parallel lines extending upwards. */
-    public static final char LINE2_SPLIT_U = (char) 202;
-    /** Two parallel, horizontal lines with two parallel lines extending downwards. */
-    public static final char LINE2_SPLIT_D = (char) 203;
-    /** Two parallel, vertical lines with two parallel lines extending to the left. */
-    public static final char LINE2_SPLIT_L = (char) 185;
-    /** Two parallel, vertical lines with two parallel lines extending to the right. */
-    public static final char LINE2_SPLIT_R = (char) 204;
-    /** Two parallel, horizontal lines with a perpendicular line extending upwards. */
-    public static final char LINE2_SWITCH_U = (char) 207;
-    /** Two parallel, horizontal lines with a perpendicular line extending downwards. */
-    public static final char LINE2_SWITCH_D = (char) 209;
-    /** Two parallel, vertical lines with a perpendicular line extending to the left. */
-    public static final char LINE2_SWITCH_L = (char) 182;
-    /** Two parallel, vertical lines with a perpendicular line extending to the right. */
-    public static final char LINE2_SWITCH_R = (char) 199;
-    /** A perpendicular intersection of two sets of parallel lines. */
-    public static final char LINE2_CENTER = (char) 206;
+    /**═*/ public static final char LINE2_HORIZONTAL = (char) 205;
+    /**║*/ public static final char LINE2_VERTICAL   = (char) 186;
+    /**╔*/ public static final char LINE2_TL         = (char) 201;
+    /**╗*/ public static final char LINE2_TR         = (char) 187;
+    /**╚*/ public static final char LINE2_BL         = (char) 200;
+    /**╝*/ public static final char LINE2_BR         = (char) 188;
+    /**╩*/ public static final char LINE2_SPLIT_U    = (char) 202;
+    /**╦*/ public static final char LINE2_SPLIT_D    = (char) 203;
+    /**╣*/ public static final char LINE2_SPLIT_L    = (char) 185;
+    /**╠*/ public static final char LINE2_SPLIT_R    = (char) 204;
+    /**╧*/ public static final char LINE2_SWITCH_U   = (char) 207;
+    /**╤*/ public static final char LINE2_SWITCH_D   = (char) 209;
+    /**╢*/ public static final char LINE2_SWITCH_L   = (char) 182;
+    /**╟*/ public static final char LINE2_SWITCH_R   = (char) 199;
+    /**╬*/ public static final char LINE2_CENTER     = (char) 206;
     
     /**
      * Returns a horizontal or vertical line character with the provided width.

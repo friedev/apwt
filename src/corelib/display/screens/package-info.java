@@ -1,5 +1,5 @@
 /**
- * The Screens displayed in the Display classes, grouped into their own package
- * since there may be a significant amount of them.
+ * Several simple {@link corelib.display.screens.Screen Screens} that can be
+ * extended and customized for specific applications and games.
  */
 package corelib.display.screens;

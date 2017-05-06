@@ -4,29 +4,41 @@ import corelib.display.windows.Window;
 import java.awt.event.KeyEvent;
 
 /**
- * A basic window where the operator can type characters and delete them with
- * backspace.
- * @param <Output> the type of Window used by the Terminal
- * @param <Content> the type of content displayed by the Terminal's Window
+ * A basic {@link corelib.display.windows.Window} where the operator can type
+ * characters and delete them with backspace.
+ * @param <Output> the type of {@link corelib.display.windows.Window} used by
+ * the {@link Terminal}
+ * @param <Content> the type of content displayed by the {@link Terminal}'s
+ * {@link corelib.display.windows.Window}
  */
 public abstract class Terminal<Output extends Window,
         Content extends CharSequence> extends ConfirmationScreen
 {
     /** The StringBuilder where all keypresses are added. */
     private StringBuilder input;
-    /** The Window through which all output is displayed. */
+    
+    /**
+     * The {@link corelib.display.windows.Window} through which all output is
+     * displayed.
+     */
     private Output output;
+    
     /** The String printed before the entered input is shown to the user. */
     private Content prompt;
-    /** The input length at which the Terminal will not accept any new input. */
+    
+    /**
+     * The input length at which the {@link Terminal} will not accept any new
+     * input.
+     */
     private int maxInputLength;
     
     /**
-     * Creates a Terminal with the given Window, prompt, and maximum length.
-     * @param output the Terminal's output window
-     * @param prompt the Terminal's prompt
-     * @param length the Terminal's maximum length, counting Window borders and
-     * the prompt
+     * Creates a {@link Terminal} with the given
+     * {@link corelib.display.windows.Window}, prompt, and maximum length.
+     * @param output the {@link Terminal}'s output window
+     * @param prompt the {@link Terminal}'s prompt
+     * @param length the {@link Terminal}'s maximum length, counting Window
+     * {@link corelib.display.windows.Border borders}
      */
     public Terminal(Output output, Content prompt, int length)
     {
@@ -46,7 +58,7 @@ public abstract class Terminal<Output extends Window,
     /**
      * Adds the typed key to the input field.
      * @param key the KeyEvent to process
-     * @return the new Screen to display
+     * @return the new {@link Screen} to display
      */
     @Override
     public Screen processInput(KeyEvent key)
@@ -74,12 +86,26 @@ public abstract class Terminal<Output extends Window,
         return checkConfirmation(key);
     }
     
+    /**
+     * Returns this {@link Terminal}'s output
+     * {@link corelib.display.windows.Window}.
+     * @return this {@link Terminal}'s output
+     * {@link corelib.display.windows.Window}
+     */
     public Window getWindow()
         {return output;}
     
+    /**
+     * Returns this {@link Terminal}'s prompt.
+     * @return this {@link Terminal}'s prompt
+     */
     public Content getPrompt()
         {return prompt;}
     
+    /**
+     * Returns the input entered into the {@link Terminal} as a String.
+     * @return the input entered into the {@link Terminal} as a String
+     */
     public String getInput()
     {
         if (input == null)

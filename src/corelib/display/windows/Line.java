@@ -12,8 +12,10 @@ public class Line extends ColoredObject
 {
     /** The character at the first (top or left) endpoint. */
     public char end1;
+    
     /** The character at the second (bottom or right) endpoint. */
     public char end2;
+    
     /** The characters to print between endpoints on the line itself. */
     public char line;
     
@@ -24,7 +26,7 @@ public class Line extends ColoredObject
     public boolean horizontal;
     
     /**
-     * Creates a Border with explicitly-defined characters and colors.
+     * Creates a {@link Line} with explicitly-defined characters and colors.
      * @param e1 the character at the first endpoint
      * @param e2 the character at the second endpoint
      * @param l the characters on the line
@@ -43,7 +45,8 @@ public class Line extends ColoredObject
     }
     
     /**
-     * Creates a Line with explicitly-defined characters and a foreground color.
+     * Creates a {@link Line} with explicitly-defined characters and a
+     * foreground color.
      * @param e1 the character at the first endpoint
      * @param e2 the character at the second endpoint
      * @param l the characters on the line
@@ -54,8 +57,8 @@ public class Line extends ColoredObject
         {this(e1, e2, l, h, f, null);}
     
     /**
-     * Creates a Line with explicitly-defined characters, but no specified
-     * colors.
+     * Creates a {@link Line} with explicitly-defined characters, but no
+     * specified colors.
      * @param e1 the character at the first endpoint
      * @param e2 the character at the second endpoint
      * @param l the characters on the line
@@ -65,8 +68,8 @@ public class Line extends ColoredObject
         {this(e1, e2, l, h, null, null);}
     
     /**
-     * Creates a Line connecting two side lines of the provided widths, along
-     * with specified colors.
+     * Creates a {@link Line} connecting two side lines of the provided widths,
+     * along with specified colors.
      * @param horizontal true if the connection is horizontal
      * @param side1Width the width of the first side line
      * @param side2Width the width of the second side line
@@ -95,8 +98,8 @@ public class Line extends ColoredObject
     }
     
     /**
-     * Creates a Line connecting two side lines of the provided widths, along
-     * with a specified foreground color.
+     * Creates a {@link Line} connecting two side lines of the provided widths,
+     * along with a specified foreground color.
      * @param horizontal true if the connection is horizontal
      * @param side1Width the width of the first side line
      * @param side2Width the width of the second side line
@@ -108,8 +111,8 @@ public class Line extends ColoredObject
         {this(horizontal, side1Width, side2Width, lineWidth, foreground, null);}
     
     /**
-     * Creates a Line connecting two side lines of the provided widths, but no
-     * specified colors
+     * Creates a {@link Line} connecting two side lines of the provided widths,
+     * but no specified colors
      * @param horizontal true if the connection is horizontal
      * @param side1Width the width of the first side line
      * @param side2Width the width of the second side line
@@ -120,8 +123,8 @@ public class Line extends ColoredObject
         {this(horizontal, side1Width, side2Width, lineWidth, null, null);}
     
     /**
-     * Creates a Line connecting two side lines of the same provided width,
-     * along with specified colors.
+     * Creates a {@link Line} connecting two side lines of the same provided
+     * width, along with specified colors.
      * @param horizontal true if the connection is horizontal
      * @param sideWidth the width of both side lines
      * @param lineWidth the width of the line
@@ -136,8 +139,8 @@ public class Line extends ColoredObject
     }
     
     /**
-     * Creates a Line connecting two side lines of the same provided width,
-     * along with a specified foreground color.
+     * Creates a {@link Line} connecting two side lines of the same provided
+     * width, along with a specified foreground color.
      * @param horizontal true if the connection is horizontal
      * @param sideWidth the width of both side lines
      * @param lineWidth the width of the line
@@ -148,8 +151,8 @@ public class Line extends ColoredObject
         {this(horizontal, sideWidth, sideWidth, lineWidth, foreground, null);}
     
     /**
-     * Creates a Line connecting two side lines of the same provided width, but
-     * no specified colors.
+     * Creates a {@link Line} connecting two side lines of the same provided
+     * width, but no specified colors.
      * @param horizontal true if the connection is horizontal
      * @param sideWidth the width of both side lines
      * @param lineWidth the width of the line
@@ -158,8 +161,8 @@ public class Line extends ColoredObject
         {this(horizontal, sideWidth, sideWidth, lineWidth, null, null);}
     
     /**
-     * Creates a Line with the provided width and specified colors; endpoints
-     * will use the same characters as the line itself.
+     * Creates a {@link Line} with the provided width and specified colors;
+     * endpoints will use the same characters as the line itself.
      * @param horizontal true if the line is horizontal
      * @param lineWidth the width of the line
      * @param foreground the color of the characters
@@ -173,8 +176,8 @@ public class Line extends ColoredObject
     }
     
     /**
-     * Creates a Line with the provided width and a specified foreground color;
-     * endpoints will use the same characters as the line itself.
+     * Creates a {@link Line} with the provided width and a specified foreground
+     * color; endpoints will use the same characters as the line itself.
      * @param horizontal true if the line is horizontal
      * @param lineWidth the width of the line
      * @param foreground the color of the characters
@@ -183,8 +186,8 @@ public class Line extends ColoredObject
         {this(horizontal, lineWidth, foreground, null);}
     
     /**
-     * Creates a Line with the provided width and no specified colors; endpoints
-     * will use the same characters as the line itself.
+     * Creates a {@link Line} with the provided width and no specified colors;
+     * endpoints will use the same characters as the line itself.
      * @param horizontal true if the line is horizontal
      * @param lineWidth the width of the line
      */
@@ -192,8 +195,8 @@ public class Line extends ColoredObject
         {this(horizontal, lineWidth, null, null);}
     
     /**
-     * Creates a Line with one character used for the line and both endpoints,
-     * along with specified colors.
+     * Creates a {@link Line} with one character used for the line and both
+     * endpoints, along with specified colors.
      * @param horizontal true if the line is meant to be displayed horizontally
      * @param c the character to use for the line and both endpoints
      * @param foreground the color of the characters
@@ -203,8 +206,8 @@ public class Line extends ColoredObject
         {this(c, c, c, horizontal, foreground, background);}
     
     /**
-     * Creates a Line with one character used for the line and both endpoints,
-     * along with a specified foreground color.
+     * Creates a {@link Line} with one character used for the line and both
+     * endpoints, along with a specified foreground color.
      * @param horizontal true if the line is meant to be displayed horizontally
      * @param c the character to use for the line and both endpoints
      * @param foreground the color of the characters
@@ -213,8 +216,8 @@ public class Line extends ColoredObject
         {this(c, c, c, horizontal, foreground, null);}
     
     /**
-     * Creates a Line with one character used for the line and both endpoints,
-     * but no specified colors.
+     * Creates a {@link Line} with one character used for the line and both
+     * endpoints, but no specified colors.
      * @param horizontal true if the line is meant to be displayed horizontally
      * @param c the character to use for the line and both endpoints
      */

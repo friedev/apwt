@@ -7,11 +7,11 @@ import java.awt.Color;
  */
 public class ColorChar extends ColoredObject
 {
-    /** The ColorChar's actual character. */
+    /** The {@link ColorChar}'s actual character. */
     private char character;
     
     /**
-     * Creates a ColorChar from a character and its two colors.
+     * Creates a {@link ColorChar} from a character and its two colors.
      * @param c the character
      * @param f the color of the character
      * @param b the color of the background
@@ -22,6 +22,10 @@ public class ColorChar extends ColoredObject
         character = c;
     }
     
+    /**
+     * Creates a {@link ColorChar} from another {@link ColorChar}.
+     * @param copying the ColorChar to copy
+     */
     public ColorChar(ColorChar copying)
     {
         this(copying.character, copying.getForeground(),
@@ -29,8 +33,8 @@ public class ColorChar extends ColoredObject
     }
     
     /**
-     * Creates a ColorChar from a character and a foreground color, but no
-     * specified background color.
+     * Creates a {@link ColorChar} from a character and a foreground color, but
+     * no specified background color.
      * @param character the character
      * @param foreground the color of the character
      */
@@ -38,15 +42,23 @@ public class ColorChar extends ColoredObject
         {this(character, foreground, null);}
     
     /**
-     * Creates a ColorChar from a character and no specified colors.
+     * Creates a {@link ColorChar} from a character and no specified colors.
      * @param character the character
      */
     public ColorChar(char character)
         {this(character, null, null);}
     
+    /**
+     * Returns the {@link ColorChar}'s actual character.
+     * @return the {@link ColorChar}'s actual character
+     */
     public char getChar()
         {return character;}
     
+    /**
+     * Sets the {@link ColorChar}'s actual character.
+     * @param character the {@link ColorChar}'s new character
+     */
     public void setChar(char character)
         {this.character = character;}
     
@@ -60,11 +72,11 @@ public class ColorChar extends ColoredObject
         if (character != cast.character)
             return false;
         
-        if (getForeground() == null && cast.getForeground() != null)
-            return false;
+        if (getForeground() == null)
+            return cast.getForeground() == null;
         
-        if (getBackground() == null && cast.getBackground() != null)
-            return false;
+        if (getBackground() == null)
+            return cast.getBackground() == null;
         
         return getForeground().equals(cast.getForeground()) &&
                getBackground().equals(cast.getBackground());

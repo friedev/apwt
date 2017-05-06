@@ -9,22 +9,25 @@ import java.awt.Color;
 import java.util.ArrayList;
 import squidpony.squidmath.Coord;
 
-/** A tool for creating bordered windows and other shapes. */
+/** A tool for creating bordered {@link Window Windows} and other shapes. */
 public abstract class WindowBuilder
 {
-    /** The default line width of Borders and Lines. */
+    /**
+     * The default line width of {@link Border Borders} and {@link Line Lines}.
+     */
     public static final int DEFAULT_LINES = 1;
     
     /**
-     * Draws a Line between two endpoints to the provided Display.
-     * @param display the Display to draw the line on
+     * Draws a {@link Line} between two endpoints to the provided Display.
+     * @param display the {@link corelib.display.Display} to draw the
+     * {@link Line} on
      * @param end1 the first endpoint; must be a different point than the second
      * endpoint, have one axis value in common, and be on the display
      * @param end2 the second endpoint; must be a different point than the first
      * endpoint, have one axis value in common, and be on the display
-     * @param border the characters of the Line; if horizontal, points must
-     * share y values, and the opposite is true with x values
-     * @return true if the Line was successfully drawn
+     * @param border the characters of the {@link Line}; if horizontal, points
+     * must share y values, and the opposite is true with x values
+     * @return true if the {@link Line} was successfully drawn
      */
     public static boolean drawLine(Display display, Coord end1, Coord end2,
             Line border)
@@ -94,17 +97,18 @@ public abstract class WindowBuilder
     }
     
     /**
-     * Draws a Border between two specified corners to the provided Display,
-     * filled with the provided fill color.
-     * @param display the Display to draw the Border on
+     * Draws a {@link Border}  between two specified corners to the provided
+     * {@link corelib.display.Display}, filled with the provided fill color.
+     * @param display the {@link corelib.display.Display} to draw the
+     * {@link Border} on
      * @param corner1 the first corner; must be a different point than the
      * second corner, share no axis values, and be on the display
      * @param corner2 the second corner; must be a different point than the
      * first corner, share no axis values, and be on the display
-     * @param border the characters of the Border
-     * @param fill the Color to fill the center of the Border with; if null, no
-     * fill will be performed
-     * @return true if the Border was successfully drawn
+     * @param border the characters of the {@link Border}
+     * @param fill the Color to fill the center of the {@link Border} with; if
+     * null, no fill will be performed
+     * @return true if the {@link Border} was successfully drawn
      */
     public static boolean drawBorder(Display display, Coord corner1,
             Coord corner2, Border border, Color fill)
@@ -192,79 +196,88 @@ public abstract class WindowBuilder
     }
     
     /**
-     * Draws a Border of the specified width between two specified corners to
-     * the provided Display.
-     * @param display the Display to draw the Border on
+     * Draws a {@link Border}  of the specified width between two specified
+     * corners to the provided {@link corelib.display.Display}.
+     * @param display the {@link corelib.display.Display} to draw the
+     * {@link Border} on
      * @param corner1 the first corner; must be a different point than the
      * second corner, share no axis values, and be on the display
      * @param corner2 the second corner; must be a different point than the
      * first corner, share no axis values, and be on the display
-     * @param width the width of the Border to draw; must be 1 or 2
-     * @param fill the Color to fill the center of the Border with; if null, no
-     * fill will be performed
-     * @return true if the Border was successfully drawn
+     * @param width the width of the {@link Border} to draw; must be 1 or 2
+     * @param fill the Color to fill the center of the {@link Border} with; if
+     * null, no fill will be performed
+     * @return true if the {@link Border} was successfully drawn
      */
     public static boolean drawBorder(Display display, Coord corner1,
             Coord corner2, int width, Color fill)
         {return drawBorder(display, corner1, corner2, new Border(width), fill);}
     
     /**
-     * Draws a Border between two specified corners to the provided Display,
-     * filled with the getBackground() color of the provided Border.
-     * @param display the Display to draw the Border on
+     * Draws a {@link Border} between two specified corners to the provided
+     * {@link corelib.display.Display}, filled with the getBackground() color of
+     * the provided {@link Border}.
+     * @param display the {@link corelib.display.Display} to draw the
+     * {@link Border} on
      * @param corner1 the first corner; must be a different point than the
      * second corner, share no axis values, and be on the display
      * @param corner2 the second corner; must be a different point than the
      * first corner, share no axis values, and be on the display
-     * @param border the characters of the Border
-     * @return true if the Border was successfully drawn
+     * @param border the characters of the {@link Border}
+     * @return true if the {@link Border} was successfully drawn
      */
     public static boolean drawBorder(Display display, Coord corner1,
             Coord corner2, Border border)
     {
         border.syncDefaults(display);
-        return drawBorder(display, corner1, corner2, border, border.getBackground());
+        return drawBorder(display, corner1, corner2, border,
+                border.getBackground());
     }
     
     /**
-     * Draws a Border of the specified width between two specified corners to
-     * the provided Display. No fill will be performed.
-     * @param display the Display to draw the Border on
+     * Draws a {@link Border} of the specified width between two specified
+     * corners to the provided Display. No fill will be performed.
+     * @param display the {@link corelib.display.Display} to draw the
+     * {@link Border} on
      * @param corner1 the first corner; must be a different point than the
      * second corner, share no axis values, and be on the display
      * @param corner2 the second corner; must be a different point than the
      * first corner, share no axis values, and be on the display
-     * @param width the width of the Border to draw; must be 1 or 2
-     * @return true if the Border was successfully drawn
+     * @param width the width of the {@link Border} to draw; must be 1 or 2
+     * @return true if the {@link Border} was successfully drawn
      */
     public static boolean drawBorder(Display display, Coord corner1,
             Coord corner2, int width)
         {return drawBorder(display, corner1, corner2, width, null);}
     
     /**
-     * Draws a Border of the default width between two specified corners to the
-     * provided Display. No fill will be performed.
-     * @param display the Display to draw the Border on
+     * Draws a {@link Border} of the default width between two specified corners
+     * to the provided {@link corelib.display.Display}. No fill will be
+     * performed.
+     * @param display the {@link corelib.display.Display} to draw the
+     * {@link Border} on
      * @param corner1 the first corner; must be a different point than the
      * second corner, share no axis values, and be on the display
      * @param corner2 the second corner; must be a different point than the
      * first corner, share no axis values, and be on the display
-     * @return true if the Border was successfully drawn
+     * @return true if the {@link Border} was successfully drawn
      */
     public static boolean drawBorder(Display display, Coord corner1,
             Coord corner2)
         {return drawBorder(display, corner1, corner2, DEFAULT_LINES);}
     
     /**
-     * Prints the provided text surrounded by the provided Border to the
-     * provided display.
-     * @param display the Display to draw on
-     * @param text the lines of text, as ColorSets, to print
-     * @param topLine the line on which the first ColorSet will be written
+     * Prints the provided text surrounded by the provided {@link Border} to the
+     * provided {@link corelib.display.Display}.
+     * @param display the {@link corelib.display.Display} to draw on
+     * @param text the lines of text, as
+     * {@link corelib.display.glyphs.ColorSet ColorSets}, to print
+     * @param topLine the line on which the first
+     * {@link corelib.display.glyphs.ColorSet} will be written
      * @param leftIndent the number of characters from the left the text will be
      * printed
-     * @param border the Border with which to surround the text
-     * @param separators the Lines with which to separate text
+     * @param border the {@link Border} with which to surround the text
+     * @param separators the {@link Line}s with which to separate text
      * @return true if the operation was successful
      */
     public static boolean printBoxed(Display display, ColorSet[] text,
@@ -430,15 +443,17 @@ public abstract class WindowBuilder
     }
     
     /**
-     * Prints the provided text surrounded by the provided Border to the
-     * provided display.
-     * @param display the Display to draw on
-     * @param text the lines of text, as ColorStrings, to print
-     * @param topLine the line on which the first ColorString will be written
+     * Prints the provided text surrounded by the provided {@link Border} to the
+     * provided {@link corelib.display.Display}.
+     * @param display the {@link corelib.display.Display} to draw on
+     * @param text the lines of text, as
+     * {@link corelib.display.glyphs.ColorString ColorStrings}, to print
+     * @param topLine the line on which the first
+     * {@link corelib.display.glyphs.ColorString} will be written
      * @param leftIndent the number of characters from the left the text will be
      * printed
-     * @param border the Border with which to surround the text
-     * @param separators the Lines with which to separate text
+     * @param border the {@link Border} with which to surround the text
+     * @param separators the {@link Line}s with which to separate text
      * @return true if the operation was successful
      */
     public static boolean printBoxed(Display display, ColorString[] text,
@@ -449,15 +464,15 @@ public abstract class WindowBuilder
     }
     
     /**
-     * Prints the provided text surrounded by the provided Border to the
-     * provided display.
-     * @param display the Display to draw on
+     * Prints the provided text surrounded by the provided {@link Border} to the
+     * provided {@link corelib.display.Display}.
+     * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as Strings, to print
      * @param topLine the line on which the first String will be written
      * @param leftIndent the number of characters from the left the text will be
      * printed
-     * @param border the Border with which to surround the text
-     * @param separators the Lines with which to separate text
+     * @param border the {@link Border} with which to surround the text
+     * @param separators the {@link Line}s with which to separate text
      * @return true if the operation was successful
      */
     public static boolean printBoxed(Display display, String[] text,
@@ -468,14 +483,16 @@ public abstract class WindowBuilder
     }
     
     /**
-     * Prints the provided text surrounded by the provided Border to the
-     * provided display; no separators will be used.
-     * @param display the Display to draw on
-     * @param text the lines of text, as ColorSets, to print
-     * @param topLine the line on which the first ColorSet will be written
+     * Prints the provided text surrounded by the provided {@link Border} to the
+     * provided {@link corelib.display.Display}; no separators will be used.
+     * @param display the {@link corelib.display.Display} to draw on
+     * @param text the lines of text, as
+     * {@link corelib.display.glyphs.ColorSet ColorSets}, to print
+     * @param topLine the line on which the first
+     * {@link corelib.display.glyphs.ColorSet} will be written
      * @param leftIndent the number of characters from the left the text will be
      * printed
-     * @param border the Border with which to surround the text
+     * @param border the {@link Border} with which to surround the text
      * @return true if the operation was successful
      */
     public static boolean printBoxed(Display display, ColorSet[] text,
@@ -483,14 +500,16 @@ public abstract class WindowBuilder
         {return printBoxed(display, text, topLine, leftIndent, border, null);}
     
     /**
-     * Prints the provided text surrounded by the provided Border to the
-     * provided display; no separators will be used.
-     * @param display the Display to draw on
-     * @param text the lines of text, as ColorStrings, to print
-     * @param topLine the line on which the first ColorString will be written
+     * Prints the provided text surrounded by the provided {@link Border} to the
+     * provided {@link corelib.display.Display}; no separators will be used.
+     * @param display the {@link corelib.display.Display} to draw on
+     * @param text the lines of text, as
+     * {@link corelib.display.glyphs.ColorString ColorStrings}, to print
+     * @param topLine the line on which the first
+     * {@link corelib.display.glyphs.ColorString} will be written
      * @param leftIndent the number of characters from the left the text will be
      * printed
-     * @param border the Border with which to surround the text
+     * @param border the {@link Border} with which to surround the text
      * @return true if the operation was successful
      */
     public static boolean printBoxed(Display display, ColorString[] text,
@@ -501,14 +520,14 @@ public abstract class WindowBuilder
     }
     
     /**
-     * Prints the provided text surrounded by the provided Border to the
-     * provided display; no separators will be used.
-     * @param display the Display to draw on
+     * Prints the provided text surrounded by the provided {@link Border} to the
+     * provided {@link corelib.display.Display}; no separators will be used.
+     * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as Strings, to print
      * @param topLine the line on which the first String will be written
      * @param leftIndent the number of characters from the left the text will be
      * printed
-     * @param border the Border with which to surround the text
+     * @param border the {@link Border} with which to surround the text
      * @return true if the operation was successful
      */
     public static boolean printBoxed(Display display, String[] text,
@@ -519,14 +538,16 @@ public abstract class WindowBuilder
     }
     
     /**
-     * Prints the provided text surrounded by a Border of the provided width to
-     * the provided display; no separators will be used.
-     * @param display the Display to draw on
+     * Prints the provided text surrounded by a {@link Border} of the provided
+     * width to the provided {@link corelib.display.Display}; no separators will
+     * be used.
+     * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as Strings, to print
      * @param topLine the line on which the first String will be written
      * @param leftIndent the number of characters from the left the text will be
      * printed
-     * @param width the width of the Border with which to surround the text
+     * @param width the width of the {@link Border} with which to surround the
+     * text
      * @return true if the operation was successful
      */
     public static boolean printBoxed(Display display, String[] text,
@@ -537,9 +558,9 @@ public abstract class WindowBuilder
     }
     
     /**
-     * Prints the provided text surrounded by the default Border to the
-     * provided display; no separators will be used.
-     * @param display the Display to draw on
+     * Prints the provided text surrounded by the default {@link Border} to the
+     * provided {@link corelib.display.Display}; no separators will be used.
+     * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as Strings, to print
      * @param topLine the line on which the first String will be written
      * @param leftIndent the number of characters from the left the text will be
@@ -551,13 +572,15 @@ public abstract class WindowBuilder
         {return printBoxed(display, text, topLine, leftIndent, DEFAULT_LINES);}
     
     /**
-     * Prints the provided text surrounded by the provided Border to the center
-     * of the provided display.
-     * @param display the Display to draw on
-     * @param text the lines of text, as ColorStrings, to print
-     * @param topLine the line on which the first ColorString will be written
-     * @param border the Border with which to surround the text
-     * @param separator the Line to use for all horizontal separations
+     * Prints the provided text surrounded by the provided {@link Border} to the
+     * center of the provided {@link corelib.display.Display}.
+     * @param display the {@link corelib.display.Display} to draw on
+     * @param text the lines of text, as
+     * {@link corelib.display.glyphs.ColorString ColorStrings}, to print
+     * @param topLine the line on which the first
+     * {@link corelib.display.glyphs.ColorString} will be written
+     * @param border the {@link Border} with which to surround the text
+     * @param separator the {@link Line} to use for all horizontal separations
      * @return true if the operation was successful
      */
     public static boolean printCenterBoxed(Display display, ColorString[] text,
@@ -606,13 +629,13 @@ public abstract class WindowBuilder
     }
     
     /**
-     * Prints the provided text surrounded by the provided Border to the center
-     * of the provided display.
-     * @param display the Display to draw on
+     * Prints the provided text surrounded by the provided {@link Border} to the
+     * center of the provided {@link corelib.display.Display}.
+     * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as Strings, to print
      * @param topLine the line on which the first String will be written
-     * @param border the Border with which to surround the text
-     * @param separator the Line to use for all horizontal separations
+     * @param border the {@link Border} with which to surround the text
+     * @param separator the {@link Line} to use for all horizontal separations
      * @return true if the operation was successful
      */
     public static boolean printCenterBoxed(Display display, String[] text,
@@ -623,12 +646,15 @@ public abstract class WindowBuilder
     }
     
     /**
-     * Prints the provided text surrounded by the provided Border to the center
-     * of the provided display; no separators will be used.
-     * @param display the Display to draw on
-     * @param text the lines of text, as ColorStrings, to print
-     * @param topLine the line on which the first ColorString will be written
-     * @param border the Border with which to surround the text
+     * Prints the provided text surrounded by the provided {@link Border} to the
+     * center of the provided {@link corelib.display.Display}; no separators 
+     * will be used.
+     * @param display the {@link corelib.display.Display} to draw on
+     * @param text the lines of text, as
+     * {@link corelib.display.glyphs.ColorString ColorStrings}, to print
+     * @param topLine the line on which the first
+     * {@link corelib.display.glyphs.ColorString} will be written
+     * @param border the {@link Border} with which to surround the text
      * @return true if the operation was successful
      */
     public static boolean printCenterBoxed(Display display, ColorString[] text,
@@ -636,12 +662,13 @@ public abstract class WindowBuilder
         {return printCenterBoxed(display, text, topLine, border, null);}
     
     /**
-     * Prints the provided text surrounded by the provided Border to the center
-     * of the provided display; no separators will be used.
-     * @param display the Display to draw on
+     * Prints the provided text surrounded by the provided {@link Border} to the
+     * center of the provided {@link corelib.display.Display}; no separators
+     * will be used.
+     * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as Strings, to print
      * @param topLine the line on which the first String will be written
-     * @param border the Border with which to surround the text
+     * @param border the {@link Border} with which to surround the text
      * @return true if the operation was successful
      */
     public static boolean printCenterBoxed(Display display, String[] text,
@@ -649,12 +676,14 @@ public abstract class WindowBuilder
         {return printCenterBoxed(display, text, topLine, border, null);}
     
     /**
-     * Prints the provided text surrounded by a Border of the provided width to
-     * the center of the provided display; no separators will be used.
-     * @param display the Display to draw on
+     * Prints the provided text surrounded by a {@link Border} of the provided
+     * width to the center of the provided{@link corelib.display.Display}; no
+     * separators will be used.
+     * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as Strings, to print
      * @param topLine the line on which the first String will be written
-     * @param width the width of the Border with which to surround the text
+     * @param width the width of the {@link Border} with which to surround the
+     * text
      * @return true if the operation was successful
      */
     public static boolean printCenterBoxed(Display display, String[] text,
@@ -662,9 +691,10 @@ public abstract class WindowBuilder
         {return printCenterBoxed(display, text, topLine, new Border(width));}
     
     /**
-     * Prints the provided text surrounded by the provided Border to the center
-     * of the provided display; no separators will be used.
-     * @param display the Display to draw on
+     * Prints the provided text surrounded by the provided {@link Border} to the
+     * center of the provided {@link corelib.display.Display}; no separators
+     * will be used.
+     * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as Strings, to print
      * @param topLine the line on which the first String will be written
      * @return true if the operation was successful

@@ -22,9 +22,6 @@ public class TileMap<TileProperty> implements Iterable<Tile>
     /** The default number of moves that tiles cost to move to. */
     public static final int TILE_COST = 1;
     
-    /** The default number of moves that entities gain each turn. */
-    public static final int ENTITY_SPEED = 1;
-    
     public static final int MAX_TRIES = 50;
     
     private Tile<TileProperty>[][] tiles;
@@ -145,7 +142,7 @@ public class TileMap<TileProperty> implements Iterable<Tile>
             throw new IllegalArgumentException(
                     "Start coordinates must be <= end coordinates");
         
-        if (!contains(start) || !contains(end))
+        if (!contains(start) || !contains(end.subtract(Coord.get(1, 1))))
             throw new IndexOutOfBoundsException("Start and end coordinates "
                     + "must be contained on the map");
         
@@ -161,8 +158,8 @@ public class TileMap<TileProperty> implements Iterable<Tile>
         {
             Coord location = entity.getLocation();
             
-            if (location.x >= start.x && location.x < end.x &&
-                    location.y >= start.y && location.y < end.y)
+            if (location.x >= start.x && location.x <= end.x &&
+                    location.y >= start.y && location.y <= end.y)
             {
                 Color background = entity.getGlyph().getBackground() == null ?
                         tileAt(location).getGlyph().getBackground() :

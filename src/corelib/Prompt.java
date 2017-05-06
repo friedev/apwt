@@ -3,7 +3,7 @@ package corelib;
 import java.util.Scanner;
 import squidpony.squidmath.Coord;
 
-/** A prompt that manages input and output. */
+/** A prompt that manages console-based input and output. */
 public abstract class Prompt
 {
     /** The number of spaces used to indent notifications. */

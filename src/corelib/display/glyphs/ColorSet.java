@@ -21,6 +21,10 @@ public class ColorSet implements CharSequence
     public ColorSet(List<ColorChar> s)
         {set = s;}
     
+    /**
+     * Creates a ColorSet from another ColorSet.
+     * @param copying the ColorSet to copy
+     */
     public ColorSet(ColorSet copying)
         {this(copying.set);}
     
@@ -62,18 +66,44 @@ public class ColorSet implements CharSequence
     public List getSet()
         {return set;}
     
+    /**
+     * Adds the given char to the set as an uncolored ColorChar.
+     * @param c the char to add
+     * @return this for convenient chaining
+     */
     public ColorSet add(char c)
         {set.add(new ColorChar(c)); return this;}
     
+    /**
+     * Adds the given String to the set as an uncolored ColorSet.
+     * @param s the String to add
+     * @return this for convenient chaining
+     */
     public ColorSet add(String s)
         {return add(new ColorSet(s));}
     
+    /**
+     * Adds the given ColorString to the set as a monotone ColorSet.
+     * @param s the ColorString to add
+     * @return this for convenient chaining
+     */
     public ColorSet add(ColorString s)
         {return add(new ColorSet(s));}
     
+    /**
+     * Adds the given ColorSet to this ColorSet.
+     * @param s the ColorSet to add
+     * @return this for convenient chaining
+     */
     public ColorSet add(ColorSet s)
         {set.addAll(Arrays.asList(s.toCharArray())); return this;}
     
+    /**
+     * Sets the foreground color of all the set's ColorChars to the given Color.
+     * @param foreground the foreground color to assign to all the set's
+     * ColorChars
+     * @return this for convenient chaining
+     */
     public ColorSet setForeground(Color foreground)
     {
         for (int i = 0; i < set.size(); i++)
@@ -85,6 +115,12 @@ public class ColorSet implements CharSequence
         return this;
     }
     
+    /**
+     * Sets the background color of all the set's ColorChars to the given Color.
+     * @param background the background color to assign to all the set's
+     * ColorChars
+     * @return this for convenient chaining
+     */
     public ColorSet setBackground(Color background)
     {
         for (int i = 0; i < set.size(); i++)
@@ -96,6 +132,14 @@ public class ColorSet implements CharSequence
         return this;
     }
     
+    /**
+     * Sets the colors of all the set's ColorChars to the given Colors.
+     * @param foreground the foreground color to assign to all the set's
+     * ColorChars
+     * @param background the background color to assign to all the set's
+     * ColorChars
+     * @return this for convenient chaining
+     */
     public ColorSet setColors(Color foreground, Color background)
         {return setForeground(foreground).setBackground(background);}
     

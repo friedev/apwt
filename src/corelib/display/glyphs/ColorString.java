@@ -8,11 +8,11 @@ import java.util.Objects;
  */
 public class ColorString extends ColoredObject implements CharSequence
 {
-    /** The ColorString's actual String. */
+    /** The {@link ColorString}'s actual String. */
     public String string;
     
     /**
-     * Creates a ColorString from a String and its two colors.
+     * Creates a {@link ColorString} from a String and its two colors.
      * @param s the String
      * @param f the color of the String
      * @param b the color of the background
@@ -23,14 +23,18 @@ public class ColorString extends ColoredObject implements CharSequence
         string = s;
     }
     
+    /**
+     * Creates a {@link ColorString} from another {@link ColorString}.
+     * @param copying the {@link ColorString} to copy
+     */
     public ColorString(ColorString copying)
     {
         this(copying.string, copying.getForeground(), copying.getBackground());
     }
     
     /**
-     * Creates a ColorString from a String and a foreground color, but no
-     * specified background color.
+     * Creates a {@link ColorString} from a String and a foreground color, but
+     * no specified background color.
      * @param s the String
      * @param f the color of the String
      */
@@ -38,23 +42,32 @@ public class ColorString extends ColoredObject implements CharSequence
         {this(s, f, null);}
     
     /**
-     * Creates a ColorString from a String and no specified colors.
+     * Creates a {@link ColorString} from a String and no specified colors.
      * @param s the String
      */
     public ColorString(String s)
         {this(s, null, null);}
     
+    /**
+     * Returns the {@link ColorString}'s actual String.
+     * @return the {@link ColorString}'s actual String
+     */
     public String getString()
         {return string;}
     
+    /**
+     * Sets the {@link ColorString}'s actual String.
+     * @param string the {@link ColorString}'s new String
+     */
     public void setString(String string)
         {this.string = string;} 
     
     /**
-     * Converts the ColorString into an array of ColorChars, each with the
-     * colors of the ColorString.
-     * @return an array of ColorChars with the characters of the ColorString and
-     * its colors
+     * Converts the {@link ColorString} into an array of
+     * {@link ColorChar ColorChars}, each with the colors of the
+     * {@link ColorString}.
+     * @return an array of {@link ColorChar ColorChars} with the characters of
+     * the {@link ColorString} and its colors
      */
     public ColorChar[] toCharArray()
     {
@@ -68,11 +81,11 @@ public class ColorString extends ColoredObject implements CharSequence
     }
     
     /**
-     * Converts an array of Strings into an array of ColorStrings without
-     * specified colors.
+     * Converts an array of Strings into an array of
+     * {@link ColorString ColorStrings} without any specified colors.
      * @param s the array of Strings to convert into ColorStrings
-     * @return an array of ColorStrings with the characters of the Strings and
-     * without specified colors
+     * @return an array of {@link ColorString ColorStrings} with the characters
+     * of the Strings and without specified colors
      */
     public static ColorString[] toColorStringArray(String[] s)
     {
@@ -91,14 +104,14 @@ public class ColorString extends ColoredObject implements CharSequence
             return false;
         
         ColorString cast = (ColorString) o;
-        if (string == null && cast.string != null)
-            return false;
+        if (string == null)
+            return cast.string == null;
         
-        if (getForeground() == null && cast.getForeground() != null)
-            return false;
+        if (getForeground() == null)
+            return cast.getForeground() == null;
         
-        if (getBackground() == null && cast.getBackground() != null)
-            return false;
+        if (getBackground() == null)
+            return cast.getBackground() == null;
         
         return string.equals(cast.string) &&
                getForeground().equals(cast.getForeground()) &&

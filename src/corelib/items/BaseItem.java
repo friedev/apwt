@@ -6,11 +6,18 @@ import java.util.List;
 /** A simple item with only a name, description, and value. */
 public abstract class BaseItem extends Nameable
 {
+    /** A String describing the {@link BaseItem}. */
     private String description;
-    private int    value;
     
-    public BaseItem(String name, int value) {this(name, null, value);}
+    /** The value of the {@link BaseItem}. */
+    private int value;
     
+    /**
+     * Creates a {@link BaseItem} with all fields defined.
+     * @param name the {@link BaseItem}'s name
+     * @param description the {@link BaseItem}'s description
+     * @param value the {@link BaseItem}'s value
+     */
     public BaseItem(String name, String description, int value)
     {
         super(name);
@@ -18,9 +25,32 @@ public abstract class BaseItem extends Nameable
         this.value = value;
     }
     
-    public String getDescription() {return description;}
-    public int    getValue()       {return value;}
+    /**
+     * Creates a {@link BaseItem} with no description.
+     * @param name the {@link BaseItem}'s name
+     * @param value the {@link BaseItem}'s value
+     */
+    public BaseItem(String name, int value)
+        {this(name, null, value);}
     
+    /**
+     * Returns this {@link BaseItem}'s description.
+     * @return this {@link BaseItem}'s description
+     */
+    public String getDescription()
+        {return description;}
+    
+    /**
+     * Returns this {@link BaseItem}'s value.
+     * @return this {@link BaseItem}'s value
+     */
+    public int getValue()
+        {return value;}
+    
+    /**
+     * Returns a list of this item's characteristics.
+     * @return a list of this item's characteristics as a {@code List<String>}
+     */
     public List<String> defineAsList()
     {
         ArrayList<String> definition = new ArrayList<>();

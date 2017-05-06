@@ -12,24 +12,30 @@ public class Border extends ColoredObject
 {
     /** The character on the top edge. */
     public char edgeT;
+    
     /** The character on the bottom edge. */
     public char edgeB;
+    
     /** The character on the left edge. */
     public char edgeL;
+    
     /** The character on the right edge. */
     public char edgeR;
     
     /** The character in the top-left corner. */
     public char cornerTL;
+    
     /** The character in the top-right corner. */
     public char cornerTR;
+    
     /** The character in the bottom-left corner. */
     public char cornerBL;
+    
     /** The character in the bottom-right corner. */
     public char cornerBR;
     
     /**
-     * Creates a Border with explicitly-defined characters and colors.
+     * Creates a {@link Border} with explicitly-defined characters and colors.
      * @param t the character on the top edge
      * @param b the character on the bottom edge
      * @param l the character on the left edge
@@ -58,8 +64,8 @@ public class Border extends ColoredObject
     }
     
     /**
-     * Creates a Border with explicitly-defined characters and a foreground
-     * color.
+     * Creates a {@link Border} with explicitly-defined characters and a
+     * foreground color.
      * @param t the character on the top edge
      * @param b the character on the bottom edge
      * @param l the character on the left edge
@@ -75,8 +81,8 @@ public class Border extends ColoredObject
         {this(t, b, l, r, tl, tr, bl, br, fc, null);}
     
     /**
-     * Creates a Border with explicitly-defined characters, but no specified
-     * colors.
+     * Creates a {@link Border} with explicitly-defined characters, but no
+     * specified colors.
      * @param t the character on the top edge
      * @param b the character on the bottom edge
      * @param l the character on the left edge
@@ -91,8 +97,8 @@ public class Border extends ColoredObject
         {this(t, b, l, r, tl, tr, bl, br, null, null);}
     
     /**
-     * Creates a Border with one character used on every edge and corner, along
-     * with specified colors.
+     * Creates a {@link Border} with one character used on every edge and
+     * corner, along with specified colors.
      * @param c the character to use on every part of the border
      * @param fc the color of the characters
      * @param bc the color of the background
@@ -101,8 +107,8 @@ public class Border extends ColoredObject
         {this(c, c, c, c, c, c, c, c, fc, bc);}
     
     /**
-     * Creates a Border with one character used on every edge and corner, along
-     * with a specified foreground color.
+     * Creates a {@link Border} with one character used on every edge and
+     * corner, along with a specified foreground color.
      * @param c the character to use on every part of the border
      * @param fc the color of the characters
      */
@@ -110,16 +116,16 @@ public class Border extends ColoredObject
         {this(c, fc, null);}
     
     /**
-     * Creates a Border with one character used on every edge and corner, but no
-     * specified colors.
+     * Creates a {@link Border} with one character used on every edge and
+     * corner, but no specified colors.
      * @param c the character to use on every part of the border
      */
     public Border(char c)
         {this(c, null, null);}
     
     /**
-     * Creates a Border with lines of the specified width, along with specified
-     * colors.
+     * Creates a {@link Border} with lines of the specified width, along with
+     * specified colors.
      * @param lineWidth the width of the line characters to use, must be 1 or 2
      * @param f the color of the characters
      * @param b the color of the background
@@ -134,7 +140,7 @@ public class Border extends ColoredObject
     }
     
     /**
-     * Creates a Border with lines of the specified width, along with a
+     * Creates a {@link Border} with lines of the specified width, along with a
      * specified foreground color.
      * @param lineWidth the width of the line characters to use, must be 1 or 2
      * @param f the color of the characters
@@ -143,8 +149,8 @@ public class Border extends ColoredObject
         {this(lineWidth, f, null);}
     
     /**
-     * Creates a Border with lines of the specified width, but no specified
-     * colors.
+     * Creates a {@link Border} with lines of the specified width, but no
+     * specified colors.
      * @param lineWidth the width of the line characters to use, must be 1 or 2
      */
     public Border(int lineWidth)

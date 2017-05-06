@@ -20,8 +20,8 @@ public class NameGenerator
     // CONSTRUCTORS
     
     /**
-     * Creates a NameGenerator with the given syllable sets and the given random
-     * generator.
+     * Creates a {@link NameGenerator} with the given syllable sets and the
+     * given random generator.
      * @param syllables the syllables to choose from
      * @param rng the random generator to use
      */
@@ -32,8 +32,8 @@ public class NameGenerator
     }
     
     /**
-     * Creates a NameGenerator with the given syllable sets and a new random
-     * generator with the given seed.
+     * Creates a {@link NameGenerator} with the given syllable sets and a new
+     * random generator with the given seed.
      * @param syllables the syllables to choose from
      * @param seed the seed of the random generator to use
      */
@@ -41,16 +41,16 @@ public class NameGenerator
         {this(syllables, new RNG(seed));}
     
     /**
-     * Creates a NameGenerator with the given syllable sets and a new random
-     * generator.
+     * Creates a {@link NameGenerator} with the given syllable sets and a new
+     * random generator.
      * @param syllables the syllables to choose from
      */
     public NameGenerator(String[][] syllables)
         {this(syllables, new RNG());}
     
     /**
-     * Creates a NameGenerator with the given file names and the given random
-     * generator.
+     * Creates a {@link NameGenerator} with the given file names and the given
+     * random generator.
      * @param files the paths of the files to load
      * @param rng the random generator to use
      * @throws java.io.FileNotFoundException
@@ -64,8 +64,8 @@ public class NameGenerator
     }
     
     /**
-     * Creates a NameGenerator with the given file names and a new random
-     * generator with the given seed.
+     * Creates a {@link NameGenerator} with the given file names and a new
+     * random generator with the given seed.
      * @param files the paths of the files to load
      * @param seed the seed of the random generator to be used
      * @throws java.io.FileNotFoundException
@@ -75,8 +75,8 @@ public class NameGenerator
         {this(new RNG(seed), files);}
     
     /**
-     * Creates a NameGenerator with the given file names and a new random
-     * generator.
+     * Creates a {@link NameGenerator} with the given file names and a new
+     * random generator.
      * @param files the paths of the files to load
      * @throws java.io.FileNotFoundException
      */

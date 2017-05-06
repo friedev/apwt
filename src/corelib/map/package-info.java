@@ -1,2 +1,5 @@
-/** A package with tile maps and entities that can traverse them. */
+/**
+ * A package with {@link TileMap tile-based maps} and {@link Entity Entities}
+ * that can traverse them.
+ */
 package corelib.map;

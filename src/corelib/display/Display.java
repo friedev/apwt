@@ -4,54 +4,40 @@ import corelib.display.glyphs.ColorSet;
 import corelib.display.glyphs.ColorChar;
 import corelib.display.glyphs.ColorString;
 import corelib.display.screens.Screen;
-import asciiPanel.AsciiFont;
 import javax.swing.JFrame;
 import asciiPanel.AsciiPanel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.Color;
 import squidpony.squidgrid.Direction;
 import squidpony.squidmath.Coord;
 
 /**
- * A class designed to create, contain, and operate an AsciiPanel, as well as
- * providing many utility functions.
+ * A class designed to create, contain, and operate an
+ * {@link asciiPanel.AsciiPanel}, as well as providing many utility functions.
  */
 public class Display extends JFrame implements KeyListener
 {
-    // CONSTANTS
-
-    /**
-     * The width that will be used by default if not supplied in a constructor.
-     */
-    public static final int DEFAULT_WIDTH = 80;
-    
-    /**
-     * The height that will be used by default if not supplied in a constructor.
-     */
-    public static final int DEFAULT_HEIGHT = 48;
-    
-    /**
-     * The font that will be used by default if not supplied in a constructor.
-     */
-    public static final AsciiFont DEFAULT_FONT = AsciiFont.QBICFEET_10x10;
-    
     // FIELDS
     
-    /** The AsciiPanel that will be used to display all "graphical" data. */
+    /**
+     * The {@link asciiPanel.AsciiPanel} that will be used to display all
+     * "graphical" data.
+     */
     private AsciiPanel panel;
     
     /**
-     * The current screen being displayed by the terminal and where input from
-     * the KeyListener is being processed.
+     * The current {@link corelib.display.screens.Screen} being displayed by the
+     * panel and where input from the KeyListener is being processed.
      */
     private Screen screen;
 
     // CONSTRUCTORS
     
     /**
-     * The main Display constructor, accepting a constructed AsciiPanel.
-     * @param panel the panel to be used as the Display's terminal
+     * Creates a {@link Display} to wrap a constructed
+     * {@link asciiPanel.AsciiPanel}.
+     * @param panel the {@link asciiPanel.AsciiPanel} to wrap with the
+     * {@link Display}
      */
     public Display(AsciiPanel panel)
     {
@@ -62,28 +48,10 @@ public class Display extends JFrame implements KeyListener
     }
     
     /**
-     * A Display constructor that uses the default font.
-     * @param width the width of the terminal
-     * @param height the height of the terminal
-     */
-    public Display(int width, int height)
-        {this(new AsciiPanel(width, height, DEFAULT_FONT));}
-    
-    /**
-     * A Display constructor that uses the default width and height.
-     * @param font the AsciiFont used by the terminal
-     */
-    public Display(AsciiFont font)
-        {this(new AsciiPanel(DEFAULT_WIDTH, DEFAULT_HEIGHT, font));}
-    
-    /** A Display constructor that uses all default presets. */
-    public Display()
-        {this(new AsciiPanel(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_FONT));}
-    
-    /**
-     * Initializes the screen and keylistener, as well as setting up default
-     * settings outside of a constructor.
-     * @param startScreen the initial screen to display
+     * Initializes the {@link corelib.display.screens.Screen} and keylistener,
+     * as well as setting up default settings outside of a constructor.
+     * @param startScreen the initial {@link corelib.display.screens.Screen} to
+     * display
      * @return the initialized display, this
      */
     public Display init(Screen startScreen)
@@ -119,8 +87,18 @@ public class Display extends JFrame implements KeyListener
     @Override
     public void keyTyped(KeyEvent e) {}
     
+    /**
+     * Converts the given KeyEvent into a Direction, referring to many different
+     * sets of directional keys. These include the arrow keys, WASD, the VI
+     * keys, and the number pad.
+     * @param key the KeyEvent to convert into a Direction
+     * @return the Direction corresponding to the provided KeyEvent
+     */
     public static Direction keyToDirection(KeyEvent key)
     {
+        if (key == null)
+            return null;
+        
         switch (key.getKeyCode())
         {
             case KeyEvent.VK_UP: case KeyEvent.VK_K: case KeyEvent.VK_W:
@@ -151,9 +129,10 @@ public class Display extends JFrame implements KeyListener
     // STATIC GRAPHICAL METHODS
     
     /**
-     * Writes a String to the provided AsciiPanel, using the default getForeground()
-     * and getBackground() colors.
-     * @param panel the panel on which to write the String
+     * Writes a String to the provided {@link asciiPanel.AsciiPanel}, using the
+     * default foreground and background colors.
+     * @param panel the {@link asciiPanel.AsciiPanel} on which to write the
+     * String
      * @param s the String to write
      * @param point the point, in characters, at which the String will be
      * written
@@ -162,9 +141,10 @@ public class Display extends JFrame implements KeyListener
         {panel.write(s, point.x, point.y);}
     
     /**
-     * Writes a character to the provided AsciiPanel, using the default
-     * getForeground() and getBackground() colors.
-     * @param panel the panel on which to write the character
+     * Writes a character to the provided {@link asciiPanel.AsciiPanel}, using
+     * the default foreground and background colors.
+     * @param panel the {@link asciiPanel.AsciiPanel} on which to write the
+     * character
      * @param c the char to write
      * @param point the point, in characters, at which the character will be
      * written
@@ -173,11 +153,13 @@ public class Display extends JFrame implements KeyListener
         {panel.write(c, point.x, point.y);}
     
     /**
-     * Writes a ColorChar to the provided AsciiPanel.
-     * @param panel the panel on which to write the ColorChar
-     * @param cc the ColorChar to write
-     * @param point  the point, in characters, at which the ColorChar will be
-     * written
+     * Writes a {@link corelib.display.glyphs.ColorChar} to the provided
+     * {@link asciiPanel.AsciiPanel}.
+     * @param panel the {@link asciiPanel.AsciiPanel} on which to write the
+     * {@link corelib.display.glyphs.ColorChar}
+     * @param cc the {@link corelib.display.glyphs.ColorChar} to write
+     * @param point  the point, in characters, at which the
+     * {@link corelib.display.glyphs.ColorChar} will be written
      */
     public static void write(AsciiPanel panel, Coord point, ColorChar cc)
     {
@@ -186,9 +168,10 @@ public class Display extends JFrame implements KeyListener
     }
     
     /**
-     * Writes an array of Strings to the provided AsciiPanel, with each String
-     * on the line below the previous.
-     * @param panel the panel on which to write the Strings
+     * Writes an array of Strings to the provided {@link asciiPanel.AsciiPanel},
+     * with each String on the line below the previous.
+     * @param panel the {@link asciiPanel.AsciiPanel} on which to write the
+     * Strings
      * @param s the Strings to write
      * @param point the point, in characters, at which the first String will be
      * written
@@ -205,15 +188,19 @@ public class Display extends JFrame implements KeyListener
     }
     
     /**
-     * Writes a String to the provided AsciiPanel, using the colors defined in
-     * the ColorSet.
-     * @param panel the panel on which to write the String
+     * Writes a String to the provided {@link asciiPanel.AsciiPanel}, using the
+     * colors defined in the {@link corelib.display.glyphs.ColorSet}.
+     * @param panel the {@link asciiPanel.AsciiPanel} on which to write the
+     * String
      * @param s the String to write
      * @param point the point, in characters, at which the String will be
      * written
-     * @param colors the colors of the first ColorChar in this ColorSet will be
-     * used on all matching characters of the String printed; if a character is
-     * not found in the ColorSet, default colors will be used instead
+     * @param colors the colors of the first
+     * {@link corelib.display.glyphs.ColorChar} in this
+     * {@link corelib.display.glyphs.ColorSet} will be used on all matching
+     * characters of the String printed; if a character is not found in the
+     * {@link corelib.display.glyphs.ColorSet}, default colors will be used
+     * instead
      */
     public static void write(AsciiPanel panel, Coord point, ColorSet colors,
             String s)
@@ -232,18 +219,21 @@ public class Display extends JFrame implements KeyListener
             else
             {
                 curColors.syncDefaults(panel);
-                panel.write(cur, point.x + i, point.y, curColors.getForeground(),
-                        curColors.getBackground());
+                panel.write(cur, point.x + i, point.y,
+                        curColors.getForeground(), curColors.getBackground());
             }
         }
     }
     
     /**
-     * Writes the ColorChars of a ColorSet to the provided AsciiPanel.
-     * @param panel the panel on which to write the ColorSet
-     * @param s the ColorSet to write
-     * @param point the point, in characters, at which the ColorSet will be
-     * written
+     * Writes the {@link corelib.display.glyphs.ColorChar ColorChars} of a
+     * {@link corelib.display.glyphs.ColorSet} to the provided
+     * {@link asciiPanel.AsciiPanel}.
+     * @param panel the {@link asciiPanel.AsciiPanel} on which to write the
+     * {@link corelib.display.glyphs.ColorSet}
+     * @param s the {@link corelib.display.glyphs.ColorSet} to write
+     * @param point the point, in characters, at which the
+     * {@link corelib.display.glyphs.ColorSet} will be written
      */
     public static void write(AsciiPanel panel, Coord point, ColorSet s)
     {
@@ -261,12 +251,14 @@ public class Display extends JFrame implements KeyListener
     }
     
     /**
-     * Writes an array of ColorSets to the provided AsciiPanel, with each
-     * ColorSet on the line below the previous.
-     * @param panel the panel on which to write the ColorSets
-     * @param s the ColorSets to write
-     * @param point the point, in characters, at which the first ColorSet will
-     * be written
+     * Writes an array of {@link corelib.display.glyphs.ColorSet ColorSets} to
+     * the provided {@link asciiPanel.AsciiPanel}, with each
+     * {@link corelib.display.glyphs.ColorSet} on the line below the previous.
+     * @param panel the {@link asciiPanel.AsciiPanel} on which to write the
+     * {@link corelib.display.glyphs.ColorSet ColorSets}
+     * @param s the {@link corelib.display.glyphs.ColorSet ColorSets} to write
+     * @param point the point, in characters, at which the first
+     * {@link corelib.display.glyphs.ColorSet} will be written
      */
     public static void write(AsciiPanel panel, Coord point,  ColorSet... s)
     {
@@ -280,8 +272,10 @@ public class Display extends JFrame implements KeyListener
     }
     
     /**
-     * Writes an array of Strings to the center of the provided AsciiPanel.
-     * @param panel the panel on which to write the Strings
+     * Writes an array of Strings to the center of the provided
+     * {@link asciiPanel.AsciiPanel}.
+     * @param panel the {@link asciiPanel.AsciiPanel} on which to write the
+     * Strings
      * @param s the Strings to write
      * @param y the line on which the first String will be written
      */
@@ -296,10 +290,15 @@ public class Display extends JFrame implements KeyListener
     }
     
     /**
-     * Writes an array of ColorStrings to the provided AsciiPanel.
-     * @param panel the panel on which to write the ColorStrings
-     * @param s the ColorStrings to write
-     * @param y the line on which the first ColorString will be written
+     * Writes an array of
+     * {@link corelib.display.glyphs.ColorString ColorStrings} to the provided
+     * {@link asciiPanel.AsciiPanel}.
+     * @param panel the {@link asciiPanel.AsciiPanel} on which to write the
+     * {@link corelib.display.glyphs.ColorString ColorStrings}
+     * @param s the {@link corelib.display.glyphs.ColorString ColorStrings} to
+     * write
+     * @param y the line on which the first
+     * {@link corelib.display.glyphs.ColorString} will be written
      */
     public static void writeCenter(AsciiPanel panel, int y, ColorString... s)
     {
@@ -318,30 +317,37 @@ public class Display extends JFrame implements KeyListener
     }
     
     /**
-     * Returns true if the AsciiPanel contains the given Coord.
-     * @param panel the AsciiPanel to check for containment of the Coord
-     * @param point the Coord to check for containment on the AsciiPanel
-     * @return true if the AsciiPanel contains the Coord
+     * Returns true if the {@link asciiPanel.AsciiPanel} contains the given
+     * Coord.
+     * @param panel the {@link asciiPanel.AsciiPanel} to check for containment
+     * of the Coord
+     * @param point the Coord to check for containment on the
+     * {@link asciiPanel.AsciiPanel}
+     * @return true if the {@link asciiPanel.AsciiPanel} contains the Coord
      */
     public static boolean contains(AsciiPanel panel, Coord point)
         {return containsX(panel, point.x) && containsY(panel, point.y);}
     
     /**
-     * Returns true if the AsciiPanel contains the given x value, in characters.
-     * @param panel the AsciiPanel to check for containment of the x value
+     * Returns true if the {@link asciiPanel.AsciiPanel} contains the given x 
+     * value, in characters.
+     * @param panel the {@link asciiPanel.AsciiPanel} to check for containment
+     * of the x value
      * @param x the x value, in characters, to check for containment on the
-     * AsciiPanel
-     * @return true if the AsciiPanel contains the x value
+     * {@link asciiPanel.AsciiPanel}
+     * @return true if the {@link asciiPanel.AsciiPanel} contains the x value
      */
     public static boolean containsX(AsciiPanel panel, int x)
         {return x >= 0 && x < panel.getWidthInCharacters();}
     
     /**
-     * Returns true if the AsciiPanel contains the given y value, in characters.
-     * @param panel the AsciiPanel to check for containment of the y value
+     * Returns true if the {@link asciiPanel.AsciiPanel} contains the given y
+     * value, in characters.
+     * @param panel the {@link asciiPanel.AsciiPanel} to check for containment
+     * of the y value
      * @param y the y value, in characters, to check for containment on the
-     * AsciiPanel
-     * @return true if the AsciiPanel contains the y value
+     * {@link asciiPanel.AsciiPanel}
+     * @return true if the {@link asciiPanel.AsciiPanel} contains the y value
      */
     public static boolean containsY(AsciiPanel panel, int y)
         {return y >= 0 && y < panel.getHeightInCharacters();}
@@ -349,15 +355,16 @@ public class Display extends JFrame implements KeyListener
     // LOCAL GRAPHICAL METHODS
     
     /**
-     * Returns this Display's AsciiPanel.
-     * @return this Display's AsciiPanel
+     * Returns this {@link Display}'s {@link asciiPanel.AsciiPanel}.
+     * @return this {@link Display}'s {@link asciiPanel.AsciiPanel}
      */
     public AsciiPanel getPanel()
         {return panel;}
     
     /**
-     * Writes a String to this Display's AsciiPanel, using the default
-     * getForeground() and getBackground() colors.
+     * Writes a String to this {@link Display}'s {@link asciiPanel.AsciiPanel},
+     * using the default
+     * foreground and background colors.
      * @param s the String to write
      * @param point the point, in characters, at which the String will be
      * written
@@ -366,8 +373,9 @@ public class Display extends JFrame implements KeyListener
         {write(panel, point, s);}
     
     /**
-     * Writes a character to this Display's AsciiPanel, using the default
-     * getForeground() and getBackground() colors.
+     * Writes a character to this {@link Display}'s
+     * {@link asciiPanel.AsciiPanel}, using the default foreground and
+     * background colors.
      * @param c the char to write
      * @param point the point, in characters, at which the character will be
      * written
@@ -376,16 +384,19 @@ public class Display extends JFrame implements KeyListener
         {write(panel, point, c);}
     
     /**
-     * Writes a ColorChar to this Display's AsciiPanel.
-     * @param cc the ColorChar to write
-     * @param point  the point, in characters, at which the ColorChar will be
+     * Writes a {@link corelib.display.glyphs.ColorChar} to this
+     * {@link Display}'s {@link asciiPanel.AsciiPanel}.
+     * @param cc the {@link corelib.display.glyphs.ColorChar} to write
+     * @param point  the point, in characters, at which the
+     * {@link corelib.display.glyphs.ColorChar} will be
      * written
      */
     public void write(Coord point, ColorChar cc)
         {write(panel, point, cc);}
     
     /**
-     * Writes an array of Strings to this Display's AsciiPanel, with each String
+     * Writes an array of Strings to this {@link Display}'s
+     * {@link asciiPanel.AsciiPanel}, with each String
      * on the line below the previous.
      * @param s the Strings to write
      * @param point the point, in characters, at which the first String will be
@@ -395,39 +406,47 @@ public class Display extends JFrame implements KeyListener
         {write(panel, point, s);}
     
     /**
-     * Writes a String to this Display's AsciiPanel, using the colors defined in
-     * the ColorSet.
+     * Writes a String to this {@link Display}'s {@link asciiPanel.AsciiPanel},
+     * using the colors defined in the {@link corelib.display.glyphs.ColorSet}.
      * @param s the String to write
      * @param point the point, in characters, at which the String will be
      * written
-     * @param colors the colors of the first ColorChar in this ColorSet will be
-     * used on all matching characters of the String printed; if a character is
-     * not found in the ColorSet, default colors will be used instead
+     * @param colors the colors of the first
+     * {@link corelib.display.glyphs.ColorChar} in this
+     * {@link corelib.display.glyphs.ColorSet} will be used on all matching
+     * characters of the String printed; if a character is not found in the
+     * {@link corelib.display.glyphs.ColorSet}, default colors will be used
+     * instead
      */
     public void write(Coord point, ColorSet colors, String s)
         {write(panel, point, colors, s);}
     
     /**
-     * Writes the ColorChars of a ColorSet to this Display's AsciiPanel.
-     * @param s the ColorSet to write
-     * @param point the point, in characters, at which the ColorSet will be
-     * written
+     * Writes the {@link corelib.display.glyphs.ColorChar}s of a
+     * {@link corelib.display.glyphs.ColorSet} to this {@link Display}'s
+     * {@link asciiPanel.AsciiPanel}.
+     * @param s the {@link corelib.display.glyphs.ColorSet} to write
+     * @param point the point, in characters, at which the
+     * {@link corelib.display.glyphs.ColorSet} will be written
      */
     public void write(Coord point, ColorSet s)
         {write(panel, point, s);}
     
     /**
-     * Writes an array of ColorSets to this Display's AsciiPanel, with each
-     * ColorSet on the line below the previous.
-     * @param s the ColorSets to write
-     * @param point the point, in characters, at which the first ColorSet will
+     * Writes an array of {@link corelib.display.glyphs.ColorSet ColorSets} to
+     * this {@link Display}'s {@link asciiPanel.AsciiPanel}, with each
+     * {@link corelib.display.glyphs.ColorSet} on the line below the previous.
+     * @param s the {@link corelib.display.glyphs.ColorSet ColorSets} to write
+     * @param point the point, in characters, at which the first
+     * {@link corelib.display.glyphs.ColorSet} will
      * be written
      */
     public void write(Coord point, ColorSet... s)
         {write(panel, point, s);}
     
     /**
-     * Writes an array of Strings to the center of this Display's AsciiPanel.
+     * Writes an array of Strings to the center of this {@link Display}'s
+     * {@link asciiPanel.AsciiPanel}.
      * @param s the Strings to write
      * @param y the line on which the first String will be written
      */
@@ -435,51 +454,61 @@ public class Display extends JFrame implements KeyListener
         {writeCenter(panel, y, s);}
     
     /**
-     * Writes an array of ColorStrings to this Display's AsciiPanel.
-     * @param s the ColorStrings to write
-     * @param y the line on which the first ColorString will be written
+     * Writes an array of
+     * {@link corelib.display.glyphs.ColorString ColorStrings} to this
+     * {@link Display}'s {@link asciiPanel.AsciiPanel}.
+     * @param s the {@link corelib.display.glyphs.ColorString ColorStrings} to
+     * write
+     * @param y the line on which the first
+     * {@link corelib.display.glyphs.ColorString ColorString} will be written
      */
     public void writeCenter(int y, ColorString... s)
         {writeCenter(panel, y, s);}
     
     /**
-     * Returns true if this Display's AsciiPanel contains the given Coord.
-     * @param point the Coord to check for containment on the AsciiPanel
-     * @return true if the AsciiPanel contains the Coord
+     * Returns true if this {@link Display}'s {@link asciiPanel.AsciiPanel}
+     * contains the given Coord.
+     * @param point the Coord to check for containment on the
+     * {@link asciiPanel.AsciiPanel}
+     * @return true if the {@link asciiPanel.AsciiPanel} contains the Coord
      */
     public boolean contains(Coord point)
         {return contains(panel, point);}
     
     /**
-     * Returns true if this Display's AsciiPanel contains the given x value, in
-     * characters.
+     * Returns true if this {@link Display}'s {@link asciiPanel.AsciiPanel}
+     * contains the given x value, in characters.
      * @param x the x value, in characters, to check for containment on the
-     * AsciiPanel
-     * @return true if the AsciiPanel contains the x value
+     * {@link asciiPanel.AsciiPanel}
+     * @return true if the {@link asciiPanel.AsciiPanel} contains the x value
      */
     public boolean containsX(int x)
         {return containsX(panel, x);}
     
     /**
-     * Returns true if this Display's AsciiPanel contains the given y value, in
-     * characters.
+     * Returns true if this {@link Display}'s {@link asciiPanel.AsciiPanel}
+     * contains the given y value, in characters.
      * @param y the y value, in characters, to check for containment on the
-     * AsciiPanel
-     * @return true if the AsciiPanel contains the y value
+     * {@link asciiPanel.AsciiPanel}
+     * @return true if the {@link asciiPanel.AsciiPanel} contains the y value
      */
     public boolean containsY(int y)
         {return containsY(panel, y);}
     
     /**
-     * Returns the width of this Display's AsciiPanel in characters.
-     * @return the width of this Display's AsciiPanel in characters
+     * Returns the width of this {@link Display}'s {@link asciiPanel.AsciiPanel}
+     * in characters.
+     * @return the width of this {@link Display}'s {@link asciiPanel.AsciiPanel}
+     * in characters
      */
     public int getCharWidth() 
         {return panel.getWidthInCharacters();}
     
     /**
-     * Returns the height of this Display's AsciiPanel in characters.
-     * @return the height of this Display's AsciiPanel in characters
+     * Returns the height of this {@link Display}'s
+     * {@link asciiPanel.AsciiPanel} in characters.
+     * @return the height of this {@link Display}'s
+     * {@link asciiPanel.AsciiPanel} in characters
      */
     public int getCharHeight()
         {return panel.getHeightInCharacters();}

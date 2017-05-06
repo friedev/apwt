@@ -36,18 +36,39 @@ public abstract class ColoredObject
     public ColoredObject()
         {this(null, null);}
     
+    /**
+     * Returns the color of the object.
+     * @return the object's foreground color
+     */
     public Color getForeground()
         {return foreground;}
     
+    /**
+     * Returns the object's background color.
+     * @return the object's background color
+     */
     public Color getBackground()
         {return background;}
     
+    /**
+     * Sets the color of the object.
+     * @param color the object's new foreground color
+     */
     public void setForeground(Color color)
         {foreground = color;}
     
+    /**
+     * Sets the object's background color.
+     * @param color the object's new background color
+     */
     public void setBackground(Color color)
         {background = color;}
     
+    /**
+     * Sets the object's colors.
+     * @param foreground the object's new foreground color
+     * @param background the object's new background color
+     */
     public void setColors(Color foreground, Color background)
     {
         this.foreground = foreground;

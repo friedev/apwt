@@ -3,16 +3,32 @@ package corelib.items;
 /** An object or other entity that can be named and given a nickname. */
 public class Nameable
 {
+    /** The name of the object. */
     private String name;
+    
+    /**
+     * The nickname of the object; to be expressed in quotation marks right of
+     * the name.
+     */
     private String nickname;
     
-    public Nameable(String name) {this(name, null);}
-    
+    /**
+     * Creates a {@link Nameable} with a name and nickname.
+     * @param name the {@link Nameable}'s name
+     * @param nickname the {@link Nameable}'s nickname
+     */
     public Nameable(String name, String nickname)
     {
         this.name = name;
         this.nickname = nickname;
     }
+    
+    /**
+     * Creates a {@link Nameable} with a name and no nickname.
+     * @param name the {@link Nameable}'s name
+     */
+    public Nameable(String name)
+        {this(name, null);}
     
     @Override
     public String toString()
@@ -21,29 +37,53 @@ public class Nameable
             name + " \"" + nickname + "\"" : name;
     }
     
-    public String getName()          {return name;              }
-    public String getNickname()      {return nickname;          }
-    public String getLowerCaseName() {return name.toLowerCase();}
-    public char   getFirstLetter()   {return name.charAt(0);    }
-    
     /**
-     * Changes the name to n, and must be final so that sector change change it.
-     * @param n the name to change the current name to
+     * Returns this {@link Nameable}'s name.
+     * @return this {@link Nameable}'s name
      */
-    public final void setName(String n) {name = n;}
+    public String getName()
+        {return name;}
     
     /**
-     * Changes the nickname to nn, and must be final for the same reason as
-     * setName().
-     * @param nn the name to change the current nickname to
+     * Returns this {@link Nameable}'s nickname.
+     * @return this {@link Nameable}'s nickname
      */
-    public final void setNickname(String nn) {nickname = nn;}
+    public String getNickname()
+        {return nickname;}
     
     /**
-     * Returns true if a given string is equal to the name or its shortened
+     * Returns this {@link Nameable}'s name in lower case.
+     * @return this {@link Nameable}'s name in lower case
+     */
+    public String getLowerCaseName()
+        {return name.toLowerCase();}
+    
+    /**
+     * Returns the first letter of the {@link Nameable}'s name.
+     * @return the first letter of the {@link Nameable}'s name
+     */
+    public char getFirstLetter()
+        {return name.charAt(0);}
+    
+    /**
+     * Changes {@link Nameable}'s name.
+     * @param name the {@link Nameable}'s new name
+     */
+    public final void setName(String name)
+        {this.name = name;}
+    
+    /**
+     * Changes {@link Nameable}'s nickname.
+     * @param nickname the {@link Nameable}'s new nickname
+     */
+    public final void setNickname(String nickname)
+        {this.nickname = nickname;}
+    
+    /**
+     * Returns true if a given String is equal to the name or its shortened
      * form.
-     * @param s the string to compare with the name
-     * @return true if the string has the same characters, ignoring case, as the
+     * @param s the String to compare with the name
+     * @return true if the String has the same characters, ignoring case, as the
      * name itself or its last word
      */
     public boolean isName(String s)

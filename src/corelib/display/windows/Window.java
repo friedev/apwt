@@ -6,22 +6,32 @@ import java.util.List;
 
 /**
  * Any window used to display a list of contents should extend this class.
- * @param <Content> the type of content the Window will display
+ * @param <Content> the type of content the {@link Window} will display
  */
 public abstract class Window<Content extends CharSequence>
 {
-    /** The Display on which to print the window. */
+    /**
+     * The {@link corelib.display.Display} on which to print the {@link Window}.
+     */
     private Display display;
-    /** The Border surrounding the Window; not displayed if null. */
+    
+    /**
+     * The {@link Border} surrounding the {@link Window}. If null, the
+     * {@link Window} will be borderless.
+     */
     private Border border;
-    /** The contents of the Window, with each Content as a different line. */
+    
+    /**
+     * The contents of the {@link Window}, with each Content as a different
+     * line.
+     */
     private List<Content> contents;
     
     /**
-     * Creates a Window with all fields defined.
-     * @param display the Window's Display
-     * @param border the Window's Border
-     * @param contents the Window's initial contents
+     * Creates a {@link Window} with all fields defined.
+     * @param display the {@link Window}'s {@link corelib.display.Display}
+     * @param border the {@link Window}'s {@link Border}
+     * @param contents the {@link Window}'s initial contents
      */
     public Window(Display display, Border border, List<Content> contents)
     {
@@ -29,55 +39,63 @@ public abstract class Window<Content extends CharSequence>
         this.border = border;
         this.contents = contents;
     }
-    
+    /**
+     * Creates a {@link Window} with no contents.
+     * @param display the {@link Window}'s {@link corelib.display.Display}
+     * @param border the {@link Window}'s {@link Border}
+     */
     public Window(Display display, Border border)
         {this(display, border, new ArrayList<>());}
     
-    /** Prints the Window to its Display using WindowBuilder. */
+    /**
+     * Prints the {@link Window} to its {@link corelib.display.Display} using
+     * {@link WindowBuilder}.
+     */
     public abstract void display();
     
     /**
-     * Returns the contents of the Window as a List.
-     * @return the contents of the Window as a List
+     * Returns the contents of the {@link Window} as a List.
+     * @return the contents of the {@link Window} as a List
      */
     public List<Content> getContents()
         {return contents;}
     
     /**
-     * Returns the Display used by the Window.
-     * @return the Display used by the Window
+     * Returns the {@link corelib.display.Display} used by the {@link Window}.
+     * @return the {@link corelib.display.Display} used by the {@link Window}
      */
     public Display getDisplay()
         {return display;}
     
     /**
-     * Returns the Window's Border.
-     * @return the Window's Border
+     * Returns the {@link Window}'s {@link Border}.
+     * @return the {@link Window}'s {@link Border}
      */
     public Border getBorder()
         {return border;}
     
     /**
-     * Returns true if the Window has a Border.
-     * @return true if the Window's Border is not null
+     * Returns true if the {@link Window} has a {@link Border}.
+     * @return true if the {@link Window}'s {@link Border} is not null
      */
     public boolean isBordered()
         {return border != null;}
     
+    /** Resets the {@link Window}'s contents to an empty ArrayList. */
     public void resetContents()
         {contents = new ArrayList<>();}
     
     /**
-     * Adds the provided content to the Window's contents.
+     * Adds the provided content to the {@link Window}'s contents.
      * @param content the content to add
      */
     public void add(Content content)
         {contents.add(content);}
     
     /**
-     * Sets the line of the Window's contents at the index to the provided
-     * content.
-     * @param index the line of the Window's contents to replace
+     * Sets the line of the {@link Window}'s contents at the index to the
+     * provided content.
+     * @param index the line of the {@link Window}'s contents to replace
      * @param content the content that will be set at the line
      */
     public void set(int index, Content content)
