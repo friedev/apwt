@@ -2,7 +2,7 @@ package corelib.items;
 
 import java.util.List;
 
-/** A collection of {@link Items} up to a maximum capacity. */
+/** A collection of {@link Item Items} up to a maximum capacity. */
 public class Container
 {
     /**

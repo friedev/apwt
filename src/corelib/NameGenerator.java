@@ -53,7 +53,8 @@ public class NameGenerator
      * random generator.
      * @param files the paths of the files to load
      * @param rng the random generator to use
-     * @throws java.io.FileNotFoundException
+     * @throws java.io.FileNotFoundException if the generation files are not
+     * found
      */
     public NameGenerator(RNG rng, String... files) throws FileNotFoundException
     {
@@ -68,7 +69,8 @@ public class NameGenerator
      * random generator with the given seed.
      * @param files the paths of the files to load
      * @param seed the seed of the random generator to be used
-     * @throws java.io.FileNotFoundException
+     * @throws java.io.FileNotFoundException if the generation files are not
+     * found
      */
     public NameGenerator(long seed, String... files)
             throws FileNotFoundException
@@ -78,7 +80,8 @@ public class NameGenerator
      * Creates a {@link NameGenerator} with the given file names and a new
      * random generator.
      * @param files the paths of the files to load
-     * @throws java.io.FileNotFoundException
+     * @throws java.io.FileNotFoundException if the generation files are not
+     * found
      */
     public NameGenerator(String... files) throws FileNotFoundException
         {this(new RNG(), files);}

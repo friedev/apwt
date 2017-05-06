@@ -147,6 +147,7 @@ public class PopupWindow extends Window<ColorString>
      * {@link corelib.display.glyphs.ColorString ColorString} and adds it to the
      * {@link PopupWindow}'s contents.
      * @param content the String to add
+     * @return this for convenient chaining
      */
     public PopupWindow add(String content)
         {getContents().add(new ColorString(content)); return this;}

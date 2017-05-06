@@ -14,26 +14,36 @@ import squidpony.squidmath.Coord;
 import squidpony.squidmath.RNG;
 
 /**
- * A two-dimensional array of tiles that can be traversed by entities.
- * @param <TileProperty>
+ * A two-dimensional array of {@link Tile Tiles} that can be traversed by
+ * {@link Entity Entities}.
+ * @param <TileProperty> the object that the map's {@link Tile Tiles} will use
+ * as a property
  */
 public class TileMap<TileProperty> implements Iterable<Tile>
 {
     /** The default number of moves that tiles cost to move to. */
     public static final int TILE_COST = 1;
     
+    /** The greatest number of attempts that findOpenTile() will make. */
     public static final int MAX_TRIES = 50;
     
+    /** The {@link Tile Tiles} that comprise the {@link TileMap}. */
     private Tile<TileProperty>[][] tiles;
+    
+    /** A list of the {@link Entity Entities} on the {@link TileMap}. */
     private List<Entity> entities;
+    
+    /** The searched map to be used in pathfinding. */
     private AStarSearch search;
+    
+    /** The {@link TileMap}'s random number generator. */
     private RNG rng;
     
     /**
-     * Generates a map of a specified size.
-     * @param size the side length of the map in tiles
-     * @param tile the tile that every map tile will be initialized as
-     * @param rng the Map's random number generator
+     * Generates a {@link TileMap} of a specified size.
+     * @param size the side length of the map in {@link Tile Tiles}
+     * @param tile the tile that every {@link Tile} will be initialized as
+     * @param rng the {@link TileMap}'s random number generator
      */
     public TileMap(int size, Tile<TileProperty> tile, RNG rng)
     {
@@ -49,6 +59,11 @@ public class TileMap<TileProperty> implements Iterable<Tile>
         search = new AStarSearch(toCosts(), AStarSearch.SearchType.DIJKSTRA);
     }
     
+    /**
+     * Generates a {@link TileMap} from a 2D array of {@link Tile Tiles}.
+     * @param tiles the {@link Tile Tiles} that will comprise the map
+     * @param rng the {@link TileMap}'s random number generator
+     */
     public TileMap(Tile<TileProperty>[][] tiles, RNG rng)
     {
         this.tiles = tiles;
@@ -57,74 +72,144 @@ public class TileMap<TileProperty> implements Iterable<Tile>
         search = new AStarSearch(toCosts(), AStarSearch.SearchType.DIJKSTRA);
     }
     
+    /**
+     * Generates a {@link TileMap} of a specified size; will create a new RNG to
+     * use.
+     * @param size the side length of the map in {@link Tile Tiles}
+     * @param tile the tile that every {@link Tile} will be initialized as
+     */
     public TileMap(int size, Tile tile)
         {this(size, tile, new RNG());}
     
+    /**
+     * Generates a {@link TileMap} from a 2D array of {@link Tile Tiles}; will
+     * create a new RNG to use.
+     * @param tiles the {@link Tile Tiles} that will comprise the map
+     */
     public TileMap(Tile[][] tiles)
         {this(tiles, new RNG());}
     
+    /**
+     * Returns the {@link TileMap} as a 2D array of {@link Tile Tiles}.
+     * @return the {@link TileMap} as a 2D array of {@link Tile Tiles}
+     */
     public Tile[][] toArray()
         {return tiles;}
     
+    /**
+     * Returns the number of {@link Tile Tiles} on the {@link TileMap}'s x-axis.
+     * @return the number of {@link Tile Tiles} on the {@link TileMap}'s x-axis
+     */
     public int getXSize()
         {return tiles[0].length;}
     
+    /**
+     * Returns the number of {@link Tile Tiles} on the {@link TileMap}'s y-axis.
+     * @return the number of {@link Tile Tiles} on the {@link TileMap}'s y-axis
+     */
     public int getYSize()
         {return tiles.length;}
     
+    /**
+     * Returns the {@link Tile} at the given x and y coordinates.
+     * @param x the x coordinate to get the {@link Tile} from
+     * @param y the y coordinate to get the {@link Tile} from
+     * @return the {@link Tile} at the given x and y coordinates
+     */
     public Tile tileAt(int x, int y)
         {return tiles[y][x];}
     
+    /**
+     * Returns the {@link Tile} at the given coordinates.
+     * @param c the coordinates to get the {@link Tile} from
+     * @return the {@link Tile} at the given coordinates
+     */
     public Tile tileAt(Coord c)
         {return tileAt(c.x, c.y);}
     
+    /**
+     * Returns the searched map to be used for pathfinding.
+     * @return the searched map to be used for pathfinding
+     */
     public AStarSearch search()
         {return search;}
     
+    /**
+     * Returns the {@link TileMap}'s random number generator.
+     * @return the {@link TileMap}'s random number generator
+     */
     public RNG getRNG()
         {return rng;}
     
     /**
-     * Returns true if the specified coordinates are on the map.
+     * Returns true if the specified coordinates are on the {@link TileMap}.
      * @param x the x coordinate of the point to check
      * @param y the y coordinate of the point to check
-     * @return true if the coordinates correspond with a point on the map
+     * @return true if the coordinates correspond with a {@link Tile} on the map
      */
     public boolean contains(int x, int y)
         {return y >= 0 && y < tiles.length && x >= 0 && x < tiles[y].length;}
     
     /**
-     * Performs the same function as contains(int, int), except that it uses a
-     * predefined point's coordinates.
-     * @param c the coordinates
-     * @return true if the point is on the map
+     * Returns true if the specified coordinates are on the {@link TileMap}.
+     * @param c the coordinates of the point to check
+     * @return true if the coordinates correspond with a {@link Tile} on the map
      */
     public boolean contains(Coord c)
         {return contains(c.x, c.y);}
     
+    /**
+     * Returns true if the {@link TileMap} contains a {@link Tile} at the given
+     * coordinates that is open.
+     * @param c the coordinates of the point to check
+     * @return true if the coordinates correspond with an open {@link Tile} on
+     * the map
+     */
     public boolean isOpen(Coord c)
         {return contains(c) && tileAt(c).isOpen();}
     
-    public void addEntity(Entity e)
+    /**
+     * Registers the given {@link Entity} on this {@link TileMap}, updating it
+     * along with other {@link Entity Entities}.
+     * @param entity the {@link Entity} to register
+     */
+    public void addEntity(Entity entity)
     {
-        if (!entities.contains(e))
-            entities.add(e);
+        if (!entities.contains(entity))
+            entities.add(entity);
     }
     
-    public void removeEntity(Entity e)
-        {entities.remove(e);}
+    /**
+     * Removes the given {@link Entity} from this {@link TileMap}.
+     * @param entity the {@link Entity} to remove
+     */
+    public void removeEntity(Entity entity)
+        {entities.remove(entity);}
     
-    public boolean hasEntity(Entity e)
-        {return entities.contains(e);}
+    /**
+     * Returns true if the given {@link Entity} is registered on this
+     * {@link TileMap}.
+     * @param entity the {@link Entity} to check
+     * @return true if the given {@link Entity} is registered on this
+     * {@link TileMap}
+     */
+    public boolean hasEntity(Entity entity)
+        {return entities.contains(entity);}
     
+    /**
+     * Updates all {@link Entity Entities} on the {@link TileMap}, updating the
+     * search as necessary.
+     */
     public void update()
     {
         for (Entity entity: entities)
-            entity.update();
+            if (entity.update())
+                search = new AStarSearch(toCosts(),
+                        AStarSearch.SearchType.DIJKSTRA);
     }
         
     
-    /** Prints the tile symbols and a border. */
+    /** Prints the {@link Tile} symbols to the {@link corelib.Console}. */
     public void print()
     {
         for (int y = 0; y < tiles.length; y++)
@@ -136,6 +221,15 @@ public class TileMap<TileProperty> implements Iterable<Tile>
         }
     }
     
+    /**
+     * Converts the {@link TileMap} to a 2D array of
+     * {@link corelib.display.glyphs.ColorChar ColorChars}, each representing a
+     * {@link Tile} between the start and end coordinates.
+     * @param start the coordinates to start converting the map at
+     * @param end the coordinates to stop converting the map at
+     * @return the {@link TileMap} as a 2D array of
+     * {@link corelib.display.glyphs.ColorChar ColorChars}
+     */
     public ColorChar[][] toGlyphs(Coord start, Coord end)
     {
         if (start.x > end.x || start.y > end.y)
@@ -174,6 +268,18 @@ public class TileMap<TileProperty> implements Iterable<Tile>
         return glyphs;
     }
     
+    /**
+     * Converts the {@link TileMap} to a 2D array of
+     * {@link corelib.display.glyphs.ColorChar ColorChars}, each representing a
+     * {@link Tile} filling the given {@link corelib.display.Display} canvas.
+     * @param center the center {@link Tile} to convert
+     * @param displayWidth the width of the {@link corelib.display.Display} to
+     * fill
+     * @param displayHeight the height of the {@link corelib.display.Display} to
+     * fill
+     * @return the {@link TileMap} as a 2D array of
+     * {@link corelib.display.glyphs.ColorChar ColorChars}
+     */
     public ColorChar[][] toGlyphs(Coord center, int displayWidth,
             int displayHeight)
     {
@@ -187,18 +293,40 @@ public class TileMap<TileProperty> implements Iterable<Tile>
         return toGlyphs(Coord.get(startX, startY), Coord.get(endX, endY));
     }
     
+    /**
+     * Converts the {@link TileMap} to a 2D array of
+     * {@link corelib.display.glyphs.ColorChar ColorChars}, each representing a
+     * {@link Tile} filling the given {@link corelib.display.Display} canvas.
+     * @param center the center {@link Tile} to convert
+     * @param display the {@link corelib.display.Display} to get a width and
+     * height from
+     * @return the {@link TileMap} as a 2D array of
+     * {@link corelib.display.glyphs.ColorChar ColorChars}
+     */
     public ColorChar[][] toGlyphs(Coord center, Display display)
     {
         return toGlyphs(center, display.getCharWidth(),
                 display.getCharHeight());
     }
     
+    /**
+     * Converts the entire {@link TileMap} to a 2D array of
+     * {@link corelib.display.glyphs.ColorChar ColorChars}, each representing a
+     * {@link Tile}.
+     * @return the {@link TileMap} as a 2D array of
+     * {@link corelib.display.glyphs.ColorChar ColorChars}
+     */
     public ColorChar[][] toGlyphs()
     {
         return toGlyphs(Coord.get(0, 0),
                 Coord.get(tiles.length - 1, tiles[0].length - 1));
     }
     
+    /**
+     * Converts the {@link TileMap} to a 2D array of its {@link Tile Tiles}'
+     * movement costs.
+     * @return the {@link TileMap} as a 2D array of movement costs
+     */
     public double[][] toCosts()
     {
         double[][] costMap = new double[tiles.length][tiles[0].length];
@@ -208,6 +336,11 @@ public class TileMap<TileProperty> implements Iterable<Tile>
         return costMap;
     }
     
+    /**
+     * Converts the {@link TileMap} into the format used by SquidLib, with
+     * hashes representing walls and periods representing open tiles.
+     * @return the {@link TileMap} in SquidLib format
+     */
     public char[][] toSquidGrid()
     {
         char[][] squidGrid = new char[tiles.length][tiles[0].length];
@@ -217,12 +350,23 @@ public class TileMap<TileProperty> implements Iterable<Tile>
         return squidGrid;
     }
     
+    /**
+     * Returns a random coordinate on the {@link TileMap}.
+     * @return a random coordinate on the {@link TileMap}
+     */
     public Coord getRandomTile()
     {
         return Coord.get(rng.nextInt(tiles.length),
                 rng.nextInt(tiles[0].length));
     }
     
+    /**
+     * Returns the coordinate of an open {@link Tile} on the {@link TileMap}.
+     * This method uses random guessing, which makes it faster on most maps but
+     * far slower on maps with few open {@link Tile Tiles}. For these maps,
+     * refer to {@link #findOpenTileSafely()}.
+     * @return the coordinate of an open {@link Tile} on the {@link TileMap}
+     */
     public Coord findOpenTile()
     {
         for (int tries = 0; tries < MAX_TRIES; tries++)
@@ -237,6 +381,13 @@ public class TileMap<TileProperty> implements Iterable<Tile>
         return null;
     }
     
+    /**
+     * Returns the coordinate of an open {@link Tile} on the {@link TileMap}.
+     * This method finds all open {@link Tile Tiles} and chooses one randomly.
+     * This is slower, but has a constant time and will always find an open
+     * {@link Tile} if at least one exists.
+     * @return the coordinate of an open {@link Tile} on the {@link TileMap}
+     */
     public Coord findOpenTileSafely()
     {
         ArrayList<Coord> possibilities = new ArrayList<>();
@@ -250,6 +401,14 @@ public class TileMap<TileProperty> implements Iterable<Tile>
                 null : possibilities.get(rng.nextInt(possibilities.size()));
     }
     
+    /**
+     * Returns the coordinate of a {@link Tile} with the given property on the
+     * {@link TileMap}. This method uses random guessing, which makes it faster
+     * on most maps but far slower on maps with few {@link Tile Tiles} with the
+     * property. For these maps, refer to {@link #findOpenTileSafely()}.
+     * @param property the property to look for
+     * @return the coordinate of an open {@link Tile} on the {@link TileMap}
+     */
     public Coord findTileWithProperty(TileProperty property)
     {
         for (int tries = 0; tries < MAX_TRIES; tries++)
@@ -264,6 +423,14 @@ public class TileMap<TileProperty> implements Iterable<Tile>
         return null;
     }
     
+    /**
+     * Returns the coordinate of a {@link Tile} with the given property on the
+     * {@link TileMap}. This method finds all open {@link Tile Tiles} and
+     * chooses one randomly. This is slower, but has a constant time and will
+     * always find a {@link Tile} with the property if at least one exists.
+     * @param property the property to look for
+     * @return the coordinate of an open {@link Tile} on the {@link TileMap}
+     */
     public Coord findTileWithPropertySafely(TileProperty property)
     {
         ArrayList<Coord> possibilities = new ArrayList<>();
@@ -281,17 +448,31 @@ public class TileMap<TileProperty> implements Iterable<Tile>
     public Iterator<Tile> iterator()
         {return new MapIterator(this);}
     
+    /** A {@link Tile} iterator for the {@link TileMap} class. */
     private class MapIterator implements Iterator
     {
+        /** An iterator to loop through rows. */
         private Iterator<Tile[]> rowIterator;
+        
+        /** An iterator to loop through columns. */
         private Iterator<Tile> colIterator;
         
+        /**
+         * Creates a {@link MapIterator} for the given 2D array of
+         * {@link Tile Tiles}.
+         * @param map the 2D array of {@link Tile Tiles} to iterate over
+         */
         public MapIterator(Tile[][] map)
         {
             rowIterator = Arrays.asList(map).iterator();
             colIterator = Arrays.asList(rowIterator.next()).iterator();
         }
         
+        /**
+         * Creates a {@link MapIterator} for the given {@link TileMap}.
+         * @param map the {@link TileMap} containing the 2D array of
+         * {@link Tile Tiles} to iterate over
+         */
         public MapIterator(TileMap map)
             {this(map.tiles);}
         
@@ -315,6 +496,20 @@ public class TileMap<TileProperty> implements Iterable<Tile>
         }
     }
     
+    /**
+     * Generates a cave-like {@link TileMap} using basic cellular automata to
+     * smooth a completely random set of {@link Tile Tiles}.
+     * @param size the size of the {@link TileMap} to generate, in
+     * {@link Tile Tiles}
+     * @param smoothing the number of times to run the smoothing algorithm;
+     * making this value any higher than about 5 will have little effect and
+     * only slow down the program
+     * @param floor the {@link Tile} to use as a floor
+     * @param wall the {@link Tile} to use as a wall
+     * @param rng the random number generator to use
+     * @return a cave-like {@link TileMap} of the given size using the specified
+     * floor and wall {@link Tile Tiles}
+     */
     public static TileMap generateCave(int size, int smoothing, Tile floor,
             Tile wall, RNG rng)
     {
@@ -331,6 +526,14 @@ public class TileMap<TileProperty> implements Iterable<Tile>
         return new TileMap(tiles);
     }
     
+    /**
+     * Smooths the given 2D array of {@link Tile Tiles} using basic cellular
+     * automata.
+     * @param tiles the 2D array of {@link Tile Tiles} to smooth
+     * @param floor the {@link Tile} to use as a floor
+     * @param wall the {@link Tile} to use as a wall
+     * @return the 2D array of {@link Tile Tiles}, smoothed
+     */
     private static Tile[][] smoothCaves(Tile[][] tiles, Tile floor,
             Tile wall)
     {
