@@ -49,11 +49,21 @@ public abstract class FileManager
     }
     
     /**
-     * Moves the path to the given folder. 
-     * @param folder the folder in the current path to move to
+     * Moves the path up multiple times.
+     * @param times the number of times to move the path up
      */
-    public static void addFolderToPath(String folder)
-        {path += folder;}
+    public static void movePathUp(int times)
+    {
+        for (int i = 0; i < times; i++)
+            movePathUp();
+    }
+    
+    /**
+     * Adds the given folders to the path.
+     * @param folders the folders in the current path to move to
+     */
+    public static void addToPath(String folders)
+        {path += folders;}
     
     /**
      * Finds the path to the jar and its directory, returning the latter.
@@ -63,11 +73,7 @@ public abstract class FileManager
     {
         String jarPath = FileManager.class.getProtectionDomain().getCodeSource()
                 .getLocation().getPath();
-        jarPath = jarPath.substring(0, jarPath.lastIndexOf("/") + 1);
-        
-        // This last step replaces the NetBeans IDE path with a path to a valid
-        // data directory
-        return jarPath.replaceFirst("build/classes", "bundle/data");
+        return jarPath.substring(0, jarPath.lastIndexOf("/") + 1);
     }
     
     // FILE MANIPULATION
@@ -352,31 +358,35 @@ public abstract class FileManager
      * Plays the given sound file, looping it for the given number of times.
      * @param target the sound file to play
      * @param times the number of times to play the sound file
+     * @return the Clip that will play
      * @throws Exception if the file is not found, or if there is an error
      * playing the file
      */
-    public static void loopAudio(String target, int times) throws Exception
+    public static Clip loopAudio(String target, int times) throws Exception
     {
         Clip clip = AudioSystem.getClip();
         clip.open(AudioSystem.getAudioInputStream(new File(path + target)));
         clip.loop(times);
+        return clip;
     }
     
     /**
      * Loops the given sound file until stopped.
      * @param target the sound file to loop
+     * @return the Clip that will play
      * @throws Exception if the file is not found, or if there is an error
      * playing the file
      */
-    public static void loopAudio(String target) throws Exception
-        {loopAudio(target, Clip.LOOP_CONTINUOUSLY);}
+    public static Clip loopAudio(String target) throws Exception
+        {return loopAudio(target, Clip.LOOP_CONTINUOUSLY);}
     
     /**
      * Plays the given sound file.
      * @param target the sound file to play
+     * @return the Clip that will play
      * @throws Exception if the file is not found, or if there is an error
      * playing the file
      */
-    public static void playAudio(String target) throws Exception
-        {loopAudio(target, 0);}
+    public static Clip playAudio(String target) throws Exception
+        {return loopAudio(target, 0);}
 }
