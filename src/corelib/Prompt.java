@@ -211,6 +211,22 @@ public abstract class Prompt
     }
     
     /**
+     * Parses a Coord from the given ordered pair as a String.
+     * @param orderedPair the ordered pair to parse, must be in the format
+     * {@code (x, y)}
+     * @return the Coord parsed from the given String
+     */
+    public static Coord parseCoord(String orderedPair)
+    {
+        orderedPair = orderedPair.replace("(", "");
+        orderedPair = orderedPair.replace(")", "");
+        orderedPair = orderedPair.replace(",", "");
+        String[] split = orderedPair.split(" ");
+        
+        return Coord.get(parseInt(split[0], 0), parseInt(split[1], 0));
+    }
+    
+    /**
      * Prompts for yes/no input until gathered.
      * @param prompt the prompt to print for the Y/N input
      * @return true if y/yes is entered, false if n/no is entered
@@ -270,7 +286,7 @@ public abstract class Prompt
      * the resulting point.
      * @return a point with an x and y coordinate specified by the player
      */
-    public static Coord getPointInput()
+    public static Coord getCoordInput()
     {
         Integer x = getIntInput("X Coordinate");
         if (x == null)
@@ -360,5 +376,44 @@ public abstract class Prompt
         return command != null && command.length > index &&
                 command[index] != null ?
                 getYNValue(command[index], prompt) : Prompt.getYNInput(prompt);
+    }
+    
+    /**
+     * Returns the input from the command array if it is valid; otherwise will
+     * prompt the operator for input.
+     * @param command the array of Strings to get input from
+     * @param indexX the index in the command array to read the x value from
+     * @param indexY the index in the command array to read the y value from
+     * @return a Coord read from the command array, if possible, or new input
+     * from the operator
+     */
+    public static Coord getInitialCoordInput(String[] command, int indexX,
+            int indexY)
+    {
+        if (command != null && command.length > Math.max(indexX, indexY) &&
+                command[indexX] != null && command[indexY] != null)
+        {
+            Integer initialX = parseInt(command[indexX]);
+            
+            if (initialX == null)
+            {
+                initialX = getIntInput(INDENT_PROMPT, "X Coordinate");
+                if (initialX == null)
+                    return null;
+            }
+            
+            Integer initialY = parseInt(command[indexY]);
+            
+            if (initialY == null)
+            {
+                initialY = getIntInput(INDENT_PROMPT, "Y Coordinate");
+                if (initialY == null)
+                    return null;
+            }
+            
+            return Coord.get(initialX, initialY);
+        }
+        
+        return getCoordInput();
     }
 }

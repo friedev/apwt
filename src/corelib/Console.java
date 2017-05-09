@@ -135,6 +135,16 @@ public abstract class Console
         {printListItem(indents, item, "" + value);}
     
     /**
+     * Prints the specified String preceded by the provided number of indenting
+     * spaces and a heading consisting of the given place and a period. 
+     * @param indents the number of space characters to indent the output with
+     * @param place the number to list in the header of the list item
+     * @param item the String to print as a list item
+     */
+    public static void printListItem(int indents, int place, String item)
+        {println(indents, place + ". " + item);}
+    
+    /**
      * Prints the provided number of newline characters, creating spacing
      * between previous lines and lines to follow.
      * @param spacing the number of newline characters to print as spacing
