@@ -100,7 +100,7 @@ public class Container
     public Item findItem(String name)
     {
         for (Item item: contents)
-            if (item.isName(name))
+            if (name.equalsIgnoreCase(item.getName()))
                 return item;
         
         return null;
