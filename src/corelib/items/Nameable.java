@@ -1,7 +1,7 @@
 package corelib.items;
 
 /** An object or other entity that can be named and given a nickname. */
-public class Nameable
+public abstract class Nameable
 {
     /** The name of the object. */
     private String name;
@@ -80,18 +80,87 @@ public class Nameable
         {this.nickname = nickname;}
     
     /**
-     * Returns true if a given String is equal to the name or its shortened
-     * form.
-     * @param s the String to compare with the name
-     * @return true if the String has the same characters, ignoring case, as the
-     * name itself or its last word
+     * Returns true if the given letter is a vowel.
+     * @param letter the character to check
+     * @return true if the letter is a vowel
      */
-    public boolean isName(String s)
+    public static boolean isVowel(char letter)
     {
-        String lastWord = name.substring(name.lastIndexOf(" ") + 1);
-        
-        return s.equalsIgnoreCase(name) || s.equalsIgnoreCase(lastWord);
+        return letter == 'a' || letter == 'e' || letter == 'i' ||
+               letter == 'o' || letter == 'u' || letter == 'A' ||
+               letter == 'E' || letter == 'I' || letter == 'O' || letter == 'U';
     }
+    
+    /**
+     * Capitalizes the first letter of a String.
+     * @param name the String to capitalize
+     * @return a new String identical to the first, but with its first letter
+     * capitalized
+     */
+    public static String capitalize(String name)
+    {
+        return name == null ? null :
+                Character.toUpperCase(name.charAt(0)) + name.substring(1);
+    }
+    
+    /**
+     * Capitalizes every word in a String.
+     * @param name the String to capitalize
+     * @return a new String identical to the first, but with the first letter of
+     * every word capitalized
+     */
+    public static String capitalizeAllWords(String name)
+    {
+        if (name == null)
+            return null;
+        
+        String[] words = name.split(" ");
+        
+        if (words.length == 1)
+            return capitalize(name);
+        
+        for (int word = 0; word < words.length; word++)
+            words[word] = capitalize(words[word]);
+        
+        return reconstruct(words);
+    }
+    
+    /**
+     * Capitalizes every character in a String.
+     * @param name the String to capitalize
+     * @return a new String identical to the first, but with every lowercase
+     * letter capitalized
+     */
+    public static String capitalizeAll(String name)
+    {
+        if (name == null)
+            return null;
+        
+        char[] array = new char[name.length()];
+        
+        for (int letter = 0; letter < name.length(); letter++)
+            array[letter] = Character.toUpperCase(name.charAt(letter));
+        
+        return new String(array);
+    }
+    
+    /**
+     * Makes the given String plural.
+     * @param name the String to make plural
+     * @return the name with an "s" appended to it
+     */
+    public static String makePlural(String name)
+        {return name + "s";}
+    
+    /**
+     * Makes the given String plural if the amount given is considered more than
+     * one (including 0).
+     * @param name the String to make plural
+     * @param amount the amount to check before changing the name
+     * @return the name with an "s" appended to it, if the amount is not 1
+     */
+    public static String makePlural(String name, int amount)
+        {return amount == 1 ? name : name + "s";}
     
     /**
      * Returns the full name of a String in lower case, meaning that either 'a'
@@ -101,10 +170,7 @@ public class Nameable
      */
     public static String getFullName(String name)
     {
-        char firstLetter = name.charAt(0);
-        
-        return firstLetter == 'A' || firstLetter == 'E' || firstLetter == 'I' ||
-                                  firstLetter == 'O' || firstLetter == 'U' ?
+        return isVowel(name.charAt(0)) ?
             "an " + name.toLowerCase() : "a " + name.toLowerCase();
     }
     
@@ -116,12 +182,50 @@ public class Nameable
      */
     public static String getFullNameCapitalized(String name)
     {
-        char firstLetter = name.charAt(0);
-        
-        return firstLetter == 'A' || firstLetter == 'E' || firstLetter == 'I' ||
-                                  firstLetter == 'O' || firstLetter == 'U' ?
-            "An " + name.toLowerCase() : "A " + name.toLowerCase();
+        return isVowel(name.charAt(0)) ?
+                "An " + name.toLowerCase() : "A " + name.toLowerCase();
     }
+    
+    /**
+     * Capitalizes the first letter of the item's name.
+     * @return a new String identical to the item's name, but with the first
+     * letter capitalized
+     */
+    public String capitalize()
+        {return capitalize(name);}
+    
+    /**
+     * Capitalizes the first letter of every word in the item's name.
+     * @return a new String identical to the item's name, but with the first
+     * letter of every word capitalized
+     */
+    public String capitalizeAllWords()
+        {return capitalizeAllWords(name);}
+    
+    /**
+     * Capitalizes every character in the item's name.
+     * @return a new String identical to the item's name, but with every
+     * lowercase letter capitalized
+     */
+    public String capitalizeAll()
+        {return capitalizeAll(name);}
+    
+    /**
+     * Makes the item's name plural.
+     * @return the item's name with an "s" appended to it
+     */
+    public String makePlural()
+        {return makePlural(name);}
+    
+    /**
+     * Makes the item's name plural if the amount given is considered more than
+     * one (including 0).
+     * @param amount the amount to check before changing the name
+     * @return the item's name with an "s" appended to it, if the amount is not
+     * 1
+     */
+    public String makePlural(int amount)
+        {return makePlural(name, amount);}
     
     /**
      * Returns the full name of the item in lower case, meaning that either 'a'
@@ -138,4 +242,55 @@ public class Nameable
      */
     public String getFullNameCapitalized()
         {return getFullNameCapitalized(name);}
+    
+    /**
+     * Reconstructs a String from an array of Strings, separating Strings
+     * between the start and end indices with spaces.
+     * @param array the array to reconstruct, must be non-null
+     * @param start the index to start reconstructing at, must be greater than
+     * or equal to zero
+     * @param end the index to stop <i>before</i>, must be no larger than the
+     * length of the array
+     * @return every String between the start and end indices of the array as
+     * one String, separating each individual String with spaces, null if the
+     * operation cannot be performed
+     */
+    public static String reconstruct(String[] array, int start, int end)
+    {
+        if (array == null || start < 0 || start > array.length ||
+                             end   < 0 || end   > array.length)
+            return null;
+        
+        StringBuilder builder = new StringBuilder();
+        for (int i = start; i < end; i++)
+            builder.append(array[i]).append(" ");
+        
+        if (builder.length() > 0)
+            builder.delete(builder.length() - 1, builder.length());
+        
+        return builder.toString();
+    }
+    
+    /**
+     * Reconstructs a String from an array of Strings, separating Strings
+     * between the start index and the end of the array with spaces.
+     * @param array the array to reconstruct, must be non-null
+     * @param start the index to start reconstructing at, must be greater than
+     * or equal to zero
+     * @return every String between the start index and the end of the array as
+     * one String, separating each individual String with spaces, null if the
+     * operation cannot be performed
+     */
+    public static String reconstruct(String[] array, int start)
+        {return array == null ? null : reconstruct(array, 0, array.length);}
+    
+    /**
+     * Reconstructs a String from an entire array of Strings, separating Strings
+     * with spaces.
+     * @param array the array to reconstruct, must be non-null
+     * @return every String in the array as on String, separating each
+     * individual String with spaces, null if the operation cannot be performed
+     */
+    public static String reconstruct(String[] array)
+        {return array == null ? null : reconstruct(array, 0, array.length);}
 }
