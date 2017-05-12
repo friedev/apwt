@@ -1,5 +1,7 @@
 package corelib.items;
 
+import java.util.Properties;
+
 /** An object or other entity that can be named and given a nickname. */
 public abstract class Nameable
 {
@@ -29,6 +31,18 @@ public abstract class Nameable
      */
     public Nameable(String name)
         {this(name, null);}
+    
+    /**
+     * Creates a Nameable from a Properties object that should contain the
+     * fields "name" and optionally "nickname".
+     * @param properties the Properties object to be used in the constructor
+     */
+    public Nameable(Properties properties)
+    {
+        // null properties will cause an exception to be thrown
+        name = properties.getProperty("name");
+        nickname = properties.getProperty("nickname");
+    }
     
     @Override
     public String toString()
