@@ -93,7 +93,7 @@ public class PopupWindow extends Window<ColorString>
      * @param y the {@link Window}'s y coordinate
      */
     public PopupWindow(Display display, int y)
-        {this(display, null, y);}
+        {this(display, y, new Border(1));}
 
     @Override
     public void display()
