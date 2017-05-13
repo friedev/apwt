@@ -85,7 +85,7 @@ public class PopupWindow extends Window<ColorString>
      * @param y the {@link Window}'s y coordinate
      */
     public PopupWindow(Display display, List<ColorString> contents, int y)
-        {this(display, contents, y, null);}
+        {this(display, contents, y, new Border(1));}
     
     /**
      * Creates a {@link PopupWindow} with a default border and no separator.
@@ -93,7 +93,7 @@ public class PopupWindow extends Window<ColorString>
      * @param y the {@link Window}'s y coordinate
      */
     public PopupWindow(Display display, int y)
-        {this(display, y, new Border(1));}
+        {this(display, null, y);}
 
     @Override
     public void display()
