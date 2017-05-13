@@ -98,6 +98,10 @@ public class ColorString extends ColoredObject implements CharSequence
     }
 
     @Override
+    public String toString()
+        {return string;}
+    
+    @Override
     public boolean equals(Object o)
     {
         if (o == null || !(o instanceof ColorString))
