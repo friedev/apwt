@@ -20,11 +20,14 @@ public class AlignedWindow extends Window<ColorSet>
     /** The y value at which the first content is written. */
     private int y;
     
-    /** The separators used to divide the {@link AlignedWindow}at each null content. */
+    /**
+     * The separators used to divide the {@link AlignedWindow} at each null
+     * content.
+     */
     private List<Line> separators;
     
     /**
-     * Creates an {@link AlignedWindow}with all fields defined.
+     * Creates an {@link AlignedWindow} with all fields defined.
      * @param display the {@link Window}'s {@link corelib.display.Display}
      * @param contents the {@link Window}'s contents
      * @param x the {@link Window}'s x coordinate
@@ -48,7 +51,7 @@ public class AlignedWindow extends Window<ColorSet>
     }
     
     /**
-     * Creates an {@link AlignedWindow}with all fields defined.
+     * Creates an {@link AlignedWindow} with all fields defined.
      * @param display the {@link Window}'s {@link corelib.display.Display}
      * @param x the {@link Window}'s x coordinate
      * @param y the {@link Window}'s y coordinate
@@ -60,7 +63,7 @@ public class AlignedWindow extends Window<ColorSet>
         {this(display, new ArrayList<>(), x, y, border, separators);}
     
     /**
-     * Creates an {@link AlignedWindow}with no separators.
+     * Creates an {@link AlignedWindow} with no separators.
      * @param display the {@link Window}'s {@link corelib.display.Display}
      * @param contents the {@link Window}'s contents
      * @param x the {@link Window}'s x coordinate
@@ -72,7 +75,7 @@ public class AlignedWindow extends Window<ColorSet>
         {this(display, contents, x, y, border, null);}
     
     /**
-     * Creates an {@link AlignedWindow}with a default border and no separators.
+     * Creates an {@link AlignedWindow} with a default border and no separators.
      * @param display the {@link Window}'s {@link corelib.display.Display}
      * @param contents the {@link Window}'s contents
      * @param x the {@link Window}'s x coordinate
@@ -82,7 +85,7 @@ public class AlignedWindow extends Window<ColorSet>
         {this(display, contents, x, y, new Border(1));}
     
     /**
-     * Creates an {@link AlignedWindow}with no separators.
+     * Creates an {@link AlignedWindow} with no separators.
      * @param display the {@link Window}'s {@link corelib.display.Display}
      * @param x the {@link Window}'s x coordinate
      * @param y the {@link Window}'s y coordinate
@@ -92,7 +95,7 @@ public class AlignedWindow extends Window<ColorSet>
         {this(display, x, y, border, null);}
     
     /**
-     * Creates an {@link AlignedWindow}with a default border and no separators.
+     * Creates an {@link AlignedWindow} with a default border and no separators.
      * @param display the {@link Window}'s {@link corelib.display.Display}
      * @param x the {@link Window}'s x coordinate
      * @param y the {@link Window}'s y coordinate
@@ -159,8 +162,9 @@ public class AlignedWindow extends Window<ColorSet>
         {return separators;}
     
     /**
-     * Returns true if the {@link AlignedWindow}has separators.
-     * @return true if the {@link AlignedWindow}'s List of separators is not null
+     * Returns true if the {@link AlignedWindow} has separators.
+     * @return true if the {@link AlignedWindow}'s List of separators is not
+     * null
      */
     public boolean hasSeparators()
         {return separators != null && !separators.isEmpty();}
@@ -211,8 +215,9 @@ public class AlignedWindow extends Window<ColorSet>
         {getContents().add(new ColorSet(content)); return this;}
     
     /**
-     * Converts the provided array of ColorChars into a {@link corelib.display.glyphs.ColorSet} and adds it to
-     * the {@link AlignedWindow}'s contents.
+     * Converts the provided array of ColorChars into a
+     * {@link corelib.display.glyphs.ColorSet} and adds it to the
+     * {@link AlignedWindow}'s contents.
      * @param content the array of
      * {@link corelib.display.glyphs.ColorChar ColorChars} to add
      * @return this for convenient chaining
