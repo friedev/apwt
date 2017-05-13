@@ -81,6 +81,15 @@ public class PopupWindow extends Window<ColorString>
     /**
      * Creates a {@link PopupWindow} with a default border and no separator.
      * @param display the {@link Window}'s {@link corelib.display.Display}
+     * @param contents the {@link Window}'s contents
+     * @param y the {@link Window}'s y coordinate
+     */
+    public PopupWindow(Display display, List<ColorString> contents, int y)
+        {this(display, contents, y, null);}
+    
+    /**
+     * Creates a {@link PopupWindow} with a default border and no separator.
+     * @param display the {@link Window}'s {@link corelib.display.Display}
      * @param y the {@link Window}'s y coordinate
      */
     public PopupWindow(Display display, int y)
