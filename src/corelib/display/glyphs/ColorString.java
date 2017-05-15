@@ -1,6 +1,8 @@
 package corelib.display.glyphs;
 
 import java.awt.Color;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -83,18 +85,37 @@ public class ColorString extends ColoredObject implements CharSequence
     /**
      * Converts an array of Strings into an array of
      * {@link ColorString ColorStrings} without any specified colors.
-     * @param s the array of Strings to convert into ColorStrings
+     * @param s the array of Strings to convert into
+     * {@link ColorString ColorStrings}
      * @return an array of {@link ColorString ColorStrings} with the characters
      * of the Strings and without specified colors
      */
     public static ColorString[] toColorStringArray(String[] s)
     {
-        ColorString[] cs = new ColorString[s.length];
+        ColorString[] lines = new ColorString[s.length];
         
         for (int i = 0; i < s.length; i++)
-            cs[i] = new ColorString(s[i]);
+            lines[i] = new ColorString(s[i]);
         
-        return cs;
+        return lines;
+    }
+    
+    /**
+     * Converts a List of Strings into an array of
+     * {@link ColorString ColorStrings} without any specified colors.
+     * @param s the List of Strings to convert into
+     * {@link ColorString ColorStrings}
+     * @return an array of {@link ColorString ColorStrings} with the characters
+     * of the Strings and without specified colors
+     */
+    public static List<ColorString> toColorStringList(List<String> s)
+    {
+        LinkedList<ColorString> lines = new LinkedList<>();
+        
+        for (String cur: s)
+            lines.add(new ColorString(cur));
+        
+        return lines;
     }
 
     @Override

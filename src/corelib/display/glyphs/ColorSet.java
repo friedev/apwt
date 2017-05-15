@@ -3,6 +3,7 @@ package corelib.display.glyphs;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -261,6 +262,57 @@ public class ColorSet implements CharSequence
         
         for (int line = 0; line < a.length; line++)
             lines[line] = new ColorSet(a[line]);
+        
+        return lines;
+    }
+    
+    /**
+     * Converts the List of Strings provided into a List of ColorSets, one for
+     * each String.
+     * @param s the List of Strings to convert into a List of ColorSets
+     * @return a List of ColorSets, one for each String, with the characters
+     * of the Strings and no specified colors
+     */
+    public static List<ColorSet> stringToColorSetList(List<String> s)
+    {
+        LinkedList<ColorSet> lines = new LinkedList<>();
+        
+        for (String cur: s)
+            lines.add(new ColorSet(cur));
+        
+        return lines;
+    }
+    
+    /**
+     * Converts the List of ColorStrings provided into a List of ColorSets,
+     * one for each ColorString.
+     * @param s the List of ColorStrings to convert into a List of ColorSets
+     * @return a List of ColorSets, one for each ColorString, with the
+     * characters of the ColorStrings and the colors of the ColorStrings from
+     * which they originated
+     */
+    public static List<ColorSet> colorStringToColorSetList(List<ColorString> s)
+    {
+        LinkedList<ColorSet> lines = new LinkedList<>();
+        
+        for (ColorString cur: s)
+            lines.add(new ColorSet(cur));
+        
+        return lines;
+    }
+    
+    /**
+     * Converts the 2D array of ColorChars provided into a List of ColorSets,
+     * with each ColorChar[] as a single ColorSet.
+     * @param a the array of ColorChars to convert into a List of ColorSets
+     * @return a List of ColorSets, one for each ColorChar
+     */
+    public static List<ColorSet> colorCharToColorSetList(ColorChar[]... a)
+    {
+        LinkedList<ColorSet> lines = new LinkedList<>();
+        
+        for (ColorChar[] cur: a)
+            lines.add(new ColorSet(cur));
         
         return lines;
     }
