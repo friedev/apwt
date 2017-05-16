@@ -6,6 +6,9 @@ import corelib.display.glyphs.ColorString;
 import corelib.display.screens.Screen;
 import javax.swing.JFrame;
 import asciiPanel.AsciiPanel;
+import corelib.display.windows.Border;
+import corelib.display.windows.Line;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import squidpony.squidgrid.Direction;
@@ -17,6 +20,11 @@ import squidpony.squidmath.Coord;
  */
 public class Display extends JFrame implements KeyListener
 {
+    /**
+     * The default line width of {@link Border Borders} and {@link Line Lines}.
+     */
+    public static final int DEFAULT_LINES = 1;
+    
     // FIELDS
     
     /**
@@ -512,4 +520,234 @@ public class Display extends JFrame implements KeyListener
      */
     public int getCharHeight()
         {return panel.getHeightInCharacters();}
+    
+    /**
+     * Draws a {@link Line} between two endpoints to the provided Display.
+     * @param end1 the first endpoint; must be a different point than the second
+     * endpoint, have one axis value in common, and be on the display
+     * @param end2 the second endpoint; must be a different point than the first
+     * endpoint, have one axis value in common, and be on the display
+     * @param border the characters of the {@link Line}; if horizontal, points
+     * must share y values, and the opposite is true with x values
+     * @return true if the {@link Line} was successfully drawn
+     */
+    public boolean drawLine(Coord end1, Coord end2,
+            Line border)
+    {
+        if (end1.equals(end2))
+            throw new IllegalArgumentException("Both endpoints may not be the "
+                    + "same point");
+        
+        if (end1.x != end2.x && end1.y != end2.y)
+            throw new IllegalArgumentException("Both endpoints must share an "
+                    + "axis value");
+        
+        if (!contains(end1) || !contains(end2))
+            throw new IndexOutOfBoundsException("The display must contain both "
+                    + "endpoints");
+        
+        if ((end1.x == end2.x && border.horizontal) ||
+                (end1.y == end2.y && !border.horizontal))
+            throw new IllegalArgumentException("Endpoint dimension does not "
+                    + "match line horizontal/vertical field");
+        
+        border.syncDefaults(this);
+        
+        write(end1, new ColorChar(border.end1,
+                border.getForeground(), border.getBackground()));
+        write(end2, new ColorChar(border.end2,
+                border.getForeground(), border.getBackground()));
+        
+        int start, end;
+        
+        if (!border.horizontal)
+        {
+            if (end1.y < end2.y)
+            {
+                start = end1.y;
+                end = end2.y;
+            }
+            else
+            {
+                start = end2.y;
+                end = end1.y;
+            }
+            
+            for (int i = start + 1; i < end; i++)
+                write(Coord.get(end1.x, i), new ColorChar(border.line,
+                        border.getForeground(), border.getBackground()));
+        }
+        else
+        {
+            if (end1.x < end2.x)
+            {
+                start = end1.x;
+                end = end2.x;
+            }
+            else
+            {
+                start = end2.x;
+                end = end1.x;
+            }
+            
+            for (int i = start + 1; i < end; i++)
+                write(Coord.get(i, end1.y), new ColorChar(border.line,
+                        border.getForeground(), border.getBackground()));
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Draws a {@link Border}  between two specified corners to the provided
+     * {@link corelib.display.Display}, filled with the provided fill color.
+     * @param corner1 the first corner; must be a different point than the
+     * second corner, share no axis values, and be on the display
+     * @param corner2 the second corner; must be a different point than the
+     * first corner, share no axis values, and be on the display
+     * @param border the characters of the {@link Border}
+     * @param fill the Color to fill the center of the {@link Border} with; if
+     * null, no fill will be performed
+     * @return true if the {@link Border} was successfully drawn
+     */
+    public boolean drawBorder(Coord corner1,
+            Coord corner2, Border border, Color fill)
+    {
+        if (corner1.x == corner2.x || corner1.y == corner2.y)
+            throw new IllegalArgumentException("Corners must have different "
+                    + "axis values");
+        
+        if (!contains(corner1) || !contains(corner2))
+            throw new IllegalArgumentException("The display must contain both "
+                    + "corners");
+        
+        Coord tl, tr, bl, br;
+        if (corner1.y < corner2.y) // corner1 is above corner2
+        {
+            if (corner1.x < corner2.x) // corner1 is left of corner2
+            {
+                tl = corner1;
+                tr = Coord.get(corner2.x, corner1.y);
+                bl = Coord.get(corner1.x, corner2.y);
+                br = corner2;
+            }
+            else // corner1 is right of corner2
+            {
+                tl = Coord.get(corner2.x, corner1.y);
+                tr = corner1;
+                bl = corner2;
+                br = Coord.get(corner1.x, corner2.y);
+            }
+        }
+        else // corner1 is below corner2
+        {
+            if (corner1.x < corner2.x) // corner1 is left of corner2
+            {
+                tl = Coord.get(corner1.x, corner2.y);
+                tr = corner2;
+                bl = corner1;
+                br = Coord.get(corner2.x, corner1.y);
+            }
+            else // corner1 is right of corner2
+            {
+                tl = corner2;
+                tr = Coord.get(corner1.x, corner2.y);
+                bl = Coord.get(corner2.x, corner1.y);
+                br = corner1;
+            }
+        }
+        
+        border.syncDefaults(this);
+        
+        write(tl, new ColorChar(border.cornerTL,
+                border.getForeground(), border.getBackground()));
+        write(tr, new ColorChar(border.cornerTR,
+                border.getForeground(), border.getBackground()));
+        write(bl, new ColorChar(border.cornerBL,
+                border.getForeground(), border.getBackground()));
+        write(br, new ColorChar(border.cornerBR,
+                border.getForeground(), border.getBackground()));
+        
+        for (int x = tl.x + 1; x < tr.x; x++)
+        {
+            getPanel().write(border.edgeT, x, tl.y,
+                    border.getForeground(), border.getBackground());
+            getPanel().write(border.edgeB, x, bl.y,
+                    border.getForeground(), border.getBackground());
+        }
+        
+        for (int y = tl.y + 1; y < bl.y; y++)
+        {
+            getPanel().write(border.edgeL, tl.x, y,
+                    border.getForeground(), border.getBackground());
+            getPanel().write(border.edgeR, tr.x, y,
+                    border.getForeground(), border.getBackground());
+        }
+        
+        if (fill == null)
+            return true;
+        
+        for (int y = tl.y + 1; y < bl.y; y++)
+            for (int x = tl.x + 1; x < tr.x; x++)
+                write(Coord.get(x, y), new ColorChar(ExtChars.BLOCK, fill));
+        
+        return true;
+    }
+    
+    /**
+     * Draws a {@link Border}  of the specified width between two specified
+     * corners.
+     * @param corner1 the first corner; must be a different point than the
+     * second corner, share no axis values, and be on the display
+     * @param corner2 the second corner; must be a different point than the
+     * first corner, share no axis values, and be on the display
+     * @param width the width of the {@link Border} to draw; must be 1 or 2
+     * @param fill the Color to fill the center of the {@link Border} with; if
+     * null, no fill will be performed
+     * @return true if the {@link Border} was successfully drawn
+     */
+    public boolean drawBorder(Coord corner1, Coord corner2, int width,
+            Color fill)
+        {return drawBorder(corner1, corner2, new Border(width), fill);}
+    
+    /**
+     * Draws a {@link Border} between two specified corners and filled with the
+     * background color of the provided {@link Border}.
+     * @param corner1 the first corner; must be a different point than the
+     * second corner, share no axis values, and be on the display
+     * @param corner2 the second corner; must be a different point than the
+     * first corner, share no axis values, and be on the display
+     * @param border the characters of the {@link Border}
+     * @return true if the {@link Border} was successfully drawn
+     */
+    public boolean drawBorder(Coord corner1, Coord corner2, Border border)
+    {
+        border.syncDefaults(this);
+        return drawBorder(corner1, corner2, border, border.getBackground());
+    }
+    
+    /**
+     * Draws a {@link Border} of the specified width between two specified
+     * corners. No fill will be performed.
+     * @param corner1 the first corner; must be a different point than the
+     * second corner, share no axis values, and be on the display
+     * @param corner2 the second corner; must be a different point than the
+     * first corner, share no axis values, and be on the display
+     * @param width the width of the {@link Border} to draw; must be 1 or 2
+     * @return true if the {@link Border} was successfully drawn
+     */
+    public boolean drawBorder(Coord corner1, Coord corner2, int width)
+        {return drawBorder(corner1, corner2, width, null);}
+    
+    /**
+     * Draws a {@link Border} of the default width between two specified
+     * corners. No fill will be performed.
+     * @param corner1 the first corner; must be a different point than the
+     * second corner, share no axis values, and be on the display
+     * @param corner2 the second corner; must be a different point than the
+     * first corner, share no axis values, and be on the display
+     * @return true if the {@link Border} was successfully drawn
+     */
+    public boolean drawBorder(Coord corner1, Coord corner2)
+        {return drawBorder(corner1, corner2, DEFAULT_LINES);}
 }

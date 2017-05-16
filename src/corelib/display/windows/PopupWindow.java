@@ -4,6 +4,7 @@ import corelib.display.glyphs.ColorString;
 import corelib.display.Display;
 import java.util.ArrayList;
 import java.util.List;
+import squidpony.squidmath.Coord;
 
 /**
  * A centered {@link Window} meant for temporary use as a popup. AsciiPanel
@@ -101,20 +102,53 @@ public class PopupWindow extends Window<ColorString>
         if (getContents() == null || getContents().isEmpty())
             return;
         
-        ColorString[] output =
-                getContents().toArray(new ColorString[getContents().size()]);
-        
         try
         {
-            if (isBordered())
-            {
-                WindowBuilder.printCenterBoxed(getDisplay(), output, y,
-                        getBorder(), separator);
-            }
+            if (getContents() == null || getContents().isEmpty())
+                throw new IllegalArgumentException(
+                        "At least 1 line of text must be provided");
+
+            if (!getDisplay().containsY(y - 1) ||
+                    !getDisplay().containsY(y + getContents().size()))
+                throw new IndexOutOfBoundsException("Top line value must be "
+                        + "between 1 and " + (getDisplay().getCharHeight() - 1)
+                                + "; was " + y);
+
+            int maxLength = 0;
+            for (ColorString line: getContents())
+                if (line != null && line.string.length() > maxLength)
+                    maxLength = line.string.length();
+
+            if (!getDisplay().containsX(maxLength + 2))
+                throw new IndexOutOfBoundsException("Text is too long for the "
+                        + "display");
+            
+            // If the display width is odd, odd String lengths will have equal
+            // offsets; if the display width is even, even String lengths have
+            // equal offsets
+            
+            int center = getDisplay().getCharWidth() / 2;
+            int offsetRight = ((int) maxLength) / 2;
+            int offsetLeft;
+            if ((((double) maxLength) / 2.0) % 1.0 == 0.5)
+                offsetLeft = offsetRight + 1;
             else
-            {
-                getDisplay().writeCenter(y, output);
-            }
+                offsetLeft = offsetRight;
+
+            getDisplay().drawBorder(Coord.get(center - offsetLeft - 1, y - 1),
+                    Coord.get(center + offsetRight, y + getContents().size()),
+                    getBorder());
+
+            if (separator != null)
+                for (int line = 0; line < getContents().size(); line++)
+                    if (getContents().get(line) == null)
+                        getDisplay().drawLine(Coord.get(center - offsetLeft - 1,
+                                y + line),
+                                Coord.get(center + offsetRight, y + line),
+                                separator);
+
+            getDisplay().writeCenter(y, getContents().toArray(
+                    new ColorString[getContents().size()]));
         }
         catch (IllegalArgumentException | IndexOutOfBoundsException e)
         {
