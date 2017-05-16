@@ -292,6 +292,15 @@ public class AlignedWindow extends Window<ColorSet>
         {return location;}
     
     /**
+     * Returns the bottom-right coordinates of the {@link AlignedWindow}. For
+     * best accuracy when drawing subsequent windows based on this, call
+     * {@link #display()} before calling this method.
+     * @return the bottom-right coordinates of the {@link AlignedWindow}
+     */
+    public Coord getBottomRight()
+        {return bottomRight;}
+    
+    /**
      * Returns the List of Lines used to separate the {@link AlignedWindow}.
      * @return the List of Lines used to separate the {@link AlignedWindow}
      */
