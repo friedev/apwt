@@ -272,20 +272,19 @@ public abstract class WindowBuilder
      * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as
      * {@link corelib.display.glyphs.ColorSet ColorSets}, to print
-     * @param topLine the line on which the first
+     * @param topLeft the Coord at which the first
      * {@link corelib.display.glyphs.ColorSet} will be written
-     * @param leftIndent the number of characters from the left the text will be
-     * printed
      * @param border the {@link Border} with which to surround the text
      * @param separators the {@link Line}s with which to separate text
-     * @return true if the operation was successful
+     * @return the coordinates of the window's bottom-right corner, including a
+     * border if there is one for easier management of multi-window placement
      */
-    public static boolean printBoxed(Display display, ColorSet[] text,
-            int topLine, int leftIndent, Border border, Line[] separators)
+    public static Coord printBoxed(Display display, ColorSet[] text,
+            Coord topLeft, Border border, Line[] separators)
     {
-        if (!display.contains(Coord.get(leftIndent - 1, topLine - 1)))
+        if (!display.contains(topLeft.subtract(1)))
             throw new IndexOutOfBoundsException("Top left coordinates must be "
-                    + ">= 1; were " + leftIndent + " and " + topLine);
+                    + ">= 1; were " + topLeft.x + " and " + topLeft.y);
         
         if (text == null || text.length == 0)
             throw new IllegalArgumentException(
@@ -315,8 +314,8 @@ public abstract class WindowBuilder
             }
         }
         
-        int curLine          = topLine;
-        int curIndent        = leftIndent;
+        int curLine          = topLeft.y;
+        int curIndent        = topLeft.x;
         int overallMaxLength = 0;
         int curMaxLines      = blocks[0].size();
         int overallLines     = blocks[0].size();
@@ -335,7 +334,7 @@ public abstract class WindowBuilder
                 if (line.getSet().size() > curMaxLength)
                     curMaxLength = line.getSet().size();
             
-            curMaxLength += curIndent - leftIndent;
+            curMaxLength += curIndent - topLeft.x;
             
             if (curMaxLength > overallMaxLength)
                 overallMaxLength = curMaxLength;
@@ -371,9 +370,9 @@ public abstract class WindowBuilder
             {
                 if (separators[block].horizontal)
                 {
-                    curIndent = leftIndent;
+                    curIndent = topLeft.x;
 
-                    endpoints[block * 2] = Coord.get(leftIndent - 1,
+                    endpoints[block * 2] = Coord.get(topLeft.x - 1,
                             curLine + curMaxLines);
                     endpoints[block * 2 + 1] =
                             Coord.get(curIndent + overallMaxLength,
@@ -395,22 +394,20 @@ public abstract class WindowBuilder
             }
             else
             {
-                curIndent = leftIndent;
+                curIndent = topLeft.x;
                 curLine += curMaxLines + 1;
                 curMaxLines = blocks[block + 1].size();
                 overallLines += blocks[block + 1].size() + 1;
             }
         }
         
-        boolean returnValue = true;
+        Coord bottomRight = topLeft.add(Coord.get(overallMaxLength,
+                overallLines));
         
         if (border != null)
-        {
-            returnValue = returnValue && WindowBuilder.drawBorder(display,
-                    Coord.get(leftIndent - 1, topLine - 1),
-                    Coord.get(leftIndent + overallMaxLength,
-                            topLine + overallLines), border);
-        }
+            drawBorder(display, topLeft.subtract(1), bottomRight, border);
+        else
+            bottomRight.subtract(1);
         
         if (separators != null && separators.length > 0)
         {
@@ -420,8 +417,7 @@ public abstract class WindowBuilder
                         separators[separator] != null &&
                         separators[separator].horizontal)
                 {
-                    returnValue = returnValue &&
-                        drawLine(display, endpoints[separator * 2],
+                    drawLine(display, endpoints[separator * 2],
                         endpoints[separator * 2 + 1], separators[separator]);
                 }
             }
@@ -432,8 +428,7 @@ public abstract class WindowBuilder
                         separators[separator] != null &&
                         !separators[separator].horizontal)
                 {
-                    returnValue = returnValue &&
-                        drawLine(display, endpoints[separator * 2],
+                    drawLine(display, endpoints[separator * 2],
                         endpoints[separator * 2 + 1], separators[separator]);
                 }
             }
@@ -443,7 +438,7 @@ public abstract class WindowBuilder
             display.write(textPoints[block], blocks[block].toArray(
                     new ColorSet[blocks[block].size()]));
         
-        return returnValue;
+        return bottomRight;
     }
     
     /**
@@ -452,19 +447,18 @@ public abstract class WindowBuilder
      * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as
      * {@link corelib.display.glyphs.ColorString ColorStrings}, to print
-     * @param topLine the line on which the first
-     * {@link corelib.display.glyphs.ColorString} will be written
-     * @param leftIndent the number of characters from the left the text will be
-     * printed
+     * @param topLeft the Coord at which the first
+     * {@link corelib.display.glyphs.ColorSet} will be written
      * @param border the {@link Border} with which to surround the text
      * @param separators the {@link Line}s with which to separate text
-     * @return true if the operation was successful
+     * @return the coordinates of the window's bottom-right corner, including a
+     * border if there is one for easier management of multi-window placement
      */
-    public static boolean printBoxed(Display display, ColorString[] text,
-            int topLine, int leftIndent, Border border, Line[] separators)
+    public static Coord printBoxed(Display display, ColorString[] text,
+            Coord topLeft, Border border, Line[] separators)
     {
-        return printBoxed(display, ColorSet.toColorSetArray(text), topLine,
-                leftIndent, border, separators);
+        return printBoxed(display, ColorSet.toColorSetArray(text), topLeft,
+                border, separators);
     }
     
     /**
@@ -472,18 +466,18 @@ public abstract class WindowBuilder
      * provided {@link corelib.display.Display}.
      * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as Strings, to print
-     * @param topLine the line on which the first String will be written
-     * @param leftIndent the number of characters from the left the text will be
-     * printed
+     * @param topLeft the Coord at which the first
+     * {@link corelib.display.glyphs.ColorSet} will be written
      * @param border the {@link Border} with which to surround the text
      * @param separators the {@link Line}s with which to separate text
-     * @return true if the operation was successful
+     * @return the coordinates of the window's bottom-right corner, including a
+     * border if there is one for easier management of multi-window placement
      */
-    public static boolean printBoxed(Display display, String[] text,
-            int topLine, int leftIndent, Border border, Line[] separators)
+    public static Coord printBoxed(Display display, String[] text,
+            Coord topLeft, Border border, Line[] separators)
     {
-        return printBoxed(display, ColorSet.toColorSetArray(text), topLine,
-                leftIndent, border, separators);
+        return printBoxed(display, ColorSet.toColorSetArray(text), topLeft,
+                border, separators);
     }
     
     /**
@@ -492,16 +486,14 @@ public abstract class WindowBuilder
      * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as
      * {@link corelib.display.glyphs.ColorSet ColorSets}, to print
-     * @param topLine the line on which the first
+     * @param topLeft the Coord at which the first
      * {@link corelib.display.glyphs.ColorSet} will be written
-     * @param leftIndent the number of characters from the left the text will be
-     * printed
      * @param border the {@link Border} with which to surround the text
      * @return true if the operation was successful
      */
-    public static boolean printBoxed(Display display, ColorSet[] text,
-            int topLine, int leftIndent, Border border)
-        {return printBoxed(display, text, topLine, leftIndent, border, null);}
+    public static Coord printBoxed(Display display, ColorSet[] text,
+            Coord topLeft, Border border)
+        {return printBoxed(display, text, topLeft, border, null);}
     
     /**
      * Prints the provided text surrounded by the provided {@link Border} to the
@@ -509,18 +501,17 @@ public abstract class WindowBuilder
      * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as
      * {@link corelib.display.glyphs.ColorString ColorStrings}, to print
-     * @param topLine the line on which the first
-     * {@link corelib.display.glyphs.ColorString} will be written
-     * @param leftIndent the number of characters from the left the text will be
-     * printed
+     * @param topLeft the Coord at which the first
+     * {@link corelib.display.glyphs.ColorSet} will be written
      * @param border the {@link Border} with which to surround the text
-     * @return true if the operation was successful
+     * @return the coordinates of the window's bottom-right corner, including a
+     * border if there is one for easier management of multi-window placement
      */
-    public static boolean printBoxed(Display display, ColorString[] text,
-            int topLine, int leftIndent, Border border)
+    public static Coord printBoxed(Display display, ColorString[] text,
+            Coord topLeft, Border border)
     {
-        return printBoxed(display, ColorSet.toColorSetArray(text), topLine,
-                leftIndent, border, null);
+        return printBoxed(display, ColorSet.toColorSetArray(text), topLeft,
+                border, null);
     }
     
     /**
@@ -528,17 +519,17 @@ public abstract class WindowBuilder
      * provided {@link corelib.display.Display}; no separators will be used.
      * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as Strings, to print
-     * @param topLine the line on which the first String will be written
-     * @param leftIndent the number of characters from the left the text will be
-     * printed
+     * @param topLeft the Coord at which the first
+     * {@link corelib.display.glyphs.ColorSet} will be written
      * @param border the {@link Border} with which to surround the text
-     * @return true if the operation was successful
+     * @return the coordinates of the window's bottom-right corner, including a
+     * border if there is one for easier management of multi-window placement
      */
-    public static boolean printBoxed(Display display, String[] text,
-            int topLine, int leftIndent, Border border)
+    public static Coord printBoxed(Display display, String[] text,
+            Coord topLeft, Border border)
     {
-        return printBoxed(display, ColorSet.toColorSetArray(text), topLine,
-                leftIndent, border, null);
+        return printBoxed(display, ColorSet.toColorSetArray(text), topLeft,
+                border, null);
     }
     
     /**
@@ -547,33 +538,30 @@ public abstract class WindowBuilder
      * be used.
      * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as Strings, to print
-     * @param topLine the line on which the first String will be written
-     * @param leftIndent the number of characters from the left the text will be
-     * printed
+     * @param topLeft the Coord at which the first
+     * {@link corelib.display.glyphs.ColorSet} will be written
      * @param width the width of the {@link Border} with which to surround the
      * text
-     * @return true if the operation was successful
+     * @return the coordinates of the window's bottom-right corner, including a
+     * border if there is one for easier management of multi-window placement
      */
-    public static boolean printBoxed(Display display, String[] text,
-            int topLine, int leftIndent, int width)
-    {
-        return printBoxed(display, text, topLine, leftIndent,
-                new Border(width));
-    }
+    public static Coord printBoxed(Display display, String[] text,
+            Coord topLeft, int width)
+        {return printBoxed(display, text, topLeft, new Border(width));}
     
     /**
      * Prints the provided text surrounded by the default {@link Border} to the
      * provided {@link corelib.display.Display}; no separators will be used.
      * @param display the {@link corelib.display.Display} to draw on
      * @param text the lines of text, as Strings, to print
-     * @param topLine the line on which the first String will be written
-     * @param leftIndent the number of characters from the left the text will be
-     * printed
-     * @return true if the operation was successful
+     * @param topLeft the Coord at which the first
+     * {@link corelib.display.glyphs.ColorSet} will be written
+     * @return the coordinates of the window's bottom-right corner, including a
+     * border if there is one for easier management of multi-window placement
      */
-    public static boolean printBoxed(Display display, String[] text,
-            int topLine, int leftIndent)
-        {return printBoxed(display, text, topLine, leftIndent, DEFAULT_LINES);}
+    public static Coord printBoxed(Display display, String[] text,
+            Coord topLeft)
+        {return printBoxed(display, text, topLeft, DEFAULT_LINES);}
     
     /**
      * Prints the provided text surrounded by the provided {@link Border} to the

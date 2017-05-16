@@ -14,11 +14,8 @@ import squidpony.squidmath.Coord;
  */
 public class AlignedWindow extends Window<ColorSet>
 {
-    /** The x value at which the first content is written. */
-    private int x;
-    
-    /** The y value at which the first content is written. */
-    private int y;
+    /** The coordinates at which the first content is written. */
+    private Coord location;
     
     /**
      * The separators used to divide the {@link AlignedWindow} at each null
@@ -30,78 +27,76 @@ public class AlignedWindow extends Window<ColorSet>
      * Creates an {@link AlignedWindow} with all fields defined.
      * @param display the {@link Window}'s {@link corelib.display.Display}
      * @param contents the {@link Window}'s contents
-     * @param x the {@link Window}'s x coordinate
-     * @param y the {@link Window}'s y coordinate
+     * @param location the {@link Window}'s location
      * @param border the {@link Window}'s {@link Border}
      * @param separators the {@link Window}'s separators
      */
-    public AlignedWindow(Display display, List<ColorSet> contents, int x, int y,
-            Border border, List<Line> separators)
+    public AlignedWindow(Display display, List<ColorSet> contents,
+            Coord location, Border border, List<Line> separators)
     {
         super(display, border, contents);
-        this.x          = x;
-        this.y          = y;
+        this.location = location;
         this.separators = separators;
     }
     
+    /**
+     * Creates an {@link AlignedWindow} from another {@link AlignedWindow}.
+     * @param copying the {@link AlignedWindow} to copy
+     */
     public AlignedWindow(AlignedWindow copying)
     {
-        this(copying.getDisplay(), copying.getContents(), copying.x, copying.y,
+        this(copying.getDisplay(), copying.getContents(), copying.location,
                 copying.getBorder(), copying.separators);
     }
     
     /**
      * Creates an {@link AlignedWindow} with all fields defined.
      * @param display the {@link Window}'s {@link corelib.display.Display}
-     * @param x the {@link Window}'s x coordinate
-     * @param y the {@link Window}'s y coordinate
+     * @param location the {@link Window}'s location
      * @param border the {@link Window}'s {@link Border}
      * @param separators the {@link Window}'s separators
      */
-    public AlignedWindow(Display display, int x, int y, Border border,
+    public AlignedWindow(Display display, Coord location, Border border,
             List<Line> separators)
-        {this(display, new ArrayList<>(), x, y, border, separators);}
+        {this(display, new ArrayList<>(), location, border, separators);}
     
     /**
      * Creates an {@link AlignedWindow} with no separators.
      * @param display the {@link Window}'s {@link corelib.display.Display}
      * @param contents the {@link Window}'s contents
-     * @param x the {@link Window}'s x coordinate
-     * @param y the {@link Window}'s y coordinate
+     * @param location the {@link Window}'s location
      * @param border the {@link Window}'s {@link Border}
      */
-    public AlignedWindow(Display display, List<ColorSet> contents, int x, int y,
-            Border border)
-        {this(display, contents, x, y, border, null);}
+    public AlignedWindow(Display display, List<ColorSet> contents,
+            Coord location, Border border)
+        {this(display, contents, location, border, null);}
     
     /**
      * Creates an {@link AlignedWindow} with a default border and no separators.
      * @param display the {@link Window}'s {@link corelib.display.Display}
      * @param contents the {@link Window}'s contents
-     * @param x the {@link Window}'s x coordinate
-     * @param y the {@link Window}'s y coordinate
+     * @param location the {@link Window}'s location
      */
-    public AlignedWindow(Display display, List<ColorSet> contents, int x, int y)
-        {this(display, contents, x, y, new Border(1));}
+    public AlignedWindow(Display display, List<ColorSet> contents,
+            Coord location)
+        {this(display, contents, location, new Border(1));}
     
     /**
      * Creates an {@link AlignedWindow} with no separators.
      * @param display the {@link Window}'s {@link corelib.display.Display}
-     * @param x the {@link Window}'s x coordinate
-     * @param y the {@link Window}'s y coordinate
+     * @param location the {@link Window}'s location
      * @param border the {@link Window}'s {@link Border}
      */
-    public AlignedWindow(Display display, int x, int y, Border border)
-        {this(display, x, y, border, null);}
+    public AlignedWindow(Display display, Coord location, Border border)
+        {this(display,location, border, null);}
     
     /**
      * Creates an {@link AlignedWindow} with a default border and no separators.
      * @param display the {@link Window}'s {@link corelib.display.Display}
-     * @param x the {@link Window}'s x coordinate
-     * @param y the {@link Window}'s y coordinate
+     * @param location the {@link Window}'s location
      */
-    public AlignedWindow(Display display, int x, int y)
-        {this(display, x, y, new Border(1));}
+    public AlignedWindow(Display display, Coord location)
+        {this(display, location, new Border(1));}
 
     @Override
     public void display()
@@ -118,19 +113,19 @@ public class AlignedWindow extends Window<ColorSet>
             {
                 if (hasSeparators())
                 {
-                    WindowBuilder.printBoxed(getDisplay(), output, y, x,
+                    WindowBuilder.printBoxed(getDisplay(), output, location,
                             getBorder(),
                             separators.toArray(new Line[separators.size()]));
                 }
                 else
                 {
-                    WindowBuilder.printBoxed(getDisplay(), output, y, x,
+                    WindowBuilder.printBoxed(getDisplay(), output, location,
                             getBorder());
                 }
             }
             else
             {
-                getDisplay().write(Coord.get(x, y), output);
+                getDisplay().write(location, output);
             }
         }
         catch (IllegalArgumentException | IndexOutOfBoundsException e)
@@ -141,18 +136,11 @@ public class AlignedWindow extends Window<ColorSet>
     }
     
     /**
-     * Returns the x coordinate of the {@link AlignedWindow}.
-     * @return the x coordinate of the {@link AlignedWindow}
+     * Returns the top-left coordinates of the {@link AlignedWindow}.
+     * @return the top-left coordinates of the {@link AlignedWindow}
      */
-    public int getX()
-        {return x;}
-    
-    /**
-     * Returns the y coordinate of the {@link AlignedWindow}.
-     * @return the y coordinate of the {@link AlignedWindow}
-     */
-    public int getY()
-        {return y;}
+    public Coord getLocation()
+        {return location;}
     
     /**
      * Returns the List of Lines used to separate the {@link AlignedWindow}.
@@ -170,29 +158,11 @@ public class AlignedWindow extends Window<ColorSet>
         {return separators != null && !separators.isEmpty();}
     
     /**
-     * Sets the {@link AlignedWindow}'s x coordinate to the specified value.
-     * @param x the new x coordinate of the {@link AlignedWindow}
-     */
-    public void setX(int x)
-        {this.x = x;}
-    
-    /**
-     * Sets the {@link AlignedWindow}'s y coordinate to the specified value.
-     * @param y the new y coordinate of the {@link AlignedWindow}
-     */
-    public void setY(int y)
-        {this.y = y;}
-    
-    /**
      * Moves the {@link AlignedWindow} to the specified coordinates.
-     * @param x the new x coordinate of the {@link AlignedWindow}
-     * @param y the new y coordinate of the {@link AlignedWindow}
+     * @param location the new top-left coordinates of the {@link AlignedWindow}
      */
-    public void moveTo(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
+    public void setLocation(Coord location)
+        {this.location = location;}
     
     /**
      * Converts the provided String into a
