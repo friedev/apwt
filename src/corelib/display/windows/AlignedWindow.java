@@ -5,6 +5,7 @@ import corelib.display.glyphs.ColorSet;
 import corelib.display.glyphs.ColorString;
 import corelib.display.Display;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import squidpony.squidmath.Coord;
 
@@ -95,7 +96,7 @@ public class AlignedWindow extends Window<ColorSet>
      * @param border the {@link Window}'s {@link Border}
      */
     public AlignedWindow(Display display, Coord location, Border border)
-        {this(display,location, border, null);}
+        {this(display,location, border, new LinkedList<>());}
     
     /**
      * Creates an {@link AlignedWindow} with a default border and no separators.
