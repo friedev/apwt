@@ -76,6 +76,14 @@ public class ColorSet implements CharSequence
         {set.add(new ColorChar(c)); return this;}
     
     /**
+     * Adds the given ColorChar to the setColorChar.
+     * @param c the ColorChar to add
+     * @return this for convenient chaining
+     */
+    public ColorSet add(ColorChar c)
+        {set.add(c); return this;}
+    
+    /**
      * Adds the given String to the set as an uncolored ColorSet.
      * @param s the String to add
      * @return this for convenient chaining
