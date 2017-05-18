@@ -108,13 +108,6 @@ public class ColorSet implements CharSequence
         {set.addAll(Arrays.asList(s.toCharArray())); return this;}
     
     /**
-     * Adds a null separator to the ColorSet.
-     * @return this for convenient chaining
-     */
-    public ColorSet addSeparator()
-        {set.add(null); return this;}
-    
-    /**
      * Sets the foreground color of all the set's ColorChars to the given Color.
      * @param foreground the foreground color to assign to all the set's
      * ColorChars
