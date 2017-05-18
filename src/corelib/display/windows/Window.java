@@ -81,10 +81,6 @@ public abstract class Window<Content extends CharSequence>
     public boolean isBordered()
         {return border != null;}
     
-    /** Resets the {@link Window}'s contents to an empty ArrayList. */
-    public void resetContents()
-        {contents = new ArrayList<>();}
-    
     /**
      * Adds the provided content to the {@link Window}'s contents.
      * @param content the content to add

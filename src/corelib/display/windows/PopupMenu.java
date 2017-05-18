@@ -33,7 +33,7 @@ public class PopupMenu extends ColoredMenu<ColorString, PopupWindow>
     public PopupWindow getOutput()
     {
         PopupWindow copy = new PopupWindow((PopupWindow) getWindow());
-        copy.resetContents();
+        copy.getContents().clear();
         for (ColorString content: getWindow().getContents())
             copy.add(new ColorString(content));
         

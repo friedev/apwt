@@ -33,7 +33,7 @@ public class AlignedMenu extends ColoredMenu<ColorSet, AlignedWindow>
     public AlignedWindow getOutput()
     {
         AlignedWindow copy = new AlignedWindow((AlignedWindow) getWindow());
-        copy.resetContents();
+        copy.getContents().clear();
         for (ColorSet content: getWindow().getContents())
             copy.add(new ColorSet(content));
         
