@@ -215,7 +215,7 @@ public class AlignedWindow extends Window<ColorSet>
                     }
                     else
                     {
-                        curIndent += curMaxLength + 1;
+                        curIndent = location.x + curMaxLength + 1;
 
                         endpoints[block * 2] = Coord.get(curIndent - 1,
                                 curLine - 1);
@@ -231,7 +231,7 @@ public class AlignedWindow extends Window<ColorSet>
                     overallLines += blocks[block + 1].size() + 1;
                 }
             }
-
+            
             bottomRight = location.add(Coord.get(overallMaxLength,
                     overallLines));
 
@@ -255,7 +255,8 @@ public class AlignedWindow extends Window<ColorSet>
                             separators.get(separator).horizontal)
                     {
                         getDisplay().drawLine(endpoints[separator * 2],
-                            endpoints[separator * 2 + 1],
+                            endpoints[separator * 2 + 1]
+                                    .setX(location.x + overallMaxLength),
                             separators.get(separator));
                     }
                 }
