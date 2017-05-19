@@ -152,10 +152,8 @@ public class AlignedWindow extends Window<ColorSet>
             int curMaxLines      = blocks[0].size();
             int overallLines     = blocks[0].size();
             Coord[] textPoints   = new Coord[nBlocks];
-            Coord[] endpoints    = null; // Suppresses undefined warning
-
-            if (hasSeparators())
-                endpoints = new Coord[separators.size() * 2];
+            Coord[] endpoints    = hasSeparators() ?
+                    new Coord[separators.size() * 2] : null;
 
             for (int block = 0; block < blocks.length; block++)
             {
@@ -251,26 +249,21 @@ public class AlignedWindow extends Window<ColorSet>
                         separator++)
                 {
                     if (separators.size() - 1 >= separator &&
-                            separators.get(separator) != null &&
-                            separators.get(separator).horizontal)
+                            separators.get(separator) != null)
                     {
-                        getDisplay().drawLine(endpoints[separator * 2],
-                            endpoints[separator * 2 + 1]
-                                    .setX(location.x + overallMaxLength),
-                            separators.get(separator));
-                    }
-                }
-
-                for (int separator = 0; separator < separators.size();
-                        separator++)
-                {
-                    if (separators.size() - 1 >= separator &&
-                            separators.get(separator) != null &&
-                            !separators.get(separator).horizontal)
-                    {
-                        getDisplay().drawLine(endpoints[separator * 2],
-                            endpoints[separator * 2 + 1],
-                            separators.get(separator));
+                        if (separators.get(separator).horizontal)
+                        {
+                            getDisplay().drawLine(endpoints[separator * 2],
+                                endpoints[separator * 2 + 1]
+                                        .setX(location.x + overallMaxLength),
+                                separators.get(separator));
+                        }
+                        else
+                        {
+                            getDisplay().drawLine(endpoints[separator * 2],
+                                endpoints[separator * 2 + 1],
+                                separators.get(separator));
+                        }
                     }
                 }
             }
