@@ -84,9 +84,10 @@ public abstract class Window<Content extends CharSequence>
     /**
      * Adds the provided content to the {@link Window}'s contents.
      * @param content the content to add
+     * @return this for convenient chaining
      */
-    public void add(Content content)
-        {contents.add(content);}
+    public Window add(Content content)
+        {contents.add(content); return this;}
     
     /**
      * Sets the line of the {@link Window}'s contents at the index to the
@@ -97,7 +98,10 @@ public abstract class Window<Content extends CharSequence>
     public void set(int index, Content content)
         {contents.set(index, content);}
     
-    /** Adds a null line, acting as a separator, to the content. */
-    public void addSeparator()
-        {contents.add(null);}
+    /**
+     * Adds a null line, acting as a separator, to the content.
+     * @return this for convenient chaining
+     */
+    public Window addSeparator()
+        {contents.add(null); return this;}
 }
