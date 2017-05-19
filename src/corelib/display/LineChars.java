@@ -23,7 +23,8 @@ public abstract class LineChars
     /**╥*/ public static final char LINE1_SWITCH_D   = (char) 210;
     /**╡*/ public static final char LINE1_SWITCH_L   = (char) 181;
     /**╞*/ public static final char LINE1_SWITCH_R   = (char) 198;
-    /**┼*/ public static final char LINE1_CENTER     = (char) 197;
+    /**┼*/ public static final char LINE1_CENTER1    = (char) 197;
+    /**╪*/ public static final char LINE1_CENTER2    = (char) 216;
 
     /**═*/ public static final char LINE2_HORIZONTAL = (char) 205;
     /**║*/ public static final char LINE2_VERTICAL   = (char) 186;
@@ -39,7 +40,8 @@ public abstract class LineChars
     /**╤*/ public static final char LINE2_SWITCH_D   = (char) 209;
     /**╢*/ public static final char LINE2_SWITCH_L   = (char) 182;
     /**╟*/ public static final char LINE2_SWITCH_R   = (char) 199;
-    /**╬*/ public static final char LINE2_CENTER     = (char) 206;
+    /**╫*/ public static final char LINE2_CENTER1    = (char) 215;
+    /**╬*/ public static final char LINE2_CENTER2    = (char) 206;
     
     /**
      * Returns a horizontal or vertical line character with the provided width.
@@ -283,15 +285,47 @@ public abstract class LineChars
      * Returns the intersection character with the specified width.
      * @param width the number of lines in the character to return; must be 1 or
      * 2
-     * @return a vertical line character with the specified width; the UNKNOWN
-     * character if invalid
+     * @return an intersection line character with the specified width; the
+     * UNKNOWN character if invalid
      */
     public static char center(int width)
     {
         switch (width)
         {
-            case 1:  return LINE1_CENTER;
-            case 2:  return LINE2_CENTER;
+            case 1:  return LINE1_CENTER1;
+            case 2:  return LINE2_CENTER2;
+            default: return UNKNOWN;
+        }
+    }
+    
+    /**
+     * Returns the intersection character with the vertical line and horizontal
+     * lines of the specified width.
+     * @param horizontal the number of horizontal lines in the character to
+     * return; must be 1 or 2
+     * @param vertical the number of vertical lines in the character to return;
+     * must be 1 or 2
+     * @return an intersection line character with the specified widths; the
+     * UNKNOWN character if invalid
+     */
+    public static char center(int horizontal, int vertical)
+    {
+        switch (vertical)
+        {
+            case 1:
+                switch (horizontal)
+                {
+                    case 1:  return LINE1_CENTER1;
+                    case 2:  return LINE1_CENTER2;
+                    default: return UNKNOWN;
+                }
+            case 2: 
+                switch (horizontal)
+                {
+                    case 1:  return LINE2_CENTER1;
+                    case 2:  return LINE2_CENTER2;
+                    default: return UNKNOWN;
+                }
             default: return UNKNOWN;
         }
     }
