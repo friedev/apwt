@@ -218,7 +218,7 @@ public class Display extends JFrame implements KeyListener
             }
             else
             {
-                curColors.syncDefaults(panel);
+                curColors.syncDefaults(this);
                 panel.write(cur, point.x + i, point.y,
                         curColors.getForeground(), curColors.getBackground());
             }
@@ -242,7 +242,7 @@ public class Display extends JFrame implements KeyListener
         
         for (int i = 0; i < chars.size(); i++)
         {
-            chars.get(i).syncDefaults(panel);
+            chars.get(i).syncDefaults(this);
             panel.write(chars.get(i).getChar(), point.x + i, point.y,
                     chars.get(i).getForeground(), chars.get(i).getBackground());
         }
@@ -301,9 +301,37 @@ public class Display extends JFrame implements KeyListener
         {
             if (s[line] != null)
             {
-                s[line].syncDefaults(panel);
-                panel.writeCenter(s[line].getString(), y + line,
-                        s[line].getForeground(), s[line].getBackground());
+                // Create a copy to avoid changing the original parameters
+                ColorString copy = s[line];
+                copy.syncDefaults(this);
+                panel.writeCenter(copy.getString(), y + line,
+                        copy.getForeground(), copy.getBackground());
+            }
+        }
+    }
+    
+    /**
+     * Writes an array of
+     * {@link corelib.display.glyphs.ColorSet ColorSets} to this
+     * {@link Display}'s {@link asciiPanel.AsciiPanel}.
+     * @param s the {@link corelib.display.glyphs.ColorSet ColorSets} to
+     * write
+     * @param y the line on which the first
+     * {@link corelib.display.glyphs.ColorSet ColorSet} will be written
+     */
+    public void writeCenter(int y, ColorSet... s)
+    {
+        if (s == null || s.length == 0)
+            return;
+        
+        for (int line = 0; line < s.length; line++)
+        {
+            if (s[line] != null)
+            {
+                // Create a copy to avoid changing the original parameters
+                ColorSet copy = new ColorSet(s[line]).syncDefaults(this);
+                write(Coord.get((getCharWidth() - copy.length()) / 2, y + line),
+                        copy);
             }
         }
     }

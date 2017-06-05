@@ -6,14 +6,8 @@ import corelib.display.glyphs.ColorString;
 import java.awt.Color;
 
 /** A {@link Terminal} displayed through an {@link AlignedWindow}. */
-public class AlignedTerminal extends Terminal<AlignedWindow, ColorSet>
+public class AlignedTerminal extends ColoredTerminal<AlignedWindow>
 {
-    /** The color of inputted text. */
-    private Color inputForeground;
-    
-    /** The background color of inputted text. */
-    private Color inputBackground;
-    
     /**
      * Creates an {@link AlignedTerminal} with the given
      * {@link corelib.display.windows.AlignedWindow Window},
@@ -28,12 +22,7 @@ public class AlignedTerminal extends Terminal<AlignedWindow, ColorSet>
      */
     public AlignedTerminal(AlignedWindow output, ColorSet prompt, int length,
             Color foreground, Color background)
-    {
-        super(output, prompt, length);
-        inputForeground = foreground;
-        inputBackground = background;
-        output.add(prompt);
-    }
+        {super(output, prompt, length, foreground, background);}
     
     /**
      * Creates an {@link AlignedTerminal} with the given
@@ -48,7 +37,7 @@ public class AlignedTerminal extends Terminal<AlignedWindow, ColorSet>
      */
     public AlignedTerminal(AlignedWindow output, ColorSet prompt, int length,
             Color foreground)
-        {this(output, prompt, length, foreground, null);}
+        {super(output, prompt, length, foreground);}
     
     /**
      * Creates an {@link AlignedTerminal} with the given
@@ -61,7 +50,7 @@ public class AlignedTerminal extends Terminal<AlignedWindow, ColorSet>
      * prompt
      */
     public AlignedTerminal(AlignedWindow output, ColorSet prompt, int length)
-        {this(output, prompt, length, null, null);}
+        {super(output, prompt, length);}
     
     /**
      * Creates an {@link AlignedTerminal} with the given
@@ -74,7 +63,7 @@ public class AlignedTerminal extends Terminal<AlignedWindow, ColorSet>
      * prompt
      */
     public AlignedTerminal(AlignedWindow output, String prompt, int length)
-        {this(output, new ColorSet(prompt), length, null, null);}
+        {super(output, prompt, length);}
     
     /**
      * Creates an {@link AlignedTerminal} with the given
@@ -85,7 +74,7 @@ public class AlignedTerminal extends Terminal<AlignedWindow, ColorSet>
      * {@link corelib.display.windows.Border borders}
      */
     public AlignedTerminal(AlignedWindow output, int length)
-        {this(output, new ColorSet(""), length, null, null);}
+        {super(output, length);}
     
     /**
      * Creates an {@link AlignedTerminal} with the given
@@ -96,7 +85,7 @@ public class AlignedTerminal extends Terminal<AlignedWindow, ColorSet>
      * @param prompt the {@link Terminal}'s prompt
      */
     public AlignedTerminal(AlignedWindow output, ColorSet prompt)
-        {this(output, prompt, output.getDisplay().getCharWidth(), null, null);}
+        {super(output, prompt);}
     
     /**
      * Creates an {@link AlignedTerminal} with the given
@@ -107,7 +96,7 @@ public class AlignedTerminal extends Terminal<AlignedWindow, ColorSet>
      * @param prompt the {@link Terminal}'s prompt
      */
     public AlignedTerminal(AlignedWindow output, String prompt)
-        {this(output, new ColorSet(prompt));}
+        {super(output, prompt);}
     
     /**
      * Creates an {@link AlignedTerminal} with no prompt
@@ -116,14 +105,14 @@ public class AlignedTerminal extends Terminal<AlignedWindow, ColorSet>
      * @param output the {@link Terminal}'s output window
      */
     public AlignedTerminal(AlignedWindow output)
-        {this(output, new ColorSet(""));}
+        {super(output);}
     
     @Override
     public void displayOutput()
     {
         getWindow().set(getWindow().getContents().size() - 1,
-                new ColorSet().add(getPrompt()).add(new ColorString(getInput(),
-                        inputForeground, inputBackground)));
+                new ColorSet(getPrompt()).add(new ColorString(getInput(),
+                        getInputForeground(), getInputBackground())));
         getWindow().display();
     }
 }

@@ -1,5 +1,6 @@
 package corelib.display.screens;
 
+import corelib.display.glyphs.ColorSet;
 import corelib.display.windows.Window;
 import java.awt.event.KeyEvent;
 
@@ -8,11 +9,8 @@ import java.awt.event.KeyEvent;
  * characters and delete them with backspace.
  * @param <Output> the type of {@link corelib.display.windows.Window} used by
  * the {@link Terminal}
- * @param <Content> the type of content displayed by the {@link Terminal}'s
- * {@link corelib.display.windows.Window}
  */
-public abstract class Terminal<Output extends Window,
-        Content extends CharSequence> extends ConfirmationScreen
+public abstract class Terminal<Output extends Window> extends ConfirmationScreen
 {
     /** The StringBuilder where all keypresses are added. */
     private StringBuilder input;
@@ -23,8 +21,11 @@ public abstract class Terminal<Output extends Window,
      */
     private Output output;
     
-    /** The String printed before the entered input is shown to the user. */
-    private Content prompt;
+    /**
+     * The {@link ColorSet} printed before the entered input is shown to the
+     * user.
+     */
+    private ColorSet prompt;
     
     /**
      * The input length at which the {@link Terminal} will not accept any new
@@ -40,7 +41,7 @@ public abstract class Terminal<Output extends Window,
      * @param length the {@link Terminal}'s maximum length, counting Window
      * {@link corelib.display.windows.Border borders}
      */
-    public Terminal(Output output, Content prompt, int length)
+    public Terminal(Output output, ColorSet prompt, int length)
     {
         super(output.getDisplay());
         input = new StringBuilder();
@@ -53,6 +54,8 @@ public abstract class Terminal<Output extends Window,
         
         if (output.isBordered())
             maxInputLength -= 2;
+        
+        output.add(prompt);
     }
     
     /**
@@ -99,7 +102,7 @@ public abstract class Terminal<Output extends Window,
      * Returns this {@link Terminal}'s prompt.
      * @return this {@link Terminal}'s prompt
      */
-    public Content getPrompt()
+    public ColorSet getPrompt()
         {return prompt;}
     
     /**

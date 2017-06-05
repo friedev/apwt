@@ -1,43 +1,75 @@
 package corelib.display.screens;
 
+import corelib.display.glyphs.ColorSet;
 import corelib.display.glyphs.ColorString;
 import corelib.display.windows.PopupWindow;
+import java.awt.Color;
 
 /**
  * A {@link Terminal} displayed through a
  * {@link corelib.display.windows.PopupWindow}.
  */
-public class PopupTerminal extends Terminal<PopupWindow, ColorString>
+public class PopupTerminal extends ColoredTerminal<PopupWindow>
 {
     /**
-     * Creates a {@link PopupTerminal} with the given
-     * {@link corelib.display.windows.PopupWindow Window}, prompt, and maximum
-     * length.
+     * Creates an {@link PopupTerminal} with the given
+     * {@link corelib.display.windows.PopupWindow Window},
+     * prompt, and maximum length.
      * @param output the {@link Terminal}'s output window
      * @param prompt the {@link Terminal}'s prompt
      * @param length the {@link Terminal}'s maximum length, counting Window
-     * {@link corelib.display.windows.Border borders}
+     * {@link corelib.display.windows.Border borders} and the
+     * prompt
+     * @param foreground the color of the input characters
+     * @param background the color of the input background
      */
-    public PopupTerminal(PopupWindow output, ColorString prompt, int length)
-    {
-        super(output, prompt, length);
-        output.add(prompt);
-    }
+    public PopupTerminal(PopupWindow output, ColorSet prompt, int length,
+            Color foreground, Color background)
+        {super(output, prompt, length, foreground, background);}
     
     /**
-     * Creates a {@link PopupTerminal} with the given
-     * {@link corelib.display.windows.PopupWindow Window}, prompt, and maximum
-     * length.
+     * Creates an {@link PopupTerminal} with the given
+     * {@link corelib.display.windows.PopupWindow Window},
+     * prompt, and maximum length.
      * @param output the {@link Terminal}'s output window
      * @param prompt the {@link Terminal}'s prompt
      * @param length the {@link Terminal}'s maximum length, counting Window
-     * {@link corelib.display.windows.Border borders}
+     * {@link corelib.display.windows.Border borders} and the
+     * prompt
+     * @param foreground the color of the input characters
+     */
+    public PopupTerminal(PopupWindow output, ColorSet prompt, int length,
+            Color foreground)
+        {super(output, prompt, length, foreground);}
+    
+    /**
+     * Creates an {@link PopupTerminal} with the given
+     * {@link corelib.display.windows.PopupWindow Window},
+     * prompt, and maximum length.
+     * @param output the {@link Terminal}'s output window
+     * @param prompt the {@link Terminal}'s prompt
+     * @param length the {@link Terminal}'s maximum length, counting Window
+     * {@link corelib.display.windows.Border borders} and the
+     * prompt
+     */
+    public PopupTerminal(PopupWindow output, ColorSet prompt, int length)
+        {super(output, prompt, length);}
+    
+    /**
+     * Creates an {@link PopupTerminal} with the given
+     * {@link corelib.display.windows.PopupWindow Window},
+     * prompt, and maximum length.
+     * @param output the {@link Terminal}'s output window
+     * @param prompt the {@link Terminal}'s prompt
+     * @param length the {@link Terminal}'s maximum length, counting Window
+     * {@link corelib.display.windows.Border borders} and the
+     * prompt
      */
     public PopupTerminal(PopupWindow output, String prompt, int length)
-        {this(output, new ColorString(prompt), length);}
+        {super(output, prompt, length);}
     
     /**
-     * Creates a {@link PopupTerminal} with the given
+     * Creates an {@link PopupTerminal} with the given
      * {@link corelib.display.windows.PopupWindow Window} and maximum length,
      * but no prompt.
      * @param output the {@link Terminal}'s output window
@@ -45,43 +77,45 @@ public class PopupTerminal extends Terminal<PopupWindow, ColorString>
      * {@link corelib.display.windows.Border borders}
      */
     public PopupTerminal(PopupWindow output, int length)
-        {this(output, new ColorString(""), length);}
+        {super(output, length);}
     
     /**
-     * Creates a {@link PopupTerminal} with the given
-     * {@link corelib.display.windows.PopupWindow Window} and prompt, using the
-     * width of the {@link corelib.display.Display} as the maximum length.
+     * Creates an {@link PopupTerminal} with the given
+     * {@link corelib.display.windows.PopupWindow Window} and
+     * prompt, using the width of the
+     * {@link corelib.display.Display} as the maximum length.
      * @param output the {@link Terminal}'s output window
      * @param prompt the {@link Terminal}'s prompt
      */
-    public PopupTerminal(PopupWindow output, ColorString prompt)
-        {this(output, prompt, output.getDisplay().getCharWidth());}
+    public PopupTerminal(PopupWindow output, ColorSet prompt)
+        {super(output, prompt);}
     
     /**
-     * Creates a {@link PopupTerminal} with the given
-     * {@link corelib.display.windows.PopupWindow Window} and prompt, using the
-     * width of the {@link corelib.display.Display} as the maximum length.
+     * Creates an {@link PopupTerminal} with the given
+     * {@link corelib.display.windows.PopupWindow Window} and
+     * prompt, using the width of the
+     * {@link corelib.display.Display} as the maximum length.
      * @param output the {@link Terminal}'s output window
      * @param prompt the {@link Terminal}'s prompt
      */
     public PopupTerminal(PopupWindow output, String prompt)
-        {this(output, new ColorString(prompt));}
+        {super(output, prompt);}
     
     /**
-     * Creates a {@link PopupTerminal} with no prompt and the width of the
-     * {@link corelib.display.Display} as the maximum length.
+     * Creates an {@link PopupTerminal} with no prompt
+     * and the width of the {@link corelib.display.Display} as the maximum
+     * length.
      * @param output the {@link Terminal}'s output window
      */
     public PopupTerminal(PopupWindow output)
-        {this(output, new ColorString(""), output.getDisplay().getCharWidth());}
+        {super(output);}
     
     @Override
     public void displayOutput()
     {
         getWindow().set(getWindow().getContents().size() - 1,
-                new ColorString(getPrompt() + getInput(),
-                        getPrompt().getForeground(),
-                        getPrompt().getBackground()));
+                new ColorSet(getPrompt()).add(new ColorString(getInput(),
+                        getInputForeground(), getInputBackground())));
         getWindow().display();
     }
 }

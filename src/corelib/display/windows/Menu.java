@@ -1,17 +1,15 @@
 package corelib.display.windows;
 
 import corelib.display.Display;
+import corelib.display.glyphs.ColorSet;
 import java.awt.event.KeyEvent;
 import squidpony.squidgrid.Direction;
 
 /**
  * A {@link Window} with navigable contents.
- * @param <Content> the type of content displayed by the {@link Menu}'s
- * {@link Window}
  * @param <WindowType> the type of {@link Window} used by the {@link Menu}
  */
-public abstract class Menu<Content extends CharSequence,
-        WindowType extends Window<Content>>
+public abstract class Menu<WindowType extends Window>
 {
     /** The {@link Window} through which the {@link Menu} will be displayed. */
     private WindowType window;
@@ -92,7 +90,7 @@ public abstract class Menu<Content extends CharSequence,
      * Gets the currently selected item.
      * @return the currently selected item
      */
-    public Content getSelection()
+    public ColorSet getSelection()
         {return window.getContents().get(selection);}
     
     /**

@@ -1,8 +1,6 @@
 package corelib.display.windows;
 
-import corelib.display.glyphs.ColorChar;
 import corelib.display.glyphs.ColorSet;
-import corelib.display.glyphs.ColorString;
 import corelib.display.Display;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -13,7 +11,7 @@ import squidpony.squidmath.Coord;
  * A left-aligned {@link Window} with the ability to use multicolored
  * {@link corelib.display.glyphs.ColorSet ColorSets}.
  */
-public class AlignedWindow extends Window<ColorSet>
+public class AlignedWindow extends Window
 {
     /** The coordinates at which the first content is written. */
     private Coord location;
@@ -53,8 +51,8 @@ public class AlignedWindow extends Window<ColorSet>
      */
     public AlignedWindow(AlignedWindow copying)
     {
-        this(copying.getDisplay(), copying.getContents(), copying.location,
-                copying.getBorder(), copying.separators);
+        this(copying.getDisplay(), new ArrayList<>(copying.getContents()),
+                copying.location, copying.getBorder(), copying.separators);
     }
     
     /**
@@ -327,136 +325,6 @@ public class AlignedWindow extends Window<ColorSet>
      */
     public void setLocation(Coord location)
         {this.location = location;}
-    
-    /**
-     * Converts the provided String into a
-     * {@link corelib.display.glyphs.ColorSet} and adds it to the
-     * {@link AlignedWindow}'s contents.
-     * @param content content the String to add
-     * @return this for convenient chaining
-     */
-    public AlignedWindow add(String content)
-        {getContents().add(new ColorSet(content)); return this;}
-    
-    /**
-     * Converts the provided ColorString into a
-     * {@link corelib.display.glyphs.ColorSet} and adds it to the
-     * {@link AlignedWindow}'s contents.
-     * @param content the {@link corelib.display.glyphs.ColorString} to add
-     * @return this for convenient chaining
-     */
-    public AlignedWindow add(ColorString content)
-        {getContents().add(new ColorSet(content)); return this;}
-    
-    /**
-     * Converts the provided array of ColorChars into a
-     * {@link corelib.display.glyphs.ColorSet} and adds it to the
-     * {@link AlignedWindow}'s contents.
-     * @param content the array of
-     * {@link corelib.display.glyphs.ColorChar ColorChars} to add
-     * @return this for convenient chaining
-     */
-    public AlignedWindow add(ColorChar[] content)
-        {getContents().add(new ColorSet(content)); return this;}
-    
-    /**
-     * Converts the provided array of
-     * {@link corelib.display.glyphs.ColorString ColorStrings} into a
-     * {@link corelib.display.glyphs.ColorSet} and adds it to the
-     * {@link AlignedWindow}'s contents.
-     * @param content the array of
-     * {@link corelib.display.glyphs.ColorString ColorStrings} to add
-     * @return this for convenient chaining
-     */
-    public AlignedWindow add(ColorString[] content)
-        {getContents().add(ColorSet.toColorSet(content)); return this;}
-    
-    /**
-     * Sets the line of the {@link AlignedWindow}'s contents at the index to the
-     * provided String, converted into a
-     * {@link corelib.display.glyphs.ColorSet}.
-     * @param index the line of the {@link AlignedWindow}'s contents to replace
-     * @param content the String that will be set at the line
-     */
-    public void set(int index, String content)
-        {getContents().set(index, new ColorSet(content));}
-    
-    /**
-     * Sets the line of the {@link AlignedWindow}'s contents at the index to the
-     * provided {@link corelib.display.glyphs.ColorString}, converted into a
-     * {@link corelib.display.glyphs.ColorSet}.
-     * @param index the line of the {@link AlignedWindow}'s contents to replace
-     * @param content the {@link corelib.display.glyphs.ColorString} that will
-     * be set at the line
-     */
-    public void set(int index, ColorString content)
-        {getContents().set(index, new ColorSet(content));}
-    
-    /**
-     * Sets the line of the {@link AlignedWindow}'s contents at the index to the
-     * provided array of {@link corelib.display.glyphs.ColorChar ColorChars},
-     * converted into a {@link corelib.display.glyphs.ColorSet}.
-     * @param index the line of the {@link AlignedWindow}'s contents to replace
-     * @param content the array of
-     * {@link corelib.display.glyphs.ColorChar ColorChars} that will be set at
-     * the line
-     */
-    public void set(int index, ColorChar[] content)
-        {getContents().set(index, new ColorSet(content));}
-    
-    /**
-     * Sets the line of the {@link AlignedWindow}'s contents at the index to the
-     * provided array of
-     * {@link corelib.display.glyphs.ColorString ColorStrings}, converted into a
-     * {@link corelib.display.glyphs.ColorSet}.
-     * @param index the line of the {@link AlignedWindow}'s contents to replace
-     * @param content the array of
-     * {@link corelib.display.glyphs.ColorString ColorStrings} that will be set
-     * at the line
-     */
-    public void set(int index, ColorString[] content)
-        {getContents().set(index, ColorSet.toColorSet(content));}
-    
-    /**
-     * Inserts the given String into the given index of the
-     * {@link AlignedWindow}'s contents.
-     * @param index the index at which to insert the String
-     * @param content the String to insert
-     */
-    public void insert(int index, String content)
-        {insert(index, new ColorSet(content));}
-    
-    /**
-     * Inserts the given {@link corelib.display.glyphs.ColorString} into the
-     * given index of the {@link AlignedWindow}'s contents.
-     * @param index the index at which to insert the
-     * {@link corelib.display.glyphs.ColorString}
-     * @param content the {@link corelib.display.glyphs.ColorString} to insert
-     */
-    public void insert(int index, ColorString content)
-        {insert(index, new ColorSet(content));}
-    
-    /**
-     * Inserts the given array of
-     * {@link corelib.display.glyphs.ColorChar ColorChars} into the given index
-     * of the {@link AlignedWindow}'s contents.
-     * @param index the index at which to insert the array of
-     * {@link corelib.display.glyphs.ColorChar ColorChars}
-     * @param content the array of
-     * {@link corelib.display.glyphs.ColorChar ColorChars} to insert
-     */
-    public void insert(int index, ColorChar[] content)
-        {insert(index, new ColorSet(content));}
-    
-    /**
-     * Inserts the given {@link corelib.display.glyphs.ColorSet} into the given
-     * index of the {@link AlignedWindow}'s contents.
-     * @param index the index at which to insert the
-     * {@link corelib.display.glyphs.ColorSet}
-     * @param content the * {@link corelib.display.glyphs.ColorSet} to insert
-     */
-    public void insert(int index, ColorSet content)
-        {getContents().add(index, content);}
     
     /**
      * Adds a separator associated with the provided {@link Line}.

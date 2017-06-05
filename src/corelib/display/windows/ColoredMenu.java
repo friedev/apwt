@@ -4,12 +4,10 @@ import java.awt.Color;
 
 /**
  * A Menu that uses color to show which item is currently selected.
- * @param <Content> the type of content displayed by the {@link Menu}'s
- * {@link Window}
  * @param <WindowType> the type of {@link Window} used by the {@link Menu}
  */
-public abstract class ColoredMenu<Content extends CharSequence,
-        WindowType extends Window<Content>> extends Menu<Content, WindowType>
+public abstract class ColoredMenu<WindowType extends Window>
+        extends Menu<WindowType>
 {
     /** The foreground color that the current selection will be set to. */
     private Color selectionForeground;

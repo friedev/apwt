@@ -1,18 +1,13 @@
 package corelib.display.windows;
 
-import corelib.display.glyphs.ColorString;
+import corelib.display.glyphs.ColorSet;
 import corelib.display.Display;
 import java.util.ArrayList;
 import java.util.List;
 import squidpony.squidmath.Coord;
 
-/**
- * A centered {@link Window} meant for temporary use as a popup. AsciiPanel
- * cannot manage centered {@link corelib.display.glyphs.ColorSet ColorSets}, so
- * {@link PopupWindow} uses
- * {@link corelib.display.glyphs.ColorString ColorStrings} instead.
- */
-public class PopupWindow extends Window<ColorString>
+/** A centered {@link Window} meant for temporary use as a popup. */
+public class PopupWindow extends Window
 {
     /** The y value at which the first content is written. */
     private int y;
@@ -31,7 +26,7 @@ public class PopupWindow extends Window<ColorString>
      * @param border the {@link Window}'s {@link Border}
      * @param separator the {@link Window}'s separator
      */
-    public PopupWindow(Display display, List<ColorString> contents, int y,
+    public PopupWindow(Display display, List<ColorSet> contents, int y,
             Border border, Line separator)
     {
         super(display, border, contents);
@@ -45,8 +40,8 @@ public class PopupWindow extends Window<ColorString>
      */
     public PopupWindow(PopupWindow copying)
     {
-        this(copying.getDisplay(), copying.getContents(), copying.y,
-                copying.getBorder(), copying.separator);
+        this(copying.getDisplay(), new ArrayList<>(copying.getContents()),
+                copying.y, copying.getBorder(), copying.separator);
     }
     
     /**
@@ -66,7 +61,7 @@ public class PopupWindow extends Window<ColorString>
      * @param y the {@link Window}'s y coordinate
      * @param border the {@link Window}'s {@link Border}
      */
-    public PopupWindow(Display display, List<ColorString> contents, int y,
+    public PopupWindow(Display display, List<ColorSet> contents, int y,
             Border border)
         {this(display, contents, y, border, null);}
     
@@ -85,7 +80,7 @@ public class PopupWindow extends Window<ColorString>
      * @param contents the {@link Window}'s contents
      * @param y the {@link Window}'s y coordinate
      */
-    public PopupWindow(Display display, List<ColorString> contents, int y)
+    public PopupWindow(Display display, List<ColorSet> contents, int y)
         {this(display, contents, y, new Border(1));}
     
     /**
@@ -115,17 +110,13 @@ public class PopupWindow extends Window<ColorString>
                                 + "; was " + y);
 
             int maxLength = 0;
-            for (ColorString line: getContents())
-                if (line != null && line.string.length() > maxLength)
-                    maxLength = line.string.length();
+            for (ColorSet line: getContents())
+                if (line != null && line.length() > maxLength)
+                    maxLength = line.length();
 
             if (!getDisplay().containsX(maxLength + 2))
                 throw new IndexOutOfBoundsException("Text is too long for the "
                         + "display");
-            
-            // If the display width is odd, odd String lengths will have equal
-            // offsets; if the display width is even, even String lengths have
-            // equal offsets
             
             int center = getDisplay().getCharWidth() / 2;
             int offsetRight = ((int) maxLength) / 2;
@@ -148,7 +139,7 @@ public class PopupWindow extends Window<ColorString>
                                 separator);
 
             getDisplay().writeCenter(y, getContents().toArray(
-                    new ColorString[getContents().size()]));
+                    new ColorSet[getContents().size()]));
         }
         catch (IllegalArgumentException | IndexOutOfBoundsException e)
         {
@@ -184,32 +175,4 @@ public class PopupWindow extends Window<ColorString>
      */
     public void setY(int y)
         {this.y = y;}
-    
-    /**
-     * Converts the provided String into a
-     * {@link corelib.display.glyphs.ColorString ColorString} and adds it to the
-     * {@link PopupWindow}'s contents.
-     * @param content the String to add
-     * @return this for convenient chaining
-     */
-    public PopupWindow add(String content)
-        {getContents().add(new ColorString(content)); return this;}
-    
-    /**
-     * Sets the line of the {@link PopupWindow}'s contents at i to the provided
-     * String, converted into a {@link corelib.display.glyphs.ColorString}.
-     * @param index the line of the {@link PopupWindow}'s contents to replace
-     * @param content the String that will be set at the line
-     */
-    public void set(int index, String content)
-        {getContents().set(index, new ColorString(content));}
-    
-    /**
-     * Inserts the given String into the given index of the
-     * {@link PopupWindow}'s contents.
-     * @param index the index at which to insert the String
-     * @param content the String to insert
-     */
-    public void insert(int index, String content)
-        {getContents().add(index, new ColorString(content));}
 }

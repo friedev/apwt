@@ -11,6 +11,7 @@ public abstract class ColoredObject
 {
     /** The color of the foreground. */
     private Color foreground;
+    
     /** The color of the background. */
     private Color background;
     
@@ -77,24 +78,16 @@ public abstract class ColoredObject
     
     /**
      * Sets any unspecified (null) colors of the ColoredObject to the default
-     * colors of the provided AsciiPanel.
-     * @param panel the AsciiPanel with which to sync default colors
-     */
-    public void syncDefaults(asciiPanel.AsciiPanel panel)
-    {
-        if (foreground == null)
-            foreground = panel.getDefaultForegroundColor();
-        
-        if (background == null)
-            background = panel.getDefaultBackgroundColor();
-    }
-    
-    /**
-     * Sets any unspecified (null) colors of the ColoredObject to the default
      * colors of the provided Display's AsciiPanel.
      * @param display the Display containing the AsciiPanel with which to sync
      * default colors
      */
     public void syncDefaults(Display display)
-        {syncDefaults(display.getPanel());}
+    {
+        if (foreground == null)
+            foreground = display.getPanel().getDefaultForegroundColor();
+        
+        if (background == null)
+            background = display.getPanel().getDefaultBackgroundColor();
+    }
 }

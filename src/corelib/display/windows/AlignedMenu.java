@@ -4,7 +4,7 @@ import corelib.display.glyphs.ColorSet;
 import java.awt.Color;
 
 /** A {@link Menu} displayed on an {@link AlignedWindow}. */
-public class AlignedMenu extends ColoredMenu<ColorSet, AlignedWindow>
+public class AlignedMenu extends ColoredMenu<AlignedWindow>
 {
     /**
      * Creates an {@link AlignedMenu} from an {@link AlignedWindow}, initial
@@ -20,8 +20,8 @@ public class AlignedMenu extends ColoredMenu<ColorSet, AlignedWindow>
         {super(window, initialSelection, foreground, background);}
     
     /**
-     * Creates an {@link AlignedMenu} from an {@link AlignedWindow} and selection
-     * colors, starting with the first item selected.
+     * Creates an {@link AlignedMenu} from an {@link AlignedWindow} and
+     * selection colors, starting with the first item selected.
      * @param window the {@link Menu}'s {@link Window}
      * @param foreground the foreground color of selected items
      * @param background the background color of selected items

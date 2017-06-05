@@ -1,10 +1,10 @@
 package corelib.display.windows;
 
-import corelib.display.glyphs.ColorString;
+import corelib.display.glyphs.ColorSet;
 import java.awt.Color;
 
 /** A {@link Menu} displayed on a {@link PopupWindow}. */
-public class PopupMenu extends ColoredMenu<ColorString, PopupWindow>
+public class PopupMenu extends ColoredMenu
 {
     /**
      * Creates a {@link PopupMenu} from a {@link PopupWindow}, initial
@@ -34,8 +34,8 @@ public class PopupMenu extends ColoredMenu<ColorString, PopupWindow>
     {
         PopupWindow copy = new PopupWindow((PopupWindow) getWindow());
         copy.getContents().clear();
-        for (ColorString content: getWindow().getContents())
-            copy.add(new ColorString(content));
+        for (ColorSet content: getWindow().getContents())
+            copy.add(new ColorSet(content));
         
         copy.getContents().get(getSelectionIndex())
                 .setColors(getForeground(), getBackground());

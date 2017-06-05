@@ -1,14 +1,14 @@
 package corelib.display.windows;
 
 import corelib.display.Display;
+import corelib.display.glyphs.ColorChar;
+import corelib.display.glyphs.ColorSet;
+import corelib.display.glyphs.ColorString;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Any window used to display a list of contents should extend this class.
- * @param <Content> the type of content the {@link Window} will display
- */
-public abstract class Window<Content extends CharSequence>
+/** Any window used to display a list of contents. */
+public abstract class Window
 {
     /**
      * The {@link corelib.display.Display} on which to print the {@link Window}.
@@ -22,10 +22,10 @@ public abstract class Window<Content extends CharSequence>
     private Border border;
     
     /**
-     * The contents of the {@link Window}, with each Content as a different
-     * line.
+     * The contents of the {@link Window}, with each
+     * {@link corelib.display.glyphs.ColorSet} as a different line.
      */
-    private List<Content> contents;
+    private List<ColorSet> contents;
     
     /**
      * Creates a {@link Window} with all fields defined.
@@ -33,7 +33,7 @@ public abstract class Window<Content extends CharSequence>
      * @param border the {@link Window}'s {@link Border}
      * @param contents the {@link Window}'s initial contents
      */
-    public Window(Display display, Border border, List<Content> contents)
+    public Window(Display display, Border border, List<ColorSet> contents)
     {
         this.display = display;
         this.border = border;
@@ -57,7 +57,7 @@ public abstract class Window<Content extends CharSequence>
      * Returns the contents of the {@link Window} as a List.
      * @return the contents of the {@link Window} as a List
      */
-    public List<Content> getContents()
+    public List<ColorSet> getContents()
         {return contents;}
     
     /**
@@ -82,12 +82,101 @@ public abstract class Window<Content extends CharSequence>
         {return border != null;}
     
     /**
+     * Converts the provided String into a
+     * {@link corelib.display.glyphs.ColorSet} and adds it to the
+     * {@link Window}'s contents.
+     * @param content content the String to add
+     * @return this for convenient chaining
+     */
+    public Window add(String content)
+        {contents.add(new ColorSet(content)); return this;}
+    
+    /**
+     * Converts the provided ColorString into a
+     * {@link corelib.display.glyphs.ColorSet} and adds it to the
+     * {@link Window}'s contents.
+     * @param content the {@link corelib.display.glyphs.ColorString} to add
+     * @return this for convenient chaining
+     */
+    public Window add(ColorString content)
+        {contents.add(new ColorSet(content)); return this;}
+    
+    /**
+     * Converts the provided array of ColorChars into a
+     * {@link corelib.display.glyphs.ColorSet} and adds it to the
+     * {@link Window}'s contents.
+     * @param content the array of
+     * {@link corelib.display.glyphs.ColorChar ColorChars} to add
+     * @return this for convenient chaining
+     */
+    public Window add(ColorChar[] content)
+        {contents.add(new ColorSet(content)); return this;}
+    
+    /**
+     * Converts the provided array of
+     * {@link corelib.display.glyphs.ColorString ColorStrings} into a
+     * {@link corelib.display.glyphs.ColorSet} and adds it to the
+     * {@link Window}'s contents.
+     * @param content the array of
+     * {@link corelib.display.glyphs.ColorString ColorStrings} to add
+     * @return this for convenient chaining
+     */
+    public Window add(ColorString[] content)
+        {contents.add(ColorSet.toColorSet(content)); return this;}
+    
+    /**
      * Adds the provided content to the {@link Window}'s contents.
      * @param content the content to add
      * @return this for convenient chaining
      */
-    public Window add(Content content)
+    public Window add(ColorSet content)
         {contents.add(content); return this;}
+    
+    /**
+     * Sets the line of the {@link Window}'s contents at the index to the
+     * provided String, converted into a
+     * {@link corelib.display.glyphs.ColorSet}.
+     * @param index the line of the {@link Window}'s contents to replace
+     * @param content the String that will be set at the line
+     */
+    public void set(int index, String content)
+        {contents.set(index, new ColorSet(content));}
+    
+    /**
+     * Sets the line of the {@link Window}'s contents at the index to the
+     * provided {@link corelib.display.glyphs.ColorString}, converted into a
+     * {@link corelib.display.glyphs.ColorSet}.
+     * @param index the line of the {@link Window}'s contents to replace
+     * @param content the {@link corelib.display.glyphs.ColorString} that will
+     * be set at the line
+     */
+    public void set(int index, ColorString content)
+        {contents.set(index, new ColorSet(content));}
+    
+    /**
+     * Sets the line of the {@link Window}'s contents at the index to the
+     * provided array of {@link corelib.display.glyphs.ColorChar ColorChars},
+     * converted into a {@link corelib.display.glyphs.ColorSet}.
+     * @param index the line of the {@link Window}'s contents to replace
+     * @param content the array of
+     * {@link corelib.display.glyphs.ColorChar ColorChars} that will be set at
+     * the line
+     */
+    public void set(int index, ColorChar[] content)
+        {contents.set(index, new ColorSet(content));}
+    
+    /**
+     * Sets the line of the {@link Window}'s contents at the index to the
+     * provided array of
+     * {@link corelib.display.glyphs.ColorString ColorStrings}, converted into a
+     * {@link corelib.display.glyphs.ColorSet}.
+     * @param index the line of the {@link Window}'s contents to replace
+     * @param content the array of
+     * {@link corelib.display.glyphs.ColorString ColorStrings} that will be set
+     * at the line
+     */
+    public void set(int index, ColorString[] content)
+        {contents.set(index, ColorSet.toColorSet(content));}
     
     /**
      * Sets the line of the {@link Window}'s contents at the index to the
@@ -95,8 +184,49 @@ public abstract class Window<Content extends CharSequence>
      * @param index the line of the {@link Window}'s contents to replace
      * @param content the content that will be set at the line
      */
-    public void set(int index, Content content)
+    public void set(int index, ColorSet content)
         {contents.set(index, content);}
+    
+    /**
+     * Inserts the given String into the given index of the
+     * {@link Window}'s contents.
+     * @param index the index at which to insert the String
+     * @param content the String to insert
+     */
+    public void insert(int index, String content)
+        {insert(index, new ColorSet(content));}
+    
+    /**
+     * Inserts the given {@link corelib.display.glyphs.ColorString} into the
+     * given index of the {@link Window}'s contents.
+     * @param index the index at which to insert the
+     * {@link corelib.display.glyphs.ColorString}
+     * @param content the {@link corelib.display.glyphs.ColorString} to insert
+     */
+    public void insert(int index, ColorString content)
+        {insert(index, new ColorSet(content));}
+    
+    /**
+     * Inserts the given array of
+     * {@link corelib.display.glyphs.ColorChar ColorChars} into the given index
+     * of the {@link Window}'s contents.
+     * @param index the index at which to insert the array of
+     * {@link corelib.display.glyphs.ColorChar ColorChars}
+     * @param content the array of
+     * {@link corelib.display.glyphs.ColorChar ColorChars} to insert
+     */
+    public void insert(int index, ColorChar[] content)
+        {insert(index, new ColorSet(content));}
+    
+    /**
+     * Inserts the given {@link corelib.display.glyphs.ColorSet} into the given
+     * index of the {@link Window}'s contents.
+     * @param index the index at which to insert the
+     * {@link corelib.display.glyphs.ColorSet}
+     * @param content the * {@link corelib.display.glyphs.ColorSet} to insert
+     */
+    public void insert(int index, ColorSet content)
+        {contents.add(index, content);}
     
     /**
      * Adds a null line, acting as a separator, to the content.
