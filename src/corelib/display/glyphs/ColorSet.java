@@ -8,62 +8,68 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * A List of ColorChars that can be used as a multicolored String or even as a
- * mapping system.
+ * A List of {@link ColorChar ColorChars} that can be used as a multicolored
+ * String. It can also be used as a system of mapping characters to colors.
  */
 public class ColorSet implements CharSequence
 {
-    /** The List of specific ColorChars in the ColorSet. */
+    /**
+     * The List of specific {@link ColorChar ColorChars} in the
+     * {@link ColorSet}.
+     */
     private List<ColorChar> set;
     
     /**
-     * Creates a ColorSet from an existing List of ColorChars.
-     * @param s the List of ColorChars that will be used in the ColorSet
+     * Creates a {@link ColorSet} from an existing List of
+     * {@link ColorChar ColorChars}.
+     * @param s the List of {@link ColorChar ColorChars} that will be used in
+     * the {@link ColorSet}
      */
     public ColorSet(List<ColorChar> s)
         {set = s;}
     
     /**
-     * Creates a ColorSet from another ColorSet.
-     * @param copying the ColorSet to copy
+     * Creates a {@link ColorSet} from another {@link ColorSet}.
+     * @param copying the {@link ColorSet} to copy
      */
     public ColorSet(ColorSet copying)
         {this(new ArrayList<>(copying.set));}
     
     /**
-     * Creates a ColorSet from an array of ColorChars, converting it into a
-     * List.
-     * @param c the array of ColorChars that will be converted in the List used
-     * by the ColorSet
+     * Creates a {@link ColorSet} from an array of {@link ColorChar ColorChars},
+     * converting it into a List.
+     * @param c the array of {@link ColorChar ColorChars} that will be converted
+     * in the List used by the {@link ColorSet}
      */
     public ColorSet(ColorChar[] c)
         {this(new ArrayList<>(java.util.Arrays.asList(c)));}
     
     /**
-     * Creates a ColorSet from a single ColorString, consisting of multiple
-     * characters with the same color.
+     * Creates a {@link ColorSet} from a single ColorString, consisting of
+     * multiple characters with the same color.
      * @param s the ColorString that will be converted into the List used by the
-     * ColorSet
+     * {@link ColorSet}
      */
     public ColorSet(ColorString s)
         {this(s.toCharArray());}
     
     /**
-     * Creates a ColorSet from a String, consisting of multiple characters
-     * without a specified color.
+     * Creates a {@link ColorSet} from a String, consisting of multiple
+     * characters without a specified color.
      * @param s the String that will be converted into the List used by the
-     * ColorSet
+     * {@link ColorSet}
      */
     public ColorSet(String s)
         {this(new ColorString(s));}
     
-    /** Creates a ColorSet with an empty ArrayList. */
+    /** Creates a {@link ColorSet} with an empty ArrayList. */
     public ColorSet()
         {this(new ArrayList<>());}
     
     /**
-     * Returns the List of ColorChars used by the ColorSet.
-     * @return the ColorSet's List of ColorChars
+     * Returns the List of {@link ColorChar ColorChars} used by the
+     * {@link ColorSet}.
+     * @return the {@link ColorSet}'s List of {@link ColorChar ColorChars}
      */
     public List getSet()
         {return set;}
@@ -77,15 +83,15 @@ public class ColorSet implements CharSequence
         {set.add(new ColorChar(c)); return this;}
     
     /**
-     * Adds the given ColorChar to the setColorChar.
-     * @param c the ColorChar to add
+     * Adds the given {@link ColorChar} to the set.
+     * @param c the {@link ColorChar} to add
      * @return this for convenient chaining
      */
     public ColorSet add(ColorChar c)
         {set.add(c); return this;}
     
     /**
-     * Adds the given String to the set as an uncolored ColorSet.
+     * Adds the given String to the set as an uncolored {@link ColorSet}.
      * @param s the String to add
      * @return this for convenient chaining
      */
@@ -93,7 +99,7 @@ public class ColorSet implements CharSequence
         {return add(new ColorSet(s));}
     
     /**
-     * Adds the given ColorString to the set as a monotone ColorSet.
+     * Adds the given ColorString to the set as a monochrome {@link ColorSet}.
      * @param s the ColorString to add
      * @return this for convenient chaining
      */
@@ -101,17 +107,18 @@ public class ColorSet implements CharSequence
         {return add(new ColorSet(s));}
     
     /**
-     * Adds the given ColorSet to this ColorSet.
-     * @param s the ColorSet to add
+     * Adds the given {@link ColorSet} to this {@link ColorSet}.
+     * @param s the {@link ColorSet} to add
      * @return this for convenient chaining
      */
     public ColorSet add(ColorSet s)
         {set.addAll(Arrays.asList(s.toCharArray())); return this;}
     
     /**
-     * Sets the foreground color of all the set's ColorChars to the given Color.
+     * Sets the foreground color of all the set's {@link ColorChar ColorChars}
+     * to the given Color.
      * @param foreground the foreground color to assign to all the set's
-     * ColorChars
+     * {@link ColorChar ColorChars}
      * @return this for convenient chaining
      */
     public ColorSet setForeground(Color foreground)
@@ -126,9 +133,10 @@ public class ColorSet implements CharSequence
     }
     
     /**
-     * Sets the background color of all the set's ColorChars to the given Color.
+     * Sets the background color of all the set's {@link ColorChar ColorChars}
+     * to the given Color.
      * @param background the background color to assign to all the set's
-     * ColorChars
+     * {@link ColorChar ColorChars}
      * @return this for convenient chaining
      */
     public ColorSet setBackground(Color background)
@@ -143,21 +151,23 @@ public class ColorSet implements CharSequence
     }
     
     /**
-     * Sets the colors of all the set's ColorChars to the given Colors.
+     * Sets the colors of all the set's {@link ColorChar ColorChars} to the
+     * given Colors.
      * @param foreground the foreground color to assign to all the set's
-     * ColorChars
+     * {@link ColorChar ColorChars}
      * @param background the background color to assign to all the set's
-     * ColorChars
+     * {@link ColorChar ColorChars}
      * @return this for convenient chaining
      */
     public ColorSet setColors(Color foreground, Color background)
         {return setForeground(foreground).setBackground(background);}
     
     /**
-     * Sets any unspecified (null) colors of each ColorChar to the default
-     * colors of the provided Display's AsciiPanel.
-     * @param display the Display containing the AsciiPanel with which to sync
-     * default colors
+     * Sets any unspecified (null) colors of each {@link ColorChar} to the
+     * default colors of the provided {@link corelib.display.Display}'s
+     * AsciiPanel.
+     * @param display the {@link corelib.display.Display} containing the
+     * AsciiPanel with which to sync default colors
      * @return this for convenient chaining
      */
     public ColorSet syncDefaults(Display display)
@@ -168,11 +178,12 @@ public class ColorSet implements CharSequence
     }
     
     /**
-     * Returns the first ColorChar found in the ColorSet with a character that
-     * matches the one provided.
-     * @param character the character to look for in the ColorSet's ColorChars
-     * @return the first ColorChar found in the ColorSet with a character that
-     * matches the one provided, null if none are found
+     * Returns the first {@link ColorChar} found in the {@link ColorSet} with a
+     * character that matches the one provided.
+     * @param character the character to look for in the {@link ColorSet}'s
+     * {@link ColorChar ColorChars}
+     * @return the first {@link ColorChar} found in the {@link ColorSet} with a
+     * character that matches the one provided, null if none are found
      */
     public ColorChar getColorChar(char character)
     {
@@ -184,8 +195,10 @@ public class ColorSet implements CharSequence
     }
     
     /**
-     * Returns the ColorSet's List as an array of ColorChars.
-     * @return the ColorSet's List as an array of ColorChars
+     * Returns the {@link ColorSet}'s List as an array of
+     * {@link ColorChar ColorChars}.
+     * @return the {@link ColorSet}'s List as an array of
+     * {@link ColorChar ColorChars}
      */
     public ColorChar[] toCharArray()
         {return set.toArray(new ColorChar[set.size()]);}
@@ -206,11 +219,11 @@ public class ColorSet implements CharSequence
     }
     
     /**
-     * Converts the array of Strings provided into a single ColorSet without
-     * specified colors.
-     * @param s the array of Strings to convert into a ColorSet
-     * @return a ColorSet consisting of ColorChars with the characters of the
-     * String
+     * Converts the array of Strings provided into a single {@link ColorSet}
+     * without specified colors.
+     * @param s the array of Strings to convert into a {@link ColorSet}
+     * @return a {@link ColorSet} consisting of {@link ColorChar ColorChars}
+     * with the characters of the String
      */
     public static ColorSet toColorSet(String... s)
     {
@@ -223,11 +236,13 @@ public class ColorSet implements CharSequence
     }
     
     /**
-     * Converts the array of ColorStrings provided into a single ColorSet with
-     * the colors of each ColorString.
-     * @param s the array of ColorStrings to convert into a ColorSet
-     * @return a ColorSet consisting of ColorChars with the characters of the
-     * ColorStrings and the color of the ColorString from which they originated
+     * Converts the array of {@link ColorString ColorStrings} provided into a
+     * single {@link ColorSet} with the colors of each {@link ColorString}.
+     * @param s the array of {@link ColorString ColorStrings} to convert into a
+     * {@link ColorSet}
+     * @return a {@link ColorSet} consisting of {@link ColorChar ColorChars}
+     * with the characters of the {@link ColorString ColorStrings} and the color
+     * of the {@link ColorString} from which they originated
      */
     public static ColorSet toColorSet(ColorString... s)
     {
@@ -239,11 +254,12 @@ public class ColorSet implements CharSequence
     }
     
     /**
-     * Converts the array of Strings provided into an array of ColorSets, one
-     * for each String.
-     * @param s the array of Strings to convert into an array of ColorSets
-     * @return an array of ColorSets, one for each String, with the characters
-     * of the Strings and no specified colors
+     * Converts the array of Strings provided into an array of
+     * {@link ColorSet ColorSets}, one for each String.
+     * @param s the array of Strings to convert into an array of
+     * {@link ColorSet ColorSets}
+     * @return an array of {@link ColorSet ColorSets}, one for each String, with
+     * the characters of the Strings and no specified colors
      */
     public static ColorSet[] toColorSetArray(String... s)
     {
@@ -256,12 +272,14 @@ public class ColorSet implements CharSequence
     }
     
     /**
-     * Converts the array of ColorStrings provided into an array of ColorSets,
-     * one for each ColorString.
-     * @param s the array of ColorStrings to convert into an array of ColorSets
-     * @return an array of ColorSets, one for each ColorString, with the
-     * characters of the ColorStrings and the colors of the ColorStrings from
-     * which they originated
+     * Converts the array of {@link ColorString ColorStrings} provided into an
+     * array of {@link ColorSet ColorSets}, one for each {@link ColorString}.
+     * @param s the array of {@link ColorString ColorStrings} to convert into an
+     * array of {@link ColorSet ColorSets}
+     * @return an array of {@link ColorSet ColorSets}, one for each
+     * {@link ColorString ColorString}, with the characters of the
+     * {@link ColorString ColorStrings} and the colors of the
+     * {@link ColorString ColorStrings} from which they originated
      */
     public static ColorSet[] toColorSetArray(ColorString... s)
     {
@@ -274,10 +292,13 @@ public class ColorSet implements CharSequence
     }
     
     /**
-     * Converts the 2D array of ColorChars provided into an array of ColorSets,
-     * with each ColorChar[] as a single ColorSet.
-     * @param a the array of ColorChars to convert into an array of ColorSets
-     * @return an array of ColorSets, one for each ColorChar
+     * Converts the 2D array of {@link ColorChar ColorChars} provided into an
+     * array of {@link ColorSet ColorSets}, with each {@link ColorChar}[] as a
+     * single {@link ColorSet}.
+     * @param a the array of {@link ColorChar ColorChars} to convert into an
+     * array of {@link ColorSet ColorSets}
+     * @return an array of {@link ColorSet ColorSets}, one for each
+     * {@link ColorChar}
      */
     public static ColorSet[] toColorSetArray(ColorChar[]... a)
     {
@@ -290,11 +311,12 @@ public class ColorSet implements CharSequence
     }
     
     /**
-     * Converts the List of Strings provided into a List of ColorSets, one for
-     * each String.
-     * @param s the List of Strings to convert into a List of ColorSets
-     * @return a List of ColorSets, one for each String, with the characters
-     * of the Strings and no specified colors
+     * Converts the List of Strings provided into a List of
+     * {@link ColorSet ColorSets}, one for each String.
+     * @param s the List of Strings to convert into a List of
+     * {@link ColorSet ColorSets}
+     * @return a List of {@link ColorSet ColorSets}, one for each String, with
+     * the characters of the Strings and no specified colors
      */
     public static List<ColorSet> stringToColorSetList(List<String> s)
     {
@@ -307,12 +329,13 @@ public class ColorSet implements CharSequence
     }
     
     /**
-     * Converts the List of ColorStrings provided into a List of ColorSets,
-     * one for each ColorString.
-     * @param s the List of ColorStrings to convert into a List of ColorSets
-     * @return a List of ColorSets, one for each ColorString, with the
-     * characters of the ColorStrings and the colors of the ColorStrings from
-     * which they originated
+     * Converts the List of ColorStrings provided into a List of
+     * {@link ColorSet ColorSets},  one for each ColorString.
+     * @param s the List of ColorStrings to convert into a List of
+     * {@link ColorSet ColorSets}
+     * @return a List of {@link ColorSet ColorSets}, one for each
+     * {@link ColorString}, with the characters of the ColorStrings and the
+     * colors of the {@link ColorString ColorStrings} from which they originated
      */
     public static List<ColorSet> colorStringToColorSetList(List<ColorString> s)
     {
@@ -325,10 +348,13 @@ public class ColorSet implements CharSequence
     }
     
     /**
-     * Converts the 2D array of ColorChars provided into a List of ColorSets,
-     * with each ColorChar[] as a single ColorSet.
-     * @param a the array of ColorChars to convert into a List of ColorSets
-     * @return a List of ColorSets, one for each ColorChar
+     * Converts the 2D array of {@link ColorChar ColorChars} provided into a
+     * List of {@link ColorSet ColorSets}, with each {@link ColorChar}[] as a
+     * single {@link ColorSet}.
+     * @param a the array of {@link ColorChar ColorChars} to convert into a List
+     * of {@link ColorSet ColorSets}
+     * @return a List of {@link ColorSet ColorSets}, one for each
+     * {@link ColorChar}
      */
     public static List<ColorSet> colorCharToColorSetList(ColorChar[]... a)
     {
