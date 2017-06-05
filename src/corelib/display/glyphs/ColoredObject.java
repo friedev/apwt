@@ -16,7 +16,7 @@ public abstract class ColoredObject
     private Color background;
     
     /**
-     * Creates a ColoredObject with a foreground and background color.
+     * Creates a {@link ColoredObject} with a foreground and background color.
      * @param f the color of the foreground
      * @param b the color of the background
      */
@@ -27,13 +27,14 @@ public abstract class ColoredObject
     }
     
     /**
-     * Creates a ColoredObject with a foreground color but no background color.
+     * Creates a {@link ColoredObject} with a foreground color but no background
+     * color.
      * @param f the color of the foreground
      */
     public ColoredObject(Color f)
         {this(f, null);}
     
-    /** Creates a ColoredObject with no specified colors. */
+    /** Creates a {@link ColoredObject} with no specified colors. */
     public ColoredObject()
         {this(null, null);}
     
@@ -77,10 +78,11 @@ public abstract class ColoredObject
     }
     
     /**
-     * Sets any unspecified (null) colors of the ColoredObject to the default
-     * colors of the provided Display's AsciiPanel.
-     * @param display the Display containing the AsciiPanel with which to sync
-     * default colors
+     * Sets any unspecified (null) colors of the {@link ColoredObject} to the
+     * default colors of the provided {@link corelib.display.Display}'s
+     * AsciiPanel.
+     * @param display the {@link corelib.display.Display} containing the
+     * AsciiPanel with which to sync default colors
      */
     public void syncDefaults(Display display)
     {
