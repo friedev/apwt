@@ -385,6 +385,27 @@ public class Display extends JFrame implements KeyListener
         {return panel.getHeightInCharacters();}
     
     /**
+     * Returns the x coordinate at the center of the {@link Display}.
+     * @return the x coordinate at the center of the {@link Display}
+     */
+    public int getCenterX()
+        {return getCharWidth() / 2;}
+    
+    /**
+     * Returns the y coordinate at the center of the {@link Display}.
+     * @return the y coordinate at the center of the {@link Display}
+     */
+    public int getCenterY()
+        {return getCharWidth() / 2;}
+    
+    /**
+     * Returns the coordinates at the center of the {@link Display}.
+     * @return the coordinates at the center of the {@link Display}
+     */
+    public Coord getCenter()
+        {return Coord.get(getCenterX(), getCenterY());}
+    
+    /**
      * Draws a {@link Line} between two endpoints to the provided Display.
      * @param end1 the first endpoint; must be a different point than the second
      * endpoint, have one axis value in common, and be on the display
