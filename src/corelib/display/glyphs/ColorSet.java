@@ -211,8 +211,11 @@ public class ColorSet implements CharSequence
     public char charAt(int index)
         {return set.get(index).getChar();}
 
+    public ColorChar getColorCharAt(int index)
+        {return set.get(index);}
+    
     @Override
-    public CharSequence subSequence(int start, int end)
+    public ColorSet subSequence(int start, int end)
     {
         return new ColorSet(set.subList(start, end).toArray(
                 new ColorChar[end - start + 1]));
