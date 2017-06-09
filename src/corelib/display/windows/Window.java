@@ -39,6 +39,7 @@ public abstract class Window
         this.border = border;
         this.contents = contents;
     }
+    
     /**
      * Creates a {@link Window} with no contents.
      * @param display the {@link Window}'s {@link corelib.display.Display}
@@ -46,6 +47,21 @@ public abstract class Window
      */
     public Window(Display display, Border border)
         {this(display, border, new ArrayList<>());}
+    
+    /**
+     * Creates a borderless {@link Window}.
+     * @param display the {@link Window}'s {@link corelib.display.Display}
+     * @param contents the {@link Window}'s initial contents
+     */
+    public Window(Display display, List<ColorSet> contents)
+        {this(display, null, contents);}
+    
+    /**
+     * Creates a borderless {@link Window} with no contents.
+     * @param display the {@link Window}'s {@link corelib.display.Display}
+     */
+    public Window(Display display)
+        {this(display, null, new ArrayList<>());}
     
     /**
      * Prints the {@link Window} to its {@link corelib.display.Display} using

@@ -11,11 +11,8 @@ import squidpony.squidmath.Coord;
  * A left-aligned {@link Window} with the ability to use multicolored
  * {@link corelib.display.glyphs.ColorSet ColorSets}.
  */
-public class AlignedWindow extends Window
+public class AlignedWindow extends CoordWindow
 {
-    /** The coordinates at which the first content is written. */
-    private Coord location;
-    
     /**
      * The bottom right corner of the {@link AlignedWindow}, including its
      * {@link Border}. Stored as it is recalculated on each repaint, yet hard to
@@ -40,8 +37,7 @@ public class AlignedWindow extends Window
     public AlignedWindow(Display display, List<ColorSet> contents,
             Coord location, Border border, List<Line> separators)
     {
-        super(display, border, contents);
-        this.location = location;
+        super(display, border, contents, location);
         this.separators = separators;
     }
     
@@ -52,7 +48,7 @@ public class AlignedWindow extends Window
     public AlignedWindow(AlignedWindow copying)
     {
         this(copying.getDisplay(), new ArrayList<>(copying.getContents()),
-                copying.location, copying.getBorder(), copying.separators);
+                copying.getLocation(), copying.getBorder(), copying.separators);
     }
     
     /**
@@ -112,9 +108,10 @@ public class AlignedWindow extends Window
         
         try
         {
-            if (!getDisplay().contains(location.subtract(1)))
+            if (!getDisplay().contains(getLocation().subtract(1)))
                 throw new IndexOutOfBoundsException("Top left coordinates must "
-                        + "be >= 1; were " + location.x + " and " + location.y);
+                        + "be >= 1; were " + getLocation().x + " and "
+                        + getLocation().y);
 
             if (getContents() == null || getContents().isEmpty())
                 throw new IllegalArgumentException(
@@ -144,8 +141,8 @@ public class AlignedWindow extends Window
                 }
             }
 
-            int curLine          = location.y;
-            int curIndent        = location.x;
+            int curLine          = getLocation().y;
+            int curIndent        = getLocation().x;
             int overallMaxLength = 0;
             int curMaxLines      = blocks[0].size();
             int overallLines     = blocks[0].size();
@@ -162,7 +159,7 @@ public class AlignedWindow extends Window
                     if (line.getSet().size() > curMaxLength)
                         curMaxLength = line.getSet().size();
 
-                curMaxLength += curIndent - location.x;
+                curMaxLength += curIndent - getLocation().x;
 
                 if (curMaxLength > overallMaxLength)
                     overallMaxLength = curMaxLength;
@@ -197,9 +194,9 @@ public class AlignedWindow extends Window
                 {
                     if (separators.get(block).horizontal)
                     {
-                        curIndent = location.x;
+                        curIndent = getLocation().x;
 
-                        endpoints[block * 2] = Coord.get(location.x - 1,
+                        endpoints[block * 2] = Coord.get(getLocation().x - 1,
                                 curLine + curMaxLines);
                         endpoints[block * 2 + 1] =
                                 Coord.get(curIndent + overallMaxLength,
@@ -211,7 +208,7 @@ public class AlignedWindow extends Window
                     }
                     else
                     {
-                        curIndent = location.x + curMaxLength + 1;
+                        curIndent = getLocation().x + curMaxLength + 1;
 
                         endpoints[block * 2] = Coord.get(curIndent - 1,
                                 curLine - 1);
@@ -221,19 +218,19 @@ public class AlignedWindow extends Window
                 }
                 else
                 {
-                    curIndent = location.x;
+                    curIndent = getLocation().x;
                     curLine += curMaxLines + 1;
                     curMaxLines = blocks[block + 1].size();
                     overallLines += blocks[block + 1].size() + 1;
                 }
             }
             
-            bottomRight = location.add(Coord.get(overallMaxLength,
+            bottomRight = getLocation().add(Coord.get(overallMaxLength,
                     overallLines));
 
             if (isBordered())
             {
-                getDisplay().drawBorder(location.subtract(1), bottomRight,
+                getDisplay().drawBorder(getLocation().subtract(1), bottomRight,
                         getBorder());
             }
             else
@@ -253,7 +250,7 @@ public class AlignedWindow extends Window
                         {
                             getDisplay().drawLine(endpoints[separator * 2],
                                 endpoints[separator * 2 + 1]
-                                        .setX(location.x + overallMaxLength),
+                                    .setX(getLocation().x + overallMaxLength),
                                 separators.get(separator));
                         }
                         else
@@ -276,13 +273,6 @@ public class AlignedWindow extends Window
             return;
         }
     }
-    
-    /**
-     * Returns the top-left coordinates of the {@link AlignedWindow}.
-     * @return the top-left coordinates of the {@link AlignedWindow}
-     */
-    public Coord getLocation()
-        {return location;}
     
     /**
      * Returns the bottom-right coordinates of the {@link AlignedWindow}. For
@@ -318,13 +308,6 @@ public class AlignedWindow extends Window
      */
     public boolean hasSeparators(int amount)
         {return separators != null && separators.size() >= amount;}
-    
-    /**
-     * Moves the {@link AlignedWindow} to the specified coordinates.
-     * @param location the new top-left coordinates of the {@link AlignedWindow}
-     */
-    public void setLocation(Coord location)
-        {this.location = location;}
     
     /**
      * Adds a separator associated with the provided {@link Line}.
