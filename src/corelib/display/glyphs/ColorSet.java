@@ -204,6 +204,18 @@ public class ColorSet implements CharSequence
         {return set.toArray(new ColorChar[set.size()]);}
     
     @Override
+    public String toString()
+    {
+        if (set.isEmpty())
+            return "";
+        
+        StringBuilder builder = new StringBuilder();
+        for (ColorChar character: set)
+            builder.append(character.getChar());
+        return builder.toString();
+    }
+    
+    @Override
     public int length()
         {return set.size();}
 

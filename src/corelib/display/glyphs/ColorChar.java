@@ -89,4 +89,8 @@ public class ColorChar extends ColoredObject
         hash = 31 * hash + this.character;
         return hash;
     }
+    
+    @Override
+    public String toString()
+        {return Character.toString(character);}
 }
