@@ -173,6 +173,19 @@ public class Display extends JFrame implements KeyListener
     }
     
     /**
+     * Writes a {@link corelib.display.glyphs.ColorString} to this
+     * {@link Display}'s {@link asciiPanel.AsciiPanel}.
+     * @param s the {@link corelib.display.glyphs.ColorString} to write
+     * @param point the point, in characters, at which the
+     * {@link corelib.display.glyphs.ColorString} will be written
+     */
+    public void write(Coord point, ColorString s)
+    {
+        panel.write(s.getString(), point.x, point.y, s.getForeground(),
+                s.getBackground());
+    }
+    
+    /**
      * Writes an array of Strings to this {@link Display}'s
      * {@link asciiPanel.AsciiPanel}, with each String
      * on the line below the previous.
@@ -271,16 +284,17 @@ public class Display extends JFrame implements KeyListener
      * Writes an array of Strings to the center of this {@link Display}'s
      * {@link asciiPanel.AsciiPanel}.
      * @param s the Strings to write
-     * @param y the line on which the first String will be written
+     * @param point the point at which the first String will be written
      */
-    public void writeCenter(int y, String... s)
+    public void writeCenter(Coord point, String... s)
     {
         if (s == null || s.length == 0)
             return;
         
         for (int line = 0; line < s.length; line++)
             if (s[line] != null)
-                panel.writeCenter(s[line], y + line);
+                write(Coord.get(point.x - (s[line].length() / 2),
+                        point.y - (s.length / 2) + line + 1), s[line]);
     }
     
     /**
@@ -289,10 +303,10 @@ public class Display extends JFrame implements KeyListener
      * {@link Display}'s {@link asciiPanel.AsciiPanel}.
      * @param s the {@link corelib.display.glyphs.ColorString ColorStrings} to
      * write
-     * @param y the line on which the first
+     * @param point the point at which the first
      * {@link corelib.display.glyphs.ColorString ColorString} will be written
      */
-    public void writeCenter(int y, ColorString... s)
+    public void writeCenter(Coord point, ColorString... s)
     {
         if (s == null || s.length == 0)
             return;
@@ -304,11 +318,58 @@ public class Display extends JFrame implements KeyListener
                 // Create a copy to avoid changing the original parameters
                 ColorString copy = s[line];
                 copy.syncDefaults(this);
-                panel.writeCenter(copy.getString(), y + line,
-                        copy.getForeground(), copy.getBackground());
+                write(Coord.get(point.x - (copy.length() / 2),
+                        point.y - (s.length / 2) + line + 1), copy.getString());
             }
         }
     }
+    
+    /**
+     * Writes an array of
+     * {@link corelib.display.glyphs.ColorSet ColorSets} to this
+     * {@link Display}'s {@link asciiPanel.AsciiPanel}.
+     * @param s the {@link corelib.display.glyphs.ColorSet ColorSets} to
+     * write
+     * @param point the point at which the first
+     * {@link corelib.display.glyphs.ColorSet ColorSet} will be written
+     */
+    public void writeCenter(Coord point, ColorSet... s)
+    {
+        if (s == null || s.length == 0)
+            return;
+        
+        for (int line = 0; line < s.length; line++)
+        {
+            if (s[line] != null)
+            {
+                // Create a copy to avoid changing the original parameters
+                ColorSet copy = new ColorSet(s[line]).syncDefaults(this);
+                write(Coord.get(point.x - (copy.length() / 2),
+                        point.y - (s.length / 2) + line + 1), copy);
+            }
+        }
+    }
+    
+    /**
+     * Writes an array of Strings to the center of this {@link Display}'s
+     * {@link asciiPanel.AsciiPanel}.
+     * @param s the Strings to write
+     * @param y the line on which the first String will be written
+     */
+    public void writeCenter(int y, String... s)
+        {writeCenter(Coord.get(getCenterX(), y), s);}
+    
+    /**
+     * Writes an array of
+     * {@link corelib.display.glyphs.ColorString ColorStrings} to this
+     * {@link Display}'s {@link asciiPanel.AsciiPanel}.
+     * @param s the {@link corelib.display.glyphs.ColorString ColorStrings} to
+     * write
+     * @param y the line on which the first
+     * {@link corelib.display.glyphs.ColorString ColorString} will be written
+     */
+    public void writeCenter(int y, ColorString... s)
+        {writeCenter(Coord.get(getCenterX(), y), s);}
     
     /**
      * Writes an array of
@@ -320,21 +381,35 @@ public class Display extends JFrame implements KeyListener
      * {@link corelib.display.glyphs.ColorSet ColorSet} will be written
      */
     public void writeCenter(int y, ColorSet... s)
-    {
-        if (s == null || s.length == 0)
-            return;
-        
-        for (int line = 0; line < s.length; line++)
-        {
-            if (s[line] != null)
-            {
-                // Create a copy to avoid changing the original parameters
-                ColorSet copy = new ColorSet(s[line]).syncDefaults(this);
-                write(Coord.get((getCharWidth() - copy.length()) / 2, y + line),
-                        copy);
-            }
-        }
-    }
+        {writeCenter(Coord.get(getCenterX(), y), s);}
+    
+    /**
+     * Writes an array of Strings to the center of this {@link Display}'s
+     * {@link asciiPanel.AsciiPanel}.
+     * @param s the Strings to write
+     */
+    public void writeCenter(String... s)
+        {writeCenter(getCenter(), s);}
+    
+    /**
+     * Writes an array of
+     * {@link corelib.display.glyphs.ColorString ColorStrings} to this
+     * {@link Display}'s {@link asciiPanel.AsciiPanel}.
+     * @param s the {@link corelib.display.glyphs.ColorString ColorStrings} to
+     * write
+     */
+    public void writeCenter(ColorString... s)
+        {writeCenter(getCenter(), s);}
+    
+    /**
+     * Writes an array of
+     * {@link corelib.display.glyphs.ColorSet ColorSets} to this
+     * {@link Display}'s {@link asciiPanel.AsciiPanel}.
+     * @param s the {@link corelib.display.glyphs.ColorSet ColorSets} to
+     * write
+     */
+    public void writeCenter(ColorSet... s)
+        {writeCenter(getCenter(), s);}
     
     /**
      * Returns true if this {@link Display}'s {@link asciiPanel.AsciiPanel}
