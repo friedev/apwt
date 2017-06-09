@@ -55,6 +55,27 @@ public class ColorSet implements CharSequence
     
     /**
      * Creates a {@link ColorSet} from a String, consisting of multiple
+     * characters with the specified colors.
+     * @param s the String that will be converted into the List used by the
+     * {@link ColorSet}
+     * @param foreground the color of the characters in the String
+     * @param background the color of the background
+     */
+    public ColorSet(String s, Color foreground, Color background)
+        {this(new ColorString(s, foreground, background));}
+    
+    /**
+     * Creates a {@link ColorSet} from a String, consisting of multiple
+     * characters with the specified foreground color.
+     * @param s the String that will be converted into the List used by the
+     * {@link ColorSet}
+     * @param foreground the color of the characters in the String
+     */
+    public ColorSet(String s, Color foreground)
+        {this(new ColorString(s, foreground));}
+    
+    /**
+     * Creates a {@link ColorSet} from a String, consisting of multiple
      * characters without a specified color.
      * @param s the String that will be converted into the List used by the
      * {@link ColorSet}
