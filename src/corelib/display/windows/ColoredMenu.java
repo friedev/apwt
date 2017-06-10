@@ -1,5 +1,6 @@
 package corelib.display.windows;
 
+import corelib.display.glyphs.ColorSet;
 import java.awt.Color;
 
 /**
@@ -55,4 +56,12 @@ public abstract class ColoredMenu<WindowType extends Window>
      */
     public Color getBackground()
         {return selectionBackground;}
+    
+    public void applySelectionColors(ColorSet selection)
+    {
+        if (getForeground() != null)
+            selection.setForeground(getForeground());
+        if (getBackground() != null)
+            selection.setBackground(getBackground());
+    }
 }

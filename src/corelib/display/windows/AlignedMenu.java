@@ -37,8 +37,7 @@ public class AlignedMenu extends ColoredMenu<AlignedWindow>
         for (ColorSet content: getWindow().getContents())
             copy.add(new ColorSet(content));
         
-        copy.getContents().get(getSelectionIndex())
-                .setColors(getForeground(), getBackground());
+        applySelectionColors(copy.getContents().get(getSelectionIndex()));
         return copy;
     }
 }
