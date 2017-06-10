@@ -9,9 +9,6 @@ import squidpony.squidmath.Coord;
 /** A centered {@link Window} meant for temporary use as a popup. */
 public class PopupWindow extends Window
 {
-    /** The y value at which the first content is written. */
-    private int y;
-    
     /**
      * The separator used to divide the {@link PopupWindow} at each null
      * content.
@@ -22,15 +19,13 @@ public class PopupWindow extends Window
      * Creates a {@link PopupWindow} with all fields defined.
      * @param display the {@link Window}'s {@link corelib.display.Display}
      * @param contents the {@link Window}'s contents
-     * @param y the {@link Window}'s y coordinate
      * @param border the {@link Window}'s {@link Border}
      * @param separator the {@link Window}'s separator
      */
-    public PopupWindow(Display display, List<ColorSet> contents, int y,
-            Border border, Line separator)
+    public PopupWindow(Display display, List<ColorSet> contents, Border border,
+            Line separator)
     {
         super(display, border, contents);
-        this.y = y;
         this.separator = separator;
     }
     
@@ -41,55 +36,49 @@ public class PopupWindow extends Window
     public PopupWindow(PopupWindow copying)
     {
         this(copying.getDisplay(), new ArrayList<>(copying.getContents()),
-                copying.y, copying.getBorder(), copying.separator);
+                copying.getBorder(), copying.separator);
     }
     
     /**
      * Creates a {@link PopupWindow} with all fields defined.
      * @param display the {@link Window}'s {@link corelib.display.Display}
-     * @param y the {@link Window}'s y coordinate
      * @param border the {@link Window}'s {@link Border}
      * @param separator the {@link Window}'s separator
      */
-    public PopupWindow(Display display, int y, Border border, Line separator)
-        {this(display, new ArrayList<>(), y, border, separator);}
+    public PopupWindow(Display display, Border border, Line separator)
+        {this(display, new ArrayList<>(), border, separator);}
     
     /**
      * Creates a {@link PopupWindow} with no separator.
      * @param display the {@link Window}'s {@link corelib.display.Display}
      * @param contents the {@link Window}'s contents
-     * @param y the {@link Window}'s y coordinate
      * @param border the {@link Window}'s {@link Border}
      */
-    public PopupWindow(Display display, List<ColorSet> contents, int y,
-            Border border)
-        {this(display, contents, y, border, null);}
+    public PopupWindow(Display display, List<ColorSet> contents, Border border)
+        {this(display, contents, border, null);}
     
     /**
      * Creates a {@link PopupWindow} with no separator.
      * @param display the {@link Window}'s {@link corelib.display.Display}
-     * @param y the {@link Window}'s y coordinate
      * @param border the {@link Window}'s {@link Border}
      */
-    public PopupWindow(Display display, int y, Border border)
-        {this(display, new ArrayList<>(), y, border);}
+    public PopupWindow(Display display, Border border)
+        {this(display, new ArrayList<>(), border);}
     
     /**
      * Creates a {@link PopupWindow} with a default border and no separator.
      * @param display the {@link Window}'s {@link corelib.display.Display}
      * @param contents the {@link Window}'s contents
-     * @param y the {@link Window}'s y coordinate
      */
-    public PopupWindow(Display display, List<ColorSet> contents, int y)
-        {this(display, contents, y, new Border(1));}
+    public PopupWindow(Display display, List<ColorSet> contents)
+        {this(display, contents, new Border(1));}
     
     /**
      * Creates a {@link PopupWindow} with a default border and no separator.
      * @param display the {@link Window}'s {@link corelib.display.Display}
-     * @param y the {@link Window}'s y coordinate
      */
-    public PopupWindow(Display display, int y)
-        {this(display, y, new Border(1));}
+    public PopupWindow(Display display)
+        {this(display, new Border(1));}
 
     @Override
     public void display()
@@ -103,11 +92,9 @@ public class PopupWindow extends Window
                 throw new IllegalArgumentException(
                         "At least 1 line of text must be provided");
 
-            if (!getDisplay().containsY(y - 1) ||
-                    !getDisplay().containsY(y + getContents().size()))
-                throw new IndexOutOfBoundsException("Top line value must be "
-                        + "between 1 and " + (getDisplay().getCharHeight() - 1)
-                                + "; was " + y);
+            if (!getDisplay().containsY(getContents().size() + 2))
+                throw new IndexOutOfBoundsException("Text is too tall for the "
+                        + "display");
 
             int maxLength = 0;
             for (ColorSet line: getContents())
@@ -115,30 +102,34 @@ public class PopupWindow extends Window
                     maxLength = line.length();
 
             if (!getDisplay().containsX(maxLength + 2))
-                throw new IndexOutOfBoundsException("Text is too long for the "
+                throw new IndexOutOfBoundsException("Text is too wide for the "
                         + "display");
             
-            int center = getDisplay().getCharWidth() / 2;
-            int offsetRight = ((int) maxLength) / 2;
-            int offsetLeft;
+            Coord center = getDisplay().getCenter();
+            int offsetDown = getContents().size() / 2;
+            int offsetUp = offsetDown;
+            if ((((double) getContents().size()) / 2.0) % 1.0 == 0.5)
+                offsetUp--;
+            int offsetRight = maxLength / 2;
+            int offsetLeft = offsetRight;
             if ((((double) maxLength) / 2.0) % 1.0 == 0.5)
-                offsetLeft = offsetRight + 1;
-            else
-                offsetLeft = offsetRight;
+                offsetLeft--;
+            
+            int top = center.y - offsetUp - 2;
+            int bottom = center.y + offsetDown + 1;
+            int left = center.x - offsetLeft - 2;
+            int right = center.x + offsetRight + 1;
 
-            getDisplay().drawBorder(Coord.get(center - offsetLeft - 1, y - 1),
-                    Coord.get(center + offsetRight, y + getContents().size()),
-                    getBorder());
+            getDisplay().drawBorder(Coord.get(left, top),
+                    Coord.get(right, bottom), getBorder());
 
             if (separator != null)
                 for (int line = 0; line < getContents().size(); line++)
                     if (getContents().get(line) == null)
-                        getDisplay().drawLine(Coord.get(center - offsetLeft - 1,
-                                y + line),
-                                Coord.get(center + offsetRight, y + line),
-                                separator);
+                        getDisplay().drawLine(Coord.get(left, top + line),
+                                Coord.get(right, top + line), separator);
 
-            getDisplay().writeCenter(y, getContents().toArray(
+            getDisplay().writeCenter(getContents().toArray(
                     new ColorSet[getContents().size()]));
         }
         catch (IllegalArgumentException | IndexOutOfBoundsException e)
@@ -147,13 +138,6 @@ public class PopupWindow extends Window
             return;
         }
     }
-    
-    /**
-     * Returns the y coordinate of the {@link PopupWindow}.
-     * @return the y coordinate of the {@link PopupWindow}
-     */
-    public int getY()
-        {return y;}
     
     /**
      * Returns the Line used to separate the {@link PopupWindow}.
@@ -168,11 +152,4 @@ public class PopupWindow extends Window
      */
     public boolean hasSeparator()
         {return separator != null;}
-    
-    /**
-     * Sets the {@link PopupWindow}'s y coordinate to the specified value.
-     * @param y the new y coordinate of the {@link PopupWindow}
-     */
-    public void setY(int y)
-        {this.y = y;}
 }
