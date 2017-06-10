@@ -345,7 +345,7 @@ public class Display extends JFrame implements KeyListener
                 // Create a copy to avoid changing the original parameters
                 ColorSet copy = new ColorSet(s[line]).syncDefaults(this);
                 write(Coord.get(point.x - (copy.length() / 2),
-                        point.y - (s.length / 2) + line + 1), copy);
+                        point.y - (s.length / 2) + line), copy);
             }
         }
     }
@@ -471,7 +471,7 @@ public class Display extends JFrame implements KeyListener
      * @return the y coordinate at the center of the {@link Display}
      */
     public int getCenterY()
-        {return getCharWidth() / 2;}
+        {return getCharHeight() / 2;}
     
     /**
      * Returns the coordinates at the center of the {@link Display}.
