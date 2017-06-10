@@ -40,7 +40,7 @@ public class MenuScreen extends ConfirmationScreen
         if (menu.updateSelection(key))
             return this;
         
-        return checkConfirmation(key);
+        return super.processInput(key);
     }
     
     /**

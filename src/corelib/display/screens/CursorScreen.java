@@ -44,7 +44,7 @@ public class CursorScreen extends ConfirmationScreen
             return this;
         }
         
-        return checkConfirmation(key);
+        return super.processInput(key);
     }
     
     /**

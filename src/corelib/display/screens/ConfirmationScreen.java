@@ -24,7 +24,8 @@ public abstract class ConfirmationScreen extends Screen
      * @return the Screen generated through the {@link ConfirmationScreen}'s
      * {@link #onConfirm()} or {@link #onCancel()} methods
      */
-    public Screen checkConfirmation(KeyEvent key)
+    @Override
+    public Screen processInput(KeyEvent key)
     {
         switch (key.getKeyCode())
         {

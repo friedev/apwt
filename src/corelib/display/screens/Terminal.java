@@ -86,7 +86,7 @@ public abstract class Terminal<Output extends Window> extends ConfirmationScreen
         if (input.length() >= maxInputLength)
             input.delete(maxInputLength, input.length());
         
-        return checkConfirmation(key);
+        return super.processInput(key);
     }
     
     /**
