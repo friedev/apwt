@@ -1,6 +1,5 @@
 package corelib.display.screens;
 
-import corelib.display.Display;
 import corelib.display.windows.Menu;
 import java.awt.event.KeyEvent;
 
@@ -19,14 +18,12 @@ public class MenuScreen extends ConfirmationScreen
     /**
      * Creates a {@link MenuScreen} on the given {@link corelib.display.Display}
      * for the given {@link corelib.display.windows.Menu}.
-     * @param display the {@link corelib.display.Display} on which the
-     * {@link Screen} will be shown
      * @param menu the {@link corelib.display.windows.Menu} to create a
      * {@link MenuScreen} for
      */
-    public MenuScreen(Display display, Menu menu)
+    public MenuScreen(Menu menu)
     {
-        super(display);
+        super(menu.getWindow().getDisplay());
         this.menu = menu;
     }
 
