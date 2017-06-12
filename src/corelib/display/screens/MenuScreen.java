@@ -6,14 +6,15 @@ import java.awt.event.KeyEvent;
 /**
  * A {@link Screen} used for traversing a {@link corelib.display.windows.Menu}
  * and selecting items on it.
+ * @param <MenuType> the type of {@link Menu} used in the {@link Screen}
  */
-public class MenuScreen extends ConfirmationScreen
+public class MenuScreen<MenuType extends Menu> extends ConfirmationScreen
 {
     /**
      * The {@link corelib.display.windows.Menu} displayed and navigated by the
      * {@link MenuScreen}.
      */
-    private Menu menu;
+    private MenuType menu;
     
     /**
      * Creates a {@link MenuScreen} on the given {@link corelib.display.Display}
@@ -21,7 +22,7 @@ public class MenuScreen extends ConfirmationScreen
      * @param menu the {@link corelib.display.windows.Menu} to create a
      * {@link MenuScreen} for
      */
-    public MenuScreen(Menu menu)
+    public MenuScreen(MenuType menu)
     {
         super(menu.getWindow().getDisplay());
         this.menu = menu;
@@ -44,7 +45,7 @@ public class MenuScreen extends ConfirmationScreen
      * Returns the {@link MenuScreen Screen's} {@link #menu menu}.
      * @return the {@link MenuScreen Screen's} {@link #menu menu}
      */
-    public Menu getMenu()
+    public MenuType getMenu()
         {return menu;}
     
     @Override
