@@ -98,6 +98,17 @@ public abstract class Window
         {return border != null;}
     
     /**
+     * Converts the provided {@link corelib.display.glyphs.ColorChar} into a
+     * {@link corelib.display.glyphs.ColorSet} and adds it to the
+     * {@link Window}'s contents.
+     * @param content content the {@link corelib.display.glyphs.ColorChar} to
+     * add
+     * @return this for convenient chaining
+     */
+    public Window add(ColorChar content)
+        {contents.add(new ColorSet(content)); return this;}
+    
+    /**
      * Converts the provided String into a
      * {@link corelib.display.glyphs.ColorSet} and adds it to the
      * {@link Window}'s contents.

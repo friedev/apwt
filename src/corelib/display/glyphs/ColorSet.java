@@ -83,6 +83,15 @@ public class ColorSet implements CharSequence
     public ColorSet(String s)
         {this(new ColorString(s));}
     
+    /**
+     * Creates a {@link ColorSet} from a {@link ColorChar}, consisting of a
+     * single colored character.
+     * @param c the {@link ColorChar} that will be added to the List used by the
+     * {@link ColorSet}
+     */
+    public ColorSet(ColorChar c)
+        {this(); add(c);}
+    
     /** Creates a {@link ColorSet} with an empty ArrayList. */
     public ColorSet()
         {this(new ArrayList<>());}
