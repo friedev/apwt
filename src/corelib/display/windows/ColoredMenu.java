@@ -59,6 +59,8 @@ public abstract class ColoredMenu<WindowType extends Window>
     
     public void applySelectionColors(ColorSet selection)
     {
+        if (selection == null)
+            return;
         if (getForeground() != null)
             selection.setForeground(getForeground());
         if (getBackground() != null)
