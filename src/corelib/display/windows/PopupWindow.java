@@ -106,14 +106,14 @@ public class PopupWindow extends Window
                         + "display");
             
             Coord center = getDisplay().getCenter();
-            int offsetDown = getContents().size() / 2;
+            int offsetDown = getContents().size() / 2 - 1;
             int offsetUp = offsetDown;
-            if ((((double) getContents().size()) / 2.0) % 1.0 == 0.5)
-                offsetUp--;
-            int offsetRight = maxLength / 2;
+            if (getContents().size() % 2 == 1)
+                offsetDown++;
+            int offsetRight = maxLength / 2 - 1;
             int offsetLeft = offsetRight;
-            if ((((double) maxLength) / 2.0) % 1.0 == 0.5)
-                offsetLeft--;
+            if (maxLength % 2 == 1)
+                offsetRight++;
             
             int top = center.y - offsetUp - 2;
             int bottom = center.y + offsetDown + 1;
