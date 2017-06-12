@@ -3,6 +3,8 @@ package corelib.display.windows;
 import corelib.display.Display;
 import corelib.display.glyphs.ColorSet;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 import squidpony.squidgrid.Direction;
 
 /**
@@ -18,6 +20,13 @@ public abstract class Menu<WindowType extends Window>
     private int selection;
     
     /**
+     * Designates which indices of the {@link Window} can be traversed as a
+     * menu. If empty or null, all of the window may be navigated. Otherwise,
+     * only indices specified in this list may be selected.
+     */
+    private List<Integer> restrictions;
+    
+    /**
      * Creates a {@link Menu} from a {@link Window} and an initial selection.
      * @param window the {@link Menu}'s {@link Window}
      * @param initialSelection the item that the {@link Menu} will have selected
@@ -28,6 +37,7 @@ public abstract class Menu<WindowType extends Window>
         this.window = window;
         selection = Math.max(0, Math.min(window.getContents().size() - 1,
                 initialSelection));
+        restrictions = new ArrayList<>();
     }
     
     /**
@@ -59,6 +69,20 @@ public abstract class Menu<WindowType extends Window>
      */
     public int getSelectionIndex()
         {return selection;}
+    
+    /**
+     * Returns a list of allowed selection indices in the menu.
+     * @return a list of allowed selection indices in the menu
+     */
+    public List<Integer> getRestrictions()
+        {return restrictions;}
+    
+    /**
+     * Returns true if the selection range of this {@link Menu} is restricted.
+     * @return true if the selection range of this {@link Menu} is restricted
+     */
+    public boolean hasRestrictions()
+        {return restrictions != null && !restrictions.isEmpty();}
     
     /**
      * Returns true if the given value is a valid index of the {@link Window}'s
@@ -95,21 +119,37 @@ public abstract class Menu<WindowType extends Window>
     
     /**
      * Modifies the selection index by the provided amount until it is either
-     * out of bounds or is not at a separator.
+     * out of bounds, or not at a separator or restricted value.
      * @param change the amount by which to modify the selection index at each
      * iteration
      * @return the final value of the selection index
      */
-    private int bypassSeparators(int change)
+    private int bypassRestrictions(int change)
     {
         if (change == 0)
             return selection;
         
         int nextSelection = selection;
-        while (contentsContains(nextSelection + change) &&
-                getWindow().getContents().get(nextSelection + change) == null)
-            nextSelection += change;
-        return nextSelection + change;
+        boolean loop;
+        do
+        {
+            if (contentsContains(nextSelection + change))
+            {
+                nextSelection += change;
+            }
+            else
+            {
+                nextSelection = change > 0 ?
+                        0 : getWindow().getContents().size() - 1;
+            }
+            
+            loop = getWindow().getContents().get(nextSelection) == null
+                    || (hasRestrictions() &&
+                    !restrictions.contains(nextSelection));
+            
+        } while (loop);
+        
+        return nextSelection;
     }
     
     /**
@@ -122,13 +162,8 @@ public abstract class Menu<WindowType extends Window>
      */
     private boolean select(int change)
     {
-        if (change == 0)
-            return false;
-        
-        int nextSelection = bypassSeparators(change);
-        int fallback = change > 0 ? 0 : getWindow().getContents().size() - 1;
-        return contentsContains(nextSelection) ?
-                setSelectionIndex(nextSelection) : setSelectionIndex(fallback);
+        return change == 0 ?
+                false : setSelectionIndex(bypassRestrictions(change));
     }
     
     /**
