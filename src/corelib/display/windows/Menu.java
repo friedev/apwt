@@ -212,8 +212,8 @@ public abstract class Menu<WindowType extends Window>
     {
         switch (key.getKeyCode())
         {
-            case KeyEvent.VK_UP:   return incrementSelection();
-            case KeyEvent.VK_DOWN: return decrementSelection();
+            case KeyEvent.VK_UP:   return decrementSelection();
+            case KeyEvent.VK_DOWN: return incrementSelection();
         }
         
         return false;
