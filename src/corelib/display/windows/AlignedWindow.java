@@ -240,25 +240,33 @@ public class AlignedWindow extends CoordWindow
 
             if (hasSeparators())
             {
+                // Must be done as 2 loops so that vertical separators can
+                // overwrite horizontal ones
+                
                 for (int separator = 0; separator < separators.size();
                         separator++)
                 {
                     if (separators.size() - 1 >= separator &&
-                            separators.get(separator) != null)
+                            separators.get(separator) != null &&
+                            separators.get(separator).horizontal)
                     {
-                        if (separators.get(separator).horizontal)
-                        {
-                            getDisplay().drawLine(endpoints[separator * 2],
-                                endpoints[separator * 2 + 1]
-                                    .setX(getLocation().x + overallMaxLength),
-                                separators.get(separator));
-                        }
-                        else
-                        {
-                            getDisplay().drawLine(endpoints[separator * 2],
-                                endpoints[separator * 2 + 1],
-                                separators.get(separator));
-                        }
+                        getDisplay().drawLine(endpoints[separator * 2],
+                            endpoints[separator * 2 + 1]
+                                .setX(getLocation().x + overallMaxLength),
+                            separators.get(separator));
+                    }
+                }
+                
+                for (int separator = 0; separator < separators.size();
+                        separator++)
+                {
+                    if (separators.size() - 1 >= separator &&
+                            separators.get(separator) != null &&
+                            !separators.get(separator).horizontal)
+                    {
+                        getDisplay().drawLine(endpoints[separator * 2],
+                            endpoints[separator * 2 + 1],
+                            separators.get(separator));
                     }
                 }
             }
