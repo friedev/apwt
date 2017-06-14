@@ -1,6 +1,6 @@
 package corelib.display.windows;
 
-import corelib.display.glyphs.ColorSet;
+import corelib.display.glyphs.ColorString;
 import java.awt.Color;
 
 /** A {@link Menu} displayed on an {@link AlignedWindow}. */
@@ -34,8 +34,8 @@ public class AlignedMenu extends ColoredMenu<AlignedWindow>
     {
         AlignedWindow copy = new AlignedWindow((AlignedWindow) getWindow());
         copy.getContents().clear();
-        for (ColorSet content: getWindow().getContents())
-            copy.add(content == null ? null : new ColorSet(content));
+        for (ColorString content: getWindow().getContents())
+            copy.add(content == null ? null : new ColorString(content));
         
         applySelectionColors(copy.getContents().get(getSelectionIndex()));
         return copy;

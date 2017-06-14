@@ -1,6 +1,6 @@
 package corelib.display.windows;
 
-import corelib.display.glyphs.ColorSet;
+import corelib.display.glyphs.ColorString;
 import corelib.display.Display;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class PopupWindow extends Window
      * @param border the {@link Window}'s {@link Border}
      * @param separator the {@link Window}'s separator
      */
-    public PopupWindow(Display display, List<ColorSet> contents, Border border,
+    public PopupWindow(Display display, List<ColorString> contents, Border border,
             Line separator)
     {
         super(display, border, contents);
@@ -54,7 +54,7 @@ public class PopupWindow extends Window
      * @param contents the {@link Window}'s contents
      * @param border the {@link Window}'s {@link Border}
      */
-    public PopupWindow(Display display, List<ColorSet> contents, Border border)
+    public PopupWindow(Display display, List<ColorString> contents, Border border)
         {this(display, contents, border, null);}
     
     /**
@@ -70,7 +70,7 @@ public class PopupWindow extends Window
      * @param display the {@link Window}'s {@link corelib.display.Display}
      * @param contents the {@link Window}'s contents
      */
-    public PopupWindow(Display display, List<ColorSet> contents)
+    public PopupWindow(Display display, List<ColorString> contents)
         {this(display, contents, new Border(1));}
     
     /**
@@ -97,7 +97,7 @@ public class PopupWindow extends Window
                         + "display");
 
             int maxLength = 0;
-            for (ColorSet line: getContents())
+            for (ColorString line: getContents())
                 if (line != null && line.length() > maxLength)
                     maxLength = line.length();
 
@@ -129,8 +129,7 @@ public class PopupWindow extends Window
                         getDisplay().drawLine(Coord.get(left, top + line),
                                 Coord.get(right, top + line), separator);
 
-            getDisplay().writeCenter(getContents().toArray(
-                    new ColorSet[getContents().size()]));
+            getDisplay().writeCenter(getContents().toArray(new ColorString[getContents().size()]));
         }
         catch (IllegalArgumentException | IndexOutOfBoundsException e)
         {

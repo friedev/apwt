@@ -1,6 +1,6 @@
 package corelib.display.windows;
 
-import corelib.display.glyphs.ColorSet;
+import corelib.display.glyphs.ColorString;
 import java.awt.Color;
 
 /** A {@link Menu} displayed on a {@link PopupWindow}. */
@@ -34,8 +34,8 @@ public class PopupMenu extends ColoredMenu
     {
         PopupWindow copy = new PopupWindow((PopupWindow) getWindow());
         copy.getContents().clear();
-        for (ColorSet content: getWindow().getContents())
-            copy.add(content == null ? null : new ColorSet(content));
+        for (ColorString content: getWindow().getContents())
+            copy.add(content == null ? null : new ColorString(content));
         
         applySelectionColors(copy.getContents().get(getSelectionIndex()));
         return copy;

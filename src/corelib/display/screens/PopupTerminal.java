@@ -1,6 +1,5 @@
 package corelib.display.screens;
 
-import corelib.display.glyphs.ColorSet;
 import corelib.display.glyphs.ColorString;
 import corelib.display.windows.PopupWindow;
 import java.awt.Color;
@@ -23,7 +22,7 @@ public class PopupTerminal extends ColoredTerminal<PopupWindow>
      * @param foreground the color of the input characters
      * @param background the color of the input background
      */
-    public PopupTerminal(PopupWindow output, ColorSet prompt, int length,
+    public PopupTerminal(PopupWindow output, ColorString prompt, int length,
             Color foreground, Color background)
         {super(output, prompt, length, foreground, background);}
     
@@ -38,7 +37,7 @@ public class PopupTerminal extends ColoredTerminal<PopupWindow>
      * prompt
      * @param foreground the color of the input characters
      */
-    public PopupTerminal(PopupWindow output, ColorSet prompt, int length,
+    public PopupTerminal(PopupWindow output, ColorString prompt, int length,
             Color foreground)
         {super(output, prompt, length, foreground);}
     
@@ -52,7 +51,7 @@ public class PopupTerminal extends ColoredTerminal<PopupWindow>
      * {@link corelib.display.windows.Border borders} and the
      * prompt
      */
-    public PopupTerminal(PopupWindow output, ColorSet prompt, int length)
+    public PopupTerminal(PopupWindow output, ColorString prompt, int length)
         {super(output, prompt, length);}
     
     /**
@@ -87,7 +86,7 @@ public class PopupTerminal extends ColoredTerminal<PopupWindow>
      * @param output the {@link Terminal}'s output window
      * @param prompt the {@link Terminal}'s prompt
      */
-    public PopupTerminal(PopupWindow output, ColorSet prompt)
+    public PopupTerminal(PopupWindow output, ColorString prompt)
         {super(output, prompt);}
     
     /**
@@ -114,7 +113,7 @@ public class PopupTerminal extends ColoredTerminal<PopupWindow>
     public void displayOutput()
     {
         getWindow().set(getWindow().getContents().size() - 1,
-                new ColorSet(getPrompt()).add(new ColorString(getInput(),
+                new ColorString(getPrompt()).add(new ColorString(getInput(),
                         getInputForeground(), getInputBackground())));
         getWindow().display();
     }

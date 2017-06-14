@@ -1,6 +1,6 @@
 package corelib.display.windows;
 
-import corelib.display.glyphs.ColorSet;
+import corelib.display.glyphs.ColorString;
 import corelib.display.Display;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -9,7 +9,7 @@ import squidpony.squidmath.Coord;
 
 /**
  * A left-aligned {@link Window} with the ability to use multicolored
- * {@link corelib.display.glyphs.ColorSet ColorSets}.
+ * {@link corelib.display.glyphs.ColorString ColorStrings}.
  */
 public class AlignedWindow extends CoordWindow
 {
@@ -34,7 +34,7 @@ public class AlignedWindow extends CoordWindow
      * @param border the {@link Window}'s {@link Border}
      * @param separators the {@link Window}'s separators
      */
-    public AlignedWindow(Display display, List<ColorSet> contents,
+    public AlignedWindow(Display display, List<ColorString> contents,
             Coord location, Border border, List<Line> separators)
     {
         super(display, border, contents, location);
@@ -69,7 +69,7 @@ public class AlignedWindow extends CoordWindow
      * @param location the {@link Window}'s location
      * @param border the {@link Window}'s {@link Border}
      */
-    public AlignedWindow(Display display, List<ColorSet> contents,
+    public AlignedWindow(Display display, List<ColorString> contents,
             Coord location, Border border)
         {this(display, contents, location, border, null);}
     
@@ -79,7 +79,7 @@ public class AlignedWindow extends CoordWindow
      * @param contents the {@link Window}'s contents
      * @param location the {@link Window}'s location
      */
-    public AlignedWindow(Display display, List<ColorSet> contents,
+    public AlignedWindow(Display display, List<ColorString> contents,
             Coord location)
         {this(display, contents, location, new Border(1));}
     
@@ -119,16 +119,16 @@ public class AlignedWindow extends CoordWindow
 
             int nBlocks = 1;
 
-            for (ColorSet line: getContents())
+            for (ColorString line: getContents())
                 if (line == null)
                     nBlocks++;
 
-            ArrayList<ColorSet>[] blocks = new ArrayList[nBlocks]; 
+            ArrayList<ColorString>[] blocks = new ArrayList[nBlocks]; 
 
             int curBlock = 0;
             blocks[0] = new ArrayList<>();
 
-            for (ColorSet line: getContents())
+            for (ColorString line: getContents())
             {
                 if (line != null)
                 {
@@ -155,7 +155,7 @@ public class AlignedWindow extends CoordWindow
                 textPoints[block] = Coord.get(curIndent, curLine);
 
                 int curMaxLength = 0;
-                for (ColorSet line: blocks[block])
+                for (ColorString line: blocks[block])
                     if (line.getSet().size() > curMaxLength)
                         curMaxLength = line.getSet().size();
 
@@ -272,8 +272,7 @@ public class AlignedWindow extends CoordWindow
             }
 
             for (int block = 0; block < nBlocks; block++)
-                getDisplay().write(textPoints[block], blocks[block].toArray(
-                        new ColorSet[blocks[block].size()]));
+                getDisplay().write(textPoints[block], blocks[block].toArray(new ColorString[blocks[block].size()]));
         }
         catch (IllegalArgumentException | IndexOutOfBoundsException e)
         {

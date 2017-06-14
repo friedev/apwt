@@ -1,8 +1,7 @@
 package corelib.display.screens;
 
-import corelib.display.glyphs.ColorSet;
-import corelib.display.windows.AlignedWindow;
 import corelib.display.glyphs.ColorString;
+import corelib.display.windows.AlignedWindow;
 import java.awt.Color;
 
 /** A {@link Terminal} displayed through an {@link AlignedWindow}. */
@@ -20,7 +19,7 @@ public class AlignedTerminal extends ColoredTerminal<AlignedWindow>
      * @param foreground the color of the input characters
      * @param background the color of the input background
      */
-    public AlignedTerminal(AlignedWindow output, ColorSet prompt, int length,
+    public AlignedTerminal(AlignedWindow output, ColorString prompt, int length,
             Color foreground, Color background)
         {super(output, prompt, length, foreground, background);}
     
@@ -35,7 +34,7 @@ public class AlignedTerminal extends ColoredTerminal<AlignedWindow>
      * prompt
      * @param foreground the color of the input characters
      */
-    public AlignedTerminal(AlignedWindow output, ColorSet prompt, int length,
+    public AlignedTerminal(AlignedWindow output, ColorString prompt, int length,
             Color foreground)
         {super(output, prompt, length, foreground);}
     
@@ -49,7 +48,7 @@ public class AlignedTerminal extends ColoredTerminal<AlignedWindow>
      * {@link corelib.display.windows.Border borders} and the
      * prompt
      */
-    public AlignedTerminal(AlignedWindow output, ColorSet prompt, int length)
+    public AlignedTerminal(AlignedWindow output, ColorString prompt, int length)
         {super(output, prompt, length);}
     
     /**
@@ -84,7 +83,7 @@ public class AlignedTerminal extends ColoredTerminal<AlignedWindow>
      * @param output the {@link Terminal}'s output window
      * @param prompt the {@link Terminal}'s prompt
      */
-    public AlignedTerminal(AlignedWindow output, ColorSet prompt)
+    public AlignedTerminal(AlignedWindow output, ColorString prompt)
         {super(output, prompt);}
     
     /**
@@ -111,7 +110,7 @@ public class AlignedTerminal extends ColoredTerminal<AlignedWindow>
     public void displayOutput()
     {
         getWindow().set(getWindow().getContents().size() - 1,
-                new ColorSet(getPrompt()).add(new ColorString(getInput(),
+                new ColorString(getPrompt()).add(new ColorString(getInput(),
                         getInputForeground(), getInputBackground())));
         getWindow().display();
     }

@@ -1,6 +1,6 @@
 package corelib.display.screens;
 
-import corelib.display.glyphs.ColorSet;
+import corelib.display.glyphs.ColorString;
 import corelib.display.windows.Window;
 import java.awt.Color;
 
@@ -31,7 +31,7 @@ public abstract class ColoredTerminal<Output extends Window>
      * @param foreground the color of the input characters
      * @param background the color of the input background
      */
-    public ColoredTerminal(Output output, ColorSet prompt, int length,
+    public ColoredTerminal(Output output, ColorString prompt, int length,
             Color foreground, Color background)
     {
         super(output, prompt, length);
@@ -50,7 +50,7 @@ public abstract class ColoredTerminal<Output extends Window>
      * prompt
      * @param foreground the color of the input characters
      */
-    public ColoredTerminal(Output output, ColorSet prompt, int length,
+    public ColoredTerminal(Output output, ColorString prompt, int length,
             Color foreground)
         {this(output, prompt, length, foreground, null);}
     
@@ -64,7 +64,7 @@ public abstract class ColoredTerminal<Output extends Window>
      * {@link corelib.display.windows.Border borders} and the
      * prompt
      */
-    public ColoredTerminal(Output output, ColorSet prompt, int length)
+    public ColoredTerminal(Output output, ColorString prompt, int length)
         {this(output, prompt, length, null, null);}
     
     /**
@@ -78,7 +78,7 @@ public abstract class ColoredTerminal<Output extends Window>
      * prompt
      */
     public ColoredTerminal(Output output, String prompt, int length)
-        {this(output, new ColorSet(prompt), length, null, null);}
+        {this(output, new ColorString(prompt), length, null, null);}
     
     /**
      * Creates an {@link ColoredTerminal} with the given
@@ -89,7 +89,7 @@ public abstract class ColoredTerminal<Output extends Window>
      * {@link corelib.display.windows.Border borders}
      */
     public ColoredTerminal(Output output, int length)
-        {this(output, new ColorSet(""), length, null, null);}
+        {this(output, new ColorString(""), length, null, null);}
     
     /**
      * Creates an {@link ColoredTerminal} with the given
@@ -99,7 +99,7 @@ public abstract class ColoredTerminal<Output extends Window>
      * @param output the {@link Terminal}'s output window
      * @param prompt the {@link Terminal}'s prompt
      */
-    public ColoredTerminal(Output output, ColorSet prompt)
+    public ColoredTerminal(Output output, ColorString prompt)
         {this(output, prompt, output.getDisplay().getCharWidth(), null, null);}
     
     /**
@@ -111,7 +111,7 @@ public abstract class ColoredTerminal<Output extends Window>
      * @param prompt the {@link Terminal}'s prompt
      */
     public ColoredTerminal(Output output, String prompt)
-        {this(output, new ColorSet(prompt));}
+        {this(output, new ColorString(prompt));}
     
     /**
      * Creates an {@link ColoredTerminal} with no prompt
@@ -120,7 +120,7 @@ public abstract class ColoredTerminal<Output extends Window>
      * @param output the {@link Terminal}'s output window
      */
     public ColoredTerminal(Output output)
-        {this(output, new ColorSet(""));}
+        {this(output, new ColorString(""));}
     
     /**
      * Returns the color of inputted text.

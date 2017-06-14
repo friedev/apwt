@@ -1,7 +1,7 @@
 package corelib.display.windows;
 
 import corelib.display.Display;
-import corelib.display.glyphs.ColorSet;
+import corelib.display.glyphs.ColorString;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +114,7 @@ public abstract class Menu<WindowType extends Window>
      * Gets the currently selected item.
      * @return the currently selected item
      */
-    public ColorSet getSelection()
+    public ColorString getSelection()
         {return window.getContents().get(selection);}
     
     /**

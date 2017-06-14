@@ -1,6 +1,6 @@
 package corelib.display.screens;
 
-import corelib.display.glyphs.ColorSet;
+import corelib.display.glyphs.ColorString;
 import corelib.display.windows.Window;
 import java.awt.event.KeyEvent;
 
@@ -22,10 +22,10 @@ public abstract class Terminal<Output extends Window> extends ConfirmationScreen
     private Output output;
     
     /**
-     * The {@link ColorSet} printed before the entered input is shown to the
+     * The {@link ColorString} printed before the entered input is shown to the
      * user.
      */
-    private ColorSet prompt;
+    private ColorString prompt;
     
     /**
      * The input length at which the {@link Terminal} will not accept any new
@@ -41,7 +41,7 @@ public abstract class Terminal<Output extends Window> extends ConfirmationScreen
      * @param length the {@link Terminal}'s maximum length, counting Window
      * {@link corelib.display.windows.Border borders}
      */
-    public Terminal(Output output, ColorSet prompt, int length)
+    public Terminal(Output output, ColorString prompt, int length)
     {
         super(output.getDisplay());
         input = new StringBuilder();
@@ -102,7 +102,7 @@ public abstract class Terminal<Output extends Window> extends ConfirmationScreen
      * Returns this {@link Terminal}'s prompt.
      * @return this {@link Terminal}'s prompt
      */
-    public ColorSet getPrompt()
+    public ColorString getPrompt()
         {return prompt;}
     
     /**

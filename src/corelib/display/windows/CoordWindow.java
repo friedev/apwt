@@ -1,7 +1,7 @@
 package corelib.display.windows;
 
 import corelib.display.Display;
-import corelib.display.glyphs.ColorSet;
+import corelib.display.glyphs.ColorString;
 import java.util.List;
 import squidpony.squidmath.Coord;
 
@@ -18,7 +18,7 @@ public abstract class CoordWindow extends Window
      * @param contents the {@link Window}'s initial contents
      * @param location the {@link Window}'s location
      */
-    public CoordWindow(Display display, Border border, List<ColorSet> contents,
+    public CoordWindow(Display display, Border border, List<ColorString> contents,
             Coord location)
     {
         super(display, border, contents);
@@ -43,7 +43,7 @@ public abstract class CoordWindow extends Window
      * @param contents the {@link Window}'s initial contents
      * @param location the {@link Window}'s location
      */
-    public CoordWindow(Display display, List<ColorSet> contents, Coord location)
+    public CoordWindow(Display display, List<ColorString> contents, Coord location)
     {
         super(display, contents);
         this.location = location;
