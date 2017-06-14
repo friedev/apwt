@@ -22,8 +22,8 @@ public class PopupWindow extends Window
      * @param border the {@link Window}'s {@link Border}
      * @param separator the {@link Window}'s separator
      */
-    public PopupWindow(Display display, List<ColorString> contents, Border border,
-            Line separator)
+    public PopupWindow(Display display, List<ColorString> contents,
+            Border border, Line separator)
     {
         super(display, border, contents);
         this.separator = separator;
@@ -54,7 +54,8 @@ public class PopupWindow extends Window
      * @param contents the {@link Window}'s contents
      * @param border the {@link Window}'s {@link Border}
      */
-    public PopupWindow(Display display, List<ColorString> contents, Border border)
+    public PopupWindow(Display display, List<ColorString> contents,
+            Border border)
         {this(display, contents, border, null);}
     
     /**
@@ -129,7 +130,8 @@ public class PopupWindow extends Window
                         getDisplay().drawLine(Coord.get(left, top + line),
                                 Coord.get(right, top + line), separator);
 
-            getDisplay().writeCenter(getContents().toArray(new ColorString[getContents().size()]));
+            getDisplay().writeCenter(getContents().toArray(
+                    new ColorString[getContents().size()]));
         }
         catch (IllegalArgumentException | IndexOutOfBoundsException e)
         {

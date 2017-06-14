@@ -55,7 +55,7 @@ public abstract class Terminal<Output extends Window> extends ConfirmationScreen
         if (output.isBordered())
             maxInputLength -= 2;
         
-        output.add(prompt);
+        output.getContents().add(prompt);
     }
     
     /**

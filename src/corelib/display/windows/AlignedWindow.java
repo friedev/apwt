@@ -272,7 +272,8 @@ public class AlignedWindow extends CoordWindow
             }
 
             for (int block = 0; block < nBlocks; block++)
-                getDisplay().write(textPoints[block], blocks[block].toArray(new ColorString[blocks[block].size()]));
+                getDisplay().write(textPoints[block], blocks[block].toArray(
+                        new ColorString[blocks[block].size()]));
         }
         catch (IllegalArgumentException | IndexOutOfBoundsException e)
         {
@@ -319,13 +320,11 @@ public class AlignedWindow extends CoordWindow
     /**
      * Adds a separator associated with the provided {@link Line}.
      * @param separator the {@link Line} to add as a separator
-     * @return this for convenient chaining
      */
-    public AlignedWindow addSeparator(Line separator)
+    public void addSeparator(Line separator)
     {
         getContents().add(null);
         separators.add(separator);
-        return this;
     }
     
     /**

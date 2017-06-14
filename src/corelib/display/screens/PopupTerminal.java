@@ -112,7 +112,7 @@ public class PopupTerminal extends ColoredTerminal<PopupWindow>
     @Override
     public void displayOutput()
     {
-        getWindow().set(getWindow().getContents().size() - 1,
+        getWindow().getContents().set(getWindow().getContents().size() - 1,
                 new ColorString(getPrompt()).add(new ColorString(getInput(),
                         getInputForeground(), getInputBackground())));
         getWindow().display();

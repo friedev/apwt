@@ -109,7 +109,7 @@ public class AlignedTerminal extends ColoredTerminal<AlignedWindow>
     @Override
     public void displayOutput()
     {
-        getWindow().set(getWindow().getContents().size() - 1,
+        getWindow().getContents().set(getWindow().getContents().size() - 1,
                 new ColorString(getPrompt()).add(new ColorString(getInput(),
                         getInputForeground(), getInputBackground())));
         getWindow().display();

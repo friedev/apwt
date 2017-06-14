@@ -95,37 +95,7 @@ public abstract class Window
     public boolean isBordered()
         {return border != null;}
     
-    /**
-     * Adds the provided content to the {@link Window}'s contents.
-     * @param content the content to add
-     * @return this for convenient chaining
-     */
-    public Window add(ColorString content)
-        {contents.add(content); return this;}
-    
-    /**
-     * Sets the line of the {@link Window}'s contents at the index to the
-     * provided content.
-     * @param index the line of the {@link Window}'s contents to replace
-     * @param content the content that will be set at the line
-     */
-    public void set(int index, ColorString content)
-        {contents.set(index, content);}
-    
-    /**
-     * Inserts the given {@link corelib.display.glyphs.ColorString} into the given
-     * index of the {@link Window}'s contents.
-     * @param index the index at which to insert the
-     * {@link corelib.display.glyphs.ColorString}
-     * @param content the * {@link corelib.display.glyphs.ColorString} to insert
-     */
-    public void insert(int index, ColorString content)
-        {contents.add(index, content);}
-    
-    /**
-     * Adds a null line, acting as a separator, to the content.
-     * @return this for convenient chaining
-     */
-    public Window addSeparator()
-        {contents.add(null); return this;}
+    /** Adds a null line, acting as a separator, to the content. */
+    public void addSeparator()
+        {contents.add(null);}
 }

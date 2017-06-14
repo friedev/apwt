@@ -35,7 +35,8 @@ public class PopupMenu extends ColoredMenu
         PopupWindow copy = new PopupWindow((PopupWindow) getWindow());
         copy.getContents().clear();
         for (ColorString content: getWindow().getContents())
-            copy.add(content == null ? null : new ColorString(content));
+            copy.getContents().add(content == null ?
+                    null : new ColorString(content));
         
         applySelectionColors(copy.getContents().get(getSelectionIndex()));
         return copy;
