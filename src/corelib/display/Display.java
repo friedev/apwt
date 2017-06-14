@@ -160,6 +160,15 @@ public class Display extends JFrame implements KeyListener
         {return panel;}
     
     /**
+     * Returns this {@link Display}'s current
+     * {@link corelib.display.screens.Screen}.
+     * @return this {@link Display}'s current
+     * {@link corelib.display.screens.Screen}
+     */
+    public Screen getScreen()
+        {return screen;}
+    
+    /**
      * Writes a String to this {@link Display}'s {@link asciiPanel.AsciiPanel},
      * using the default
      * foreground and background colors.
