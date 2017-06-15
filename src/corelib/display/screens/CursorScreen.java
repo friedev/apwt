@@ -1,5 +1,6 @@
 package corelib.display.screens;
 
+import corelib.Utility;
 import corelib.display.Display;
 import corelib.map.Entity;
 import java.awt.event.KeyEvent;
@@ -37,7 +38,7 @@ public class CursorScreen extends ConfirmationScreen
     @Override
     public Screen processInput(KeyEvent key)
     {
-        Direction direction = Display.keyToDirection(key);
+        Direction direction = Utility.keyToDirection(key);
         if (direction != null)
         {
             cursor.changeLocation(direction);

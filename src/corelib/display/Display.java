@@ -11,7 +11,6 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
-import squidpony.squidgrid.Direction;
 import squidpony.squidmath.Coord;
 
 /**
@@ -88,69 +87,6 @@ public class Display extends JFrame implements KeyListener
 
     @Override
     public void keyTyped(KeyEvent e) {}
-    
-    /**
-     * Converts the given KeyEvent into a Direction, referring only to the arrow
-     * keys.
-     * @param key the KeyEvent to convert into a Direction
-     * @return the Direction corresponding to the provided KeyEvent; will be
-     * orthogonal
-     */
-    public static Direction keyToDirectionRestricted(KeyEvent key)
-    {
-        if (key == null)
-            return null;
-        
-        switch (key.getKeyCode())
-        {
-            case KeyEvent.VK_UP:    return Direction.UP;
-            case KeyEvent.VK_DOWN:  return Direction.DOWN;
-            case KeyEvent.VK_LEFT:  return Direction.LEFT;
-            case KeyEvent.VK_RIGHT: return Direction.RIGHT;
-        }
-        
-        return null;
-    }
-    
-    /**
-     * Converts the given KeyEvent into a Direction, referring to many different
-     * sets of directional keys. These include the arrow keys, WASD, the VI
-     * keys, and the number pad.
-     * @param key the KeyEvent to convert into a Direction
-     * @return the Direction corresponding to the provided KeyEvent; may be
-     * orthogonal or diagonal
-     */
-    public static Direction keyToDirection(KeyEvent key)
-    {
-        if (key == null)
-            return null;
-        
-        Direction restricted = keyToDirectionRestricted(key);
-        if (restricted != null)
-            return restricted;
-        
-        switch (key.getKeyCode())
-        {
-            case KeyEvent.VK_K: case KeyEvent.VK_W: case KeyEvent.VK_NUMPAD8:
-                return Direction.UP;
-            case KeyEvent.VK_J: case KeyEvent.VK_S: case KeyEvent.VK_NUMPAD2:
-                return Direction.DOWN;
-            case KeyEvent.VK_H: case KeyEvent.VK_A: case KeyEvent.VK_NUMPAD4:
-                return Direction.LEFT;
-            case KeyEvent.VK_L: case KeyEvent.VK_D: case KeyEvent.VK_NUMPAD6:
-                return Direction.RIGHT;
-            case KeyEvent.VK_Y: case KeyEvent.VK_NUMPAD7:
-                return Direction.UP_LEFT;
-            case KeyEvent.VK_U: case KeyEvent.VK_NUMPAD9:
-                return Direction.UP_RIGHT;
-            case KeyEvent.VK_B: case KeyEvent.VK_NUMPAD1:
-                return Direction.DOWN_LEFT;
-            case KeyEvent.VK_N: case KeyEvent.VK_NUMPAD3:
-                return Direction.DOWN_RIGHT;
-        }
-        
-        return null;
-    }
     
     /**
      * Returns this {@link Display}'s {@link asciiPanel.AsciiPanel}.

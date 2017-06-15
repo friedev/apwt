@@ -1,5 +1,6 @@
 package corelib.display.windows;
 
+import corelib.Utility;
 import corelib.display.Display;
 import corelib.display.glyphs.ColorString;
 import java.awt.event.KeyEvent;
@@ -188,7 +189,7 @@ public abstract class Menu<WindowType extends Window>
      */
     public boolean updateSelection(KeyEvent key)
     {
-        Direction direction = Display.keyToDirection(key);
+        Direction direction = Utility.keyToDirection(key);
         
         if (direction == null)
             return false;
