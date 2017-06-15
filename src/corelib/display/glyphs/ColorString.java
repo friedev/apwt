@@ -34,7 +34,6 @@ public class ColorString implements CharSequence
      */
     public ColorString(ColorString copying)
         {this(new ArrayList<>(copying.set));}
-    
     /**
      * Creates a {@link ColorString} from an array of {@link ColorChar ColorChars},
      * converting it into a List.
@@ -242,8 +241,7 @@ public class ColorString implements CharSequence
     @Override
     public ColorString subSequence(int start, int end)
     {
-        return new ColorString(set.subList(start, end).toArray(
-                new ColorChar[end - start + 1]));
+        return new ColorString(set.subList(start, end));
     }
     
     /**
