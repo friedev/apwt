@@ -177,16 +177,21 @@ public abstract class Nameable
         {return amount == 1 ? name : name + "s";}
     
     /**
-     * Returns the full name of a String in lower case, meaning that either 'a'
-     * or 'an' will be attached to the front.
+     * Returns the indefinite article that would precede this name.
+     * @param name the String to generate an article for
+     * @return the indefinite article that would precede this name
+     */
+    public static String getArticle(String name)
+        {return isVowel(name.charAt(0)) ? "an" : "a";}
+    
+    /**
+     * Returns the full name of a String in lower case, preceded by an
+     * indefinite article.
      * @param name the String to generate a full name for
      * @return the full name of the String as described above
      */
     public static String getFullName(String name)
-    {
-        return isVowel(name.charAt(0)) ?
-            "an " + name.toLowerCase() : "a " + name.toLowerCase();
-    }
+        {return getArticle(name) + " " + name.toLowerCase();}
     
     /**
      * Performs the same function as the normal full name method, except the 'a'
@@ -242,12 +247,19 @@ public abstract class Nameable
         {return makePlural(name, amount);}
     
     /**
-     * Returns the full name of the item in lower case, meaning that either 'a'
-     * or 'an' will be attached to the front.
-     * @return the full name of the item as described above
+     * Returns the indefinite article that would precede this item's name.
+     * @return the indefinite article that would precede this item's name
+     */
+    public String getArticle()
+        {return getArticle(name);}
+    
+    /**
+     * Returns the full name of the item in lower case, preceded by an
+     * indefinite article.
+     * @return the item's name as described above
      */
     public String getFullName()
-     {return getFullName(name);}
+        {return getFullName(name);}
     
     /**
      * Performs the same function as the normal full name method, except the 'a'
