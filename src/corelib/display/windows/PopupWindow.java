@@ -125,10 +125,16 @@ public class PopupWindow extends Window
                     Coord.get(right, bottom), getBorder());
 
             if (separator != null)
+            {
                 for (int line = 0; line < getContents().size(); line++)
+                {
                     if (getContents().get(line) == null)
-                        getDisplay().drawLine(Coord.get(left, top + line),
-                                Coord.get(right, top + line), separator);
+                    {
+                        getDisplay().drawLine(Coord.get(left, top + 1 + line),
+                                Coord.get(right, top + 1 + line), separator);
+                    }
+                }
+            }
 
             getDisplay().writeCenter(getContents().toArray(
                     new ColorString[getContents().size()]));

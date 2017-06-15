@@ -34,6 +34,7 @@ public class ColorString implements CharSequence
      */
     public ColorString(ColorString copying)
         {this(new ArrayList<>(copying.set));}
+    
     /**
      * Creates a {@link ColorString} from an array of {@link ColorChar ColorChars},
      * converting it into a List.
