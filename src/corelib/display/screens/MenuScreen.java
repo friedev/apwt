@@ -8,7 +8,8 @@ import java.awt.event.KeyEvent;
  * and selecting items on it.
  * @param <MenuType> the type of {@link Menu} used in the {@link Screen}
  */
-public class MenuScreen<MenuType extends Menu> extends ConfirmationScreen
+public abstract class MenuScreen<MenuType extends Menu>
+        extends ConfirmationScreen
 {
     /**
      * The {@link corelib.display.windows.Menu} displayed and navigated by the
@@ -47,15 +48,4 @@ public class MenuScreen<MenuType extends Menu> extends ConfirmationScreen
      */
     public MenuType getMenu()
         {return menu;}
-    
-    @Override
-    public Screen onConfirm()
-        {return null;}
-
-    @Override
-    public Screen onCancel()
-    {
-        menu = null;
-        return null;
-    }
 }
