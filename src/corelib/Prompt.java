@@ -161,7 +161,7 @@ public abstract class Prompt
             if ("cancel".equals(intString))
                 return null;
             
-            Integer parsedInteger = parseInt(intString);
+            Integer parsedInteger = Utility.parseInt(intString);
             if (parsedInteger == null)
             {
                 Console.println(INDENT_ERROR,
@@ -176,54 +176,6 @@ public abstract class Prompt
         
         // NOT REACHED
         return null;
-    }
-    
-    /**
-     * A modified version of Integer.parseInt() that will return null instead of
-     * throwing a NumberFormatException.
-     * @param intString the String to parse for integers
-     * @return an Integer read from the given String; null if none were found
-     */
-    public static Integer parseInt(String intString)
-    {
-        try
-        {
-            return Integer.parseInt(intString);
-        }
-        catch (NumberFormatException nf)
-        {
-            return null;
-        }
-    }
-    
-    /**
-     * A modified version of Integer.parseInt() that will return the default
-     * value instead of throwing a NumberFormatException.
-     * @param intString the String to parse for integers
-     * @param defaultValue the value to return if the parsing fails
-     * @return an int read from the given String; the defaultValue if none were
-     * found
-     */
-    public static int parseInt(String intString, int defaultValue)
-    {
-        Integer parsedInt = parseInt(intString);
-        return parsedInt == null ? defaultValue : parsedInt;
-    }
-    
-    /**
-     * Parses a Coord from the given ordered pair as a String.
-     * @param orderedPair the ordered pair to parse, must be in the format
-     * {@code (x, y)}
-     * @return the Coord parsed from the given String
-     */
-    public static Coord parseCoord(String orderedPair)
-    {
-        orderedPair = orderedPair.replace("(", "");
-        orderedPair = orderedPair.replace(")", "");
-        orderedPair = orderedPair.replace(",", "");
-        String[] split = orderedPair.split(" ");
-        
-        return Coord.get(parseInt(split[0], 0), parseInt(split[1], 0));
     }
     
     /**
@@ -353,7 +305,7 @@ public abstract class Prompt
     {
         if (command != null && command.length > index && command[index] != null)
         {
-            Integer initialInt = parseInt(command[index]);
+            Integer initialInt = Utility.parseInt(command[index]);
             if (initialInt != null)
                 return initialInt;
         }
@@ -393,7 +345,7 @@ public abstract class Prompt
         if (command != null && command.length > Math.max(indexX, indexY) &&
                 command[indexX] != null && command[indexY] != null)
         {
-            Integer initialX = parseInt(command[indexX]);
+            Integer initialX = Utility.parseInt(command[indexX]);
             
             if (initialX == null)
             {
@@ -402,7 +354,7 @@ public abstract class Prompt
                     return null;
             }
             
-            Integer initialY = parseInt(command[indexY]);
+            Integer initialY = Utility.parseInt(command[indexY]);
             
             if (initialY == null)
             {

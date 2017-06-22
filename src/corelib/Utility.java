@@ -3,6 +3,7 @@ package corelib;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import squidpony.squidgrid.Direction;
+import squidpony.squidmath.Coord;
 import squidpony.squidmath.RNG;
 
 /**
@@ -10,6 +11,54 @@ import squidpony.squidmath.RNG;
  */
 public abstract class Utility
 {
+    /**
+     * A modified version of Integer.parseInt() that will return null instead of
+     * throwing a NumberFormatException.
+     * @param intString the String to parse for integers
+     * @return an Integer read from the given String; null if none were found
+     */
+    public static Integer parseInt(String intString)
+    {
+        try
+        {
+            return Integer.parseInt(intString);
+        }
+        catch (NumberFormatException nf)
+        {
+            return null;
+        }
+    }
+    
+    /**
+     * A modified version of Integer.parseInt() that will return the default
+     * value instead of throwing a NumberFormatException.
+     * @param intString the String to parse for integers
+     * @param defaultValue the value to return if the parsing fails
+     * @return an int read from the given String; the defaultValue if none were
+     * found
+     */
+    public static int parseInt(String intString, int defaultValue)
+    {
+        Integer parsedInt = parseInt(intString);
+        return parsedInt == null ? defaultValue : parsedInt;
+    }
+    
+    /**
+     * Parses a Coord from the given ordered pair as a String.
+     * @param orderedPair the ordered pair to parse, must be in the format
+     * {@code (x, y)}
+     * @return the Coord parsed from the given String
+     */
+    public static Coord parseCoord(String orderedPair)
+    {
+        orderedPair = orderedPair.replace("(", "");
+        orderedPair = orderedPair.replace(")", "");
+        orderedPair = orderedPair.replace(",", "");
+        String[] split = orderedPair.split(" ");
+        
+        return Coord.get(parseInt(split[0], 0), parseInt(split[1], 0));
+    }
+    
     /**
      * Converts the given KeyEvent into a Direction, referring only to the arrow
      * keys.
