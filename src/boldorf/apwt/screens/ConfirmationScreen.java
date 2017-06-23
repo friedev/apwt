@@ -66,6 +66,15 @@ public abstract class ConfirmationScreen extends Screen
         return this;
     }
     
+    public List<Integer> getConfirmCodes()
+        {return confirmCodes;}
+    
+    public List<Integer> getDenyCodes()
+        {return denyCodes;}
+    
+    public List<Integer> getCancelCodes()
+        {return cancelCodes;}
+    
     /**
      * Performs this {@link ConfirmationScreen}'s confirmation actions. By
      * default, performs the same actions as {@link #onCancel()}.
