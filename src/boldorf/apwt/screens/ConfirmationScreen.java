@@ -12,17 +12,36 @@ import java.util.List;
  */
 public abstract class ConfirmationScreen extends Screen
 {
+    /** The default confirmation keycodes. */
     public static final List<Integer> CONFIRM_CODES =
             Arrays.asList(new Integer[]{KeyEvent.VK_ENTER, KeyEvent.VK_Y});
+    
+    /** The default denial keycodes. */
     public static final List<Integer> DENY_CODES =
             Arrays.asList(new Integer[]{KeyEvent.VK_N});
+    
+    /** The default cancellation keycodes. */
     public static final List<Integer> CANCEL_CODES =
             Arrays.asList(new Integer[]{KeyEvent.VK_ESCAPE, KeyEvent.VK_Q});
     
+    /** The keycodes that will trigger {@link #onConfirm()}. */
     private List<Integer> confirmCodes;
+    
+    /** The keycodes that will trigger {@link #onDeny()}. */
     private List<Integer> denyCodes;
+    
+    /** The keycodes that will trigger {@link #onCancel()}. */
     private List<Integer> cancelCodes;
     
+    /**
+     * Creates a new {@link ConfirmationScreen} on the provided {@link Display}
+     * with the given Lists of keycodes.
+     * @param display the {@link Display} on which the
+     * {@link ConfirmationScreen} will be shown
+     * @param confirmCodes the keycodes that will trigger {@link #onConfirm()}
+     * @param denyCodes the keycodes that will trigger {@link #onDeny()}
+     * @param cancelCodes the keycodes that will trigger {@link #onCancel()}
+     */
     public ConfirmationScreen(Display display, List<Integer> confirmCodes,
             List<Integer> denyCodes, List<Integer> cancelCodes)
     {
@@ -32,6 +51,15 @@ public abstract class ConfirmationScreen extends Screen
         this.cancelCodes  = cancelCodes;
     }
     
+    /**
+     * Creates a new {@link ConfirmationScreen} on the provided {@link Display}
+     * with the given arrays of keycodes.
+     * @param display the {@link Display} on which the
+     * {@link ConfirmationScreen} will be shown
+     * @param confirmCodes the keycodes that will trigger {@link #onConfirm()}
+     * @param denyCodes the keycodes that will trigger {@link #onDeny()}
+     * @param cancelCodes the keycodes that will trigger {@link #onCancel()}
+     */
     public ConfirmationScreen(Display display, Integer[] confirmCodes,
             Integer[] denyCodes, Integer[] cancelCodes)
     {
@@ -42,6 +70,7 @@ public abstract class ConfirmationScreen extends Screen
     
     /**
      * Creates a new {@link ConfirmationScreen} on the provided {@link Display}.
+     * Uses the default keycodes.
      * @param display the {@link Display} on which the
      * {@link ConfirmationScreen} will be shown
      */
@@ -73,12 +102,24 @@ public abstract class ConfirmationScreen extends Screen
         return this;
     }
     
+    /**
+     * Returns this {@link ConfirmationScreen}'s confirmation keycodes.
+     * @return this {@link ConfirmationScreen}'s confirmation keycodes
+     */
     public List<Integer> getConfirmCodes()
         {return confirmCodes;}
     
+    /**
+     * Returns this {@link ConfirmationScreen}'s denial keycodes.
+     * @return this {@link ConfirmationScreen}'s denial keycodes
+     */
     public List<Integer> getDenyCodes()
         {return denyCodes;}
     
+    /**
+     * Returns this {@link ConfirmationScreen}'s cancellation keycodes.
+     * @return this {@link ConfirmationScreen}'s cancellation keycodes
+     */
     public List<Integer> getCancelCodes()
         {return cancelCodes;}
     
