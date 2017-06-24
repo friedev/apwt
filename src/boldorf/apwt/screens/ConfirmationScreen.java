@@ -12,6 +12,13 @@ import java.util.List;
  */
 public abstract class ConfirmationScreen extends Screen
 {
+    public static final List<Integer> CONFIRM_CODES =
+            Arrays.asList(new Integer[]{KeyEvent.VK_ENTER, KeyEvent.VK_Y});
+    public static final List<Integer> DENY_CODES =
+            Arrays.asList(new Integer[]{KeyEvent.VK_N});
+    public static final List<Integer> CANCEL_CODES =
+            Arrays.asList(new Integer[]{KeyEvent.VK_ESCAPE, KeyEvent.VK_Q});
+    
     private List<Integer> confirmCodes;
     private List<Integer> denyCodes;
     private List<Integer> cancelCodes;
@@ -40,10 +47,8 @@ public abstract class ConfirmationScreen extends Screen
      */
     public ConfirmationScreen(Display display)
     {
-        this(display,
-                new Integer[] {KeyEvent.VK_ENTER, KeyEvent.VK_Y},
-                new Integer[] {KeyEvent.VK_N},
-                new Integer[] {KeyEvent.VK_ESCAPE, KeyEvent.VK_Q});
+        this(display, new ArrayList<>(CONFIRM_CODES),
+                new ArrayList<>(DENY_CODES), new ArrayList<>(CANCEL_CODES));
     }
     
     /**
