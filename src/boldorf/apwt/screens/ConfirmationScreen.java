@@ -2,6 +2,7 @@ package boldorf.apwt.screens;
 
 import boldorf.apwt.Display;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,8 +28,9 @@ public abstract class ConfirmationScreen extends Screen
     public ConfirmationScreen(Display display, Integer[] confirmCodes,
             Integer[] denyCodes, Integer[] cancelCodes)
     {
-        this(display, Arrays.asList(confirmCodes), Arrays.asList(denyCodes),
-                Arrays.asList(cancelCodes));
+        this(display, new ArrayList<>(Arrays.asList(confirmCodes)),
+                new ArrayList<>(Arrays.asList(denyCodes)),
+                new ArrayList<>(Arrays.asList(cancelCodes)));
     }
     
     /**
