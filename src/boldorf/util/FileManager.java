@@ -97,6 +97,21 @@ public abstract class FileManager
             file.delete();
     }
     
+    public static List<String> getFilesInFolder(String folderPath)
+    {
+        File folder = new File(path + folderPath);
+        if (!folder.isDirectory())
+            return null;
+        
+        List<String> paths = new ArrayList<>();
+        for (File file: folder.listFiles())
+        {
+            if (!file.isDirectory())
+                paths.add(folderPath + file.getName());
+        }
+        return paths;
+    }
+    
     /**
      * Creates all folders containing the target file or folder, using
      * recursion up to the base directory specified by the path field.
