@@ -56,6 +56,10 @@ public abstract class Terminal<Output extends Window> extends ConfirmationScreen
             maxInputLength -= 2;
         
         output.getContents().add(prompt);
+        
+        getConfirmCodes().remove(new Integer(KeyEvent.VK_Y));
+        getDenyCodes().remove(new Integer(KeyEvent.VK_N));
+        getCancelCodes().remove(new Integer(KeyEvent.VK_Q));
     }
     
     /**
