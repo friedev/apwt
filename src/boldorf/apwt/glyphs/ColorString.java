@@ -36,13 +36,22 @@ public class ColorString implements CharSequence
         {this(new ArrayList<>(copying.set));}
     
     /**
-     * Creates a {@link ColorString} from an array of {@link ColorChar ColorChars},
-     * converting it into a List.
+     * Creates a {@link ColorString} with the
+     * {@link ColorStringObject#toColorString()} method from a
+     * {@link ColorStringObject}.
+     * @param o the {@link ColorStringObject} to read from
+     */
+    public ColorString(ColorStringObject o)
+        {this(o.toColorString());}
+    
+    /**
+     * Creates a {@link ColorString} from an array of
+     * {@link ColorChar ColorChars}, converting it into a List.
      * @param c the array of {@link ColorChar ColorChars} that will be converted
      * in the List used by the {@link ColorString}
      */
     public ColorString(ColorChar[] c)
-        {this(new ArrayList<>(java.util.Arrays.asList(c)));}
+        {this(new ArrayList<>(Arrays.asList(c)));}
     
     /**
      * Creates a {@link ColorString} from a String, consisting of multiple
@@ -118,6 +127,15 @@ public class ColorString implements CharSequence
      */
     public ColorString add(String s)
         {return add(new ColorString(s));}
+    
+    /**
+     * Adds the given {@link ColorStringObject} to the set using its
+     * {@link ColorStringObject#toColorString()} method.
+     * @param o the {@link ColorStringObject} to add
+     * @return this for convenient chaining
+     */
+    public ColorString add(ColorStringObject o)
+        {return add(o.toColorString());}
     
     /**
      * Adds the given {@link ColorString} to this {@link ColorString}.
@@ -241,9 +259,7 @@ public class ColorString implements CharSequence
     
     @Override
     public ColorString subSequence(int start, int end)
-    {
-        return new ColorString(set.subList(start, end));
-    }
+        {return new ColorString(set.subList(start, end));}
     
     /**
     * Converts the String into a List of {@link ColorChar ColorChars}, each
@@ -284,8 +300,8 @@ public class ColorString implements CharSequence
      * {@link ColorString ColorStrings}, one for each String.
      * @param s the array of Strings to convert into an array of
      * {@link ColorString ColorStrings}
-     * @return an array of {@link ColorString ColorStrings}, one for each String, with
-     * the characters of the Strings and no specified colors
+     * @return an array of {@link ColorString ColorStrings}, one for each
+     * String, with the characters of the Strings and no specified colors
      */
     public static ColorString[] toColorStringArray(String... s)
     {
@@ -299,8 +315,8 @@ public class ColorString implements CharSequence
     
     /**
      * Converts the 2D array of {@link ColorChar ColorChars} provided into an
-     * array of {@link ColorString ColorStrings}, with each {@link ColorChar}[] as a
-     * single {@link ColorString}.
+     * array of {@link ColorString ColorStrings}, with each {@link ColorChar}[]
+     * as a single {@link ColorString}.
      * @param a the array of {@link ColorChar ColorChars} to convert into an
      * array of {@link ColorString ColorStrings}
      * @return an array of {@link ColorString ColorStrings}, one for each
@@ -321,8 +337,8 @@ public class ColorString implements CharSequence
      * {@link ColorString ColorStrings}, one for each String.
      * @param s the List of Strings to convert into a List of
      * {@link ColorString ColorStrings}
-     * @return a List of {@link ColorString ColorStrings}, one for each String, with
-     * the characters of the Strings and no specified colors
+     * @return a List of {@link ColorString ColorStrings}, one for each String,
+     * with the characters of the Strings and no specified colors
      */
     public static List<ColorString> toColorStringList(List<String> s)
     {
@@ -336,8 +352,8 @@ public class ColorString implements CharSequence
     
     /**
      * Converts the 2D array of {@link ColorChar ColorChars} provided into a
-     * List of {@link ColorString ColorStrings}, with each {@link ColorChar}[] as a
-     * single {@link ColorString}.
+     * List of {@link ColorString ColorStrings}, with each {@link ColorChar}[]
+     * as a single {@link ColorString}.
      * @param a the array of {@link ColorChar ColorChars} to convert into a List
      * of {@link ColorString ColorStrings}
      * @return a List of {@link ColorString ColorStrings}, one for each
