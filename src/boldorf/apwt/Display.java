@@ -203,10 +203,10 @@ public class Display extends JFrame implements KeyListener
      */
     public void write(Coord point, ColorString s)
     {
-        if (s == null || s.getSet() == null || s.getSet().isEmpty())
+        if (s == null || s.getCharacters() == null || s.getCharacters().isEmpty())
             return;
         
-        List<ColorChar> chars = s.getSet();
+        List<ColorChar> chars = s.getCharacters();
         
         for (int i = 0; i < chars.size(); i++)
         {

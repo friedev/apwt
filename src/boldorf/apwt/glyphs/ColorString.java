@@ -18,7 +18,7 @@ public class ColorString implements CharSequence
      * The List of specific {@link ColorChar ColorChars} in the
      * {@link ColorString}.
      */
-    private List<ColorChar> set;
+    private List<ColorChar> characters;
     
     /**
      * Creates a {@link ColorString} from an existing List of
@@ -27,14 +27,14 @@ public class ColorString implements CharSequence
      * the {@link ColorString}
      */
     public ColorString(List<ColorChar> s)
-        {set = s;}
+        {characters = s;}
     
     /**
      * Creates a {@link ColorString} from another {@link ColorString}.
      * @param copying the {@link ColorString} to copy
      */
     public ColorString(ColorString copying)
-        {this(new ArrayList<>(copying.set));}
+        {this(new ArrayList<>(copying.characters));}
     
     /**
      * Creates a {@link ColorString} with the
@@ -102,8 +102,8 @@ public class ColorString implements CharSequence
      * {@link ColorString}.
      * @return the {@link ColorString}'s List of {@link ColorChar ColorChars}
      */
-    public List getSet()
-        {return set;}
+    public List getCharacters()
+        {return characters;}
     
     /**
      * Adds the given char to the set as an uncolored ColorChar.
@@ -111,7 +111,7 @@ public class ColorString implements CharSequence
      * @return this for convenient chaining
      */
     public ColorString add(char c)
-        {set.add(new ColorChar(c)); return this;}
+        {characters.add(new ColorChar(c)); return this;}
     
     /**
      * Adds the given {@link ColorChar} to the set.
@@ -119,7 +119,7 @@ public class ColorString implements CharSequence
      * @return this for convenient chaining
      */
     public ColorString add(ColorChar c)
-        {set.add(c); return this;}
+        {characters.add(c); return this;}
     
     /**
      * Adds the given String to the set as an uncolored {@link ColorString}.
@@ -144,7 +144,7 @@ public class ColorString implements CharSequence
      * @return this for convenient chaining
      */
     public ColorString add(ColorString s)
-        {set.addAll(Arrays.asList(s.toCharArray())); return this;}
+        {characters.addAll(Arrays.asList(s.toCharArray())); return this;}
     
     /**
      * Sets the foreground color of all the set's {@link ColorChar ColorChars}
@@ -155,11 +155,11 @@ public class ColorString implements CharSequence
      */
     public ColorString setForeground(Color foreground)
     {
-        for (int i = 0; i < set.size(); i++)
+        for (int i = 0; i < characters.size(); i++)
         {
-            ColorChar newChar = new ColorChar(set.get(i));
+            ColorChar newChar = new ColorChar(characters.get(i));
             newChar.setForeground(foreground);
-            set.set(i, newChar);
+            characters.set(i, newChar);
         }
         return this;
     }
@@ -173,22 +173,22 @@ public class ColorString implements CharSequence
      */
     public ColorString setBackground(Color background)
     {
-        for (int i = 0; i < set.size(); i++)
+        for (int i = 0; i < characters.size(); i++)
         {
-            ColorChar newChar = new ColorChar(set.get(i));
+            ColorChar newChar = new ColorChar(characters.get(i));
             newChar.setBackground(background);
-            set.set(i, newChar);
+            characters.set(i, newChar);
         }
         return this;
     }
     
     /**
-     * Sets the colors of all the set's {@link ColorChar ColorChars} to the
-     * given Colors.
-     * @param foreground the foreground color to assign to all the set's
-     * {@link ColorChar ColorChars}
-     * @param background the background color to assign to all the set's
-     * {@link ColorChar ColorChars}
+     * Sets the colors of all the {@link ColorString}'s
+     * {@link ColorChar ColorChars} to the given Colors.
+     * @param foreground the foreground color to assign to all the
+     * {@link ColorString}'s {@link ColorChar ColorChars}
+     * @param background the background color to assign to all the
+     * {@link ColorString}'s {@link ColorChar ColorChars}
      * @return this for convenient chaining
      */
     public ColorString setColors(Color foreground, Color background)
@@ -204,22 +204,22 @@ public class ColorString implements CharSequence
      */
     public ColorString syncDefaults(Display display)
     {
-        for (ColorChar c: set)
+        for (ColorChar c: characters)
             c.syncDefaults(display);
         return this;
     }
     
     /**
-     * Returns the first {@link ColorChar} found in the {@link ColorString} with a
-     * character that matches the one provided.
+     * Returns the first {@link ColorChar} found in the {@link ColorString} with
+     * a character that matches the one provided.
      * @param character the character to look for in the {@link ColorString}'s
      * {@link ColorChar ColorChars}
-     * @return the first {@link ColorChar} found in the {@link ColorString} with a
-     * character that matches the one provided, null if none are found
+     * @return the first {@link ColorChar} found in the {@link ColorString} with
+     * a character that matches the one provided, null if none are found
      */
     public ColorChar getColorChar(char character)
     {
-        for (ColorChar cc: set)
+        for (ColorChar cc: characters)
             if (cc.getChar() == character)
                 return cc;
         
@@ -233,34 +233,34 @@ public class ColorString implements CharSequence
      * {@link ColorChar ColorChars}
      */
     public ColorChar[] toCharArray()
-        {return set.toArray(new ColorChar[set.size()]);}
+        {return characters.toArray(new ColorChar[characters.size()]);}
     
     @Override
     public String toString()
     {
-        if (set.isEmpty())
+        if (characters.isEmpty())
             return "";
         
         StringBuilder builder = new StringBuilder();
-        for (ColorChar character: set)
+        for (ColorChar character: characters)
             builder.append(character.getChar());
         return builder.toString();
     }
     
     @Override
     public int length()
-        {return set.size();}
+        {return characters.size();}
 
     @Override
     public char charAt(int index)
-        {return set.get(index).getChar();}
+        {return characters.get(index).getChar();}
 
     public ColorChar getColorCharAt(int index)
-        {return set.get(index);}
+        {return characters.get(index);}
     
     @Override
     public ColorString subSequence(int start, int end)
-        {return new ColorString(set.subList(start, end));}
+        {return new ColorString(characters.subList(start, end));}
     
     @Override
     public boolean equals(Object o)
@@ -269,14 +269,14 @@ public class ColorString implements CharSequence
             return false;
         
         ColorString cs = (ColorString) o;
-        return set.equals(cs.set);
+        return characters.equals(cs.characters);
     }
 
     @Override
     public int hashCode()
     {
         int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.set);
+        hash = 71 * hash + Objects.hashCode(this.characters);
         return hash;
     }
     

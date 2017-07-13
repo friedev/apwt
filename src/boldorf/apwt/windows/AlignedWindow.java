@@ -156,8 +156,8 @@ public class AlignedWindow extends CoordWindow
 
                 int curMaxLength = 0;
                 for (ColorString line: blocks[block])
-                    if (line.getSet().size() > curMaxLength)
-                        curMaxLength = line.getSet().size();
+                    if (line.getCharacters().size() > curMaxLength)
+                        curMaxLength = line.getCharacters().size();
 
                 curMaxLength += curIndent - getLocation().x;
 
