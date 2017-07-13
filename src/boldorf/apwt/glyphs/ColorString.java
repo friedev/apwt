@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A List of {@link ColorChar ColorChars} that can be used as a multicolored
@@ -260,6 +261,24 @@ public class ColorString implements CharSequence
     @Override
     public ColorString subSequence(int start, int end)
         {return new ColorString(set.subList(start, end));}
+    
+    @Override
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof ColorString))
+            return false;
+        
+        ColorString cs = (ColorString) o;
+        return set.equals(cs.set);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.set);
+        return hash;
+    }
     
     /**
     * Converts the String into a List of {@link ColorChar ColorChars}, each
