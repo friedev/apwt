@@ -72,14 +72,10 @@ public class ColorChar extends ColoredObject
         if (character != cast.character)
             return false;
         
-        if (getForeground() == null)
-            return cast.getForeground() == null;
-        
-        if (getBackground() == null)
-            return cast.getBackground() == null;
-        
-        return getForeground().equals(cast.getForeground()) &&
-               getBackground().equals(cast.getBackground());
+        return (getForeground() == null ? cast.getForeground() == null :
+                    getForeground().equals(cast.getForeground())) &&
+                (getBackground() == null ? cast.getBackground() == null :
+                    getBackground().equals(cast.getBackground()));
     }
 
     @Override
