@@ -63,6 +63,7 @@ public class Display extends JFrame implements KeyListener
         addKeyListener(this);
         repaint();
         setResizable(false);
+        setSize(getWidth() - 10, getHeight() - 10);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         return this;
