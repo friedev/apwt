@@ -1,5 +1,6 @@
 package boldorf.util;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import squidpony.squidmath.RNG;
@@ -367,6 +369,18 @@ public abstract class FileManager
 
         writer.println(text);
         writer.close();
+    }
+    
+    /**
+     * Loads the specified image from the file at the given path.
+     * @param target the name of the image file, must be non-null and exist
+     * @throws java.io.IOException if there is an error processing the file
+     * @return the Image read at the given path
+     */
+    public static Image loadImage(String target) throws IOException
+    {
+        File imageFile = new File(path + target);
+        return imageFile.exists() ? ImageIO.read(imageFile) : null;
     }
     
     /**
