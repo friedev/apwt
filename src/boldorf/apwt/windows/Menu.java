@@ -187,20 +187,7 @@ public abstract class Menu<WindowType extends Window>
      * @return true if the selection index was updated
      */
     public boolean updateSelection(KeyEvent key)
-    {
-        Direction direction = Utility.keyToDirection(key);
-        
-        if (direction == null)
-            return false;
-        
-        if (direction.hasUp())
-            return decrementSelection();
-        
-        if (direction.hasDown())
-            return incrementSelection();
-        
-        return false;
-    }
+        {return updateSelection(Utility.keyToDirection(key));}
     
     /**
      * Increments the selection if the up arrow is pressed, and decrements it if
@@ -209,12 +196,25 @@ public abstract class Menu<WindowType extends Window>
      * @return true if the selection index was updated
      */
     public boolean updateSelectionRestricted(KeyEvent key)
+        {return updateSelection(Utility.keyToDirectionRestricted(key));}
+    
+    /**
+     * Modifies the selection index by the direction given.
+     * @param direction the Direction in which to move the selection; an up
+     * component decrements the index, while a down component increments the
+     * index
+     * @return true if the selection index was updated
+     */
+    public boolean updateSelection(Direction direction)
     {
-        switch (key.getKeyCode())
-        {
-            case KeyEvent.VK_UP:   return decrementSelection();
-            case KeyEvent.VK_DOWN: return incrementSelection();
-        }
+        if (direction == null)
+            return false;
+        
+        if (direction.hasUp())
+            return decrementSelection();
+        
+        if (direction.hasDown())
+            return incrementSelection();
         
         return false;
     }
