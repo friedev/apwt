@@ -46,18 +46,25 @@ public abstract class Utility
     /**
      * Parses a Coord from the given ordered pair as a String.
      * @param orderedPair the ordered pair to parse, must be in the format
-     * {@code (x, y)}
+     * {@code (x,y)}
      * @return the Coord parsed from the given String
      */
     public static Coord parseCoord(String orderedPair)
     {
         orderedPair = orderedPair.replace("(", "");
         orderedPair = orderedPair.replace(")", "");
-        orderedPair = orderedPair.replace(",", "");
-        String[] split = orderedPair.split(" ");
+        String[] split = orderedPair.split(",");
         
         return Coord.get(parseInt(split[0], 0), parseInt(split[1], 0));
     }
+    
+    /**
+     * Encodes a Coord as String in ordered pair format.
+     * @param coord the Coord to encode
+     * @return the Coord in the format {@code (x,y)}
+     */
+    public static String coordToOrderedPair(Coord coord)
+        {return ("(" + coord.x + "," + coord.y + ")");}
     
     /**
      * Converts the given KeyEvent into a Direction, referring only to the arrow
