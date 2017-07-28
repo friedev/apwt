@@ -47,7 +47,7 @@ public abstract class Nameable
     @Override
     public String toString()
     {
-        return nickname != null && !"".equals(nickname) ?
+        return nickname != null && !nickname.isEmpty() ?
             name + " \"" + nickname + "\"" : name;
     }
     
