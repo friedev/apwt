@@ -67,6 +67,17 @@ public abstract class Utility
         {return ("(" + coord.x + "," + coord.y + ")");}
     
     /**
+     * Performs the same function as {@link Coord#toGoTo(Coord)}, but works over
+     * any distance and returns only cardinal directions.
+     * @param from the starting coordinate
+     * @param to the destination coordinate
+     * @return a Direction that, if the from coordinate was translated by it,
+     * would decrease the distance between the points
+     */
+    public static Direction toGoToCardinal(Coord from, Coord to)
+        {return Direction.getCardinalDirection(to.x - from.x, to.y - from.y);}
+    
+    /**
      * Converts the given KeyEvent into a Direction, referring only to the arrow
      * keys.
      * @param key the KeyEvent to convert into a Direction
