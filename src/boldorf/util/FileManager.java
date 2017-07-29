@@ -14,6 +14,7 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import squidpony.squidmath.RNG;
 
 /**
@@ -23,7 +24,11 @@ import squidpony.squidmath.RNG;
  */
 public abstract class FileManager
 {
-    // PATH
+    /**
+     * The maximum integer volume allowed in
+     * {@link #setVolume(javax.sound.sampled.Clip, int).
+     */
+    public static final int MAX_VOLUME = 100;
     
     /** The path to the data folder. */
     private static String path = findPath();
@@ -77,8 +82,6 @@ public abstract class FileManager
                 .getLocation().getPath();
         return jarPath.substring(0, jarPath.lastIndexOf("/") + 1);
     }
-    
-    // FILE MANIPULATION
     
     /**
      * Returns true if the specified file name exists.
@@ -418,4 +421,31 @@ public abstract class FileManager
      */
     public static Clip playAudio(String target) throws Exception
         {return loopAudio(target, 0);}
+    
+    /**
+     * Sets the volume of the given clip to the given float value.
+     * @param clip the clip to adjust the volume of
+     * @param volume the volume to set the clip at, with {@code 1.0f} being full
+     * volume and {@code 0.0f} being silence
+     */
+    public static void setVolume(Clip clip, float volume)
+    {
+        FloatControl control = (FloatControl)
+                clip.getControl(FloatControl.Type.MASTER_GAIN);
+        float range = control.getMaximum() - control.getMinimum();
+        float gain = (range * volume) + control.getMinimum();
+        control.setValue(gain);
+    }
+    
+    /**
+     * Sets the volume of the given clip to the given int value.
+     * @param clip the clip to adjust the volume of
+     * @param volume the volume to set the clip at, with {@code 100} being full
+     * volume and {@code 0} being silence
+     */
+    public static void setVolume(Clip clip, int volume)
+    {
+        setVolume(clip, Math.max(0.0f, Math.min(1.0f,
+                        ((float) volume) / ((float) MAX_VOLUME))));
+    }
 }
