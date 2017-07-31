@@ -2,6 +2,7 @@ package boldorf.util;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import squidpony.squidgrid.Direction;
 import squidpony.squidmath.Coord;
@@ -256,5 +257,14 @@ public abstract class Utility
         
         Object[] resultsArray = new Object[results.size()];
         return results.toArray(resultsArray);
+    }
+    
+    public static Comparator<Coord> createDistanceComparator(Coord center)
+    {
+        return (Coord coord1, Coord coord2) ->
+        {
+            return Double.compare(coord1.distanceSq(center),
+                    coord2.distanceSq(center));
+        };
     }
 }
