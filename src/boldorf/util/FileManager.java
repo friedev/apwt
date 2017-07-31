@@ -213,7 +213,7 @@ public abstract class FileManager
     public static String[] toLineArray(String target)
             throws FileNotFoundException
     {
-        ArrayList<String> lineList = new ArrayList<>();
+        List<String> lineList = new ArrayList<>();
         Scanner reader = new Scanner(new File(path + target));
         while (reader.hasNextLine())
             lineList.add(reader.nextLine());

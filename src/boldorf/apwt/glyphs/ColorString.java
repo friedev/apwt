@@ -306,7 +306,7 @@ public class ColorString implements CharSequence
      */
     public static ColorString toColorString(String... s)
     {
-        ArrayList<ColorChar> chars = new ArrayList<>();
+        List<ColorChar> chars = new ArrayList<>();
         for (String ss: s)
             for (int i = 0; i < ss.length(); i++)
                 chars.add(new ColorChar(ss.charAt(i)));
@@ -361,7 +361,7 @@ public class ColorString implements CharSequence
      */
     public static List<ColorString> toColorStringList(List<String> s)
     {
-        LinkedList<ColorString> lines = new LinkedList<>();
+        List<ColorString> lines = new LinkedList<>();
         
         for (String cur: s)
             lines.add(new ColorString(cur));
@@ -380,7 +380,7 @@ public class ColorString implements CharSequence
      */
     public static List<ColorString> toColorStringList(ColorChar[]... a)
     {
-        LinkedList<ColorString> lines = new LinkedList<>();
+        List<ColorString> lines = new LinkedList<>();
         
         for (ColorChar[] cur: a)
             lines.add(new ColorString(cur));

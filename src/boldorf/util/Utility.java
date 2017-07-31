@@ -2,6 +2,7 @@ package boldorf.util;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 import squidpony.squidgrid.Direction;
 import squidpony.squidmath.Coord;
 import squidpony.squidmath.RNG;
@@ -215,7 +216,7 @@ public abstract class Utility
         
         if (probabilities == null || choices.length != probabilities.length)
         {
-            ArrayList<Object> results = new ArrayList<>();
+            List<Object> results = new ArrayList<>();
             for (int i = 0; i < amount; i++)
             {
                 if (results.contains(choices[i]))
@@ -227,7 +228,7 @@ public abstract class Utility
         
         double maxProb;
         double selector;
-        ArrayList<Object> results = new ArrayList<>();
+        List<Object> results = new ArrayList<>();
         
         for (int n = 0; n < amount; n++)
         {

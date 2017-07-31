@@ -123,7 +123,7 @@ public class AlignedWindow extends CoordWindow
                 if (line == null)
                     nBlocks++;
 
-            ArrayList<ColorString>[] blocks = new ArrayList[nBlocks]; 
+            List<ColorString>[] blocks = new ArrayList[nBlocks]; 
 
             int curBlock = 0;
             blocks[0] = new ArrayList<>();
