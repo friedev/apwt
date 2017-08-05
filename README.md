@@ -2,7 +2,7 @@
 
 ### Summary ###
 
-AsciiPanelWindowingToolkit, or APWT, is a set of classes and utilities that will make working with AsciiPanel on a larger scale much easier. It includes text windows, multicolored strings, CP437 character definitions, and a collection of related utilities that can be used independently. APWT, of course, depends on [AsciiPanel](github.com/trystan/AsciiPanel), as well as [SquidLib](https://github.com/SquidPony/SquidLib), both of which are included in the ``lib`` directory.
+AsciiPanelWindowingToolkit, or APWT, is a set of classes and utilities that will make working with AsciiPanel on a larger scale much easier. It includes text windows, multicolored strings, CP437 character definitions, and a collection of related utilities that can be used independently. APWT, of course, depends on [AsciiPanel](github.com/trystan/AsciiPanel), as well as [SquidLib](https://github.com/SquidPony/SquidLib) and my utility library, [BoldorfUtils](https://https://bitbucket.org/DarklordMogrithe/boldorfutils). Jar files for all of these libraries are included in the ``lib`` directory, which you can include as dependencies in your projects.
 
 ### License ###
 
@@ -10,7 +10,7 @@ APWT is licensed under the MIT license. Basically, this lets you copy, modify, d
 
 ### Implementation ###
 
-To set up APWT, download the sources or the library jar and include them as dependencies in your project. SquidLib depends on regexodus, so ensure that your project depends on both. To start using APWT, initialize a Display object and go from there. The Display is designed to work with a hierarchy of Screens, each of which read input and display output. For more on this, see [Trystan's Roguelike tutorial](https://trystans.blogspot.com/2016/01/roguelike-tutorial-00-table-of-contents.html).
+To set up APWT, download the sources or the library jar (and ``lib`` jars) and include them as dependencies in your project. SquidLib depends on regexodus, so ensure that your project depends on both. To start using APWT, initialize a Display object and go from there. The Display is designed to work with a hierarchy of Screens, each of which read input and display output. For more on this, see [Trystan's Roguelike tutorial](https://trystans.blogspot.com/2016/01/roguelike-tutorial-00-table-of-contents.html).
 
 ### Contribution ###
 
