@@ -147,6 +147,52 @@ public class ColorString implements CharSequence
         {characters.addAll(Arrays.asList(s.toCharArray())); return this;}
     
     /**
+     * Inserts the given char into the set as an uncolored ColorChar.
+     * @param index the index at which to insert the char
+     * @param c the char to insert
+     * @return this for convenient chaining
+     */
+    public ColorString insert(int index, char c)
+        {characters.add(index, new ColorChar(c)); return this;}
+    
+    /**
+     * Inserts the given {@link ColorChar} into the set.
+     * @param index the index at which to insert the {@link ColorChar}
+     * @param c the {@link ColorChar} to insert
+     * @return this for convenient chaining
+     */
+    public ColorString insert(int index, ColorChar c)
+        {characters.add(index, c); return this;}
+    
+    /**
+     * Inserts the given String into the set as an uncolored {@link ColorString}.
+     * @param index the index at which to insert the String
+     * @param s the String to insert
+     * @return this for convenient chaining
+     */
+    public ColorString insert(int index, String s)
+        {return insert(index, new ColorString(s));}
+    
+    /**
+     * Inserts the given {@link ColorStringObject} into the set using its
+     * {@link ColorStringObject#toColorString()} method.
+     * @param index the index at which to insert the {@link ColorStringObject}
+     * @param o the {@link ColorStringObject} to insert
+     * @return this for convenient chaining
+     */
+    public ColorString insert(int index, ColorStringObject o)
+        {return insert(index, o.toColorString());}
+    
+    /**
+     * Inserts the given {@link ColorString} into this {@link ColorString}.
+     * @param index the index at which to insert the {@link ColorString}
+     * @param s the {@link ColorString} to insert
+     * @return this for convenient chaining
+     */
+    public ColorString insert(int index, ColorString s)
+        {characters.addAll(index, Arrays.asList(s.toCharArray())); return this;}
+    
+    /**
      * Sets the foreground color of all the set's {@link ColorChar ColorChars}
      * to the given Color.
      * @param foreground the foreground color to assign to all the set's
