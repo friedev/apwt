@@ -2,7 +2,7 @@
 
 ### Summary ###
 
-AsciiPanelWindowingToolkit, or APWT, is a set of classes and utilities that will make working with AsciiPanel on a larger scale much easier. It includes text windows, multicolored strings, CP437 character definitions, and a collection of related utilities that can be used independently. APWT, of course, depends on [AsciiPanel](github.com/trystan/AsciiPanel), as well as [SquidLib](https://github.com/SquidPony/SquidLib) and my utility library, [BoldorfUtils](https://bitbucket.org/DarklordMogrithe/boldorfutils). Jar files for all of these libraries are included in the ``lib`` directory, which you can include as dependencies in your projects.
+AsciiPanelWindowingToolkit, or APWT, is a set of classes and utilities that will make working with AsciiPanel on a larger scale much easier. It includes text windows, multicolored strings, CP437 character definitions, and a collection of related utilities that can be used independently. APWT, of course, depends on [AsciiPanel](github.com/trystan/AsciiPanel), as well as [SquidLib](https://github.com/SquidPony/SquidLib) and my utility library, [BoldorfUtils](https://bitbucket.org/Maugrift/boldorfutils). Jar files for all of these libraries are included in the ``lib`` directory, which you can include as dependencies in your projects.
 
 ### License ###
 
@@ -18,8 +18,8 @@ If you want to contribute to the project, I would happy to accept reasonable pul
 
 ### Contact ###
 
-If you have any questions or comments about upcoming features, you may comment on the [Trello board](https://trello.com/b/oY7z1nm5). For other inquiries, you may contact DarklordMogrithe, owner of the repository, with any of the links below.
+If you have any questions or comments about upcoming features, you may comment on the [Trello board](https://trello.com/b/oY7z1nm5). For other inquiries, you may contact Maugrift, owner of the repository, with any of the links below.
 
-* [Twitter](https://twitter.com/DLMogrithe)
+* [Twitter](https://twitter.com/Maugrift)
 * [Reddit](https://www.reddit.com/user/DarklordMogrithe)
-* [itch.io](https://boldorf.itch.io)
+* [itch.io](https://maugrift.itch.io)
