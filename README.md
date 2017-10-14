@@ -14,7 +14,7 @@ To set up APWT, download the sources or the library jars and include them as dep
 
 ### Contribution ###
 
-If you want to contribute to the project, I would happy to accept reasonable pull requests. Please create JavaDoc comments on any added methods, classes, and constants. The project also has a [Trello board](https://trello.com/b/oY7z1nm5) that outlines planned features.
+If you want to contribute to the project, I would happy to accept reasonable pull requests. Please create JavaDoc comments on any added methods, classes, and constants. If you have IntelliJ IDEA, please download the ``APWT.xml`` code style from Downloads and apply it to files you change (default is Ctrl+Alt+L). The project also has a [Trello board](https://trello.com/b/oY7z1nm5) that outlines planned features.
 
 ### Contact ###
 
