@@ -184,7 +184,7 @@ public abstract class Menu<WindowType extends Window>
      */
     private boolean select(int change)
     {
-        return change == 0 ? false : setSelectionIndex(bypassRestrictions(change));
+        return change != 0 && setSelectionIndex(bypassRestrictions(change));
     }
 
     /**

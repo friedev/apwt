@@ -17,17 +17,17 @@ public abstract class ConfirmationScreen extends Screen
     /**
      * The default confirmation keycodes.
      */
-    public static final List<Integer> CONFIRM_CODES = Arrays.asList(new Integer[]{KeyEvent.VK_ENTER, KeyEvent.VK_Y});
+    public static final List<Integer> CONFIRM_CODES = Arrays.asList(KeyEvent.VK_ENTER, KeyEvent.VK_Y);
 
     /**
      * The default denial keycodes.
      */
-    public static final List<Integer> DENY_CODES = Arrays.asList(new Integer[]{KeyEvent.VK_N});
+    public static final List<Integer> DENY_CODES = Arrays.asList(KeyEvent.VK_N);
 
     /**
      * The default cancellation keycodes.
      */
-    public static final List<Integer> CANCEL_CODES = Arrays.asList(new Integer[]{KeyEvent.VK_ESCAPE, KeyEvent.VK_Q});
+    public static final List<Integer> CANCEL_CODES = Arrays.asList(KeyEvent.VK_ESCAPE, KeyEvent.VK_Q);
 
     /**
      * The keycodes that will trigger {@link #onConfirm()}.

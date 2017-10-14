@@ -40,7 +40,7 @@ public class AlignedMenu extends ColoredMenu<AlignedWindow>
     @Override
     public AlignedWindow getOutput()
     {
-        AlignedWindow copy = new AlignedWindow((AlignedWindow) getWindow());
+        AlignedWindow copy = new AlignedWindow(getWindow());
         copy.getContents().clear();
         for (ColorString content : getWindow().getContents())
         {

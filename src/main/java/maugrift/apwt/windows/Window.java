@@ -75,7 +75,7 @@ public abstract class Window
     }
 
     /**
-     * Prints the {@link Window} to its {@link maugrift.apwt.Display} using {@link WindowBuilder}.
+     * Prints the {@link Window} to its {@link maugrift.apwt.Display}.
      */
     public abstract void display();
 

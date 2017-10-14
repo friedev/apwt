@@ -9,5 +9,5 @@ import squidpony.squidmath.Coord;
  */
 public interface CursorScreen
 {
-    public Coord getCursor();
+    Coord getCursor();
 }

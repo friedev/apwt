@@ -14,5 +14,5 @@ public interface KeyScreen
      *
      * @return a List of {@link Keybinding Keybindings} active on this {@link KeyScreen}
      */
-    public List<Keybinding> getKeybindings();
+    List<Keybinding> getKeybindings();
 }

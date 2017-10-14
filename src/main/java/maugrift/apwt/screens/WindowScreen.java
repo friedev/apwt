@@ -10,5 +10,5 @@ import maugrift.apwt.windows.Window;
  */
 public interface WindowScreen<WindowType extends Window>
 {
-    public WindowType getWindow();
+    WindowType getWindow();
 }

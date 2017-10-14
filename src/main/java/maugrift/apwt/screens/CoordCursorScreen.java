@@ -9,7 +9,8 @@ import squidpony.squidmath.Coord;
 import java.awt.event.KeyEvent;
 
 /**
- * A {@link CoordScreen} designed to select locations on the {@link maugrift.apwt.Display}.
+ * A {@link maugrift.apwt.screens.CursorScreen CursorScreen} designed to select locations on the {@link
+ * maugrift.apwt.Display}.
  *
  * @author Maugrift
  */

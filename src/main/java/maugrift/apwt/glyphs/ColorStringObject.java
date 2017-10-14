@@ -12,5 +12,5 @@ public interface ColorStringObject
      *
      * @return a {@link ColorString} representing this object
      */
-    public ColorString toColorString();
+    ColorString toColorString();
 }
