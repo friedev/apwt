@@ -1,8 +1,7 @@
 package maugrift.apwt.windows;
 
-import maugrift.apwt.Display;
+import maugrift.apwt.display.AsciiPanelDisplay;
 import maugrift.apwt.glyphs.ColorString;
-import squidpony.squidmath.Coord;
 
 import java.util.List;
 
@@ -14,80 +13,105 @@ import java.util.List;
 public abstract class CoordWindow extends Window
 {
     /**
-     * The coordinates of the {@link CoordWindow}.
+     * The x coordinate of the {@link CoordWindow}.
      */
-    private Coord location;
+    private int x;
+
+    /**
+     * The y coordinate of the {@link CoordWindow}.
+     */
+    private int y;
 
     /**
      * Creates a {@link CoordWindow} with all fields defined.
      *
-     * @param display  the {@link Window}'s {@link maugrift.apwt.Display}
+     * @param display  the {@link Window}'s {@link AsciiPanelDisplay}
      * @param border   the {@link Window}'s {@link Border}
      * @param contents the {@link Window}'s initial contents
-     * @param location the {@link Window}'s location
+     * @param x        the {@link Window}'s x coordinate
+     * @param y        the {@link Window}'s y coordinate
      */
-    public CoordWindow(Display display, Border border, List<ColorString> contents, Coord location)
+    public CoordWindow(AsciiPanelDisplay display, Border border, List<ColorString> contents, int x, int y)
     {
         super(display, border, contents);
-        this.location = location;
+        this.x = x;
+        this.y = y;
     }
 
     /**
      * Creates a {@link CoordWindow} with no contents.
      *
-     * @param display  the {@link Window}'s {@link maugrift.apwt.Display}
-     * @param border   the {@link Window}'s {@link Border}
-     * @param location the {@link Window}'s location
+     * @param display the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param border  the {@link Window}'s {@link Border}
+     * @param x       the {@link Window}'s x coordinate
+     * @param y       the {@link Window}'s y coordinate
      */
-    public CoordWindow(Display display, Border border, Coord location)
+    public CoordWindow(AsciiPanelDisplay display, Border border, int x, int y)
     {
         super(display, border);
-        this.location = location;
+        this.x = x;
+        this.y = y;
     }
 
     /**
      * Creates a borderless {@link CoordWindow}.
      *
-     * @param display  the {@link Window}'s {@link maugrift.apwt.Display}
+     * @param display  the {@link Window}'s {@link AsciiPanelDisplay}
      * @param contents the {@link Window}'s initial contents
-     * @param location the {@link Window}'s location
+     * @param x        the {@link Window}'s x coordinate
+     * @param y        the {@link Window}'s y coordinate
      */
-    public CoordWindow(Display display, List<ColorString> contents, Coord location)
+    public CoordWindow(AsciiPanelDisplay display, List<ColorString> contents, int x, int y)
     {
         super(display, contents);
-        this.location = location;
+        this.x = x;
+        this.y = y;
     }
 
     /**
      * Creates a borderless {@link CoordWindow} with no contents.
      *
-     * @param display  the {@link Window}'s {@link maugrift.apwt.Display}
-     * @param location the {@link Window}'s location
+     * @param display the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param x       the {@link Window}'s x coordinate
+     * @param y       the {@link Window}'s y coordinate
      */
-    public CoordWindow(Display display, Coord location)
+    public CoordWindow(AsciiPanelDisplay display, int x, int y)
     {
         super(display);
-        this.location = location;
+        this.x = x;
+        this.y = y;
     }
 
     /**
-     * Returns the top-left coordinates of the {@link CoordWindow}.
+     * Returns the x coordinate of the {@link CoordWindow}.
      *
-     * @return the top-left coordinates of the {@link CoordWindow}
+     * @return the x coordinate of the {@link CoordWindow}
      */
-    public Coord getLocation()
+    public int getX()
     {
-        return location;
+        return x;
+    }
+
+    /**
+     * Returns the y coordinate of the {@link CoordWindow}.
+     *
+     * @return the y coordinate of the {@link CoordWindow}
+     */
+    public int getY()
+    {
+        return y;
     }
 
     /**
      * Moves the {@link CoordWindow} to the specified coordinates.
      *
-     * @param location the new coordinates of the {@link CoordWindow}
+     * @param x the new x coordinate of the {@link CoordWindow}
+     * @param y the new y coordinate of the {@link CoordWindow}
      */
-    public void setLocation(Coord location)
+    public void setLocation(int x, int y)
     {
-        this.location = location;
+        this.x = x;
+        this.y = y;
     }
 
     /**
@@ -95,7 +119,7 @@ public abstract class CoordWindow extends Window
      */
     public void centerX()
     {
-        this.location.setX(getDisplay().getCenterX());
+        this.x = getDisplay().getCenterX();
     }
 
     /**
@@ -103,6 +127,6 @@ public abstract class CoordWindow extends Window
      */
     public void centerY()
     {
-        this.location.setY(getDisplay().getCenterY());
+        this.y = getDisplay().getCenterY();
     }
 }

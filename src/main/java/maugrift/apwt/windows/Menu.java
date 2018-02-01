@@ -1,10 +1,7 @@
 package maugrift.apwt.windows;
 
 import maugrift.apwt.glyphs.ColorString;
-import maugrift.util.Utility;
-import squidpony.squidgrid.Direction;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,6 +138,18 @@ public abstract class Menu<WindowType extends Window>
     }
 
     /**
+     * Increments the selection index by the given amount, wrapping to the front or back if bounds are exceeded.
+     * Intermediate separators will not be selected.
+     *
+     * @param change the amount by which to modify the selection index at each iteration
+     * @return true if the selection index was updated
+     */
+    public boolean select(int change)
+    {
+        return change != 0 && setSelectionIndex(bypassRestrictions(change));
+    }
+
+    /**
      * Modifies the selection index by the provided amount until it is either out of bounds, or not at a separator or
      * restricted value.
      *
@@ -173,86 +182,5 @@ public abstract class Menu<WindowType extends Window>
         } while (loop);
 
         return nextSelection;
-    }
-
-    /**
-     * Increments the selection index by the given amount, wrapping to the front or back if bounds are exceeded.
-     * Intermediate separators will not be selected.
-     *
-     * @param change the amount by which to modify the selection index at each iteration
-     * @return true if the selection index was updated
-     */
-    private boolean select(int change)
-    {
-        return change != 0 && setSelectionIndex(bypassRestrictions(change));
-    }
-
-    /**
-     * Increments the selection index by one.
-     *
-     * @return true if the selection index was incremented
-     */
-    public boolean incrementSelection()
-    {
-        return select(1);
-    }
-
-    /**
-     * Decrements the selection index by one.
-     *
-     * @return true if the selection index was decremented
-     */
-    public boolean decrementSelection()
-    {
-        return select(-1);
-    }
-
-    /**
-     * Modifies the selection index by the direction corresponding to the given KeyEvent.
-     *
-     * @param key the KeyEvent to process
-     * @return true if the selection index was updated
-     */
-    public boolean updateSelection(KeyEvent key)
-    {
-        return updateSelection(Utility.keyToDirection(key));
-    }
-
-    /**
-     * Increments the selection if the up arrow is pressed, and decrements it if the down arrow is pressed.
-     *
-     * @param key the KeyEvent to process
-     * @return true if the selection index was updated
-     */
-    public boolean updateSelectionRestricted(KeyEvent key)
-    {
-        return updateSelection(Utility.keyToDirectionRestricted(key));
-    }
-
-    /**
-     * Modifies the selection index by the direction given.
-     *
-     * @param direction the Direction in which to move the selection; an up component decrements the index, while a down
-     *                  component increments the index
-     * @return true if the selection index was updated
-     */
-    public boolean updateSelection(Direction direction)
-    {
-        if (direction == null)
-        {
-            return false;
-        }
-
-        if (direction.hasUp())
-        {
-            return decrementSelection();
-        }
-
-        if (direction.hasDown())
-        {
-            return incrementSelection();
-        }
-
-        return false;
     }
 }

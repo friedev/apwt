@@ -1,6 +1,6 @@
 package maugrift.apwt.windows;
 
-import maugrift.apwt.Display;
+import maugrift.apwt.display.AsciiPanelDisplay;
 import maugrift.apwt.glyphs.ColorString;
 
 import java.util.ArrayList;
@@ -14,9 +14,9 @@ import java.util.List;
 public abstract class Window
 {
     /**
-     * The {@link maugrift.apwt.Display} on which to print the {@link Window}.
+     * The {@link AsciiPanelDisplay} on which to print the {@link Window}.
      */
-    private Display display;
+    private AsciiPanelDisplay display;
 
     /**
      * The {@link Border} surrounding the {@link Window}. If null, the {@link Window} will be borderless.
@@ -31,11 +31,11 @@ public abstract class Window
     /**
      * Creates a {@link Window} with all fields defined.
      *
-     * @param display  the {@link Window}'s {@link maugrift.apwt.Display}
+     * @param display  the {@link Window}'s {@link AsciiPanelDisplay}
      * @param border   the {@link Window}'s {@link Border}
      * @param contents the {@link Window}'s initial contents
      */
-    public Window(Display display, Border border, List<ColorString> contents)
+    public Window(AsciiPanelDisplay display, Border border, List<ColorString> contents)
     {
         this.display = display;
         this.border = border;
@@ -45,10 +45,10 @@ public abstract class Window
     /**
      * Creates a {@link Window} with no contents.
      *
-     * @param display the {@link Window}'s {@link maugrift.apwt.Display}
+     * @param display the {@link Window}'s {@link AsciiPanelDisplay}
      * @param border  the {@link Window}'s {@link Border}
      */
-    public Window(Display display, Border border)
+    public Window(AsciiPanelDisplay display, Border border)
     {
         this(display, border, new ArrayList<>());
     }
@@ -56,10 +56,10 @@ public abstract class Window
     /**
      * Creates a borderless {@link Window}.
      *
-     * @param display  the {@link Window}'s {@link maugrift.apwt.Display}
+     * @param display  the {@link Window}'s {@link AsciiPanelDisplay}
      * @param contents the {@link Window}'s initial contents
      */
-    public Window(Display display, List<ColorString> contents)
+    public Window(AsciiPanelDisplay display, List<ColorString> contents)
     {
         this(display, null, contents);
     }
@@ -67,15 +67,15 @@ public abstract class Window
     /**
      * Creates a borderless {@link Window} with no contents.
      *
-     * @param display the {@link Window}'s {@link maugrift.apwt.Display}
+     * @param display the {@link Window}'s {@link AsciiPanelDisplay}
      */
-    public Window(Display display)
+    public Window(AsciiPanelDisplay display)
     {
         this(display, null, new ArrayList<>());
     }
 
     /**
-     * Prints the {@link Window} to its {@link maugrift.apwt.Display}.
+     * Prints the {@link Window} to its {@link AsciiPanelDisplay}.
      */
     public abstract void display();
 
@@ -90,11 +90,11 @@ public abstract class Window
     }
 
     /**
-     * Returns the {@link maugrift.apwt.Display} used by the {@link Window}.
+     * Returns the {@link AsciiPanelDisplay} used by the {@link Window}.
      *
-     * @return the {@link maugrift.apwt.Display} used by the {@link Window}
+     * @return the {@link AsciiPanelDisplay} used by the {@link Window}
      */
-    public Display getDisplay()
+    public AsciiPanelDisplay getDisplay()
     {
         return display;
     }

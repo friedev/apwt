@@ -1,6 +1,8 @@
 apply plugin: 'java'
+apply plugin: 'maven'
 
-sourceCompatibility = '1.8'
+group = 'org.bitbucket.maugrift'
+sourceCompatibility = 1.9
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 jar {

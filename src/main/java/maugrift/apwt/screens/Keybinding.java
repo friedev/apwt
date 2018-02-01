@@ -13,8 +13,8 @@ import java.awt.*;
  */
 public class Keybinding implements ColorStringObject
 {
-    public static final Color COLOR_FUNCTION = AsciiPanel.white;
-    public static final Color COLOR_KEY = AsciiPanel.brightWhite;
+    public static final Color COLOR_FUNCTION = new Color(192, 192, 192);
+    public static final Color COLOR_KEY = Color.WHITE;
 
     /**
      * The function that is performed when the key is pressed.

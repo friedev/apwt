@@ -1,5 +1,6 @@
 package maugrift.apwt.screens;
 
+import maugrift.apwt.display.AsciiPanelDisplay;
 import maugrift.apwt.windows.Menu;
 
 import java.awt.event.KeyEvent;
@@ -18,7 +19,7 @@ public abstract class MenuScreen<MenuType extends Menu> extends ConfirmationScre
     private MenuType menu;
 
     /**
-     * Creates a {@link MenuScreen} on the given {@link maugrift.apwt.Display} for the given {@link
+     * Creates a {@link MenuScreen} on the given {@link AsciiPanelDisplay} for the given {@link
      * maugrift.apwt.windows.Menu}.
      *
      * @param menu the {@link maugrift.apwt.windows.Menu} to create a {@link MenuScreen} for
@@ -38,9 +39,20 @@ public abstract class MenuScreen<MenuType extends Menu> extends ConfirmationScre
     @Override
     public Screen processInput(KeyEvent key)
     {
-        if (menu.updateSelection(key))
+        switch (key.getKeyCode())
         {
-            return this;
+            case KeyEvent.VK_UP:
+                if (menu.select(-1))
+                {
+                    return this;
+                }
+                break;
+            case KeyEvent.VK_DOWN:
+                if (menu.select(1))
+                {
+                    return this;
+                }
+                break;
         }
 
         return super.processInput(key);

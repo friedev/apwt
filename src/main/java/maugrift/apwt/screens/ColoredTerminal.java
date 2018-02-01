@@ -1,5 +1,6 @@
 package maugrift.apwt.screens;
 
+import maugrift.apwt.display.AsciiPanelDisplay;
 import maugrift.apwt.glyphs.ColorString;
 import maugrift.apwt.windows.Window;
 
@@ -99,19 +100,19 @@ public abstract class ColoredTerminal<Output extends Window> extends Terminal<Ou
 
     /**
      * Creates an {@link ColoredTerminal} with the given {@link maugrift.apwt.windows.Window Window} and prompt, using
-     * the width of the {@link maugrift.apwt.Display} as the maximum length.
+     * the width of the {@link AsciiPanelDisplay} as the maximum length.
      *
      * @param output the {@link Terminal}'s output window
      * @param prompt the {@link Terminal}'s prompt
      */
     public ColoredTerminal(Output output, ColorString prompt)
     {
-        this(output, prompt, output.getDisplay().getCharWidth(), null, null);
+        this(output, prompt, output.getDisplay().getWidthInCharacters(), null, null);
     }
 
     /**
      * Creates an {@link ColoredTerminal} with the given {@link maugrift.apwt.windows.Window Window} and prompt, using
-     * the width of the {@link maugrift.apwt.Display} as the maximum length.
+     * the width of the {@link AsciiPanelDisplay} as the maximum length.
      *
      * @param output the {@link Terminal}'s output window
      * @param prompt the {@link Terminal}'s prompt
@@ -122,7 +123,7 @@ public abstract class ColoredTerminal<Output extends Window> extends Terminal<Ou
     }
 
     /**
-     * Creates an {@link ColoredTerminal} with no prompt and the width of the {@link maugrift.apwt.Display} as the
+     * Creates an {@link ColoredTerminal} with no prompt and the width of the {@link AsciiPanelDisplay} as the
      * maximum length.
      *
      * @param output the {@link Terminal}'s output window

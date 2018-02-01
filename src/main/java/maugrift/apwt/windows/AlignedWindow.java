@@ -1,8 +1,7 @@
 package maugrift.apwt.windows;
 
-import maugrift.apwt.Display;
+import maugrift.apwt.display.AsciiPanelDisplay;
 import maugrift.apwt.glyphs.ColorString;
-import squidpony.squidmath.Coord;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -17,10 +16,16 @@ import java.util.List;
 public class AlignedWindow extends CoordWindow
 {
     /**
-     * The bottom right corner of the {@link AlignedWindow}, including its {@link Border}. Stored as it is recalculated
-     * on each repaint, yet hard to calculate on its own.
+     * The x value of right edge of the {@link AlignedWindow}, including its {@link Border}. Stored as it is
+     * recalculated on each repaint, yet hard to calculate on its own.
      */
-    private Coord bottomRight;
+    private int right;
+
+    /**
+     * The y value of the bottom edge of the {@link AlignedWindow}, including its {@link Border}. Stored as it is
+     * recalculated on each repaint, yet hard to calculate on its own.
+     */
+    private int bottom;
 
     /**
      * The separators used to divide the {@link AlignedWindow} at each null content.
@@ -30,16 +35,17 @@ public class AlignedWindow extends CoordWindow
     /**
      * Creates an {@link AlignedWindow} with all fields defined.
      *
-     * @param display    the {@link Window}'s {@link maugrift.apwt.Display}
+     * @param display    the {@link Window}'s {@link AsciiPanelDisplay}
      * @param contents   the {@link Window}'s contents
-     * @param location   the {@link Window}'s location
+     * @param x          the {@link Window}'s x coordinate
+     * @param y          the {@link Window}'s y coordinate
      * @param border     the {@link Window}'s {@link Border}
      * @param separators the {@link Window}'s separators
      */
-    public AlignedWindow(Display display, List<ColorString> contents, Coord location, Border border,
+    public AlignedWindow(AsciiPanelDisplay display, List<ColorString> contents, int x, int y, Border border,
                          List<Line> separators)
     {
-        super(display, border, contents, location);
+        super(display, border, contents, x, y);
         this.separators = separators;
     }
 
@@ -50,69 +56,74 @@ public class AlignedWindow extends CoordWindow
      */
     public AlignedWindow(AlignedWindow copying)
     {
-        this(copying.getDisplay(), new ArrayList<>(copying.getContents()), copying.getLocation(), copying.getBorder(),
-                copying.separators);
+        this(copying.getDisplay(), new ArrayList<>(copying.getContents()), copying.getX(), copying.getY(),
+                copying.getBorder(), copying.separators);
     }
 
     /**
      * Creates an {@link AlignedWindow} with all fields defined.
      *
-     * @param display    the {@link Window}'s {@link maugrift.apwt.Display}
-     * @param location   the {@link Window}'s location
+     * @param display    the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param x          the {@link Window}'s x coordinate
+     * @param y          the {@link Window}'s y coordinate
      * @param border     the {@link Window}'s {@link Border}
      * @param separators the {@link Window}'s separators
      */
-    public AlignedWindow(Display display, Coord location, Border border, List<Line> separators)
+    public AlignedWindow(AsciiPanelDisplay display, int x, int y, Border border, List<Line> separators)
     {
-        this(display, new ArrayList<>(), location, border, separators);
+        this(display, new ArrayList<>(), x, y, border, separators);
     }
 
     /**
      * Creates an {@link AlignedWindow} with no separators.
      *
-     * @param display  the {@link Window}'s {@link maugrift.apwt.Display}
+     * @param display  the {@link Window}'s {@link AsciiPanelDisplay}
      * @param contents the {@link Window}'s contents
-     * @param location the {@link Window}'s location
+     * @param x        the {@link Window}'s x coordinate
+     * @param y        the {@link Window}'s y coordinate
      * @param border   the {@link Window}'s {@link Border}
      */
-    public AlignedWindow(Display display, List<ColorString> contents, Coord location, Border border)
+    public AlignedWindow(AsciiPanelDisplay display, List<ColorString> contents, int x, int y, Border border)
     {
-        this(display, contents, location, border, null);
+        this(display, contents, x, y, border, null);
     }
 
     /**
      * Creates an {@link AlignedWindow} with a default border and no separators.
      *
-     * @param display  the {@link Window}'s {@link maugrift.apwt.Display}
+     * @param display  the {@link Window}'s {@link AsciiPanelDisplay}
      * @param contents the {@link Window}'s contents
-     * @param location the {@link Window}'s location
+     * @param x        the {@link Window}'s x coordinate
+     * @param y        the {@link Window}'s y coordinate
      */
-    public AlignedWindow(Display display, List<ColorString> contents, Coord location)
+    public AlignedWindow(AsciiPanelDisplay display, List<ColorString> contents, int x, int y)
     {
-        this(display, contents, location, new Border(1));
+        this(display, contents, x, y, new Border(1));
     }
 
     /**
      * Creates an {@link AlignedWindow} with no separators.
      *
-     * @param display  the {@link Window}'s {@link maugrift.apwt.Display}
-     * @param location the {@link Window}'s location
-     * @param border   the {@link Window}'s {@link Border}
+     * @param display the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param x       the {@link Window}'s x coordinate
+     * @param y       the {@link Window}'s y coordinate
+     * @param border  the {@link Window}'s {@link Border}
      */
-    public AlignedWindow(Display display, Coord location, Border border)
+    public AlignedWindow(AsciiPanelDisplay display, int x, int y, Border border)
     {
-        this(display, location, border, new LinkedList<>());
+        this(display, x, y, border, new LinkedList<>());
     }
 
     /**
      * Creates an {@link AlignedWindow} with a default border and no separators.
      *
-     * @param display  the {@link Window}'s {@link maugrift.apwt.Display}
-     * @param location the {@link Window}'s location
+     * @param display the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param x       the {@link Window}'s x coordinate
+     * @param y       the {@link Window}'s y coordinate
      */
-    public AlignedWindow(Display display, Coord location)
+    public AlignedWindow(AsciiPanelDisplay display, int x, int y)
     {
-        this(display, location, new Border(1));
+        this(display, x, y, new Border(1));
     }
 
     @Override
@@ -125,10 +136,10 @@ public class AlignedWindow extends CoordWindow
 
         try
         {
-            if (!getDisplay().contains(getLocation().subtract(1)))
+            if (!getDisplay().contains(getX() - 1, getY() - 1))
             {
                 throw new IndexOutOfBoundsException(
-                        "Top left coordinates must " + "be >= 1; were " + getLocation().x + " and " + getLocation().y);
+                        "Top left coordinates must be >= 1; were " + getX() + " and " + getY());
             }
 
             if (getContents() == null || getContents().isEmpty())
@@ -164,17 +175,30 @@ public class AlignedWindow extends CoordWindow
                 }
             }
 
-            int curLine = getLocation().y;
-            int curIndent = getLocation().x;
+            int curLine = getY();
+            int curIndent = getX();
             int overallMaxLength = 0;
             int curMaxLines = blocks[0].size();
             int overallLines = blocks[0].size();
-            Coord[] textPoints = new Coord[nBlocks];
-            Coord[] endpoints = hasSeparators() ? new Coord[separators.size() * 2] : null;
+            int[] textX = new int[nBlocks];
+            int[] textY = new int[nBlocks];
+
+            int[] endX, endY;
+            if (hasSeparators())
+            {
+                endX = new int[separators.size() * 2];
+                endY = new int[separators.size() * 2];
+            }
+            else
+            {
+                endX = null;
+                endY = null;
+            }
 
             for (int block = 0; block < blocks.length; block++)
             {
-                textPoints[block] = Coord.get(curIndent, curLine);
+                textX[block] = curIndent;
+                textY[block] = curLine;
 
                 int curMaxLength = 0;
                 for (ColorString line : blocks[block])
@@ -185,7 +209,7 @@ public class AlignedWindow extends CoordWindow
                     }
                 }
 
-                curMaxLength += curIndent - getLocation().x;
+                curMaxLength += curIndent - getX();
 
                 if (curMaxLength > overallMaxLength)
                 {
@@ -208,8 +232,7 @@ public class AlignedWindow extends CoordWindow
                     while (separators.size() - 1 >= checkingBlock && checkingBlock >= 0 && separators.get(
                             checkingBlock) != null && !separators.get(checkingBlock).horizontal)
                     {
-                        endpoints[checkingBlock * 2 + 1] = Coord.get(endpoints[checkingBlock * 2 + 1].x,
-                                curLine + curMaxLines);
+                        endY[checkingBlock * 2 + 1] = curLine + curMaxLines;
                         checkingBlock--;
                     }
                 }
@@ -223,10 +246,12 @@ public class AlignedWindow extends CoordWindow
                 {
                     if (separators.get(block).horizontal)
                     {
-                        curIndent = getLocation().x;
+                        curIndent = getX();
 
-                        endpoints[block * 2] = Coord.get(getLocation().x - 1, curLine + curMaxLines);
-                        endpoints[block * 2 + 1] = Coord.get(curIndent + overallMaxLength, curLine + curMaxLines);
+                        endX[block * 2] = getX() - 1;
+                        endY[block * 2] = curLine + curMaxLines;
+                        endX[block * 2 + 1] = curIndent + overallMaxLength;
+                        endY[block * 2 + 1] = curLine + curMaxLines;
 
                         curLine += curMaxLines + 1;
                         curMaxLines = blocks[block + 1].size();
@@ -234,30 +259,34 @@ public class AlignedWindow extends CoordWindow
                     }
                     else
                     {
-                        curIndent = getLocation().x + curMaxLength + 1;
+                        curIndent = getX() + curMaxLength + 1;
 
-                        endpoints[block * 2] = Coord.get(curIndent - 1, curLine - 1);
-                        endpoints[block * 2 + 1] = Coord.get(curIndent - 1, curLine + curMaxLines);
+                        endX[block * 2] = curIndent - 1;
+                        endY[block * 2] = curLine - 1;
+                        endX[block * 2 + 1] = curIndent - 1;
+                        endY[block * 2 + 1] = curLine + curMaxLines;
                     }
                 }
                 else
                 {
-                    curIndent = getLocation().x;
+                    curIndent = getX();
                     curLine += curMaxLines + 1;
                     curMaxLines = blocks[block + 1].size();
                     overallLines += blocks[block + 1].size() + 1;
                 }
             }
 
-            bottomRight = getLocation().add(Coord.get(overallMaxLength, overallLines));
+            right = getX() + overallLines;
+            bottom = getY() + overallMaxLength;
 
             if (isBordered())
             {
-                getDisplay().drawBorder(getLocation().subtract(1), bottomRight, getBorder());
+                getDisplay().drawBorder(getX() - 1, getY() - 1, right, bottom, getBorder());
             }
             else
             {
-                bottomRight = bottomRight.subtract(1);
+                right--;
+                bottom--;
             }
 
             if (hasSeparators())
@@ -270,9 +299,8 @@ public class AlignedWindow extends CoordWindow
                     if (separators.size() - 1 >= separator && separators.get(separator) != null && separators.get(
                             separator).horizontal)
                     {
-                        getDisplay().drawLine(endpoints[separator * 2],
-                                endpoints[separator * 2 + 1].setX(getLocation().x + overallMaxLength),
-                                separators.get(separator));
+                        getDisplay().drawLine(endX[separator * 2], endY[separator * 2], getX() + overallMaxLength,
+                                endY[separator * 2 + 1], separators.get(separator));
                     }
                 }
 
@@ -281,15 +309,16 @@ public class AlignedWindow extends CoordWindow
                     if (separators.size() - 1 >= separator && separators.get(separator) != null && !separators.get(
                             separator).horizontal)
                     {
-                        getDisplay().drawLine(endpoints[separator * 2], endpoints[separator * 2 + 1],
-                                separators.get(separator));
+                        getDisplay().drawLine(endX[separator * 2], endY[separator * 2], endX[separator * 2 + 1],
+                                endY[separator * 2 + 1], separators.get(separator));
                     }
                 }
             }
 
             for (int block = 0; block < nBlocks; block++)
             {
-                getDisplay().write(textPoints[block], blocks[block].toArray(new ColorString[blocks[block].size()]));
+                getDisplay().write(textX[block], textY[block],
+                        blocks[block].toArray(new ColorString[blocks[block].size()]));
             }
         }
         catch (IllegalArgumentException | IndexOutOfBoundsException e)
@@ -300,14 +329,25 @@ public class AlignedWindow extends CoordWindow
     }
 
     /**
-     * Returns the bottom-right coordinates of the {@link AlignedWindow}. For best accuracy when drawing subsequent
-     * windows based on this, call {@link #display()} before calling this method.
+     * Returns the x coordinate of the right side of the {@link AlignedWindow}. For best accuracy when drawing
+     * subsequent windows based on this, call {@link #display()} before calling this method.
      *
-     * @return the bottom-right coordinates of the {@link AlignedWindow}
+     * @return the x coordinate of the right side of the {@link AlignedWindow}
      */
-    public Coord getBottomRight()
+    public int getRight()
     {
-        return bottomRight;
+        return right;
+    }
+
+    /**
+     * Returns the y coordinate of the bottom of the {@link AlignedWindow}. For best accuracy when drawing
+     * subsequent windows based on this, call {@link #display()} before calling this method.
+     *
+     * @return the y coordinate of the bottom of the {@link AlignedWindow}
+     */
+    public int getBottom()
+    {
+        return bottom;
     }
 
     /**

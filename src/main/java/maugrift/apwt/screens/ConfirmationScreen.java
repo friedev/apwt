@@ -1,6 +1,6 @@
 package maugrift.apwt.screens;
 
-import maugrift.apwt.Display;
+import maugrift.apwt.display.AsciiPanelDisplay;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -45,14 +45,14 @@ public abstract class ConfirmationScreen extends Screen
     private List<Integer> cancelCodes;
 
     /**
-     * Creates a new {@link ConfirmationScreen} on the provided {@link Display} with the given Lists of keycodes.
+     * Creates a new {@link ConfirmationScreen} on the provided {@link AsciiPanelDisplay} with the given Lists of keycodes.
      *
-     * @param display      the {@link Display} on which the {@link ConfirmationScreen} will be shown
+     * @param display      the {@link AsciiPanelDisplay} on which the {@link ConfirmationScreen} will be shown
      * @param confirmCodes the keycodes that will trigger {@link #onConfirm()}
      * @param denyCodes    the keycodes that will trigger {@link #onDeny()}
      * @param cancelCodes  the keycodes that will trigger {@link #onCancel()}
      */
-    public ConfirmationScreen(Display display, List<Integer> confirmCodes, List<Integer> denyCodes,
+    public ConfirmationScreen(AsciiPanelDisplay display, List<Integer> confirmCodes, List<Integer> denyCodes,
                               List<Integer> cancelCodes)
     {
         super(display);
@@ -62,25 +62,25 @@ public abstract class ConfirmationScreen extends Screen
     }
 
     /**
-     * Creates a new {@link ConfirmationScreen} on the provided {@link Display} with the given arrays of keycodes.
+     * Creates a new {@link ConfirmationScreen} on the provided {@link AsciiPanelDisplay} with the given arrays of keycodes.
      *
-     * @param display      the {@link Display} on which the {@link ConfirmationScreen} will be shown
+     * @param display      the {@link AsciiPanelDisplay} on which the {@link ConfirmationScreen} will be shown
      * @param confirmCodes the keycodes that will trigger {@link #onConfirm()}
      * @param denyCodes    the keycodes that will trigger {@link #onDeny()}
      * @param cancelCodes  the keycodes that will trigger {@link #onCancel()}
      */
-    public ConfirmationScreen(Display display, Integer[] confirmCodes, Integer[] denyCodes, Integer[] cancelCodes)
+    public ConfirmationScreen(AsciiPanelDisplay display, Integer[] confirmCodes, Integer[] denyCodes, Integer[] cancelCodes)
     {
         this(display, new ArrayList<>(Arrays.asList(confirmCodes)), new ArrayList<>(Arrays.asList(denyCodes)),
                 new ArrayList<>(Arrays.asList(cancelCodes)));
     }
 
     /**
-     * Creates a new {@link ConfirmationScreen} on the provided {@link Display}. Uses the default keycodes.
+     * Creates a new {@link ConfirmationScreen} on the provided {@link AsciiPanelDisplay}. Uses the default keycodes.
      *
-     * @param display the {@link Display} on which the {@link ConfirmationScreen} will be shown
+     * @param display the {@link AsciiPanelDisplay} on which the {@link ConfirmationScreen} will be shown
      */
-    public ConfirmationScreen(Display display)
+    public ConfirmationScreen(AsciiPanelDisplay display)
     {
         this(display, new ArrayList<>(CONFIRM_CODES), new ArrayList<>(DENY_CODES), new ArrayList<>(CANCEL_CODES));
     }

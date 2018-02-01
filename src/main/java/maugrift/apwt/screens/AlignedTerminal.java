@@ -1,5 +1,6 @@
 package maugrift.apwt.screens;
 
+import maugrift.apwt.display.AsciiPanelDisplay;
 import maugrift.apwt.glyphs.ColorString;
 import maugrift.apwt.windows.AlignedWindow;
 
@@ -86,7 +87,7 @@ public class AlignedTerminal extends ColoredTerminal<AlignedWindow>
 
     /**
      * Creates an {@link AlignedTerminal} with the given {@link maugrift.apwt.windows.AlignedWindow Window} and prompt,
-     * using the width of the {@link maugrift.apwt.Display} as the maximum length.
+     * using the width of the {@link AsciiPanelDisplay} as the maximum length.
      *
      * @param output the {@link Terminal}'s output window
      * @param prompt the {@link Terminal}'s prompt
@@ -98,7 +99,7 @@ public class AlignedTerminal extends ColoredTerminal<AlignedWindow>
 
     /**
      * Creates an {@link AlignedTerminal} with the given {@link maugrift.apwt.windows.AlignedWindow Window} and prompt,
-     * using the width of the {@link maugrift.apwt.Display} as the maximum length.
+     * using the width of the {@link AsciiPanelDisplay} as the maximum length.
      *
      * @param output the {@link Terminal}'s output window
      * @param prompt the {@link Terminal}'s prompt
@@ -109,7 +110,7 @@ public class AlignedTerminal extends ColoredTerminal<AlignedWindow>
     }
 
     /**
-     * Creates an {@link AlignedTerminal} with no prompt and the width of the {@link maugrift.apwt.Display} as the
+     * Creates an {@link AlignedTerminal} with no prompt and the width of the {@link AsciiPanelDisplay} as the
      * maximum length.
      *
      * @param output the {@link Terminal}'s output window

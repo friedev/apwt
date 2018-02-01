@@ -1,6 +1,7 @@
 package maugrift.apwt.glyphs;
 
-import maugrift.apwt.Display;
+import maugrift.apwt.display.AsciiPanelDisplay;
+import maugrift.apwt.display.Display;
 
 import java.awt.*;
 import java.util.*;
@@ -294,9 +295,9 @@ public class ColorString implements CharSequence
 
     /**
      * Sets any unspecified (null) colors of each {@link ColorChar} to the default colors of the provided {@link
-     * maugrift.apwt.Display}'s AsciiPanel.
+     * Display}.
      *
-     * @param display the {@link maugrift.apwt.Display} containing the AsciiPanel with which to sync default colors
+     * @param display the {@link Display} with which to sync default colors
      * @return this for convenient chaining
      */
     public ColorString syncDefaults(Display display)

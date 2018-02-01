@@ -1,8 +1,7 @@
 package maugrift.apwt.windows;
 
-import maugrift.apwt.Display;
+import maugrift.apwt.display.AsciiPanelDisplay;
 import maugrift.apwt.glyphs.ColorString;
-import squidpony.squidmath.Coord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +21,12 @@ public class PopupWindow extends Window
     /**
      * Creates a {@link PopupWindow} with all fields defined.
      *
-     * @param display   the {@link Window}'s {@link maugrift.apwt.Display}
+     * @param display   the {@link Window}'s {@link AsciiPanelDisplay}
      * @param contents  the {@link Window}'s contents
      * @param border    the {@link Window}'s {@link Border}
      * @param separator the {@link Window}'s separator
      */
-    public PopupWindow(Display display, List<ColorString> contents, Border border, Line separator)
+    public PopupWindow(AsciiPanelDisplay display, List<ColorString> contents, Border border, Line separator)
     {
         super(display, border, contents);
         this.separator = separator;
@@ -46,11 +45,11 @@ public class PopupWindow extends Window
     /**
      * Creates a {@link PopupWindow} with all fields defined.
      *
-     * @param display   the {@link Window}'s {@link maugrift.apwt.Display}
+     * @param display   the {@link Window}'s {@link AsciiPanelDisplay}
      * @param border    the {@link Window}'s {@link Border}
      * @param separator the {@link Window}'s separator
      */
-    public PopupWindow(Display display, Border border, Line separator)
+    public PopupWindow(AsciiPanelDisplay display, Border border, Line separator)
     {
         this(display, new ArrayList<>(), border, separator);
     }
@@ -58,11 +57,11 @@ public class PopupWindow extends Window
     /**
      * Creates a {@link PopupWindow} with no separator.
      *
-     * @param display  the {@link Window}'s {@link maugrift.apwt.Display}
+     * @param display  the {@link Window}'s {@link AsciiPanelDisplay}
      * @param contents the {@link Window}'s contents
      * @param border   the {@link Window}'s {@link Border}
      */
-    public PopupWindow(Display display, List<ColorString> contents, Border border)
+    public PopupWindow(AsciiPanelDisplay display, List<ColorString> contents, Border border)
     {
         this(display, contents, border, null);
     }
@@ -70,10 +69,10 @@ public class PopupWindow extends Window
     /**
      * Creates a {@link PopupWindow} with no separator.
      *
-     * @param display the {@link Window}'s {@link maugrift.apwt.Display}
+     * @param display the {@link Window}'s {@link AsciiPanelDisplay}
      * @param border  the {@link Window}'s {@link Border}
      */
-    public PopupWindow(Display display, Border border)
+    public PopupWindow(AsciiPanelDisplay display, Border border)
     {
         this(display, new ArrayList<>(), border);
     }
@@ -81,10 +80,10 @@ public class PopupWindow extends Window
     /**
      * Creates a {@link PopupWindow} with a default border and no separator.
      *
-     * @param display  the {@link Window}'s {@link maugrift.apwt.Display}
+     * @param display  the {@link Window}'s {@link AsciiPanelDisplay}
      * @param contents the {@link Window}'s contents
      */
-    public PopupWindow(Display display, List<ColorString> contents)
+    public PopupWindow(AsciiPanelDisplay display, List<ColorString> contents)
     {
         this(display, contents, new Border(1));
     }
@@ -92,9 +91,9 @@ public class PopupWindow extends Window
     /**
      * Creates a {@link PopupWindow} with a default border and no separator.
      *
-     * @param display the {@link Window}'s {@link maugrift.apwt.Display}
+     * @param display the {@link Window}'s {@link AsciiPanelDisplay}
      */
-    public PopupWindow(Display display)
+    public PopupWindow(AsciiPanelDisplay display)
     {
         this(display, new Border(1));
     }
@@ -116,7 +115,7 @@ public class PopupWindow extends Window
 
             if (!getDisplay().containsY(getContents().size() + 2))
             {
-                throw new IndexOutOfBoundsException("Text is too tall for the " + "display");
+                throw new IndexOutOfBoundsException("Text is too tall for the display");
             }
 
             int maxLength = 0;
@@ -130,16 +129,19 @@ public class PopupWindow extends Window
 
             if (!getDisplay().containsX(maxLength + 2))
             {
-                throw new IndexOutOfBoundsException("Text is too wide for the " + "display");
+                throw new IndexOutOfBoundsException("Text is too wide for the display");
             }
 
-            Coord center = getDisplay().getCenter();
+            int centerX = getDisplay().getCenterX();
+            int centerY = getDisplay().getCenterY();
+
             int offsetDown = getContents().size() / 2 - 1;
             int offsetUp = offsetDown;
             if (getContents().size() % 2 == 1)
             {
                 offsetDown++;
             }
+
             int offsetRight = maxLength / 2 - 1;
             int offsetLeft = offsetRight;
             if (maxLength % 2 == 1)
@@ -147,12 +149,12 @@ public class PopupWindow extends Window
                 offsetRight++;
             }
 
-            int top = center.y - offsetUp - 2;
-            int bottom = center.y + offsetDown + 1;
-            int left = center.x - offsetLeft - 2;
-            int right = center.x + offsetRight + 1;
+            int top = centerY - offsetUp - 2;
+            int bottom = centerY + offsetDown + 1;
+            int left = centerX - offsetLeft - 2;
+            int right = centerX + offsetRight + 1;
 
-            getDisplay().drawBorder(Coord.get(left, top), Coord.get(right, bottom), getBorder());
+            getDisplay().drawBorder(left, top, right, bottom, getBorder());
 
             if (separator != null)
             {
@@ -160,8 +162,7 @@ public class PopupWindow extends Window
                 {
                     if (getContents().get(line) == null)
                     {
-                        getDisplay().drawLine(Coord.get(left, top + 1 + line), Coord.get(right, top + 1 + line),
-                                separator);
+                        getDisplay().drawLine(left, top + 1 + line, right, top + 1 + line, separator);
                     }
                 }
             }

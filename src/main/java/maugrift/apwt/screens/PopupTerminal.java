@@ -1,5 +1,6 @@
 package maugrift.apwt.screens;
 
+import maugrift.apwt.display.AsciiPanelDisplay;
 import maugrift.apwt.glyphs.ColorString;
 import maugrift.apwt.windows.PopupWindow;
 
@@ -86,7 +87,7 @@ public class PopupTerminal extends ColoredTerminal<PopupWindow>
 
     /**
      * Creates an {@link PopupTerminal} with the given {@link maugrift.apwt.windows.PopupWindow Window} and prompt,
-     * using the width of the {@link maugrift.apwt.Display} as the maximum length.
+     * using the width of the {@link AsciiPanelDisplay} as the maximum length.
      *
      * @param output the {@link Terminal}'s output window
      * @param prompt the {@link Terminal}'s prompt
@@ -98,7 +99,7 @@ public class PopupTerminal extends ColoredTerminal<PopupWindow>
 
     /**
      * Creates an {@link PopupTerminal} with the given {@link maugrift.apwt.windows.PopupWindow Window} and prompt,
-     * using the width of the {@link maugrift.apwt.Display} as the maximum length.
+     * using the width of the {@link AsciiPanelDisplay} as the maximum length.
      *
      * @param output the {@link Terminal}'s output window
      * @param prompt the {@link Terminal}'s prompt
@@ -109,7 +110,7 @@ public class PopupTerminal extends ColoredTerminal<PopupWindow>
     }
 
     /**
-     * Creates an {@link PopupTerminal} with no prompt and the width of the {@link maugrift.apwt.Display} as the maximum
+     * Creates an {@link PopupTerminal} with no prompt and the width of the {@link AsciiPanelDisplay} as the maximum
      * length.
      *
      * @param output the {@link Terminal}'s output window

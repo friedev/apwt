@@ -1,6 +1,6 @@
 package maugrift.apwt.screens;
 
-import maugrift.apwt.Display;
+import maugrift.apwt.display.AsciiPanelDisplay;
 
 import java.awt.event.KeyEvent;
 
@@ -13,16 +13,16 @@ import java.awt.event.KeyEvent;
 public abstract class Screen
 {
     /**
-     * The {@link maugrift.apwt.Display} through which output is shown.
+     * The {@link AsciiPanelDisplay} through which output is shown.
      */
-    private Display display;
+    private AsciiPanelDisplay display;
 
     /**
-     * Creates a new {@link Screen} on the provided {@link maugrift.apwt.Display}.
+     * Creates a new {@link Screen} on the provided {@link AsciiPanelDisplay}.
      *
-     * @param display the {@link maugrift.apwt.Display} on which the {@link Screen} will be shown
+     * @param display the {@link AsciiPanelDisplay} on which the {@link Screen} will be shown
      */
-    public Screen(Display display)
+    public Screen(AsciiPanelDisplay display)
     {
         this.display = display;
     }
@@ -30,25 +30,25 @@ public abstract class Screen
     /**
      * Returns the {@link #display Display} used by the {@link Screen}.
      *
-     * @return the {@link maugrift.apwt.Display} used by the {@link Screen}
+     * @return the {@link AsciiPanelDisplay} used by the {@link Screen}
      */
-    public Display getDisplay()
+    public AsciiPanelDisplay getDisplay()
     {
         return display;
     }
 
     /**
-     * Sets the {@link #display Display} to the given {@link maugrift.apwt.Display}.
+     * Sets the {@link #display Display} to the given {@link AsciiPanelDisplay}.
      *
-     * @param d the new {@link maugrift.apwt.Display} for the {@link Screen} to use
+     * @param d the new {@link AsciiPanelDisplay} for the {@link Screen} to use
      */
-    public void setDisplay(Display d)
+    public void setDisplay(AsciiPanelDisplay d)
     {
         display = d;
     }
 
     /**
-     * Displays the {@link Screen}'s output to its {@link maugrift.apwt.Display}.
+     * Displays the {@link Screen}'s output to its {@link AsciiPanelDisplay}.
      */
     public abstract void displayOutput();
 

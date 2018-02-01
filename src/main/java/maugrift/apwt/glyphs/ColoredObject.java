@@ -1,6 +1,7 @@
 package maugrift.apwt.glyphs;
 
-import maugrift.apwt.Display;
+import maugrift.apwt.display.AsciiPanelDisplay;
+import maugrift.apwt.display.Display;
 
 import java.awt.*;
 
@@ -105,20 +106,20 @@ public abstract class ColoredObject
 
     /**
      * Sets any unspecified (null) colors of the {@link ColoredObject} to the default colors of the provided {@link
-     * maugrift.apwt.Display}'s AsciiPanel.
+     * Display}.
      *
-     * @param display the {@link maugrift.apwt.Display} containing the AsciiPanel with which to sync default colors
+     * @param display the {@link Display} with which to sync default colors
      */
     public void syncDefaults(Display display)
     {
         if (foreground == null)
         {
-            foreground = display.getPanel().getDefaultForegroundColor();
+            foreground = display.getDefaultForegroundColor();
         }
 
         if (background == null)
         {
-            background = display.getPanel().getDefaultBackgroundColor();
+            background = display.getDefaultBackgroundColor();
         }
     }
 }
