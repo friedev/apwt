@@ -54,7 +54,6 @@ public class AsciiPanelDisplay extends JFrame implements KeyListener, Display
         addKeyListener(this);
         repaint();
         setResizable(false);
-        setSize(getWidth() - 10, getHeight() - 10);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         return this;

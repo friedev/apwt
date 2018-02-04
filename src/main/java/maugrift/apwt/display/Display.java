@@ -204,7 +204,7 @@ public interface Display
     {
         if (s == null || s.length == 0)
         {
-            throw new IllegalArgumentException("No Strings were provided to print");
+            return;
         }
 
         for (int line = 0; line < s.length; line++)
@@ -228,7 +228,7 @@ public interface Display
     {
         if (s == null || s.getCharacters() == null || s.getCharacters().isEmpty())
         {
-            throw new IllegalArgumentException("Given ColorString is null or empty");
+            return;
         }
 
         List<ColorChar> chars = s.getCharacters();
@@ -251,7 +251,7 @@ public interface Display
     {
         if (s == null || s.length == 0)
         {
-            throw new IllegalArgumentException("No ColorStrings were provided to print");
+            return;
         }
 
         for (int line = 0; line < s.length; line++)
