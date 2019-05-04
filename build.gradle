@@ -3,29 +3,18 @@ apply plugin: 'java'
 sourceCompatibility = '9.0.1'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-jar {
-    from {
-        configurations.compile.collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
-        configurations.runtime.collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
-    }
-}
-
 repositories {
-    flatDir {
-        dirs 'lib'
+    mavenCentral()
+    allprojects {
+        repositories {
+            maven {
+                url 'https://jitpack.io'
+            }
+        }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'lib', include: ['*.jar'])
-}
-
-buildscript {
-    dependencies {
-        classpath fileTree(dir: 'lib', include: ['*.jar'])
-    }
+    compile 'com.github.trystan:AsciiPanel:master-SNAPSHOT'
+    compile 'com.squidpony:squidlib-util:3.0.0-b9'
 }
