@@ -1,6 +1,6 @@
 # AsciiPanelWindowingToolkit (APWT)
 
-AsciiPanelWindowingToolkit is a set of classes and utilities that will make working with AsciiPanel on a larger scale much easier. It includes support for screens, text windows, multicolored strings, and defines constants for different CP437 characters. APWT, of course, depends on [AsciiPanel](github.com/trystan/AsciiPanel), as well as [SquidLib](https://github.com/SquidPony/SquidLib).
+AsciiPanelWindowingToolkit is a set of classes and utilities that will make working with AsciiPanel on a larger scale much easier. It includes support for screens, text windows, multicolored strings, and defines constants for different CP437 characters. APWT, of course, depends on [AsciiPanel](https://github.com/trystan/AsciiPanel), as well as [SquidLib](https://github.com/SquidPony/SquidLib).
 
 **DISCLAIMER:** To be brutally honest, one of the reasons AsciiPanel is still a decent library is because of its downright simplicity. If you really want more complexity in your Java terminal emulators, I would strongly recommend [Zircon](https://github.com/Hexworks/zircon), or even [SquidLib](https://github.com/SquidPony/SquidLib)'s built-in graphical options. Still, this library exists if you've got something made with AsciiPanel and want to easily extend its functionality.
 
