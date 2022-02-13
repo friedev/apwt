@@ -1,20 +1,20 @@
 apply plugin: 'java'
 
-sourceCompatibility = '9.0.1'
+sourceCompatibility = '1.8'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {
-    mavenCentral()
-    allprojects {
-        repositories {
-            maven {
-                url 'https://jitpack.io'
-            }
-        }
-    }
+	mavenCentral()
+	allprojects {
+		repositories {
+			maven {
+				url 'https://jitpack.io'
+			}
+		}
+	}
 }
 
 dependencies {
-    compile 'com.github.trystan:AsciiPanel:master-SNAPSHOT'
-    compile 'com.squidpony:squidlib-util:3.0.0-b9'
+	implementation 'com.github.trystan:asciipanel:4af354155a'
+	implementation 'com.github.yellowstonegames.SquidLib:squidlib:v3.0.4'
 }

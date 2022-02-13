@@ -11,7 +11,8 @@ Nonetheless, this library exists if you've got something made with AsciiPanel an
 
 ## Compiling
 
-To compile APWT, clone the repository and run `gradle clean build jar`.
+To compile APWT, you must have Gradle installed.
+Clone the repository and run `gradle clean build jar`.
 You can then include the compiled library jar file in your projects.
 
 ## Usage
