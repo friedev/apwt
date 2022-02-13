@@ -367,6 +367,14 @@ public class ColorString implements CharSequence
         return characters.get(index).getChar();
     }
 
+    /**
+     * Returns the {@link ColorChar} at the given index of this
+	 * {@link ColorString}.
+     *
+	 * @param index the index at which to retrieve the {@link ColorChar}; must
+	 *              be a valid index into the {@link ColorString}
+     * @return      the {@link ColorChar} at the given index
+     */
     public ColorChar getColorCharAt(int index)
     {
         return characters.get(index);

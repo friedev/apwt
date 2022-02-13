@@ -493,6 +493,14 @@ public abstract class Utility
         return results.toArray(resultsArray);
     }
 
+	/**
+	 * Creates a Comparator that compares Coords based on their squared
+	 * distance to the given center point.
+	 *
+	 * @param center other Coords are compared to each other by their distance
+	 *               to this Coord
+	 * @return       the Comparator described above
+	 */
     public static Comparator<Coord> createDistanceComparator(Coord center)
     {
         return Comparator.comparingDouble(coord -> coord.distanceSq(center));

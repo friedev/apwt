@@ -22,7 +22,7 @@ import java.util.Scanner;
 public abstract class FileManager
 {
     /**
-     * The maximum integer volume allowed in {@link #setVolume(Clip, int).
+     * The maximum integer volume allowed in {@link #setVolume(Clip, int)}.
      */
     public static final int MAX_VOLUME = 100;
 

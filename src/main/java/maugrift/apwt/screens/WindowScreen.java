@@ -10,5 +10,12 @@ import maugrift.apwt.windows.Window;
  */
 public interface WindowScreen<WindowType extends Window>
 {
+	/**
+	 * Returns the {@link maugrift.apwt.windows.Window} used by this
+	 * {@link Screen}.
+	 *
+	 * @return the {@link maugrift.apwt.windows.Window} used by this
+	 *         {@link Screen}
+	 */
     WindowType getWindow();
 }

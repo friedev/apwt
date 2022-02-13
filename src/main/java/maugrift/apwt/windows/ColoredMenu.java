@@ -69,6 +69,13 @@ public abstract class ColoredMenu<WindowType extends Window> extends Menu<Window
         return selectionBackground;
     }
 
+    /**
+     * Colors the given ColorString with the selection colors. Intended for
+	 * use by interactive menus for setting the color of the current selection.
+     *
+     * @param selection the ColorString to apply selection colors to; null is
+	 *                  ignored
+     */
     public void applySelectionColors(ColorString selection)
     {
         if (selection == null)

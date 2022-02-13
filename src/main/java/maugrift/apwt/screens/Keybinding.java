@@ -13,7 +13,15 @@ import java.awt.*;
  */
 public class Keybinding implements ColorStringObject
 {
+    /**
+     * The default color to use when outputting the key's function as a
+	 * ColorString.
+     */
     public static final Color COLOR_FUNCTION = new Color(192, 192, 192);
+
+    /**
+     * The default color to use when outputting the key as a ColorString.
+     */
     public static final Color COLOR_KEY = Color.WHITE;
 
     /**
@@ -85,12 +93,26 @@ public class Keybinding implements ColorStringObject
         return keys;
     }
 
+	/**
+	 * Convert this {@link Keybinding} to a ColorString representation using
+	 * the default colors.
+	 *
+	 * @return a ColorString representing this keybinding
+	 */
     @Override
     public ColorString toColorString()
     {
         return toColorString(COLOR_FUNCTION, COLOR_KEY);
     }
 
+	/**
+	 * Convert this {@link Keybinding} to a ColorString representation using
+	 * the given colors.
+	 *
+     * @param colorFunction  the color to use for the key's function
+     * @param colorKey       the color to use for the key
+	 * @return a ColorString representing this keybinding
+	 */
     public ColorString toColorString(Color colorFunction, Color colorKey)
     {
         ColorString colorString = new ColorString(keys[0], colorKey);
