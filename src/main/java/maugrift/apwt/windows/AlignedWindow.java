@@ -276,8 +276,8 @@ public class AlignedWindow extends CoordWindow
                 }
             }
 
-            right = getX() + overallLines;
-            bottom = getY() + overallMaxLength;
+            right = getX() + overallMaxLength;
+            bottom = getY() + overallLines;
 
             if (isBordered())
             {
