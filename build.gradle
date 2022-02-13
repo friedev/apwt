@@ -21,3 +21,15 @@ dependencies {
 	implementation 'com.github.trystan:asciipanel:4af354155a'
 	implementation 'com.github.yellowstonegames.SquidLib:squidlib:v3.0.4'
 }
+
+java {
+	withSourcesJar()
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			from components.java
+		}
+	}
+}
