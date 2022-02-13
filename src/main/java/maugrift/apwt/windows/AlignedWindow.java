@@ -1,6 +1,6 @@
 package maugrift.apwt.windows;
 
-import maugrift.apwt.display.AsciiPanelDisplay;
+import maugrift.apwt.display.Display;
 import maugrift.apwt.glyphs.ColorString;
 
 import java.util.ArrayList;
@@ -35,14 +35,14 @@ public class AlignedWindow extends CoordWindow
     /**
      * Creates an {@link AlignedWindow} with all fields defined.
      *
-     * @param display    the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display    the {@link Window}'s {@link Display}
      * @param contents   the {@link Window}'s contents
      * @param x          the {@link Window}'s x coordinate
      * @param y          the {@link Window}'s y coordinate
      * @param border     the {@link Window}'s {@link Border}
      * @param separators the {@link Window}'s separators
      */
-    public AlignedWindow(AsciiPanelDisplay display, List<ColorString> contents, int x, int y, Border border,
+    public AlignedWindow(Display display, List<ColorString> contents, int x, int y, Border border,
                          List<Line> separators)
     {
         super(display, border, contents, x, y);
@@ -63,13 +63,13 @@ public class AlignedWindow extends CoordWindow
     /**
      * Creates an {@link AlignedWindow} with all fields defined.
      *
-     * @param display    the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display    the {@link Window}'s {@link Display}
      * @param x          the {@link Window}'s x coordinate
      * @param y          the {@link Window}'s y coordinate
      * @param border     the {@link Window}'s {@link Border}
      * @param separators the {@link Window}'s separators
      */
-    public AlignedWindow(AsciiPanelDisplay display, int x, int y, Border border, List<Line> separators)
+    public AlignedWindow(Display display, int x, int y, Border border, List<Line> separators)
     {
         this(display, new ArrayList<>(), x, y, border, separators);
     }
@@ -77,13 +77,13 @@ public class AlignedWindow extends CoordWindow
     /**
      * Creates an {@link AlignedWindow} with no separators.
      *
-     * @param display  the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display  the {@link Window}'s {@link Display}
      * @param contents the {@link Window}'s contents
      * @param x        the {@link Window}'s x coordinate
      * @param y        the {@link Window}'s y coordinate
      * @param border   the {@link Window}'s {@link Border}
      */
-    public AlignedWindow(AsciiPanelDisplay display, List<ColorString> contents, int x, int y, Border border)
+    public AlignedWindow(Display display, List<ColorString> contents, int x, int y, Border border)
     {
         this(display, contents, x, y, border, null);
     }
@@ -91,12 +91,12 @@ public class AlignedWindow extends CoordWindow
     /**
      * Creates an {@link AlignedWindow} with a default border and no separators.
      *
-     * @param display  the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display  the {@link Window}'s {@link Display}
      * @param contents the {@link Window}'s contents
      * @param x        the {@link Window}'s x coordinate
      * @param y        the {@link Window}'s y coordinate
      */
-    public AlignedWindow(AsciiPanelDisplay display, List<ColorString> contents, int x, int y)
+    public AlignedWindow(Display display, List<ColorString> contents, int x, int y)
     {
         this(display, contents, x, y, new Border(1));
     }
@@ -104,12 +104,12 @@ public class AlignedWindow extends CoordWindow
     /**
      * Creates an {@link AlignedWindow} with no separators.
      *
-     * @param display the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display the {@link Window}'s {@link Display}
      * @param x       the {@link Window}'s x coordinate
      * @param y       the {@link Window}'s y coordinate
      * @param border  the {@link Window}'s {@link Border}
      */
-    public AlignedWindow(AsciiPanelDisplay display, int x, int y, Border border)
+    public AlignedWindow(Display display, int x, int y, Border border)
     {
         this(display, x, y, border, new LinkedList<>());
     }
@@ -117,11 +117,11 @@ public class AlignedWindow extends CoordWindow
     /**
      * Creates an {@link AlignedWindow} with a default border and no separators.
      *
-     * @param display the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display the {@link Window}'s {@link Display}
      * @param x       the {@link Window}'s x coordinate
      * @param y       the {@link Window}'s y coordinate
      */
-    public AlignedWindow(AsciiPanelDisplay display, int x, int y)
+    public AlignedWindow(Display display, int x, int y)
     {
         this(display, x, y, new Border(1));
     }

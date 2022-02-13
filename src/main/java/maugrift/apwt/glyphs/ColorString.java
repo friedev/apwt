@@ -1,6 +1,5 @@
 package maugrift.apwt.glyphs;
 
-import maugrift.apwt.display.AsciiPanelDisplay;
 import maugrift.apwt.display.Display;
 
 import java.awt.*;

@@ -1,6 +1,6 @@
 package maugrift.apwt.windows;
 
-import maugrift.apwt.display.AsciiPanelDisplay;
+import maugrift.apwt.display.Display;
 import maugrift.apwt.glyphs.ColorString;
 
 import java.util.List;
@@ -25,13 +25,13 @@ public abstract class CoordWindow extends Window
     /**
      * Creates a {@link CoordWindow} with all fields defined.
      *
-     * @param display  the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display  the {@link Window}'s {@link Display}
      * @param border   the {@link Window}'s {@link Border}
      * @param contents the {@link Window}'s initial contents
      * @param x        the {@link Window}'s x coordinate
      * @param y        the {@link Window}'s y coordinate
      */
-    public CoordWindow(AsciiPanelDisplay display, Border border, List<ColorString> contents, int x, int y)
+    public CoordWindow(Display display, Border border, List<ColorString> contents, int x, int y)
     {
         super(display, border, contents);
         this.x = x;
@@ -41,12 +41,12 @@ public abstract class CoordWindow extends Window
     /**
      * Creates a {@link CoordWindow} with no contents.
      *
-     * @param display the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display the {@link Window}'s {@link Display}
      * @param border  the {@link Window}'s {@link Border}
      * @param x       the {@link Window}'s x coordinate
      * @param y       the {@link Window}'s y coordinate
      */
-    public CoordWindow(AsciiPanelDisplay display, Border border, int x, int y)
+    public CoordWindow(Display display, Border border, int x, int y)
     {
         super(display, border);
         this.x = x;
@@ -56,12 +56,12 @@ public abstract class CoordWindow extends Window
     /**
      * Creates a borderless {@link CoordWindow}.
      *
-     * @param display  the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display  the {@link Window}'s {@link Display}
      * @param contents the {@link Window}'s initial contents
      * @param x        the {@link Window}'s x coordinate
      * @param y        the {@link Window}'s y coordinate
      */
-    public CoordWindow(AsciiPanelDisplay display, List<ColorString> contents, int x, int y)
+    public CoordWindow(Display display, List<ColorString> contents, int x, int y)
     {
         super(display, contents);
         this.x = x;
@@ -71,11 +71,11 @@ public abstract class CoordWindow extends Window
     /**
      * Creates a borderless {@link CoordWindow} with no contents.
      *
-     * @param display the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display the {@link Window}'s {@link Display}
      * @param x       the {@link Window}'s x coordinate
      * @param y       the {@link Window}'s y coordinate
      */
-    public CoordWindow(AsciiPanelDisplay display, int x, int y)
+    public CoordWindow(Display display, int x, int y)
     {
         super(display);
         this.x = x;

@@ -1,6 +1,6 @@
 package maugrift.apwt.screens;
 
-import maugrift.apwt.display.AsciiPanelDisplay;
+import maugrift.apwt.display.Display;
 
 import java.awt.event.KeyEvent;
 
@@ -13,16 +13,16 @@ import java.awt.event.KeyEvent;
 public abstract class Screen
 {
     /**
-     * The {@link AsciiPanelDisplay} through which output is shown.
+     * The {@link Display} through which output is shown.
      */
-    private AsciiPanelDisplay display;
+    private Display display;
 
     /**
-     * Creates a new {@link Screen} on the provided {@link AsciiPanelDisplay}.
+     * Creates a new {@link Screen} on the provided {@link Display}.
      *
-     * @param display the {@link AsciiPanelDisplay} on which the {@link Screen} will be shown
+     * @param display the {@link Display} on which the {@link Screen} will be shown
      */
-    public Screen(AsciiPanelDisplay display)
+    public Screen(Display display)
     {
         this.display = display;
     }
@@ -30,25 +30,25 @@ public abstract class Screen
     /**
      * Returns the {@link #display Display} used by the {@link Screen}.
      *
-     * @return the {@link AsciiPanelDisplay} used by the {@link Screen}
+     * @return the {@link Display} used by the {@link Screen}
      */
-    public AsciiPanelDisplay getDisplay()
+    public Display getDisplay()
     {
         return display;
     }
 
     /**
-     * Sets the {@link #display Display} to the given {@link AsciiPanelDisplay}.
+     * Sets the {@link #display Display} to the given {@link Display}.
      *
-     * @param d the new {@link AsciiPanelDisplay} for the {@link Screen} to use
+     * @param d the new {@link Display} for the {@link Screen} to use
      */
-    public void setDisplay(AsciiPanelDisplay d)
+    public void setDisplay(Display d)
     {
         display = d;
     }
 
     /**
-     * Displays the {@link Screen}'s output to its {@link AsciiPanelDisplay}.
+     * Displays the {@link Screen}'s output to its {@link Display}.
      */
     public abstract void displayOutput();
 

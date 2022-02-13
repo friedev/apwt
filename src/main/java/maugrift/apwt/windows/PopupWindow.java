@@ -1,6 +1,6 @@
 package maugrift.apwt.windows;
 
-import maugrift.apwt.display.AsciiPanelDisplay;
+import maugrift.apwt.display.Display;
 import maugrift.apwt.glyphs.ColorString;
 
 import java.util.ArrayList;
@@ -21,12 +21,12 @@ public class PopupWindow extends Window
     /**
      * Creates a {@link PopupWindow} with all fields defined.
      *
-     * @param display   the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display   the {@link Window}'s {@link Display}
      * @param contents  the {@link Window}'s contents
      * @param border    the {@link Window}'s {@link Border}
      * @param separator the {@link Window}'s separator
      */
-    public PopupWindow(AsciiPanelDisplay display, List<ColorString> contents, Border border, Line separator)
+    public PopupWindow(Display display, List<ColorString> contents, Border border, Line separator)
     {
         super(display, border, contents);
         this.separator = separator;
@@ -45,11 +45,11 @@ public class PopupWindow extends Window
     /**
      * Creates a {@link PopupWindow} with all fields defined.
      *
-     * @param display   the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display   the {@link Window}'s {@link Display}
      * @param border    the {@link Window}'s {@link Border}
      * @param separator the {@link Window}'s separator
      */
-    public PopupWindow(AsciiPanelDisplay display, Border border, Line separator)
+    public PopupWindow(Display display, Border border, Line separator)
     {
         this(display, new ArrayList<>(), border, separator);
     }
@@ -57,11 +57,11 @@ public class PopupWindow extends Window
     /**
      * Creates a {@link PopupWindow} with no separator.
      *
-     * @param display  the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display  the {@link Window}'s {@link Display}
      * @param contents the {@link Window}'s contents
      * @param border   the {@link Window}'s {@link Border}
      */
-    public PopupWindow(AsciiPanelDisplay display, List<ColorString> contents, Border border)
+    public PopupWindow(Display display, List<ColorString> contents, Border border)
     {
         this(display, contents, border, null);
     }
@@ -69,10 +69,10 @@ public class PopupWindow extends Window
     /**
      * Creates a {@link PopupWindow} with no separator.
      *
-     * @param display the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display the {@link Window}'s {@link Display}
      * @param border  the {@link Window}'s {@link Border}
      */
-    public PopupWindow(AsciiPanelDisplay display, Border border)
+    public PopupWindow(Display display, Border border)
     {
         this(display, new ArrayList<>(), border);
     }
@@ -80,10 +80,10 @@ public class PopupWindow extends Window
     /**
      * Creates a {@link PopupWindow} with a default border and no separator.
      *
-     * @param display  the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display  the {@link Window}'s {@link Display}
      * @param contents the {@link Window}'s contents
      */
-    public PopupWindow(AsciiPanelDisplay display, List<ColorString> contents)
+    public PopupWindow(Display display, List<ColorString> contents)
     {
         this(display, contents, new Border(1));
     }
@@ -91,9 +91,9 @@ public class PopupWindow extends Window
     /**
      * Creates a {@link PopupWindow} with a default border and no separator.
      *
-     * @param display the {@link Window}'s {@link AsciiPanelDisplay}
+     * @param display the {@link Window}'s {@link Display}
      */
-    public PopupWindow(AsciiPanelDisplay display)
+    public PopupWindow(Display display)
     {
         this(display, new Border(1));
     }
