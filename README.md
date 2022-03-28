@@ -1,6 +1,6 @@
-# AsciiPanelWindowingToolkit (APWT)
+# AsciiPanel Windowing Toolkit
 
-AsciiPanelWindowingToolkit is a set of classes and utilities that will make working with [AsciiPanel](https://github.com/trystan/AsciiPanel) on a larger scale much easier.
+AsciiPanel Windowing Toolkit is a set of classes and utilities that will make working with [AsciiPanel](https://github.com/trystan/AsciiPanel) on a larger scale much easier.
 It includes support for screens, text windows, multicolored strings, and constants for different CP437 characters.
 APWT, of course, depends on [AsciiPanel](https://github.com/trystan/AsciiPanel), as well as [SquidLib](https://github.com/SquidPony/SquidLib).
 
