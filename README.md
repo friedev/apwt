@@ -6,8 +6,16 @@ AsciiPanel Windowing Toolkit is a library that provides several high-level UI co
 
 ## Compiling
 
-To build APWT as a library JAR, clone the repository and run `./gradlew clean build jar`.
-You can then include the compiled library JAR file in your project.
+Dependencies:
+
+- Java 8 or newer
+- Gradle (last tested with Gradle 7.5.1)
+
+To build a library JAR:
+
+```sh
+gradle clean build jar
+```
 
 ## Usage
 
@@ -23,7 +31,7 @@ To use APWT in your own Java project, you have a few options:
 ## Documentation
 
 APWT has full JavaDoc documentation.
-To read it, run `./gradlew javadoc` and browse to `build/docs/index.html`.
+To read it, run `gradle javadoc` and browse to `build/docs/index.html`.
 
 To get started, I would recommend simply initializing a `Display` object and going from there.
 The `Display` is designed to work with a hierarchy of `Screen`s, each of which read input and display output.
