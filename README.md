@@ -1,64 +1,37 @@
 # AsciiPanel Windowing Toolkit
 
-AsciiPanel Windowing Toolkit is a set of classes and utilities that will make working with [AsciiPanel](https://github.com/trystan/AsciiPanel) on a larger scale much easier.
-It includes support for screens, text windows, multicolored strings, and constants for different CP437 characters.
-APWT, of course, depends on [AsciiPanel](https://github.com/trystan/AsciiPanel), as well as [SquidLib](https://github.com/SquidPony/SquidLib).
+AsciiPanel Windowing Toolkit is a library that provides several high-level UI components for [AsciiPanel](https://github.com/trystan/AsciiPanel).
 
-**DISCLAIMER:** To be honest, one of the reasons AsciiPanel is still a decent library is because of its downright simplicity.
-If you really want more complexity in your Java terminal emulators, I would strongly recommend one that has been designed from the ground up with more advanced features.
-[Zircon](https://github.com/Hexworks/zircon) is a great choice that I have used myself.
-Nonetheless, this library exists if you've got something made with AsciiPanel and want to easily extend its functionality.
+**DISCLAIMER:** If you want to develop a roguelike or other complex TUI application in Java, I strongly recommend using [Zircon](https://hexworks.org/projects/zircon) instead of AsciiPanel or APWT.
 
 ## Compiling
 
 To build APWT as a library JAR, clone the repository and run `./gradlew clean build jar`.
-You can then include the compiled library jar file in your projects.
-
-To test building for Maven distribution (e.g. JitPack), run `./gradlew clean build jar publishToMavenLocal`.
+You can then include the compiled library JAR file in your project.
 
 ## Usage
 
 To use APWT in your own Java project, you have a few options:
 
-1. Build a library JAR as described above and include it in your project.
-2. Use a build tool like Maven or Gradle and get APWT from JitPack.
-
-Below is an example configuration for Gradle based off of the `v1.0.0` tag:
-
-```gradle
-repositories {
-	allprojects {
-		repositories {
-			maven {
-				url 'https://jitpack.io'
-			}
-		}
-	}
-}
-
-dependencies {
-	implementation 'com.github.maugrift:apwt:v1.0.0'
-}
-```
+1. Build a library JAR as described in the Compiling section above and include it in your project.
+2. Add this repository as a Git submodule: `git submodule add https://frie.dev/apwt.git`
+	- You may need to create a symbolic link so that APWT's source tree is in the path expected by your build system.
+	- See [EverSector](https://frie.dev/eversector) for an example of this configuration.
+3. Use a [Gradle source dependency](https://blog.gradle.org/introducing-source-dependencies).
+	- I have not been able to get this to work for APWT, but you may have better luck.
 
 ## Documentation
 
 APWT has full JavaDoc documentation.
-To read it, you again have a few options:
-
-1. Run `./gradlew javadoc` and browse to `build/docs/index.html`.
-2. Get a JavaDoc JAR from JitPack.
+To read it, run `./gradlew javadoc` and browse to `build/docs/index.html`.
 
 To get started, I would recommend simply initializing a `Display` object and going from there.
 The `Display` is designed to work with a hierarchy of `Screen`s, each of which read input and display output.
 This system is modeled after [Trystan's roguelike tutorial](https://trystans.blogspot.com/2016/01/roguelike-tutorial-00-table-of-contents.html).
 
-For an example of APWT in action, check out my (abandoned) space roguelike [EverSector](https://github.com/Maugrift/EverSector).
+For an example project using APWT, see [EverSector](https://frie.dev/eversector).
 
 ## Contributing
 
-I have ceased development on APWT because, 1) it is largely feature complete as-is and 2) I don't have much further use for it in my own projects.
-However, I may still try to maintain it, so if something doesn't work, feel free to create an issue or pull request for it.
-
-If you want to develop more features for APWT, I would suggest making your own fork.
-Just make sure to abide by the terms of the license (found in `LICENSE.txt`).
+I have ceased development on APWT because it is largely feature-complete and I have no further use for it in my own projects.
+If you want to expand on APWT, fork it.
