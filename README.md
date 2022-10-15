@@ -41,5 +41,5 @@ For an example project using APWT, see [EverSector](https://frie.dev/eversector)
 
 ## Contributing
 
-I have ceased development on APWT because it is largely feature-complete and I have no further use for it in my own projects.
-If you want to expand on APWT, fork it.
+APWT is no longer in development because it is largely feature-complete and I have no further use for it in my own projects.
+If you want to expand on APWT, make your own fork.
